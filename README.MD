@@ -65,7 +65,7 @@ The application can be launched by
 
 ArtiasnMain.py will read the json file and interpret the keys and then perform the calculations. There are a few example JSON files under the folder "Test_json", and the sample geometry files are at the folder "sample-obj". For example, 
 
-    python ArtisanMain.py -f .//Test_json//EngineBracket_Infill_Lin.txt
+    python ArtisanMain.py -f .//Test_json//EngineBracket_HS_Infill_Lin_LR.txt
 
 Above commands will perform the complex lattice filling in EngineBracket model. The results are stored at "Test_results", or user may modify the json file to save the results at the desired location. 
 
