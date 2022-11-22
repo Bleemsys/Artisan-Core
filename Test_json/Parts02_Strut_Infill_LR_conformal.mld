@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//sample-obj//Parts02//Parts02.med",
+ "la_name" : "BCCubic"
+ }
+}

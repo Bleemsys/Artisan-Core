@@ -1,0 +1,7 @@
+{
+"type": "MeshLattice",
+"definition": {
+ "meshfile": ".//sample-obj//Parts02//Parts02.msh",
+ "la_name" : "BCCubic"
+ }
+}

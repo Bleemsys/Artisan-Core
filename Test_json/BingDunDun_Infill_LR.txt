@@ -1,0 +1,21 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.75,0.75,0.75],
+		"Padding": 1,
+                "onGPU": true,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": "Cubic", "size": [8.0,8.0,8.0], "thk":1.2, "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2":{"Export": {"outfile": ".//Test_results/BingDunDun_Infill.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+}
