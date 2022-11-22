@@ -1,0 +1,1 @@
+This folder is only for exporting the testing results.
