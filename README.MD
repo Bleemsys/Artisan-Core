@@ -1,6 +1,8 @@
 # Artisan
 Artisan is a tool for lattice generation. It is based on implicit modelling technique. The code is based on Python and C++ in order to combining the development speed and computational efficiency. Artisan computes the most of heavy math through C++ code, and conducts the routine calculations via Python. 
 
+![image info](./ArtisanIllustration_05.jpg)
+
 Lattice structure recently draws lots of attention on its potential applications in mechanical performance and heat transferring capabilities. Integrating the lattice structure into the parts can transform the existing design into a lightweight component with functionally enhanced features, such as shocking absorption. The conventional manufacturing methods, such as casting, cannot make such sophisticated design. Additive manufacturing, i.e. 3D printing, is only way of manufacturing these design at this stage. You may find more information regarding to the design and concepts at:
 
  - Understanding 3D printed lattices: Properties, performance, and design considerations: https://www.fastradius.com/resources/understanding-3d-printed-lattices-performance-and-design-considerations/
