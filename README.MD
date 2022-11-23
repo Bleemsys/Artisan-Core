@@ -35,7 +35,7 @@ Artisan considers the utilization of hardware, and the resources spending on the
 
 ## Testing Package
 
-The package is a stand alone package aiming to provide chance for user to verify the basic functionalities and resources costs of the software. We are developing the user guide/manual, meanwhile, you may try the package examples and some quick understanding of the general capability of Artisan.
+The package is a stand alone package aiming to provide chance for user to verify the basic functionalities and resources costs of the software. We are developing the user guide/manual, meanwhile, you may try the package examples and have some quick understanding of the general capability of Artisan.
 
 ## Installation
 Artisan does not require any installation. It requires installation of the dependency packages and pre-requisites softwares. 
