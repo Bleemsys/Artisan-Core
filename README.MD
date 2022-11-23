@@ -49,7 +49,7 @@ Python: https://www.python.org/downloads/release/python-397/
 
 CUDA Toolkit: https://developer.nvidia.com/cuda-toolkit
 
-Users have to make sure their computers having proper hardwares, that support CUDA GPU computing, 
+Users have to make sure their computers supports CUDA GPU computing, 
 
  - NVIDIA CUDA GPU with the Compute Capability 3.0 or later;
 
@@ -70,6 +70,6 @@ ArtiasnMain.py will read the json file and interpret the keys and then perform t
 Above commands will perform the complex lattice filling in EngineBracket model. The results are stored at "Test_results", or user may modify the json file to save the results at the desired location. 
 
 ## License
-This testing package is the copyrighted closed source freeware. Artisan is licensed under Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0). You may obtain a copy of the License at https://creativecommons.org/licenses/by-nc-nd/3.0/
+This testing package is the copyrighted & closed source freeware. This testing package is licensed under Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0). You may obtain a copy of the License at https://creativecommons.org/licenses/by-nc-nd/3.0/
 
 You may copy and redistribute this testing package material in any medium or format under the condition for non-commercial purpose. For commercial applications, please contact us. We are also happy to offer the customized development and consulting services.
