@@ -1,0 +1,6 @@
+This is simple change log recording the major and minor updates
+
+0.1.1
+- bug fix for user defined geometric shape lattice
+- remove cupy from python
+- move all GPU calculations to C++ modulus

@@ -2,8 +2,8 @@
                 "Geomfile": ".//sample-obj//Parts01//Parts01.stl",
                 "Rot" : [0.0,0.0,0.0],
                 "res":[0.25,0.25,0.25],
-		"Padding": 2,
-                "onGPU": true,
+                "Padding": 2,
+                "onGPU": false,
                 "memorylimit": 16106127360
                 },
  "WorkFlow":{

@@ -2,7 +2,8 @@
                 "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
                 "Rot" : [0.0,0.0,0.0],
                 "res":[0.35,0.35,0.35],
-                "onGPU": true,
+                "onGPU": false,
+                "Padding": 1, 
                 "memorylimit": 16106127360
                 },
  "WorkFlow":{
@@ -11,7 +12,7 @@
                     "Cube_Request": {}
                     }
                },
-          "2":{"Export": {"outfile": ".//Test_results/BingDunDun_Infill.stl"}}
+          "2":{"Export": {"outfile": ".//Test_results/BingDunDun_Infill_CustomGeom.stl"}}
            },
  "PostProcess":{"CombineMeshes": true,
                 "RemovePartitionMeshFile": false,

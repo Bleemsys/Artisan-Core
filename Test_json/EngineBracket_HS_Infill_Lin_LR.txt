@@ -3,7 +3,7 @@
                 "Rot" : [0.0,0.0,0.0],
                 "res":[0.4,0.4,0.4],
                 "Padding": 1,
-                "onGPU": true,
+                "onGPU": false,
                 "memorylimit": 1073741824
                 },
  "WorkFlow":{
@@ -41,7 +41,7 @@
                     "Cube_Request": {}
                     }},
           "6": {
-          "Export": {"outfile": ".//Test_results/EngineBracket_HS_Lin_TPMS_Infill.stl"}
+          "Export": {"outfile": ".//Test_results/EngineBracket_HS_Lin_TPMS_Infill_LR.stl"}
            }},
  "PostProcess":{"CombineMeshes": true,
                 "RemovePartitionMeshFile": false,
