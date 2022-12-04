@@ -1,0 +1,69 @@
+Conformal Lattice
+*****************
+
+One has to mention is that, the conformal lattice here is mesh based conformal lattice. Artisan requires an user input of mesh, e.g. FEA mesh, to generate the conformal lattice. Please note that,
+
+ - only hexahedron element containing 8 nodes and 6 faces are supported at this stage. 
+ - only MED mesh file format is support at this stage. Future development will certainly also consider other mesh format. 
+
+User may use Salome software to generate the mesh, and export the mesh as MED file. 
+
+The JSON setup is very similar to the mesh lattice. Example below demonstrates the combinations of conformal TPMS and conformal strut lattice. 
+
+.. code-block:: json
+
+    {"Setup":{  "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Parts02//Parts02.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.4,0.4,0.4],
+                "Padding": 3,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+     "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": ".//Test_json//Parts02_Strut_Infill_LR_conformal.mld", "size": [15.0,15.0,15.0], "thk":1.5, "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2" :{"HS_Interpolate" : {
+                    "la_name": ".//Test_json//Parts02_TPMS_Infill_LR_conformal.mld", 
+                    "size": [15.0,15.0,15.0], 
+                    "thk": 1.5, "pt":[0.0,0.0,0.0], 
+                    "n_vec":[-1.0,0.0,0.0], "Fill": false, "Cube_Request": {}
+                    }},
+          "3":{"Export": {"outfile": ".//Test_results/Parts02_Combined_Infill_02.stl"}}
+           },
+     "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+    }
+
+The lattice file :code:`.//Test_json//Parts02_Strut_Infill_LR_conformal.mld` defines the mesh file and the type of strut lattice. 
+
+.. code-block:: json
+
+    {
+     "type": "ConformalLattice",
+     "definition": {
+            "meshfile": ".//sample-obj//Parts02//Parts02.med",
+            "la_name" : "BCCubic"
+        }
+    }
+
+Similarly, the lattice file :code:`.//Test_json//Parts02_TPMS_Infill_LR_conformal.mld` defines the mesh file and the type of TPMS lattice. You may also apply the customized lattice definition here by changing :code:`la_name` to the customized lattice definition file. Please note that, the customized geometric shape lattice is not supported at this stage. 
+
+.. code-block:: json
+
+    {
+      "type": "ConformalLattice",
+      "definition": {
+           "meshfile": ".//sample-obj//Parts02//Parts02.med",
+           "la_name" : "SchwarzPrimitive"
+        }
+    }
+
+Then, we could generate a combined conformal lattice infill.
+
+.. image:: ./pictures/Conformal_combined_lattice.png
