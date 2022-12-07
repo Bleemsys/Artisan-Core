@@ -72,7 +72,7 @@ Above commands will perform the complex lattice filling in EngineBracket model. 
 
 ## Documentation
 
-The online version of the documentation is available at http://bleemsys.com/Artisan/docs/index.html. Or you may find the same docs under the Doc folder. This documents are regularly updated to reflects the latest features, application and tips of the tool.
+The online version of the documentation is available at http://bleemsys.com/Artisan/docs/index.html. Or you may find the same docs under the Doc folder. The documents are regularly updated to reflect the latest features, applications and the tips of the tool.
 
 ## License
 This testing package is the copyrighted & closed source freeware. This testing package is licensed under Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0). You may obtain a copy of the License at https://creativecommons.org/licenses/by-nc-nd/3.0/
