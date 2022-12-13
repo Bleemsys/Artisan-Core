@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Conformal Lattice &#8212; Artisan 0.1.1 documentation</title>
+    <title>Conformal Lattice &#8212; Artisan 0.1.2 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">Artisan 0.1.1 documentation</h1>
+      <h1 class="site-logo" id="site-title">Artisan 0.1.2 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -237,12 +237,46 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lattice-in-hexahedron-domain">
+   Lattice in hexahedron domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lattice-in-tetrahedron-domain">
+   Lattice in tetrahedron domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conformal-geometric-shape-lattice">
+   Conformal Geometric Shape Lattice
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -254,6 +288,29 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lattice-in-hexahedron-domain">
+   Lattice in hexahedron domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lattice-in-tetrahedron-domain">
+   Lattice in tetrahedron domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conformal-geometric-shape-lattice">
+   Conformal Geometric Shape Lattice
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -263,7 +320,10 @@ title="Print to PDF"
                 
   <section id="conformal-lattice">
 <h1>Conformal Lattice<a class="headerlink" href="#conformal-lattice" title="Permalink to this headline">#</a></h1>
-<p>One has to mention is that, the conformal lattice here is mesh based conformal lattice. Artisan requires an user input of mesh, e.g. FEA mesh, to generate the conformal lattice. Please note that,</p>
+<p>Conformal lattice in Artisan is considered the mini morphing of the lattice to the given lattice domain. The domain can be a hexahedron or tetrahedron shape. The lattice in definition is therefore considered as the reference status, and the morphed lattice structure is in a deformed status. The mesh used in FEA/CFD computation are utilized for domain discretization, then the task of lattice generation becomes the morphing of the unit lattice into the lattice domain defined by individual element.</p>
+<section id="lattice-in-hexahedron-domain">
+<h2>Lattice in hexahedron domain<a class="headerlink" href="#lattice-in-hexahedron-domain" title="Permalink to this headline">#</a></h2>
+<p>The conformal lattice here is the mesh based conformal lattice. Artisan requires an user input of mesh, e.g. FEA mesh, to generate the conformal lattice. For using lattice in hexahedron domain, please note that,</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>only hexahedron element containing 8 nodes and 6 faces are supported at this stage.</p></li>
@@ -323,6 +383,128 @@ title="Print to PDF"
 </div>
 <p>Then, we could generate a combined conformal lattice infill.</p>
 <img alt="_images/Conformal_combined_lattice.png" src="_images/Conformal_combined_lattice.png" />
+</section>
+<section id="lattice-in-tetrahedron-domain">
+<h2>Lattice in tetrahedron domain<a class="headerlink" href="#lattice-in-tetrahedron-domain" title="Permalink to this headline">#</a></h2>
+<p>Tetrahedron mesh is widely used for domain discretization. It can be applied to most of difficult geometric shape, and has much higher chance of generating the mesh. Unlike the hexahedron element generation which often involves manual domain partition, the tetrahedron element requires less efforts on the domain partition.</p>
+<p>We use a sole of shoes to demonstrate how tetrahedron lattice domain infill works on difficult geometry. Here is the main JSON.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_02.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">],</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//Shoe_TetConformal_Infill_LR.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">18.0</span><span class="p">,</span><span class="mf">18.0</span><span class="p">,</span><span class="mf">18.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Shoe_TetConformal_Infill_LR.stl&quot;</span><span class="p">}}</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And the conformal lattice definition <code class="code docutils literal notranslate"><span class="pre">&quot;la_name&quot;:</span> <span class="pre">&quot;.//Test_json//Shoe_TetConformal_Infill_LR.mld&quot;</span></code> is below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConformalLattice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_02.med&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;la_name&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Icosahedral&quot;</span><span class="w"></span>
+<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The filled geometry has strong visual presentation, as shown below.</p>
+<img alt="_images/Sole.png" src="_images/Sole.png" />
+<p>The custom lattice definition also supported in tetrahedron mesh infill. In general it has exact same parameter meaning as the periodic lattice, but only need to change <code class="code docutils literal notranslate"><span class="pre">&quot;la_domain&quot;</span></code> to <code class="code docutils literal notranslate"><span class="pre">&quot;Tet&quot;</span></code>. The strut nodes should be defined in a standard tetrahedron domain (covered by 4 nodes, <code class="code docutils literal notranslate"><span class="pre">(0,0,0)</span></code>, <code class="code docutils literal notranslate"><span class="pre">(1,0,0)</span></code>, <code class="code docutils literal notranslate"><span class="pre">(0,1,0)</span></code> and <code class="code docutils literal notranslate"><span class="pre">(0,0,1)</span></code>). Artisan will not check whether the coordinates of nodes in the range, anything beyond the tetrahedron can cause irregular lattice distribution.</p>
+<p>Above main JSON can be pushed further that makes the model to be ready for production, as shown below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">],</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//Shoe_TetConformal_Infill_LR.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">18.0</span><span class="p">,</span><span class="mf">18.0</span><span class="p">,</span><span class="mf">18.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span><span class="nt">&quot;Substract_Surf_Plate&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Surffile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_Top.stl&quot;</span><span class="p">,</span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">3.5</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;GeomTrim&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Add_Surf_Plate&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Surffile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_Top.stl&quot;</span><span class="p">,</span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">3.51</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;GeomTrim&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;4&quot;</span><span class="p">:{</span><span class="nt">&quot;Add_Surf_Plate&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Surffile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_Btm.stl&quot;</span><span class="p">,</span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">2.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;GeomTrim&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;6&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Shoe_TetConformal_Infill_LR.stl&quot;</span><span class="p">}}</span><span class="w"></span>
+<span class="w">       </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The model showed the better presentation. The keywords <code class="code docutils literal notranslate"><span class="pre">Add_Surf_Plate</span></code> and <code class="code docutils literal notranslate"><span class="pre">Substract_Surf_Plate</span></code> read the geometric surface and apply thickness to create a solid plate, and then perform add or substract operation on the lattice field. The parameter <code class="code docutils literal notranslate"><span class="pre">GeomTrim</span></code> controls whether the solid plate to do the cutting operation with the domain geometry.</p>
+<img alt="_images/Sole_Production_TopView.png" src="_images/Sole_Production_TopView.png" />
+<img alt="_images/Sole_Production_TopView_02.png" src="_images/Sole_Production_TopView_02.png" />
+<img alt="_images/Sole_Production_BtmView.png" src="_images/Sole_Production_BtmView.png" />
+</section>
+<section id="conformal-geometric-shape-lattice">
+<h2>Conformal Geometric Shape Lattice<a class="headerlink" href="#conformal-geometric-shape-lattice" title="Permalink to this headline">#</a></h2>
+<p>The custom geometric shape lattice is also supported. The example below showed the conformal custom geometric shape lattice infill of the twisted bar.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Twisted_Bar//Twisted_Bar.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//Twisted_Bar_ConformalCustomLattice.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">200.0</span><span class="p">,</span><span class="mf">200.0</span><span class="p">,</span><span class="mf">200.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">3.8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                   </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Twisted_Bar_ConformalCustomLattice.stl&quot;</span><span class="p">}}</span><span class="w"></span>
+<span class="w">       </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The custom lattice is defined as below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConformalLattice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Twisted_Bar//Twisted_Bar.med&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;la_name&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//CustomLattice_Geom.txt&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The twisted bar shall be filled by a series of <code class="code docutils literal notranslate"><span class="pre">boxframe.obj</span></code> shape. Due to current algorithm limitation, user are required to give the input of thickness parameter <code class="code docutils literal notranslate"><span class="pre">thk</span></code> (in this case, <code class="code docutils literal notranslate"><span class="pre">&quot;thk&quot;:3.8</span></code>). User may try different thickness level at the low resolution model before moving to the high resolution model generation.</p>
+<img alt="_images/Twisted_Bar_Custom_Geom_Conformal.png" src="_images/Twisted_Bar_Custom_Geom_Conformal.png" />
+</section>
 </section>
 
 

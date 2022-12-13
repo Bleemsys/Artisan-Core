@@ -4,3 +4,9 @@ This is simple change log recording the major and minor updates
 - bug fix for user defined geometric shape lattice
 - remove cupy from python
 - move all GPU calculations to C++ modulus
+
+0.1.2
+- bug fix for conformal lattice generation
+- Add the tetrahedron based conformal lattice generation
+- Add user defined geometric shape lattice for conformal lattice generation
+- Doc updates

@@ -4,17 +4,20 @@ Customization
 Artisan integrates a number of lattice design, including:
 
 .. list-table:: 
-   :widths: 50 50 
+   :widths: 30 30 40
    :header-rows: 1
 
    * - Strut Lattice
      - TPMS Lattice
+     - Strut Lattice Tetrahedron domain
    * - Cubic, BCCubic
      - SchwarzDiamond, SchwarzPrimitive, FischerKoch
+     - Rhombic, Star, Icosahedral
    * - BC 
      - Neovius, Lidinoid, Gyroid
+     - Voronoi, Kagome, Tetrahedron
 
-We will gradually expand this list above in future development.
+We will gradually expand this list above in future development. The strut and TPMS lattice generally used in hexahedron domain which contains 6 faces and 8 nodes, such as a cube. The strut lattice in tetrahedron domain is mainly used in conformal lattice generation when tetrahedron meshes were given. Artisan will not check the lattice domain types in filling process, but please note that, the mismatched lattices types will produce unexpected results. The lattice in tetrahedron domain will be demonstrated in later section. 
 
 This may not meet all user's needs at some stage. Artisan has a capability of taking user's lattice definition into the design. User may define a lattice through three different ways:
 
@@ -56,7 +59,7 @@ Defining a strut lattice requires the nodal coordinates, and topological conduct
                 "ExportLazPts": false}
     }
 
-The parameter :code:`la_name` in the keywords :code:`Add_Lattice` became a file path that links to the custom strut lattice definition. The definition in the file is showed below. In this case, we defines the strut lattice type, and nodes coordinates and the conductivities. Note that the node coordinates shall define with from 0 to 1 mm in x, y and z direction.  
+The parameter :code:`la_name` in the keywords :code:`Add_Lattice` became a file path that links to the custom strut lattice definition. The definition in the file is showed below. In this case, we defines the strut lattice type, and nodes coordinates and the conductivities. Note that the node coordinates shall define with from 0 to 1 mm in x, y and z direction.  The parameter :code:`"ladomain"` defines the lattice in a hexahedron lattice domain, i.e. :code:`"Hex"`, a domain defined by 6 faces and 8 nodes. 
 
 .. code-block:: json
 
@@ -79,8 +82,10 @@ The parameter :code:`la_name` in the keywords :code:`Add_Lattice` became a file 
                                [7, 4],[7, 6],
                                [6, 5],[4, 5],
                                [0, 5],[1, 4],
-                               [2, 7],[3, 6]]
+                               [2, 7],[3, 6]],
+                       "ladomain" : "Hex"
                      }
+
     }
 
 Above example shall produce the filled results like below. Yes, it is filled by the BCCubic lattice. User may try different nodes locations and/or conductivities. 
@@ -101,7 +106,8 @@ User may define a surface through its implicit equation, and apply the thickness
      "unit_x_len": "2*pi",
      "unit_y_len": "2*pi",
      "unit_z_len": "2*pi",
-     "expr": "cos(x)+cos(y)+cos(z)"}
+     "expr": "cos(x)+cos(y)+cos(z)",
+     "ladomain" : "Hex"}
     }    
 
 In this definition, we defined an implicit equation 
@@ -135,7 +141,9 @@ To fill the geometry with this shape, we could define it like below.
     {
      "type": "Geom",
      "definition": {
-                     "file": ".//sample-obj//boxframe.obj"}
+                     "file": ".//sample-obj//boxframe.obj",
+                     "ladomain" : "Hex"
+                    }
     }
 
 We could have following results.
@@ -146,4 +154,4 @@ More details here.
 
 .. image:: ../pictures/custom_geom_details.png
 
-The thickness of the geometric shape lattice is adjustable through defining the parameter :code:`thk`. The initial inputs will be considered as :code:`0.0`, the negative value of :code:`thk` shrinks the shape, whereas the positive value expands the lattice unit.  
+The thickness of the geometric shape lattice is adjustable through defining the parameter :code:`thk`. The initial inputs will be considered as :code:`0.0`, the negative value of :code:`thk` shrinks the shape, whereas the positive value expands the lattice unit. The thickness of the given shape has different definition in conformal lattice, please refer to conformal lattice section for more details.

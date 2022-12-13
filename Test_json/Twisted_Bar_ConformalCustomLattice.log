@@ -1,0 +1,14 @@
+2022-12-12 13:49:07,704 [INFO] This is a testing package of Artisan.
+2022-12-12 13:49:07,720 [INFO] Version: 0.1.1
+2022-12-12 13:49:07,720 [INFO] reading Json file: Test_json\Twisted_Bar_ConformalCustomLattice.txt
+2022-12-12 13:49:07,720 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj//Twisted_Bar//Twisted_Bar.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [2.0, 2.0, 2.0], 'Padding': 3, 'onGPU': False, 'memorylimit': 16106127360}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': './/Test_json//Twisted_Bar_ConformalCustomLattice.mld', 'size': [200.0, 200.0, 200.0], 'thk': 3.8, 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results/Twisted_Bar_ConformalCustomLattice.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2022-12-12 13:49:07,720 [INFO] Setup basic fill domain......
+2022-12-12 13:49:07,720 [INFO] Workflow Calculation: 
+2022-12-12 13:49:07,720 [INFO] Number of Domain Partition: 1
+2022-12-12 13:49:07,720 [INFO] Calculating Sub-Domain:1
+2022-12-12 13:49:07,720 [INFO] Building Up GeomDomain......
+2022-12-12 13:49:09,091 [INFO] Calculating Add_Lattice
+2022-12-12 13:49:14,179 [INFO] Calculating Export
+2022-12-12 13:49:17,372 [INFO] PostProcessing Meshes......
+2022-12-12 13:49:21,703 [INFO] Process finished, check the results file.
+2022-12-12 13:49:21,703 [INFO] Peak Memory Usage: 445.5861625671387 MB

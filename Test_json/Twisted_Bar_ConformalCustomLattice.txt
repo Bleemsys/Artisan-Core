@@ -1,0 +1,21 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Twisted_Bar//Twisted_Bar.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[2.0,2.0,2.0],
+                "Padding": 3,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": ".//Test_json//Twisted_Bar_ConformalCustomLattice.mld", "size": [200.0,200.0,200.0], "thk":3.8, "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{"Export": {"outfile": ".//Test_results/Twisted_Bar_ConformalCustomLattice.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

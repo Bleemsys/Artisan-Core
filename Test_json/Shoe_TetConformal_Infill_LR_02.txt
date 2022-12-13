@@ -1,0 +1,25 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Shore//Shoes.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.4,0.4,0.4],
+		"Padding": 5,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": ".//Test_json//Shoe_TetConformal_Infill_LR.mld", "size": [18.0,18.0,18.0], "thk":0.8, "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2":{"Substract_Surf_Plate":{"Surffile": ".//sample-obj//Shore//Shoes_Top.stl","thk":3.5, "GeomTrim": false}},
+          "3":{"Add_Surf_Plate":{"Surffile": ".//sample-obj//Shore//Shoes_Top.stl","thk":3.51, "GeomTrim": true}},
+          "4":{"Add_Surf_Plate":{"Surffile": ".//sample-obj//Shore//Shoes_Btm.stl","thk":2.0, "GeomTrim": true}},
+          
+          "6":{"Export": {"outfile": ".//Test_results/Shoe_TetConformal_Infill_LR.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+}
