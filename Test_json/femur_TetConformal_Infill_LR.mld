@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//sample-obj//femur_cortical.med",
+ "la_name" : "Icosahedral"
+ }
+}

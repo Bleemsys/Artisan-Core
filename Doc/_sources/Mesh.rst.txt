@@ -44,7 +44,23 @@ You might notice that the parameter :code:`Padding` became 2, it is different fr
       }
     }
 
-As stated above, the mesh file points to :code:`.//sample-obj//Parts01//Parts01.med` and type of filling is called :code:`MeshLattice`. The results is shown below. 
+As stated above, the mesh file points to :code:`.//sample-obj//Parts01//Parts01.med` and type of filling is called :code:`MeshLattice`. Artisan currently supports the following mesh file format:
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - File extension
+     - Original Software
+   * - :code:`.med`
+     - Salome platform
+   * - :code:`.msh` 
+     - Ansys Mesh Export (Fluent Mesh Export Option)
+   * - :code:`.inp`
+     - Abaqus input file
+
+
+The results is shown below. 
 
 .. image:: ./pictures/MeshLattice.png
 
@@ -85,5 +101,57 @@ User could certainly combine the mesh lattice with other types of lattice, such 
 We have a half-half infill. 
 
 .. image:: ./pictures/MeshLattice_Combined.png
+
+Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file :code:`GenTetBasicMesh.txt`, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh. 
+
+.. code-block:: json
+
+    {"Setup":{  "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Ball_Mesh.STL",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[5.0,5.0,5.0],
+				        "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+    "WorkFlow":{
+          "1": {"Gen_TetBasicMesh":{
+                    "Geomfile": ".//sample-obj//Ball_Mesh.STL", 
+					          "size": [100.0,100.0,100.0],
+					          "Meshfile": ".//sample-obj//Ball_Mesh.med"
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json_03//GenTetBasicMesh.mld", 
+                    "size": [150.0,150.0,150.0], "thk":10.0, "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3": {
+                "Export": {"outfile": ".//Test_results/BallBasicTetNMesh_Lattice.stl"}
+               }
+		          },
+    "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+     }
+
+The keywords :code:`Gen_TetBasicMesh` activates the algorithm. The parameter :code:`"Geomfile"` defines the location of the target meshing geometry, :code:`Meshfile` indicates where the mesh would be stored. Currently it supports Abaqus :code:`inp`, Ansys fluent :code:`msh` and Salome :code:`med` file format. The parameter :code:`"size"` defines the lattice size at current layer as 
+
+.. math::
+
+  num_{nodes} = area / (size[0]*size[1]*0.5)
+
+:code:`num_{nodes}` is the number of nodes at current layer, and they were evenly and randomly distributed over the current layer surface. The value :code:`size[2]`, which is the third element in :code:`size`, defines the layer depth, here 100 mm depth. 
+Above JSON produced a mesh lattice filled ball geometry as shown below. 
+
+.. image:: ./pictures/BallMeshLattice.png
+
+The cross-sectional view below clearly showed the lattices were stacked layer by layer, from exterior surface towards center. 
+
+.. image:: ./pictures/BallMeshLattice_CrossSection.png
+
+Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow.  
 
 

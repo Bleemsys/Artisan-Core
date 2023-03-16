@@ -3,6 +3,6 @@ meshio==5.3.4
 numexpr==2.7.3
 numpy==1.20.1
 open3d==0.16.0
-pyvista==0.33.3
+pyvista==0.37.0
 requests==2.26.0
 scipy==1.7.1

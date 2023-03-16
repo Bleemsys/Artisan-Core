@@ -10,3 +10,8 @@ This is simple change log recording the major and minor updates
 - Add the tetrahedron based conformal lattice generation
 - Add user defined geometric shape lattice for conformal lattice generation
 - Doc updates
+
+0.1.3
+- Integrate the simple mesher for tet element
+- Add field operation for offset material thickness
+- Doc updates

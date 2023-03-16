@@ -1,0 +1,22 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Bar//Bar.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": "BCCubic", "size": [10.0,10.0,10.0], "thk":0.5, "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2":{"OP_OffsetField":{"Max_Offset":1.5,"Min_Offset":0.001,"FieldFile":".//sample-obj//Bar//fielddata.csv", "Fill": true}},
+          "3":{"Export": {"outfile": ".//Test_results/Bar_FieldScale.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Field Operation &#8212; Artisan 0.1.3 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Supports" href="Supports.html" />
+    <link rel="prev" title="Conformal Lattice" href="Conformal.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Artisan 0.1.3 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OtherTools.html">
+   Tools
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="QStart/QStart.html">
+   Basics 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GeomOPT/GeomOPT.html">
+   Basics 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Customization/Customization.html">
+   Customization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Mesh.html">
+   Mesh Lattice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Conformal.html">
+   Conformal Lattice
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Field Operation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Supports.html">
+   Supports
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/OPField.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Field Operation</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="field-operation">
+<h1>Field Operation<a class="headerlink" href="#field-operation" title="Permalink to this headline">#</a></h1>
+<p>Often the engineer/designer would like to design a component that accommodates engineering analysis results, such as finite element stress analysis etc., or try to introduce a thicker material layer at the areas suffered higher system loads. In Artisan, these regionally specified design change is considered as a spatially varying field that is added to the existing design field, or being an input variable affecting the local lattice design.</p>
+<p>Artisan can read external field (i.e. a data cloud in 3D spatial space) as input and perform high nonlinear interpolation on the field, and use the field to modify local material thickness. Here we use a bending steel bar as an example to demonstrate how to incorporate with external field data, for instance, in this case, a von Mises stress results generated from Ansys mechanical software. Assuming one side of long steel bar is fixed, the force is applied downward on the bottom edge of the other side. The deformation and stress distribution is shown as below.</p>
+<img alt="_images/BarStressField.png" src="_images/BarStressField.png" />
+<p>As shown here, the left hand side surface was fully fixed, and the force applied on the right hand side edge. Therefore the higher stress was observed around the fixation, and gradually reduced towards the right hand side. The stress field can be exported as data cloud, including nodal coordinate with X, Y and Z, and the nodal corresponding von Mises stress values. In practice, Artisan reads the <code class="code docutils literal notranslate"><span class="pre">csv</span></code> file that looks like below. CSV files are text files with information separated by commas, saved with the extension .csv. The file has to be separated by commas and Artisan will skip the first row and first colum, but read the data from second row and second colum.</p>
+<img alt="_images/fielddata_demo.PNG" src="_images/fielddata_demo.PNG" />
+<p>In order to incorporate with above data, we could define a lattice fill with field strength on the local material thickness as the JSON below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Bar//Bar.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">],</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span><span class="w"></span>
+<span class="w">               </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BCCubic&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                   </span><span class="p">}</span><span class="w"></span>
+<span class="w">              </span><span class="p">},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span><span class="nt">&quot;OP_OffsetField&quot;</span><span class="p">:{</span><span class="nt">&quot;Max_Offset&quot;</span><span class="p">:</span><span class="mf">1.5</span><span class="p">,</span><span class="nt">&quot;Min_Offset&quot;</span><span class="p">:</span><span class="mf">0.001</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;FieldFile&quot;</span><span class="p">:</span><span class="s2">&quot;.//sample-obj//Bar//fielddata.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Bar_FieldScale.stl&quot;</span><span class="p">}}</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The item <code class="code docutils literal notranslate"><span class="pre">2</span></code> in the <code class="code docutils literal notranslate"><span class="pre">WorkFlow</span></code> shows a new keywords <code class="code docutils literal notranslate"><span class="pre">OP_OffsetField</span></code>. It takes the maximum and minimum values in the field data and perform linear interpolation local material thickness offset corresponding to the field value data. In this case, for example, the maximum offset 1.5 mm (i.e. the keywords <code class="code docutils literal notranslate"><span class="pre">Max_Offset</span></code> defined) will be added to the region where has the maximum stress data, whereas the minimum field value (i.e. the keywords <code class="code docutils literal notranslate"><span class="pre">Min_Offset</span></code> defined) 0.001 mm is applied to the spot with lowest stress value. The offset value which the field values lies between max and min will be interpolated using the <code class="code docutils literal notranslate"><span class="pre">Min_Offset</span></code> and <code class="code docutils literal notranslate"><span class="pre">Max_Offset</span></code>. the results are as shown below. User can find this example <code class="code docutils literal notranslate"><span class="pre">Bar_FieldOffset.txt</span></code> at the Test_json folder.</p>
+<img alt="_images/BarLatticeStressField.png" src="_images/BarLatticeStressField.png" />
+<p>The top and lower lattices where close to the fixation side were thickened in corresponding to the field values.</p>
+<p>The field offset operation certainly can apply to other lattice, such as conformal or mesh lattices. Here we use the steering knuckle as example to demonstrate a simple design work flow to reduce the weight and reinforce the local lattice structure. Please note that, this example is only for demonstrating the application of software functionalities, and has no implication on any products.</p>
+<img alt="_images/SteeringKnuckleIllustration.png" src="_images/SteeringKnuckleIllustration.png" />
+<p>Steering knuckle is a piece of cast iron made component that ideally should be lightweight in order to improve vehicle’s efficiency and handling. Below is comparison between the original component design and mesh lattice filled geometry.</p>
+<img alt="_images/SK_original.png" src="_images/SK_original.png" />
+<img alt="_images/SK_Lattice.png" src="_images/SK_Lattice.png" />
+<p>The steering knuckle has to be verified by a series load cases in order to meet the structural integrity criterion. The stress distribution is therefore generated by applying the boundary conditions which reflects the loads in these scenarios. This stress filed was then exported as a csv file, and later imported as inputs for the design calculation. User may find the full JSON in the file <code class="code docutils literal notranslate"><span class="pre">SteeringKnuckle_Mesh_Infill_LR.txt</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//SteeringKnuckle//SteeringKnuckle.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">           </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1610612736000000</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">     </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//SteeringKnuckle//SteeringKnuckle_Mesh_Infill_LR.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">               </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">},</span><span class="w"></span>
+<span class="w">     </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span><span class="nt">&quot;OP_OffsetField&quot;</span><span class="p">:{</span><span class="nt">&quot;Max_Offset&quot;</span><span class="p">:</span><span class="mf">2.5</span><span class="p">,</span><span class="nt">&quot;Min_Offset&quot;</span><span class="p">:</span><span class="mf">-0.1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;FieldFile&quot;</span><span class="p">:</span><span class="s2">&quot;.//sample-obj//SteeringKnuckle//SteeringKnuckle_vonMisesStress.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}},</span><span class="w"></span>
+<span class="w">     </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/SteeringKnuckle_Mesh_Infill_OPField_3.stl&quot;</span><span class="p">}}</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The mesh lattice definition file <code class="code docutils literal notranslate"><span class="pre">.//Test_json//SteeringKnuckle//SteeringKnuckle_Mesh_Infill_LR.mld</span></code> has a simple setup.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//SteeringKnuckle//SteeringKnuckle.msh&quot;</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The exterior surface has been trimmed by the geometric surface for clean and smooth finish. User may try the un-trimmed design by using <code class="code docutils literal notranslate"><span class="pre">&quot;Fill&quot;:</span> <span class="pre">false</span></code> in the keyword <code class="code docutils literal notranslate"><span class="pre">&quot;OP_OffsetField&quot;</span></code>. The field value file <code class="code docutils literal notranslate"><span class="pre">.//sample-obj//SteeringKnuckle//SteeringKnuckle_vonMisesStress.csv</span></code> stores the sptial data points and the corresponding field value, in this case, the von Miese stress at various nodal points in the FEA mesh. It has to note that, the mesh in the FEA analysis does not have to be same as the lattice mesh. Two meshes has no relationship and can be complete two different mesh.</p>
+<p>The overall comparison is presented below.</p>
+<img alt="_images/SK_Lattice_OP01.png" src="_images/SK_Lattice_OP01.png" />
+<img alt="_images/SK_Stress_OP01.png" src="_images/SK_Stress_OP01.png" />
+<p>Local comparison on the high stress areas showed the locally reinforced and thickened materials on the component.</p>
+<img alt="_images/SK_Lattice_OP02.png" src="_images/SK_Lattice_OP02.png" />
+<img alt="_images/SK_Stress_OP02.png" src="_images/SK_Stress_OP02.png" />
+<p>An comparison from the other side.</p>
+<img alt="_images/SK_Lattice_OP03.png" src="_images/SK_Lattice_OP03.png" />
+<img alt="_images/SK_Stress_OP03.png" src="_images/SK_Stress_OP03.png" />
+<p>Please note that, above examples takes large data set as interpolation inputs and can run over 1 hours time. More data points included in the field data could result longer computational time. The current field operation function can only handle the material thickening operation. We will work on the features and algorithm by extending the function to the lattice size and lattice types.</p>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Conformal.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Conformal Lattice</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Supports.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Supports</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Bleemsys<br/>
+  
+      &copy; Copyright 2023, Bleemsys Ltd.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

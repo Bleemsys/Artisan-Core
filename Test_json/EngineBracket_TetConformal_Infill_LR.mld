@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//sample-obj//EngineBracket.med",
+ "la_name" : "Icosahedral"
+ }
+}

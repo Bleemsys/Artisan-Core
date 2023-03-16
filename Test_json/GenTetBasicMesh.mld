@@ -1,0 +1,6 @@
+{
+"type": "MeshLattice",
+"definition": {
+ "meshfile": ".//sample-obj//Ball_Mesh.med"
+ }
+}

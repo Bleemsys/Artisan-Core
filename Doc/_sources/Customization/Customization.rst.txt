@@ -41,7 +41,7 @@ Defining a strut lattice requires the nodal coordinates, and topological conduct
                 "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
                 "Rot" : [0.0,0.0,0.0],
                 "res":[0.5,0.5,0.5],
-		        "Padding": 1,
+		            "Padding": 1,
                 "onGPU": false,
                 "memorylimit": 16106127360
                 },

@@ -1,0 +1,6 @@
+{
+"type": "MeshLattice",
+"definition": {
+ "meshfile": ".//sample-obj//SteeringKnuckle//SteeringKnuckle.msh"
+ }
+}
