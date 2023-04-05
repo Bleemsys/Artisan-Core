@@ -1,6 +1,5 @@
-===============
 Field Operation
-===============
+***************
 
 Often the engineer/designer would like to design a component that accommodates engineering analysis results, such as finite element stress analysis etc., or try to introduce a thicker material layer at the areas suffered higher system loads. In Artisan, these regionally specified design change is considered as a spatially varying field that is added to the existing design field, or being an input variable affecting the local lattice design.
 
@@ -118,3 +117,5 @@ An comparison from the other side.
 .. image:: ./pictures/SK_Stress_OP03.png
 
 Please note that, above examples takes large data set as interpolation inputs and can run over 1 hours time. More data points included in the field data could result longer computational time. The current field operation function can only handle the material thickening operation. We will work on the features and algorithm by extending the function to the lattice size and lattice types. 
+
+ 

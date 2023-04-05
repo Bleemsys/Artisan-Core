@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//sample-obj//Twisted_Bar//Twisted_Bar.med",
+ "la_name" : "Cubic"
+ }
+}

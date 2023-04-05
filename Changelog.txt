@@ -15,3 +15,9 @@ This is simple change log recording the major and minor updates
 - Integrate the simple mesher for tet element
 - Add field operation for offset material thickness
 - Doc updates
+
+0.1.4
+- Add OP_FieldMerge, lattice merging alogrithm
+- Doc updates
+- Test_json examples re-organized
+

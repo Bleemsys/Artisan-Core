@@ -1,0 +1,20 @@
+2023-04-05 11:08:09,067 [INFO] This is a testing package of Artisan.
+2023-04-05 11:08:09,067 [INFO] Version: 0.1.4
+2023-04-05 11:08:09,067 [INFO] reading Json file: Test_json\FieldOpt\Bar_FieldOffset.txt
+2023-04-05 11:08:09,067 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj//Bar//Bar.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [0.25, 0.25, 0.25], 'Padding': 1, 'onGPU': False, 'memorylimit': 16106127360}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'BCCubic', 'size': [10.0, 10.0, 10.0], 'thk': 0.5, 'Inv': False, 'Fill': True, 'Cube_Request': {}}}, '2': {'OP_OffsetField': {'Max_Offset': 1.5, 'Min_Offset': 0.001, 'FieldFile': './/sample-obj//Bar//fielddata.csv', 'Fill': True}}, '3': {'Export': {'outfile': './/Test_results/Bar_FieldScale.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2023-04-05 11:08:09,067 [INFO] Setup basic fill domain......
+2023-04-05 11:08:09,067 [INFO] Workflow Calculation: 
+2023-04-05 11:08:09,067 [INFO] Number of Domain Partition: 2
+2023-04-05 11:08:09,067 [INFO] Calculating Sub-Domain:1
+2023-04-05 11:08:09,067 [INFO] Building Up GeomDomain......
+2023-04-05 11:08:12,052 [INFO] Calculating Add_Lattice
+2023-04-05 11:08:14,536 [INFO] Calculating OP_OffsetField
+2023-04-05 11:10:06,845 [INFO] Calculating Export
+2023-04-05 11:10:16,815 [INFO] Calculating Sub-Domain:2
+2023-04-05 11:10:16,815 [INFO] Building Up GeomDomain......
+2023-04-05 11:10:18,093 [INFO] Calculating Add_Lattice
+2023-04-05 11:10:19,158 [INFO] Calculating OP_OffsetField
+2023-04-05 11:11:03,943 [INFO] Calculating Export
+2023-04-05 11:11:06,883 [INFO] PostProcessing Meshes......
+2023-04-05 11:11:31,270 [INFO] Process finished, check the results file.
+2023-04-05 11:11:31,270 [INFO] Peak Memory Usage: 1116.0645532608032 MB

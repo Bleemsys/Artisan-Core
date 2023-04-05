@@ -1,7 +1,7 @@
 Introduction
 ************
 
-Here is some essential information of the package. 
+This document aims to provide essential usage information, basic tutorials and examples of Arisan computational engine for generating complex lattice structure.  
 
 ========
 Overview 
@@ -71,6 +71,15 @@ A few python dependency packages are required to be installed before running Art
 
     pip install -r requirements.txt
 
+==================
+All-in-one package
+==================
+
+All-in-one package is available at: 
+
+    https://sourceforge.net/projects/artisan-py39/
+
+No installation is required. The package contains a local embedded python and all required libs that are ready to use. 
 
 ===========
 Basic Usage

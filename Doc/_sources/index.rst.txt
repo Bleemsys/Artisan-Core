@@ -26,6 +26,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Mesh Lattice <Mesh.rst>
    Conformal Lattice <Conformal.rst>
    Field Operation <OPField.rst>
+   Lattice Transition <TransLattice.rst>
    Supports <Supports.rst>
 
 

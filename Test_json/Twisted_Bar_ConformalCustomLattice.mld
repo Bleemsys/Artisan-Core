@@ -1,7 +1,0 @@
-{
-"type": "ConformalLattice",
-"definition": {
- "meshfile": ".//sample-obj//Twisted_Bar//Twisted_Bar.med",
- "la_name" : ".//Test_json//CustomLattice_Geom.txt"
- }
-}
