@@ -1,0 +1,21 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,0.1],[0.0,0.1],[0.0,0.1]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.005,0.005,0.005],
+                "Padding": 3,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1":{"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//Sample_Box_Mesh.mld", "size": [0.05,0.05,0.05], "thk":0.005, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }},
+          "2":{"Export": {"outfile": ".//Test_results/Test_Sample_Strut_Infill.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

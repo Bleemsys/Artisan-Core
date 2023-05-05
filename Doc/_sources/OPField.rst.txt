@@ -25,7 +25,7 @@ In order to incorporate with above data, we could define a lattice fill with fie
                 },
  "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": "BCCubic", "size": [10.0,10.0,10.0], "thk":0.5, 
+                    "la_name": "BCCubic", "size": [10.0,10.0,10.0], "thk":0.5, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "Inv": false, "Fill": true, "Cube_Request": {}
                     }
                },
@@ -70,7 +70,7 @@ The steering knuckle has to be verified by a series load cases in order to meet 
                 },
      "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": ".//Test_json//SteeringKnuckle//SteeringKnuckle_Mesh_Infill_LR.mld", 
+                    "la_name": ".//Test_json//SteeringKnuckle//SteeringKnuckle_Mesh_Infill_LR.mld", "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "size": [8.0,8.0,8.0], "thk":0.5, "Inv": false, "Fill": false, 
                     "Cube_Request": {}
                     }

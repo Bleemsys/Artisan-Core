@@ -8,12 +8,13 @@
                 },
  "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": ".//Test_json//LatticeMerge//Twisted_Bar_Conformal_La01.mld", "size": [200.0,200.0,200.0], "thk":5.0, "Inv": false, "Fill": false, 
+                    "la_name": ".//Test_json//LatticeMerge//Twisted_Bar_Conformal_La01.mld", "size": [200.0,200.0,200.0], "thk":5.0, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
+                    "Inv": false, "Fill": false, 
                     "Cube_Request": {}
                     }
                },
 		  
-		  "2":{"OP_FieldMerge":{ "la_name":".//Test_json//LatticeMerge//Twisted_Bar_Conformal_La02.mld", "size":[200.0,200.0,200.0], "thk":15.0, 
+		  "2":{"OP_FieldMerge":{ "la_name":".//Test_json//LatticeMerge//Twisted_Bar_Conformal_La02.mld", "size":[200.0,200.0,200.0], "thk":15.0, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
                                  "OP_para":{
                                             "InterpType": "Linear",
                                             "pt_01":[300.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 

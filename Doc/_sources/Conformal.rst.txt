@@ -9,8 +9,8 @@ Lattice in hexahedron domain
 
 The conformal lattice here is the mesh based conformal lattice. Artisan requires an user input of mesh, e.g. FEA mesh, to generate the conformal lattice. For using lattice in hexahedron domain, please note that,
 
- - only hexahedron element containing 8 nodes and 6 faces are supported at this stage. 
- - only MED mesh file format is support at this stage. Future development will certainly also consider other mesh format. 
+ - Only the hexahedron element containing 8 nodes and 6 faces are supported at this stage. 
+ - The supported mesh file format includes Salome :code:`.med`, Abaqus :code:`.inp` and Nastran :code:`bdf`. 
 
 User may use Salome software to generate the mesh, and export the mesh as MED file. 
 
@@ -28,14 +28,14 @@ The JSON setup is very similar to the mesh lattice. Example below demonstrates t
                 },
      "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": ".//Test_json//Parts02_Strut_Infill_LR_conformal.mld", "size": [15.0,15.0,15.0], "thk":1.5, "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
+                    "la_name": ".//Test_json//Parts02_Strut_Infill_LR_conformal.mld", "size": [15.0,15.0,15.0], "thk":1.5, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": false, "Cube_Request": {}
                     }
                },
           "2" :{"HS_Interpolate" : {
                     "la_name": ".//Test_json//Parts02_TPMS_Infill_LR_conformal.mld", 
                     "size": [15.0,15.0,15.0], 
-                    "thk": 1.5, "pt":[0.0,0.0,0.0], 
+                    "thk": 1.5, "pt":[0.0,0.0,0.0], "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "n_vec":[-1.0,0.0,0.0], "Fill": false, "Cube_Request": {}
                     }},
           "3":{"Export": {"outfile": ".//Test_results/Parts02_Combined_Infill_02.stl"}}
@@ -96,8 +96,8 @@ We use a sole of shoes to demonstrate how tetrahedron lattice domain infill work
      "WorkFlow":{
                 "1": {"Add_Lattice":{
                     "la_name": ".//Test_json//Shoe_TetConformal_Infill_LR.mld", 
-                    "size": [18.0,18.0,18.0], "thk":1.2, "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
+                    "size": [18.0,18.0,18.0], "thk":1.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": false, "Cube_Request": {}
                     }
                 },
                "2":{
@@ -143,8 +143,8 @@ Above main JSON can be pushed further that makes the model to be ready for produ
      "WorkFlow":{
           "1": {"Add_Lattice":{
                     "la_name": ".//Test_json//Shoe_TetConformal_Infill_LR.mld", 
-                    "size": [18.0,18.0,18.0], "thk":0.8, "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
+                    "size": [18.0,18.0,18.0], "thk":0.8, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": false, "Cube_Request": {}
                     }
                },
           "2":{"Substract_Surf_Plate":{
@@ -193,8 +193,8 @@ The custom geometric shape lattice is also supported. The example below showed t
      "WorkFlow":{
                 "1": {"Add_Lattice":{
                        "la_name": ".//Test_json//Twisted_Bar_ConformalCustomLattice.mld", 
-                       "size": [200.0,200.0,200.0], "thk":3.8, "Inv": false, "Fill": false, 
-                       "Cube_Request": {}
+                       "size": [200.0,200.0,200.0], "thk":3.8, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                       "Inv": false, "Fill": false, "Cube_Request": {}
                        }
                     },
           "3":{"Export": {"outfile": ".//Test_results/Twisted_Bar_ConformalCustomLattice.stl"}}

@@ -8,14 +8,14 @@
                 },
  "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": "Cubic", "size": [10.0,10.0,10.0], "thk":1.5, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "Cubic", "size": [10.0,10.0,10.0], "thk":1.5, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }
                },
           "2" :{"HS_Interpolate" : {
                     "la_name": ".//Test_json//CombinedLattices//Parts02_Mesh_Infill_LR.mld", 
                     "size": [4.0,4.0,4.0], 
-                    "thk": 1.5, "pt":[0.0,0.0,0.0], 
+                    "thk": 1.5, "pt":[0.0,0.0,0.0], "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "n_vec":[-1.0,0.0,0.0], "Fill": false, "Cube_Request": {}
                     }},
           "3":{"Export": {"outfile": ".//Test_results/Parts02_Combined_Infill.stl"}}

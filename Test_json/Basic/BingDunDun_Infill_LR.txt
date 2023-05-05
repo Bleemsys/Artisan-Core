@@ -8,7 +8,7 @@
                 },
  "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": "Cubic", "size": [8.0,8.0,8.0], "thk":1.2, "Inv": false, "Fill": true, 
+                    "la_name": "Cubic", "size": [8.0,8.0,8.0], "thk":1.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], "Inv": false, "Fill": true, 
                     "Cube_Request": {}
                     }
                },

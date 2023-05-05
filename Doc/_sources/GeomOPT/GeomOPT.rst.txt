@@ -22,8 +22,8 @@ The following example JSON setup fills the crank handle geometry with Cubic latt
                 },
      "WorkFlow":{
           "1":{"Add_Lattice":{
-                    "la_name": "Cubic", "size": [3.0,3.0,3.0], "thk":0.35, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "Cubic", "size": [3.0,3.0,3.0], "thk":0.35, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }},
            "2":{"Export": {"outfile": ".//Test_results/crank_handle_infill.ply"}}
            },
@@ -51,8 +51,8 @@ It is often the filled lattice with a layer of external shell. The following dem
                 },
      "WorkFlow":{
           "1":{"Add_Lattice":{
-                    "la_name": "BC", "size": [3.0,3.0,3.0], "thk":0.35, "Inv": false, "Fill": true,
-                    "Cube_Request": {}
+                    "la_name": "BC", "size": [3.0,3.0,3.0], "thk":0.35, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }},
           "2":{"Add_Shell" :{"Geomfile":"", "thk": 1.0}},
           "3":{"Export": {"outfile": ".//Test_results/crank_handle_Shell_infill.stl"}}
@@ -86,12 +86,12 @@ The lattice field is operable. User may add or subtract the lattice fields as ma
                 },
      "WorkFlow":{
            "1":{"Add_Lattice":{
-                    "la_name": "Cubic", "size": [3.0,3.0,3.0], "thk":0.35, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "Cubic", "size": [3.0,3.0,3.0], "thk":0.35, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }},
            "2":{"Add_Lattice":{
-                    "la_name": "BC", "size": [3.0,3.0,3.0], "thk":0.2, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "BC", "size": [3.0,3.0,3.0], "thk":0.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }},
            "3":{"Export": {"outfile": ".//Test_results/crank_handle_infill.ply"}}
            },
@@ -123,8 +123,8 @@ The parameter :code:`Inv` operates the inverse of lattice. When :code:`true`, th
                 },
      "WorkFlow":{
           "1":{"Add_Lattice":{
-                    "la_name": "Cubic", "size": [3.0,3.0,3.0], "thk":0.35, "Inv": true, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "Cubic", "size": [3.0,3.0,3.0], "thk":0.35, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": true, "Fill": true, "Cube_Request": {}
                     }},
            "2":{"Export": {"outfile": ".//Test_results/crank_handle_infill.ply"}}
            },
@@ -158,8 +158,8 @@ The term of "boundary inflation" meant the thickness of the lattice on the closi
                 },
      "WorkFlow":{
            "1":{"Add_Lattice":{
-                    "la_name": "BCCubic", "size": [3.0,3.0,3.0], "thk":0.1, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "BCCubic", "size": [3.0,3.0,3.0], "thk":0.1, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }},
            "2":{"Boundary_Inflation": {"offset":0.4, "scale_range": [0.8,0.01]}},	
            "3":{"Export": {"outfile": ".//Test_results/crank_handle_infill.ply"}}

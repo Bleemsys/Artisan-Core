@@ -20,7 +20,7 @@ For example, we have the following main JSON file which fills a part with tetrah
      "WorkFlow":{
           "1": {"Add_Lattice":{
                     "la_name": ".//Test_json//Parts01_Mesh_Infill_LR.mld", 
-                    "size": [4.0,4.0,4.0], "thk":0.3, 
+                    "size": [4.0,4.0,4.0], "thk":0.3, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "Inv": false, "Fill": false, 
                     "Cube_Request": {}
                     }
@@ -47,20 +47,26 @@ You might notice that the parameter :code:`Padding` became 2, it is different fr
 As stated above, the mesh file points to :code:`.//sample-obj//Parts01//Parts01.med` and type of filling is called :code:`MeshLattice`. Artisan currently supports the following mesh file format:
 
 .. list-table:: 
-   :widths: 30 70
+   :widths: 30 30 40
    :header-rows: 1
 
    * - File extension
-     - Original Software
+     - Original software
+     - Supporting element types
    * - :code:`.med`
      - Salome platform
+     - Beam, Tet, Hex,
    * - :code:`.msh` 
      - Ansys Mesh Export (Fluent Mesh Export Option)
+     - Beam, Tet
    * - :code:`.inp`
      - Abaqus input file
+     - Beam, Tet, Hex
+   * - :code:`bdf`
+     - Nastran
+     - Beam, Tet, Hex
 
-
-The results is shown below. 
+The result is shown below. 
 
 .. image:: ./pictures/MeshLattice.png
 
@@ -80,8 +86,8 @@ User could certainly combine the mesh lattice with other types of lattice, such 
                 },
      "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": "Cubic", "size": [10.0,10.0,10.0], "thk":1.5, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": "Cubic", "size": [10.0,10.0,10.0], "thk":1.5, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }
                },
           "2" :{"HS_Interpolate" : {
@@ -123,8 +129,8 @@ Artisan has an integrated simple tetrahedron elements mesher that automatically 
                },
           "2": {"Add_Lattice":{
                     "la_name": ".//Test_json_03//GenTetBasicMesh.mld", 
-                    "size": [150.0,150.0,150.0], "thk":10.0, "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
+                    "size": [150.0,150.0,150.0], "thk":10.0, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": false, "Cube_Request": {}
                     }
                },
           "3": {

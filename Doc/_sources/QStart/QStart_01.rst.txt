@@ -19,13 +19,13 @@ The JSON setup below builds a cube filled with two distinct lattices, BCCubic an
                 },
      "WorkFlow":{
           "1":{"Add_Lattice":{
-                    "la_name": "BCCubic", "size": [1.0,1.0,1.0], "thk":0.1, "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
+                    "la_name": "BCCubic", "size": [1.0,1.0,1.0], "thk":0.1, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
+                    "Inv": false, "Fill": false, "Cube_Request": {}
                     }},
           "2" :{"HS_Interpolate" : {
                     "la_name": "SchwarzPrimitive", 
                     "size": [1.0,1.0,1.0], 
-                    "thk": 0.05, "pt":[2.0, 0.0, 0.0], 
+                    "thk": 0.05, "pt":[2.0, 0.0, 0.0], "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "n_vec":[1.0, 0.0, 0.0], "Fill": true, "Cube_Request": {}
                     }},
           "3":{"Export": {"outfile": ".//Test_results/Test_Sample_Strut_Infill_2lattices.stl"}}
@@ -58,11 +58,11 @@ The linear varying relationship normally applied to the same lattice topological
                 },
      "WorkFlow":{
           "1":{"Add_Lattice":{
-                    "la_name": "BCCubic", "size": [1.0,1.0,1.0], "thk":0.1, "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
+                    "la_name": "BCCubic", "size": [1.0,1.0,1.0], "thk":0.1, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
+                    "Inv": false, "Fill": false, "Cube_Request": {}
                     }},
           "2":{"Lin_Interpolate" : {
-                    "la_name": "BCCubic", "size": [1.0,1.0,1.0], "thk": 0.3, 
+                    "la_name": "BCCubic", "size": [1.0,1.0,1.0], "thk": 0.3, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "pt_01":[0.0,0.0,0.0], "n_vec_01":[0.0,0.0,1.0], 
                     "pt_02":[0.0,0.0,4.0], "n_vec_02":[0.0,0.0,-1.0], 
                     "Inv": false, "Fill": true, 
@@ -97,11 +97,11 @@ There is a trick that the size can be varying as well, as long as the interface 
           "1":{"Add_Lattice":{
                     "la_name": "BCCubic", 
                     "size": [1.0,1.0,1.0], "thk":0.1, 
-                    "Inv": false, "Fill": false, 
+                    "Inv": false, "Fill": false, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "Cube_Request": {}
                     }},
           "2":{"Lin_Interpolate" : {
-                    "la_name": "BCCubic", "size": [1.0,1.0,2.0], "thk": 0.2, 
+                    "la_name": "BCCubic", "size": [1.0,1.0,2.0], "thk": 0.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
                     "pt_01":[0.0,0.0,0.0], "n_vec_01":[0.0,0.0,1.0], 
                     "pt_02":[0.0,0.0,8.0], "n_vec_02":[0.0,0.0,-1.0], 
                     "Inv": false, "Fill": true, 

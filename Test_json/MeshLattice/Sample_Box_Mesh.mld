@@ -1,0 +1,7 @@
+{
+"type": "MeshLattice",
+"definition": {
+ "meshfile": ".//Test_json//MeshLattice//Sample_Box_Mesh.inp",
+ "la_name" : ""
+ }
+}

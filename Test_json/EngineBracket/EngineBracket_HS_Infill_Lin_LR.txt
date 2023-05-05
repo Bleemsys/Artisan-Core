@@ -9,12 +9,12 @@
  "WorkFlow":{
           "1": {
           "Add_Lattice":{
-                    "la_name": "SchwarzDiamond", "size": [8.0,8.0,8.0], "thk":0.2, "Inv": false, "Fill": false, 
+                    "la_name": "SchwarzDiamond", "size": [8.0,8.0,8.0], "thk":0.2, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
                     "Cube_Request": {}
                     }},
           "2": {
           "Lin_Interpolate" : {
-                    "la_name": "SchwarzDiamond", "size": [8.0,8.0,8.0], "thk": 1.4, 
+                    "la_name": "SchwarzDiamond", "size": [8.0,8.0,8.0], "thk": 1.4, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
                     "pt_01":[90.0,0.0,0.0], "n_vec_01":[-1.0,0.0,0.0], 
                     "pt_02":[45.0,0.0,0.0], "n_vec_02":[1.0,0.0,0.0], 
                     "Inv": false, "Fill": false, 
@@ -22,7 +22,7 @@
                     }},
           "3": {
           "Lin_Interpolate" : {
-                    "la_name": "SchwarzDiamond", "size": [8.0,8.0,8.0], "thk": 0.35, 
+                    "la_name": "SchwarzDiamond", "size": [8.0,8.0,8.0], "thk": 0.35, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
                     "pt_01":[0.0,0.0,50.0], "n_vec_01":[0.0,0.0,-1.0], 
                     "pt_02":[0.0,0.0,20.0], "n_vec_02":[0.0,0.0,1.0], 
                     "Inv": false, "Fill": false, 
@@ -31,12 +31,12 @@
           "4" :{"HS_Interpolate" : {
                     "la_name": "Cubic", 
                     "size": [5.0,5.0,5.0], 
-                    "thk": 0.5, "pt":[90.0,30.0,50.0], 
+                    "thk": 0.5, "pt":[90.0,30.0,50.0], "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
                     "n_vec":[-1.0,-1.0,0.0], "Fill": false, "Cube_Request": {}
                     }},
           "5":{
           "Add_Attractor": {
-                    "la_name": "Cubic", "size": [5.0,5.0,5.0], "thk": 1.8, 
+                    "la_name": "Cubic", "size": [5.0,5.0,5.0], "thk": 1.8, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
                     "pt":[120.0,20.0,50.0], "r":45.0, "Inv": false, "Fill": true, 
                     "Cube_Request": {}
                     }},

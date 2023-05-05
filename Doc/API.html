@@ -1,0 +1,836 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>API Interface &#8212; Artisan 0.1.5 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Supports" href="Supports.html" />
+    <link rel="prev" title="Lattice Transition" href="TransLattice.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Artisan 0.1.5 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OtherTools.html">
+   Tools
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="QStart/QStart.html">
+   Basics 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GeomOPT/GeomOPT.html">
+   Basics 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Customization/Customization.html">
+   Customization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Mesh.html">
+   Mesh Lattice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Conformal.html">
+   Conformal Lattice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OPField.html">
+   Field Operation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TransLattice.html">
+   Lattice Transition
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   API Interface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Supports.html">
+   Supports
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/API.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-api">
+   Python API
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-api">
+   C++ API
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>API Interface</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#python-api">
+   Python API
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-api">
+   C++ API
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="api-interface">
+<h1>API Interface<a class="headerlink" href="#api-interface" title="Permalink to this headline">#</a></h1>
+<p>Users have the flexibility to interact with Artisan using either Python or C++ through its API interface. This interface allows Artisan to be integrated as a computational engine backend or component for various application development needs. The Artisan API is designed to be compatible with keywords for simplicity and consistency. Users can access its functionalities through keyword-based inputs and retrieve the geometry (e.g., vertices and faces) at any design stage. The examples in this section can be found under the <code class="code docutils literal notranslate"><span class="pre">Interface</span></code> folder.</p>
+<section id="python-api">
+<h2>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">#</a></h2>
+<p>Artisan has the native Python APIs. User may import the ArtisanMain and call the functions as with other python modulus. In general API interface provides three simple ways to access the Artisan computational power, <code class="code docutils literal notranslate"><span class="pre">Execution</span></code>, <code class="code docutils literal notranslate"><span class="pre">Run</span></code> and <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code>. Former two functions allows user direct inputs the entire JSON string through a string or a file, whereas the latter enable user to manipulate the lattice design step by step and extract the geometry at any design stage.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Run</span></code> function reads the specified JSON file, imports the data, and performs the defined calculations. One needs to note that, the working directory is no longer the directory of <code class="code docutils literal notranslate"><span class="pre">ArtisanMain.py</span></code> and Artisan package. The application script working directory should be considered as the current directory, therefore the working path related definition in the input JSON file should be updated as well.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add the ArtisanMain.py path into your system path</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span> <span class="nn">pathlib</span>
+<span class="n">ArtisanRoot</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;..//Artsian_PY39//&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ArtisanRoot</span><span class="p">)</span>
+<span class="c1"># Simply import ArtisanModel. It is a function returns the API class</span>
+<span class="kn">from</span> <span class="nn">ArtisanMain</span> <span class="kn">import</span> <span class="n">Run</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">ArtisanRoot</span> <span class="o">/</span> <span class="s2">&quot;Test_json//EngineBracket_HS_Infill_Lin_LR.txt&quot;</span>
+<span class="n">Run</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Execution</span></code> function takes the input JSON string to perform the calculation. Additional file name are required in order to save log output information.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add the ArtisanMain.py path into your system path</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span><span class="o">,</span> <span class="nn">pathlib</span>
+<span class="n">ArtisanRoot</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;..//Artsian_PY39//&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ArtisanRoot</span><span class="p">)</span>
+<span class="c1"># Simply import ArtisanModel. It is a function returns the API class</span>
+<span class="kn">from</span> <span class="nn">ArtisanMain</span> <span class="kn">import</span> <span class="n">Execution</span>
+
+<span class="n">logfilename</span> <span class="o">=</span> <span class="n">ArtisanRoot</span> <span class="o">/</span> <span class="s2">&quot;Test_json//Test_log.txt&quot;</span>
+
+<span class="n">cmd_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Setup&quot;</span><span class="p">:{</span>      <span class="s2">&quot;Type&quot;</span> <span class="p">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Geomfile&quot;</span><span class="p">:</span> <span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Rot&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+            <span class="s2">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.75</span><span class="p">],</span>
+                      <span class="s2">&quot;Padding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;onGPU&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;memorylimit&quot;</span><span class="p">:</span> <span class="mi">16106127360</span>
+            <span class="p">},</span>
+       <span class="s2">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+             <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+                 <span class="s2">&quot;la_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Cubic&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">],</span> <span class="s2">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span> <span class="s2">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s2">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                 <span class="s2">&quot;Inv&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Fill&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Cube_Request&quot;</span><span class="p">:</span> <span class="p">{}</span>
+                <span class="p">}</span>
+                  <span class="p">},</span>
+            <span class="s2">&quot;2&quot;</span><span class="p">:{</span><span class="s2">&quot;Export&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="s2">&quot;.//Test_results/BingDunDun_Infill.stl&quot;</span><span class="p">}}</span>
+       <span class="p">},</span>
+<span class="s2">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="s2">&quot;CombineMeshes&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;ExportLazPts&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Execution</span><span class="p">(</span><span class="n">cmd_dict</span><span class="p">,</span> <span class="n">logfilename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Manipulating the design process through <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code> is as easy as writing the JSON string. The working flow keywords are feed sequentially through <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code> function, as demonstrated below. The order of the keywords are important as they build the lattice step by step.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add the ArtisanMain.py path into your system path</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..//Artsian_PY39//&quot;</span><span class="p">)</span>
+<span class="c1"># Simply import ArtisanModel. It is a function returns the API class</span>
+<span class="kn">from</span> <span class="nn">ArtisanMain</span> <span class="kn">import</span> <span class="n">ArtisanModel</span>
+
+<span class="c1"># Call ArtisanModel to buildup the API class</span>
+<span class="n">Model</span> <span class="o">=</span> <span class="n">ArtisanModel</span><span class="p">()</span>
+
+<span class="c1"># Setup section in dict structure</span>
+<span class="n">cmd_setup</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Type&quot;</span> <span class="p">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Geomfile&quot;</span><span class="p">:</span> <span class="s2">&quot;..//..//Src//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Rot&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+            <span class="s2">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.75</span><span class="p">],</span>
+                      <span class="s2">&quot;Padding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;onGPU&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;memorylimit&quot;</span><span class="p">:</span> <span class="mi">16106127360</span>
+        <span class="p">}</span>
+<span class="c1"># Push to the Setup method, and it setup the model building required infrastructure,</span>
+<span class="c1"># it also calculates all fields for geometry.</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">Setup</span><span class="p">(</span><span class="n">cmd_setup</span><span class="p">)</span>
+<span class="c1"># A simple add lattice commands. The model always starts from Add_Lattice</span>
+<span class="n">cmd_workitem</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+                <span class="s2">&quot;la_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Cubic&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">],</span> <span class="s2">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span> <span class="s2">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s2">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                <span class="s2">&quot;Inv&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Fill&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Cube_Request&quot;</span><span class="p">:</span> <span class="p">{}</span>
+                <span class="p">}</span>
+           <span class="p">}</span>
+<span class="c1"># Call the workitem method to calculates the defined workitem above.</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">WorkItem</span><span class="p">(</span><span class="n">cmd_workitem</span><span class="p">)</span>
+
+<span class="c1"># A repeat call of workitem to save the geometry in a stl file.</span>
+<span class="n">cmd_workitem</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Export&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="s2">&quot;..//..//Src//Test_results/BingDunDun_Infill.stl&quot;</span><span class="p">}}</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">WorkItem</span><span class="p">(</span><span class="n">cmd_workitem</span><span class="p">)</span>
+
+<span class="c1"># alternatively, user may extract the surfaces, including the vertices and triangulations.</span>
+<span class="n">verts</span><span class="p">,</span> <span class="n">faces</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">ExtractSurf</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="c-api">
+<h2>C++ API<a class="headerlink" href="#c-api" title="Permalink to this headline">#</a></h2>
+<p>The interaction between C++ and Artisan is just as straightforward as with Python. C++ applications can integrate the Artisan module through the embedded Python style. Users can refer to official documentation on the following topics:</p>
+<blockquote>
+<div><p>Embedding Python in Another Application: <a class="reference external" href="https://docs.python.org/3.9/extending/embedding.html">https://docs.python.org/3.9/extending/embedding.html</a></p>
+<p>Using NumPy C-API: <a class="reference external" href="https://numpy.org/doc/stable/user/c-info.html">https://numpy.org/doc/stable/user/c-info.html</a></p>
+<p>Extending Python with C or C++: <a class="reference external" href="https://docs.python.org/3.9/extending/extending.html">https://docs.python.org/3.9/extending/extending.html</a></p>
+</div></blockquote>
+<p>User may also consider use the well-known third party package to further enhance the interaction between python and C++, such as pybind11 (<a class="reference external" href="https://pybind11.readthedocs.io/en/stable/advanced/embedding.html">https://pybind11.readthedocs.io/en/stable/advanced/embedding.html</a>). This section will not cover this part, and will take official python interface as the coding base since it’s simply straightforward.</p>
+<p>To compile successfully, users are required to link to the Python libraries. Since Artisan relies on NumPy array-based data operations, compilation requires NumPy library support. The cmake code below shows a simple way of integrating both libs for compilation.</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.0.0</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">CheckArtisan</span><span class="w"> </span><span class="s">VERSION</span><span class="w"> </span><span class="s">0.1.0</span><span class="p">)</span>
+
+<span class="nb">include</span><span class="p">(</span><span class="s">CTest</span><span class="p">)</span>
+<span class="nb">enable_testing</span><span class="p">()</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">Artisan</span><span class="w"> </span><span class="s">./src/Artisan_Example_01.cpp</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">CPACK_PROJECT_NAME</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">CPACK_PROJECT_VERSION</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_VERSION</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">include</span><span class="p">(</span><span class="s">CPack</span><span class="p">)</span>
+
+<span class="c"># find_package(PythonLibs REQUIRED)</span>
+<span class="nb">include_directories</span><span class="p">(</span><span class="s">C:/ProgramData/Anaconda3/include</span><span class="p">)</span><span class="w"> </span><span class="c"># Python include folder</span>
+<span class="nb">include_directories</span><span class="p">(</span><span class="s">C:/ProgramData/Anaconda3/libs</span><span class="p">)</span><span class="w"> </span><span class="c"># Python link lib</span>
+<span class="nb">include_directories</span><span class="p">(</span><span class="s">C:/ProgramData/Anaconda3/Lib/site-packages/numpy/core/include</span><span class="p">)</span><span class="w"> </span><span class="c"># Numpy include folder</span>
+<span class="nb">target_include_directories</span><span class="p">(</span><span class="s">Artisan</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">C:/ProgramData/Anaconda3/include</span><span class="p">)</span>
+<span class="nb">target_link_directories</span><span class="p">(</span><span class="s">Artisan</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">C:/ProgramData/Anaconda3/libs</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">Artisan</span><span class="w"> </span><span class="s">PUBLIC</span><span class="w"> </span><span class="s">C:/ProgramData/Anaconda3/libs/python39.lib</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Similar to the usage in Python, Artisan offers three different styles of API interfaces. Users can launch the design computation directly by reading the JSON file or through a JSON stream. To do so, they can call the <code class="code docutils literal notranslate"><span class="pre">Run</span></code> function and pass in the JSON filename as input to launch the computation. Alternatively, users can push a string data that contains the JSON structure to the <code class="code docutils literal notranslate"><span class="pre">Execution</span></code> function to initiate the computation. And user may manipulate the design process through <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code> function.</p>
+<p>The sample code below demonstrates the basic usage of <code class="code docutils literal notranslate"><span class="pre">Run</span></code> function. The code loads the modulus using <code class="code docutils literal notranslate"><span class="pre">PyImport_Import</span></code> function, and execute the function using <code class="code docutils literal notranslate"><span class="pre">PyObject_CallObject</span></code>. Note that the function returns <code class="code docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Python.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;conio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// References:</span>
+<span class="w">    </span><span class="c1">// Embedding Python in Another Application</span>
+<span class="w">    </span><span class="c1">// https://docs.python.org/3.9/extending/embedding.html</span>
+
+<span class="w">    </span><span class="c1">// The code below demonstrates how to call the &quot;Run&quot; function which takes one argument - filename</span>
+<span class="w">    </span><span class="c1">// It reads the file containing the json, and then execute the file and construct the model.</span>
+<span class="w">    </span><span class="c1">// commands: Artisan.exe &lt;-- the json file path here --&gt;</span>
+<span class="w">    </span><span class="c1">// Examples: Artisan.exe .//Test_json//crank_handle_infill.txt</span>
+<span class="w">    </span><span class="c1">// Note this is only an example since we take the first argument after Artisan.exe as input.</span>
+
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">pName</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pModule</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pDict</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pFunc</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pValue</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Initialize the Python Interpreter</span>
+<span class="w">    </span><span class="n">Py_Initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Imports ArtisanMain.py</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">filename</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ArtisanMain&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">pName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Load the module object</span>
+<span class="w">    </span><span class="n">pModule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyImport_Import</span><span class="p">(</span><span class="n">pName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Check whether the module was loaded.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pModule</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Modulue loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: Modulue loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Access to the function &quot;Run&quot; in &quot;ArtisanMain.py&quot;.</span>
+<span class="w">    </span><span class="c1">// Run(filename)</span>
+<span class="w">    </span><span class="c1">// This function will read the &quot;filename&quot; - a JSON file and execute the file.</span>
+<span class="w">    </span><span class="n">pFunc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">pModule</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Run&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pFunc</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">PyCallable_Check</span><span class="p">(</span><span class="n">pFunc</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Define the function parameter values, as a python tuple</span>
+<span class="w">    </span><span class="n">pArgs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyTuple_New</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// we have one parameter here, the JSON file name.</span>
+<span class="w">    </span><span class="n">PyTuple_SetItem</span><span class="p">(</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Call function</span>
+<span class="w">    </span><span class="n">pValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">pFunc</span><span class="p">,</span><span class="w"> </span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Clean up</span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pModule</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pFunc</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Finish the python interpreter</span>
+<span class="w">    </span><span class="n">Py_Finalize</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>User may choose passing the c-style JSON string to Artisan, rather than read from external files. The code below demonstrate how to interact with the <code class="code docutils literal notranslate"><span class="pre">Execution</span></code> function in <code class="code docutils literal notranslate"><span class="pre">ArtisanMain</span></code>. This function requires additional argument that indicates the file name for log output.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Python.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;conio.h&gt;</span><span class="cp"></span>
+
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// This demo shows how to pass a c-style string with JSON to the execution function</span>
+<span class="w">    </span><span class="c1">// User are required to give a logfile name as well.</span>
+
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">pName</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pModule</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pDict</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pFunc</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pValue</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">TestString</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;{</span><span class="se">\&quot;</span><span class="s">Setup</span><span class="se">\&quot;</span><span class="s">: {</span><span class="se">\&quot;</span><span class="s">Type</span><span class="se">\&quot;</span><span class="s">: </span><span class="se">\&quot;</span><span class="s">Geometry</span><span class="se">\&quot;</span><span class="s">,                                \</span>
+<span class="s">                                      </span><span class="se">\&quot;</span><span class="s">Geomfile</span><span class="se">\&quot;</span><span class="s">: </span><span class="se">\&quot;</span><span class="s">.//sample-obj//shell_1_of_bdd_.stl</span><span class="se">\&quot;</span><span class="s">,  \</span>
+<span class="s">                                                                      </span><span class="se">\&quot;</span><span class="s">Rot</span><span class="se">\&quot;</span><span class="s">: [0.0, 0.0, 0.0],                              \</span>
+<span class="s">                                                                      </span><span class="se">\&quot;</span><span class="s">res</span><span class="se">\&quot;</span><span class="s">: [0.75, 0.75, 0.75],                           \</span>
+<span class="s">                                                                      </span><span class="se">\&quot;</span><span class="s">Padding</span><span class="se">\&quot;</span><span class="s">: 1, </span><span class="se">\&quot;</span><span class="s">onGPU</span><span class="se">\&quot;</span><span class="s">: false,                      \</span>
+<span class="s">                                                                      </span><span class="se">\&quot;</span><span class="s">memorylimit</span><span class="se">\&quot;</span><span class="s">: 16106127360                           \</span>
+<span class="s">                                                                      },                                                     \</span>
+<span class="s">                                             </span><span class="se">\&quot;</span><span class="s">WorkFlow</span><span class="se">\&quot;</span><span class="s">: {                                                     \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">1</span><span class="se">\&quot;</span><span class="s">: {                                                         \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">Add_Lattice</span><span class="se">\&quot;</span><span class="s">: {</span><span class="se">\&quot;</span><span class="s">la_name</span><span class="se">\&quot;</span><span class="s">: </span><span class="se">\&quot;</span><span class="s">Cubic</span><span class="se">\&quot;</span><span class="s">,                        \</span>
+<span class="s">                                                                      </span><span class="se">\&quot;</span><span class="s">size</span><span class="se">\&quot;</span><span class="s">: [8.0, 8.0, 8.0],                     \</span>
+<span class="s">                                                                                      </span><span class="se">\&quot;</span><span class="s">thk</span><span class="se">\&quot;</span><span class="s">: 1.2,                                  \</span>
+<span class="s">                                          </span><span class="se">\&quot;</span><span class="s">Rot</span><span class="se">\&quot;</span><span class="s">:[0.0, 0.0, 0.0],                       \</span>
+<span class="s">                                          </span><span class="se">\&quot;</span><span class="s">Trans</span><span class="se">\&quot;</span><span class="s">:[0.0, 0.0, 0.0],                     \</span>
+<span class="s">                                                                                      </span><span class="se">\&quot;</span><span class="s">Inv</span><span class="se">\&quot;</span><span class="s">: false,                                \</span>
+<span class="s">                                                                                      </span><span class="se">\&quot;</span><span class="s">Fill</span><span class="se">\&quot;</span><span class="s">: true,                                \</span>
+<span class="s">                                                                                      </span><span class="se">\&quot;</span><span class="s">Cube_Request</span><span class="se">\&quot;</span><span class="s">: {}}},                        \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">2</span><span class="se">\&quot;</span><span class="s">: {                                                         \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">Export</span><span class="se">\&quot;</span><span class="s">: {</span><span class="se">\&quot;</span><span class="s">outfile</span><span class="se">\&quot;</span><span class="s">: </span><span class="se">\&quot;</span><span class="s">.//Test_results/BingDunDun_Infill.stl</span><span class="se">\&quot;</span><span class="s">}}}, \</span>
+<span class="s">                                            </span><span class="se">\&quot;</span><span class="s">PostProcess</span><span class="se">\&quot;</span><span class="s">: {                                                   \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">CombineMeshes</span><span class="se">\&quot;</span><span class="s">: true,                                         \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">RemovePartitionMeshFile</span><span class="se">\&quot;</span><span class="s">: false,                              \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">RemoveIsolatedParts</span><span class="se">\&quot;</span><span class="s">: true,                                   \</span>
+<span class="s">                                                    </span><span class="se">\&quot;</span><span class="s">ExportLazPts</span><span class="se">\&quot;</span><span class="s">: false}}&quot;</span><span class="w"> </span><span class="p">;</span><span class="w">                                      </span>\
+
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">filename</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ArtisanMain&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">logfile</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Testlogfile.log&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// logfile file name</span>
+<span class="w">    </span><span class="n">Py_Initialize</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">pName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Load the module object</span>
+<span class="w">    </span><span class="n">pModule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyImport_Import</span><span class="p">(</span><span class="n">pName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Check whether the module was loaded.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pModule</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Modulue loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: Modulue loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Access to the function &quot;Run&quot; in &quot;ArtisanMain.py&quot;.</span>
+<span class="w">    </span><span class="c1">// Run(filename)</span>
+<span class="w">    </span><span class="c1">// This function will read the &quot;filename&quot; - a JSON file and execute the file.</span>
+<span class="w">    </span><span class="n">pFunc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">pModule</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Execution&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pFunc</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">PyCallable_Check</span><span class="p">(</span><span class="n">pFunc</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Define the function parameter values, as a python tuple</span>
+<span class="w">    </span><span class="n">pArgs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyTuple_New</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// we have two parameter here, one json like string, and logfile filename.</span>
+<span class="w">    </span><span class="n">PyTuple_SetItem</span><span class="p">(</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">TestString</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">PyTuple_SetItem</span><span class="p">(</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">logfile</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Call function</span>
+<span class="w">    </span><span class="n">pValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">pFunc</span><span class="p">,</span><span class="w"> </span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Clean up</span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pModule</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pFunc</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Finish the python interpreter</span>
+<span class="w">    </span><span class="n">Py_Finalize</span><span class="p">();</span><span class="w"></span>
+
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Users can use the <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code> method of the API object to perform various design and export operations on the lattice field. By passing the appropriate workflow keywords as inputs to <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code>, users can apply specific operations to manipulate the lattice field. Once the workflow has been completed, users can extract the resultant geometry using the <code class="code docutils literal notranslate"><span class="pre">ExtractSurf</span></code> method. This provides flexibility to users in terms of defining their own customized workflows for specific applications and use cases. The extracted geometry can be further processed or exported as per the user’s requirement. The example below showed the usage of these methods.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Python.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;numpy/arrayobject.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="c1">// This example demonstrates how to access Artisan APIs through Setup, WorkItem and ExtractSurf</span>
+<span class="c1">// Note that the codes is the embedded python interpreter into the application.</span>
+
+<span class="w">    </span><span class="c1">// Coding References:</span>
+<span class="c1">// Extending Python with C or C++</span>
+<span class="c1">// https://docs.python.org/3.9/extending/extending.html</span>
+<span class="w">    </span><span class="c1">// Embedding Python in Another Application</span>
+<span class="w">    </span><span class="c1">// https://docs.python.org/3.9/extending/embedding.html</span>
+<span class="c1">// Using NumPy C-API</span>
+<span class="w">    </span><span class="c1">// https://numpy.org/doc/stable/user/c-info.html</span>
+
+<span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">pName</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pModule</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pDict</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pFunc</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">pValue</span><span class="p">;</span><span class="w"></span>
+<span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">ArtisanModel</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">AM_Setup</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">AM_WorkItem</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">AM_ExtractSurf</span><span class="p">;</span><span class="w"></span>
+<span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">pFunc_ArgsVal</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">filename</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ArtisanMain&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">Py_Initialize</span><span class="p">();</span><span class="w"></span>
+<span class="n">pName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Load the module object</span>
+<span class="n">pModule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyImport_Import</span><span class="p">(</span><span class="n">pName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Check whether the module was loaded.</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pModule</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Artian Modulue loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: Artisan Modulue loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Access to the function &quot;ArtisanModel&quot; in &quot;ArtisanMain.py&quot;.</span>
+<span class="w">    </span><span class="c1">// ArtisanModel() has to be called to return the API object.</span>
+<span class="n">ArtisanModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">pModule</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ArtisanModel&quot;</span><span class="p">),</span><span class="w"></span>
+<span class="w">                                   </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;()&quot;</span><span class="p">));</span><span class="w"></span>
+
+<span class="c1">// Check whether the API object loaded or not</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ArtisanModel</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;API object loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: API object loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Access the setup method</span>
+<span class="n">AM_Setup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">ArtisanModel</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Setup&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyCallable_Check</span><span class="p">(</span><span class="n">AM_Setup</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;AM_Setup Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: AM_Setup Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Build up the input Dict data object for setup.</span>
+<span class="n">pFunc_ArgsVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;{s:s, s:s, s:O, s:O, s:i, s:O, s:l}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Geomfile&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Rot&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;[d, d, d]&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;res&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;[d, d, d]&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">),</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Padding&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;onGPU&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_False</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;memorylimit&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">16106127360</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Define the function parameter values, as a python tuple</span>
+<span class="w">    </span><span class="n">pArgs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyTuple_New</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// we have one parameter here - a Dict data object.</span>
+<span class="w">    </span><span class="n">PyTuple_SetItem</span><span class="p">(</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">pFunc_ArgsVal</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Call Setup method</span>
+<span class="w">    </span><span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">AM_Setup</span><span class="p">,</span><span class="w"> </span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="c1">// Build up the input Dict data object of the 1st WorkItem.</span>
+<span class="c1">// Add a Cubic Lattice</span>
+<span class="n">pFunc_ArgsVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;{s:s, s:O, s:d, s:O, s:O, s:O, s:O, s:O}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;la_name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Cubic&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;size&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;[d, d, d]&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">),</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;thk&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Rot&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;[d, d, d]&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Trans&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;[d, d, d]&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Inv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_False</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Fill&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_True</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="s">&quot;Cube_Request&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">));</span><span class="w"></span>
+
+<span class="n">pArgs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyTuple_New</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// we have one parameter here - a Dict data object.</span>
+<span class="w">    </span><span class="n">PyTuple_SetItem</span><span class="p">(</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;{s:O}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Add_Lattice&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pFunc_ArgsVal</span><span class="p">));</span><span class="w"></span>
+
+<span class="c1">// Get the WorkItem function</span>
+<span class="n">AM_WorkItem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">ArtisanModel</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;WorkItem&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">PyCallable_Check</span><span class="p">(</span><span class="n">AM_WorkItem</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;AM_WorkItem Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Fail: AM_WorkItem Function loaded </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="c1">// Call WorkItem - Add_Lattice</span>
+<span class="w">    </span><span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">AM_WorkItem</span><span class="p">,</span><span class="w"> </span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Build up the input Dict data object of the 2nd WorkItem.</span>
+<span class="c1">// Export the surfaces, save them as stl file.</span>
+<span class="n">pFunc_ArgsVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;{s:O}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Export&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;{s:s}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="s">&quot;outfile&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;.//Test_results/BingDunDun_Infill.stl&quot;</span><span class="p">));</span><span class="w"></span>
+
+<span class="n">PyTuple_SetItem</span><span class="p">(</span><span class="n">pArgs</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">pFunc_ArgsVal</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// Call WorkItem - Export</span>
+<span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">AM_WorkItem</span><span class="p">,</span><span class="w"> </span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="c1">// Alternatively we could get the vertices and faces here</span>
+<span class="n">AM_ExtractSurf</span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">ArtisanModel</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ExtractSurf&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// Call ExtractSurf method to extract the surfaces of the current design.</span>
+<span class="n">PyObject</span><span class="o">*</span><span class="w"> </span><span class="n">pGeoms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">AM_ExtractSurf</span><span class="p">,</span><span class="w"> </span><span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">&quot;()&quot;</span><span class="p">));</span><span class="w"></span>
+
+<span class="c1">// Extract the returned numpy arrays</span>
+<span class="c1">// Vertices</span>
+<span class="n">PyArrayObject</span><span class="o">*</span><span class="w"> </span><span class="n">verts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">PyArrayObject</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">PyTuple_GetItem</span><span class="p">(</span><span class="n">pGeoms</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w"></span>
+<span class="c1">// Surfaces</span>
+<span class="n">PyArrayObject</span><span class="o">*</span><span class="w"> </span><span class="n">faces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">reinterpret_cast</span><span class="o">&lt;</span><span class="n">PyArrayObject</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">PyTuple_GetItem</span><span class="p">(</span><span class="n">pGeoms</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
+
+<span class="c1">// Convert the numpy arrays to C++ arrays</span>
+<span class="c1">// This is a critical step that the data types have to match python returned values.</span>
+<span class="c1">// Vertices, float numbers.</span>
+<span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">verts_c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">PyArray_DATA</span><span class="p">(</span><span class="n">verts</span><span class="p">));</span><span class="w"></span>
+<span class="c1">// Faces, unsigned int32</span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">faces_c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">PyArray_DATA</span><span class="p">(</span><span class="n">faces</span><span class="p">));</span><span class="w"></span>
+
+
+<span class="c1">// Get the shape of arrays</span>
+<span class="n">npy_intp</span><span class="o">*</span><span class="w"> </span><span class="n">verts_shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyArray_SHAPE</span><span class="p">(</span><span class="n">verts</span><span class="p">);</span><span class="w"></span>
+<span class="n">npy_intp</span><span class="o">*</span><span class="w"> </span><span class="n">faces_shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyArray_SHAPE</span><span class="p">(</span><span class="n">faces</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Vertices Matrix Shape:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Number of the vertices</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Coordinate dimension, i.e. 3, in 3D space</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Faces Matrix Shape:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Number of the faces</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// Each face contains three vertices</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Print out the last vertices coordinate</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Coordinate of the last vertices:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">verts_c</span><span class="p">[(</span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">verts_c</span><span class="p">[(</span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">verts_c</span><span class="p">[(</span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">verts_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="c1">// Print out the last surfaces vertices index</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Vertices index of the last surface:&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">faces_c</span><span class="p">[(</span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">faces_c</span><span class="p">[(</span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">faces_c</span><span class="p">[(</span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">faces_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Print the data in the numpy arrays</span>
+<span class="c1">// for (npy_intp i = 0; i &lt; verts_shape[0]; i++) {</span>
+<span class="c1">//     for (npy_intp j = 0; j &lt; verts_shape[1]; j++) {</span>
+<span class="c1">//         std::cout &lt;&lt; verts_c[i * verts_shape[1] + j] &lt;&lt; &quot; &quot;;</span>
+<span class="c1">//     }</span>
+<span class="c1">//     std::cout &lt;&lt; std::endl;</span>
+<span class="c1">// }</span>
+
+<span class="c1">// for (npy_intp i = 0; i &lt; faces_shape[0]; i++) {</span>
+<span class="c1">//     for (npy_intp j = 0; j &lt; faces_shape[1]; j++) {</span>
+<span class="c1">//         std::cout &lt;&lt; faces_c[i * faces_shape[1] + j] &lt;&lt; &quot; &quot;;</span>
+<span class="c1">//     }</span>
+<span class="c1">//     std::cout &lt;&lt; std::endl;</span>
+<span class="c1">// }</span>
+
+<span class="c1">// Use below to print out the error message (if any).</span>
+<span class="n">PyErr_Print</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Clean up</span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pModule</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pFunc</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pName</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pArgs</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pGeoms</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pFunc_ArgsVal</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">ArtisanModel</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">AM_Setup</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">AM_WorkItem</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">AM_ExtractSurf</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">verts</span><span class="p">);</span><span class="w"></span>
+<span class="n">Py_DECREF</span><span class="p">(</span><span class="n">faces</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Finish the python interpreter</span>
+<span class="w">    </span><span class="n">Py_Finalize</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="TransLattice.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Lattice Transition</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Supports.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Supports</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Bleemsys<br/>
+  
+      &copy; Copyright 2023, Bleemsys Ltd.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

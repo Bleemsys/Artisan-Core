@@ -27,6 +27,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Conformal Lattice <Conformal.rst>
    Field Operation <OPField.rst>
    Lattice Transition <TransLattice.rst>
+   API Interface <API.rst>
    Supports <Supports.rst>
 
 

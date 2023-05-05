@@ -1,0 +1,14 @@
+2023-05-03 22:56:41,464 [INFO] This is a testing package of Artisan.
+2023-05-03 22:56:41,464 [INFO] Version: 0.1.5
+2023-05-03 22:56:41,464 [INFO] reading Json file: Test_json\Basic\Sample_Box.txt
+2023-05-03 22:56:41,464 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[0.0, 4.0], [0.0, 4.0], [0.0, 4.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.025, 0.025, 0.025], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'Cubic', 'size': [1.0, 1.0, 1.0], 'thk': 0.1, 'Rot': [0.7853981633974483, 0.0, 0.0], 'Trans': [0.5, 0.0, 0.0], 'Inv': False, 'Fill': True, 'Cube_Request': {}}}, '2': {'Export': {'outfile': './/Test_results/Test_Sample_Strut_Infill.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2023-05-03 22:56:41,464 [INFO] Setup basic fill domain......
+2023-05-03 22:56:41,464 [INFO] Number of Domain Partition: 1
+2023-05-03 22:56:41,464 [INFO] Calculating Sub-Domain:1
+2023-05-03 22:56:41,464 [INFO] Building Up Sample Domain
+2023-05-03 22:56:41,714 [INFO] Workflow Calculation: 
+2023-05-03 22:56:41,714 [INFO] Calculating Add_Lattice
+2023-05-03 22:56:42,045 [INFO] Calculating Export
+2023-05-03 22:56:42,483 [INFO] PostProcessing Meshes......
+2023-05-03 22:56:43,043 [INFO] Process finished, check the results file.
+2023-05-03 22:56:43,043 [INFO] Peak Memory Usage: 171.39333724975586 MB

@@ -1,0 +1,7 @@
+[
+{
+  "directory": "C:/Users/y.wang/Documents/Project-Artisan/Artisan/PyArtisan/Artisan/Interfaces/Cpp/build",
+  "command": "C:\\Strawberry\\c\\bin\\g++.exe  @CMakeFiles/Artisan.dir/includes_CXX.rsp -O3 -DNDEBUG -o CMakeFiles\\Artisan.dir\\src\\Artisan_Example_02.cpp.obj -c C:\\Users\\y.wang\\Documents\\Project-Artisan\\Artisan\\PyArtisan\\Artisan\\Interfaces\\Cpp\\src\\Artisan_Example_02.cpp",
+  "file": "C:/Users/y.wang/Documents/Project-Artisan/Artisan/PyArtisan/Artisan/Interfaces/Cpp/src/Artisan_Example_02.cpp"
+}
+]

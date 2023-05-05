@@ -21,3 +21,9 @@ This is simple change log recording the major and minor updates
 - Doc updates
 - Test_json examples re-organized
 
+0.1.5
+- Add a few more integrated lattice
+- Add Python and C++ API interface docs & examples
+- Add Rotation & translation for periodic lattice 
+- Add more mesh supports (inp & bdf) for mesh and conformal lattice
+

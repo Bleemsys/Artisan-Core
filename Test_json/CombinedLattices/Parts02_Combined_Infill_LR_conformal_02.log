@@ -1,0 +1,15 @@
+2023-05-03 15:53:33,823 [INFO] This is a testing package of Artisan.
+2023-05-03 15:53:33,823 [INFO] Version: 0.1.5
+2023-05-03 15:53:33,823 [INFO] reading Json file: Test_json\CombinedLattices\Parts02_Combined_Infill_LR_conformal_02.txt
+2023-05-03 15:53:33,823 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj//Parts02//Parts02.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [0.4, 0.4, 0.4], 'Padding': 3, 'onGPU': False, 'memorylimit': 16106127360}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': './/Test_json//CombinedLattices//Parts02_Strut_Infill_LR_conformal.mld', 'size': [15.0, 15.0, 15.0], 'thk': 1.5, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '2': {'HS_Interpolate': {'la_name': './/Test_json//CombinedLattices//Parts02_TPMS_Infill_LR_conformal.mld', 'size': [15.0, 15.0, 15.0], 'thk': 1.5, 'pt': [0.0, 0.0, 0.0], 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'n_vec': [-1.0, 0.0, 0.0], 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results/Parts02_Combined_Infill_02.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': False}}
+2023-05-03 15:53:33,839 [INFO] Setup basic fill domain......
+2023-05-03 15:53:33,839 [INFO] Number of Domain Partition: 1
+2023-05-03 15:53:33,839 [INFO] Calculating Sub-Domain:1
+2023-05-03 15:53:33,839 [INFO] Building Up GeomDomain......
+2023-05-03 15:53:36,918 [INFO] Workflow Calculation: 
+2023-05-03 15:53:36,918 [INFO] Calculating Add_Lattice
+2023-05-03 15:54:01,362 [INFO] Calculating HS_Interpolate
+2023-05-03 15:55:38,595 [INFO] Calculating Export
+2023-05-03 15:55:42,023 [INFO] PostProcessing Meshes......
+2023-05-03 15:55:48,574 [INFO] Process finished, check the results file.
+2023-05-03 15:55:48,574 [INFO] Peak Memory Usage: 878.581335067749 MB

@@ -10,12 +10,10 @@ Artisan integrates a number of lattice design, including:
    * - Strut Lattice
      - TPMS Lattice
      - Strut Lattice Tetrahedron domain
-   * - Cubic, BCCubic
-     - SchwarzDiamond, SchwarzPrimitive, FischerKoch
-     - Rhombic, Star, Icosahedral
-   * - BC 
-     - Neovius, Lidinoid, Gyroid
-     - Voronoi, Kagome, Tetrahedron
+   * - Cubic, BCCubic, VertexOcta, BC, FCCubic, EdgeOcta, StarTet, Dodecahedron, Auxetic
+     - SchwarzDiamond, SchwarzPrimitive, FischerKoch, Neovius, Lidinoid, Gyroid
+     - Rhombic, Star, Icosahedral, Voronoi, Kagome, Tetrahedron
+
 
 We will gradually expand this list above in future development. The strut and TPMS lattice generally used in hexahedron domain which contains 6 faces and 8 nodes, such as a cube. The strut lattice in tetrahedron domain is mainly used in conformal lattice generation when tetrahedron meshes were given. Artisan will not check the lattice domain types in filling process, but please note that, the mismatched lattices types will produce unexpected results. The lattice in tetrahedron domain will be demonstrated in later section. 
 
@@ -47,8 +45,8 @@ Defining a strut lattice requires the nodal coordinates, and topological conduct
                 },
      "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": ".//Test_json//CustomLattice_Strut.txt", "size": [8.0,8.0,8.0], "thk":1.2, "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
+                    "la_name": ".//Test_json//CustomLattice_Strut.txt", "size": [8.0,8.0,8.0], "thk":1.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
                     }
                },
           "2":{"Export": {"outfile": ".//Test_results/BingDunDun_Infill_CustomStrut.stl"}}

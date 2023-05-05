@@ -1,0 +1,3 @@
+C:\msys64\mingw64\bin\cmake.exe -E rm -f CMakeFiles\Artisan.dir/objects.a
+C:\Strawberry\c\bin\ar.exe qc CMakeFiles\Artisan.dir/objects.a @CMakeFiles\Artisan.dir\objects1.rsp
+C:\Strawberry\c\bin\g++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\Artisan.dir/objects.a -Wl,--no-whole-archive -o Artisan.exe -Wl,--out-implib,libArtisan.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Artisan.dir\linklibs.rsp
