@@ -1,0 +1,31 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//crank_handle.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+		"Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360000000
+                },
+ "WorkFlow":{
+          "1": {"Gen_VoronoiPolyMesh":{
+                    "Geomfile": ".//sample-obj//crank_handle.stl", 
+		    "size": [3.0,3.0,3.0],
+		    "Meshfile": ".//sample-obj//crank_handle.med",
+		    "remove_tol": 0.6
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//GenVorMesh_crank_handle.mld", 
+                    "size": [3.5,3.5,3.5], "thk":0.5, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/crank_handle_VoriMesh_Lattice.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}

@@ -33,6 +33,7 @@ The :code:`Execution` function takes the input JSON string to perform the calcul
     sys.path.append(ArtisanRoot)
     # Simply import ArtisanModel. It is a function returns the API class 
     from ArtisanMain import Execution
+    import json
 
     logfilename = ArtisanRoot / "Test_json//Test_log.txt"
 
@@ -58,7 +59,7 @@ The :code:`Execution` function takes the input JSON string to perform the calcul
                 "ExportLazPts": False}
     }
 
-    Execution(cmd_dict, logfilename)
+    Execution(json.dumps(cmd_dict), logfilename)
 
 Manipulating the design process through :code:`WorkItem` is as easy as writing the JSON string. The working flow keywords are feed sequentially through :code:`WorkItem` function, as demonstrated below. The order of the keywords are important as they build the lattice step by step. 
 

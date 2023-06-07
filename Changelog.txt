@@ -27,3 +27,7 @@ This is simple change log recording the major and minor updates
 - Add Rotation & translation for periodic lattice 
 - Add more mesh supports (inp & bdf) for mesh and conformal lattice
 
+0.1.6
+- Add one option "convertTet2Beam" in tet mesh generation
+- Add Voronoi tessellation keywords
+- Revise Documentation. 

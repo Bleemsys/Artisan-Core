@@ -9,7 +9,7 @@
                 },
  "WorkFlow":{
           "1":{"Add_Lattice":{
-                    "la_name": "Cubic", "size": [1.0,1.0,1.0], "thk":0.1, "Rot":[0.7853981633974483, 0.0, 0.0], "Trans":[0.5,0.0,0.0], "Inv": false, "Fill": true, 
+                    "la_name": "Auxetic", "size": [1.0,1.0,1.0], "thk":0.05, "Rot":[0.7853981633974483, 0.0, 0.0], "Trans":[0.5,0.0,0.0], "Inv": false, "Fill": true, 
                     "Cube_Request": {}
                     }},
           "2":{"Export": {"outfile": ".//Test_results/Test_Sample_Strut_Infill.stl"}}

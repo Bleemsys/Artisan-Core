@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>API Interface &#8212; Artisan 0.1.5 documentation</title>
+    <title>API Interface &#8212; Artisan 0.1.6 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -73,7 +73,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">Artisan 0.1.5 documentation</h1>
+      <h1 class="site-logo" id="site-title">Artisan 0.1.6 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -115,6 +115,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Mesh.html">
    Mesh Lattice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Mesher.html">
+   Meshing
   </a>
  </li>
  <li class="toctree-l1">
@@ -348,6 +353,7 @@ title="Print to PDF"
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ArtisanRoot</span><span class="p">)</span>
 <span class="c1"># Simply import ArtisanModel. It is a function returns the API class</span>
 <span class="kn">from</span> <span class="nn">ArtisanMain</span> <span class="kn">import</span> <span class="n">Execution</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="n">logfilename</span> <span class="o">=</span> <span class="n">ArtisanRoot</span> <span class="o">/</span> <span class="s2">&quot;Test_json//Test_log.txt&quot;</span>
 
@@ -373,7 +379,7 @@ title="Print to PDF"
             <span class="s2">&quot;ExportLazPts&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="n">Execution</span><span class="p">(</span><span class="n">cmd_dict</span><span class="p">,</span> <span class="n">logfilename</span><span class="p">)</span>
+<span class="n">Execution</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">cmd_dict</span><span class="p">),</span> <span class="n">logfilename</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Manipulating the design process through <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code> is as easy as writing the JSON string. The working flow keywords are feed sequentially through <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code> function, as demonstrated below. The order of the keywords are important as they build the lattice step by step.</p>

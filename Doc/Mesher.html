@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Meshing &#8212; Artisan 0.1.6 documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Conformal Lattice" href="Conformal.html" />
+    <link rel="prev" title="Mesh Lattice" href="Mesh.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Artisan 0.1.6 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OtherTools.html">
+   Tools
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="QStart/QStart.html">
+   Basics 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GeomOPT/GeomOPT.html">
+   Basics 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Customization/Customization.html">
+   Customization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Mesh.html">
+   Mesh Lattice
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Meshing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Conformal.html">
+   Conformal Lattice
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OPField.html">
+   Field Operation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="TransLattice.html">
+   Lattice Transition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="API.html">
+   API Interface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Supports.html">
+   Supports
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/Mesher.rst.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.rst</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tetrahedron-mesher">
+   Tetrahedron Mesher
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#voronoi-polygon">
+   Voronoi Polygon
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Meshing</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tetrahedron-mesher">
+   Tetrahedron Mesher
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#voronoi-polygon">
+   Voronoi Polygon
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section id="meshing">
+<h1>Meshing<a class="headerlink" href="#meshing" title="Permalink to this headline">#</a></h1>
+<p>One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the conformal lattice generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder <code class="code docutils literal notranslate"><span class="pre">Test_json\MeshLattice</span></code>.</p>
+<section id="tetrahedron-mesher">
+<h2>Tetrahedron Mesher<a class="headerlink" href="#tetrahedron-mesher" title="Permalink to this headline">#</a></h2>
+<p>Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh.txt</span></code>, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                            </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_TetBasicMesh&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                                    </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.med&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;ConvertTet2Beam&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json_03//GenTetBasicMesh.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">150.0</span><span class="p">,</span><span class="mf">150.0</span><span class="p">,</span><span class="mf">150.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/BallBasicTetNMesh_Lattice.stl&quot;</span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">}</span><span class="w"></span>
+<span class="w">                      </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code> activates the algorithm. The parameter <code class="code docutils literal notranslate"><span class="pre">&quot;Geomfile&quot;</span></code> defines the location of the target meshing geometry, <code class="code docutils literal notranslate"><span class="pre">Meshfile</span></code> indicates where the mesh would be stored. Currently it supports Abaqus <code class="code docutils literal notranslate"><span class="pre">inp</span></code>, Ansys fluent <code class="code docutils literal notranslate"><span class="pre">msh</span></code> and Salome <code class="code docutils literal notranslate"><span class="pre">med</span></code> file format. The parameter <code class="code docutils literal notranslate"><span class="pre">&quot;size&quot;</span></code> defines the lattice size at current layer as</p>
+<div class="math notranslate nohighlight">
+\[num_{nodes} = area / (size[0]*size[1]*0.5)\]</div>
+<p><code class="code docutils literal notranslate"><span class="pre">num_{nodes}</span></code> is the number of nodes at current layer, and they were evenly and randomly distributed over the current layer surface. The value <code class="code docutils literal notranslate"><span class="pre">size[2]</span></code>, which is the third element in <code class="code docutils literal notranslate"><span class="pre">size</span></code>, defines the layer depth, here 100 mm depth. The parameter <code class="code docutils literal notranslate"><span class="pre">ConvertTet2Beam</span></code> is boolean type definition, that <code class="code docutils literal notranslate"><span class="pre">&quot;true&quot;</span></code> meant the mesher will convert generated tetrahedron to the beam element (a 2-node-strut-like element), <code class="code docutils literal notranslate"><span class="pre">false</span></code> will keep tetrahedron element. One of the benefits is user may import the beam element into the FEA solver for further analysis if the mesh lattice is desired.</p>
+<p>Above JSON produced a mesh lattice filled ball geometry as shown below.</p>
+<img alt="_images/BallMeshLattice.png" src="_images/BallMeshLattice.png" />
+<p>The cross-sectional view below clearly showed the lattices were stacked layer by layer, from exterior surface towards center.</p>
+<img alt="_images/BallMeshLattice_CrossSection.png" src="_images/BallMeshLattice_CrossSection.png" />
+<p>Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow.</p>
+</section>
+<section id="voronoi-polygon">
+<h2>Voronoi Polygon<a class="headerlink" href="#voronoi-polygon" title="Permalink to this headline">#</a></h2>
+<p>A Voronoi diagram, also known as a Voronoi tessellation or Voronoi decomposition, is a geometric structure that partitions a space into regions based on the proximity to a set of given points. In a Voronoi diagram, each point in the set is associated with a unique region that consists of all locations in the space that are closer to that point than any other point. It is named after the Russian mathematician Georgy Voronoi, who first introduced the idea. Voronoi polygons have various applications, such as in computer graphics, spatial analysis, geographical information systems, and computational biology. They provide a way to partition space based on proximity and are useful in solving proximity-based problems and analyzing spatial patterns. In additive manufacturing, this structure is often used on the components which suppose to bear loading with cushioning effect.</p>
+<p>Setup the generation of the Voronoi polygons on the given geometry is similar to the tet mesher. Below shows the piece of setup JSON (the file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh.txt</span></code>).</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_VoronoiPolyMesh&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_VorMesh.med&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;remove_tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//GenVorMesh.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">150.0</span><span class="p">,</span><span class="mf">150.0</span><span class="p">,</span><span class="mf">150.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/BallBasicVoriMesh_Lattice.stl&quot;</span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">               </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The parameter setup is very similar to the keywords <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code>. The additional parameter <code class="code docutils literal notranslate"><span class="pre">remove_tol</span></code> defines tolerance of removing the strut which contains the end node outside of the given geometry. The mesh is an approximation of geometry, sometime, the end-nodes may locate beyond the boundary of geometric shape. This parameter allows user to flexibly remove such. The results are shown below.</p>
+<img alt="_images/VoriMeshBall.png" src="_images/VoriMeshBall.png" />
+<p>And the cross-section view shows how the mesher generates the element layer by layer.</p>
+<img alt="_images/VoriMeshBall_CrossSection.png" src="_images/VoriMeshBall_CrossSection.png" />
+<p>We can certainly apply this to a more complex geometry. The example below (<code class="code docutils literal notranslate"><span class="pre">GenVorMesh_crank_handle.txt</span></code>) shows the generation of the Voronoi polygons on a real world component.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">],</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360000000</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_VoronoiPolyMesh&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.med&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;remove_tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.6</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//GenVorMesh_crank_handle.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.5</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span><span class="mf">3.5</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/crank_handle_VoriMesh_Lattice.stl&quot;</span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And the mesh lattice defintion (<code class="code docutils literal notranslate"><span class="pre">GenVorMesh_crank_handle.mld</span></code>) is:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.med&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The result is shown as below. As mentioned before, the current mesh strategy may not handle the sharp edge very well, and in general, it produces a good fitting of Voronoi polygons.</p>
+<img alt="_images/crank_handle_vori_mesh.png" src="_images/crank_handle_vori_mesh.png" />
+</section>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Mesh.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Mesh Lattice</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Conformal.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Conformal Lattice</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Bleemsys<br/>
+  
+      &copy; Copyright 2023, Bleemsys Ltd.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
