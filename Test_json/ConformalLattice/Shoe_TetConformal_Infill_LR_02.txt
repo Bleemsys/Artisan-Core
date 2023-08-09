@@ -8,7 +8,7 @@
                 },
  "WorkFlow":{
           "1": {"Add_Lattice":{
-                    "la_name": ".//Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.mld", "size": [18.0,18.0,18.0], "thk":0.8, "Inv": false, "Fill": false, 
+                    "la_name": ".//Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.mld", "size": [18.0,18.0,18.0], "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], "thk":0.8, "Inv": false, "Fill": false, 
                     "Cube_Request": {}
                     }
                },

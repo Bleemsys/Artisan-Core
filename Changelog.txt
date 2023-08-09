@@ -31,3 +31,8 @@ This is simple change log recording the major and minor updates
 - Add one option "convertTet2Beam" in tet mesh generation
 - Add Voronoi tessellation keywords
 - Revise Documentation. 
+
+0.1.7
+- Add surface lattice functions through conformal lattice
+- Add primitive meshes - cylindrical domain and spherical domain
+- Fixed a few minor bugs on conformal lattice

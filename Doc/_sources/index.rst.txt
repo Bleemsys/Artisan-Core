@@ -26,6 +26,8 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Mesh Lattice <Mesh.rst>
    Meshing <Mesher.rst>
    Conformal Lattice <Conformal.rst>
+   Surface Lattice <SurfaceLattice.rst>
+   Primitive Design <Primitive.rst>
    Field Operation <OPField.rst>
    Lattice Transition <TransLattice.rst>
    API Interface <API.rst>

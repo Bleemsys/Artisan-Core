@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": ".//Test_json//PrimitiveDesign//SphericalMesh.med",
+  "la_name" : "SchwarzPrimitive",
+  "la_domain": "Hex"
+ }
+}

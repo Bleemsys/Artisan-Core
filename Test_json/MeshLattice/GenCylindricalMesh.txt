@@ -1,0 +1,35 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[-10.0,10.0],[-10.0,10.0],[-10.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1,0.1,0.1],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {"Gen_CylindricalMesh":{
+                     "num_elem": [3,6,5], 
+                     "r_range": [3.0,8.0],
+                     "phi_range": [0.0,1.0],
+                     "ori":[0.0,0.0,-2.0],
+                     "Height": 10.0,
+                     "Normal": [0.0,0.0,1.0],
+                     "Mesh_file": ".//Test_json//MeshLattice//CylindricalMesh.med"
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//GenCylindricalMesh.mld", 
+                    "size": [3.0,3.0,3.0], "thk":0.5, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/CylindricalMesh_Lattice.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}

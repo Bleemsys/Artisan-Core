@@ -1,0 +1,160 @@
+Primitive Design
+****************
+
+Often the design of the lightweight structure requires the lattice generation on a primitive shape, such as cylinder or sphere. Artisan can generate mesh-based discretization of the domain and morph the lattice unit onto the element. All examples in this section can be found under the folder :code:`\\Test_json\\PrimitiveDesign\\`. Note that, all mesh generation of primitive shapes only supports :code:`.med` file format.  
+
+==================
+Cylindrical Domain
+==================
+
+The design on the cylindrical domain is common in most of industrial applications, for instance, the heat exchanger in the pressurized vessel application. Artisan integrates a simple mesh generator for the cylindrical domain. User may use this infrastructure to further produce conformal lattice. The definition of the cylindrical domain requires the radius, :math:`\phi` and height.
+
+The following example can be find in the file :code:`GenCylindricalConformalMesh.txt`.    
+
+.. code-block:: json
+
+    {"Setup":{  "Type" : "Sample",
+                "Sample": {"Domain" : [[-10.0,10.0],[-10.0,10.0],[-10.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1,0.1,0.1],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+     "WorkFlow":{
+          "1": {"Gen_CylindricalMesh":{
+                     "num_elem": [3,10,3], 
+                     "r_range": [2.0,8.0],
+                     "phi_range": [0.0,1.0],
+                     "ori":[0.0,0.0,-2.0],
+                     "Height": 10.0,
+                     "Normal": [0.0,0.0,1.0],
+                     "Mesh_file": ".//Test_json//PrimitiveDesign//CylindricalMesh.med"
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//PrimitiveDesign//GenCylindricalConformalMesh.mld", 
+                    "size": [3.0,3.0,3.0], "thk":0.25, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/CylindricalMesh_ConformalLattice.stl"}
+              }
+		   },
+     "PostProcess":{"CombineMeshes": true,
+                    "RemovePartitionMeshFile": false,
+                    "RemoveIsolatedParts": true, 
+                    "ExportLazPts": true}
+    }
+
+
+The keywords :code:`Gen_CylindricalMesh` contains the parameters as defined in the table below. 
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`num_elem`
+     - it is a list parameter containing 3 elements. Each elements defines the number of lattice units in each direction.
+   * - :code:`r_range` 
+     - a list parameter containing 2 elements. The first one defines the lower bound of radius, and the second one defines the upper bound of radius. Two elements forms the range of infill.
+   * - :code:`phi_range`
+     - a list parameter containing 2 elements. The first one defines the lower bound of :math:`\phi`, and the second one defines the upper bound of :math:`\phi`. Two elements forms the span range in :math:`\phi` direction.
+   * - :code:`ori`
+     - a list parameter defining the coordinate of origin of the cylinder shape.
+   * - :code:`Height`
+     - a float number defining the height of cylinder shape.  
+   * - :code:`Normal`
+     - a list containing 3 elements, and it is the definition of the normal direction of the cylinder.
+   * - :code:`Mesh_file`
+     - the file path to store the results.
+
+The results as blow shows a strut lattice generation on the cylinder body. User may certainly change to other types of lattice unit, e.g. TPMS or geometry.
+    
+.. image:: ./pictures/Cylindrical_Mesh.png
+
+The parameter :code:`phi_range` provides a more interesting design features, that may help to control spanning of the cylinder. For example, the illustration below shows the case of the parameter :code:`"phi_range": [0,0.5]`. 
+
+.. image:: ./pictures/Cylindrical_Mesh_half.png
+
+
+================
+Spherical Domain
+================
+
+User can generate lattices on the spherical domain through the keywords :code:`Gen_SphericalMesh`. The JSON below (filename: :code:`GenSphericalConformalMesh.txt`) shows a demonstration of this feature using TPMS lattice.
+
+.. code-block:: json
+
+    {"Setup":{  "Type" : "Sample",
+                "Sample": {"Domain" : [[-10.0,10.0],[-10.0,10.0],[-10.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.05,0.05,0.05],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+    "WorkFlow":{
+          "1": {"Gen_SphericalMesh":{
+                     "num_elem": [3,10,4], 
+                     "r_range": [3.0,8.0],
+                     "phi_range": [0.0,1.0],
+                     "theta_range":[0.3,0.7],
+                     "ori":[0.0,0.0,0.0],
+                     "Normal": [1.0,1.0,0.0],
+                     "Mesh_file": ".//Test_json//PrimitiveDesign//SphericalMesh.med"
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//PrimitiveDesign//GenSphericalConformalMesh.mld", 
+                    "size": [3.0,3.0,3.0], "thk":0.2, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/SphericalMesh_ConformalLattice.stl"}
+              }
+		   },
+    "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+    }
+
+The parameters in :code:`Gen_SphericalMesh` are explained in the table below.
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`num_elem`
+     - it is a list parameter containing 3 elements. Each elements defines the number of lattice units in each direction.
+   * - :code:`r_range` 
+     - a list parameter containing 2 elements. The first one defines the lower bound of radius, and the second one defines the upper bound of radius. Two elements forms the range of infill.
+   * - :code:`phi_range`
+     - a list parameter containing 2 elements. The first one defines the lower bound of :math:`\phi`, and the second one defines the upper bound of :math:`\phi`. Two elements forms the span range in :math:`\phi` direction.
+   * - :code:`theta_range`
+     - a list parameter containing 2 elements. The first one defines the lower bound of :math:`\theta`, and the second one defines the upper bound of :math:`\phi`. Two elements forms the span range in :math:`\theta` direction.
+   * - :code:`ori`
+     - a list parameter defining the coordinate of origin of the cylinder shape.
+   * - :code:`Height`
+     - a float number defining the height of cylinder shape.  
+   * - :code:`Normal`
+     - a list containing 3 elements, and it is the definition of the normal direction of the cylinder.
+   * - :code:`Mesh_file`
+     - the file path to store the results.
+
+Below presented the resultant lattice on spherical domain. 
+
+.. image:: ./pictures/spherical_mesh.png
+
+Similar to the :code:`Gen_CylindricalMesh`, the keywords :code:`Gen_SphericalMesh` can also change the spanning of domain. In the case above, we have a complete :math:`\phi` direction spanning, and the spanning of :math:`\theta` is between :code:`0.3` to :code:`0.7` - :math:`0.3\times\pi` to :math:`0.7\times\pi`. User may alter both :code:`phi_range` and :code:`theta_range` to generate various combined spanning of the domain. The illustration below shows the case with parameter value :code:`"phi_range":[0.2, 0.8]`.
+
+.. image:: ./pictures/spherical_mesh_part.png

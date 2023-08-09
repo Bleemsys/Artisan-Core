@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": ".//Test_json//PrimitiveDesign//CylindricalMesh.med",
+  "la_name" : ".//Test_json//PrimitiveDesign//CustomLattice_Strut.txt",
+  "la_domain": "Hex"
+ }
+}

@@ -62,9 +62,13 @@ As stated above, the mesh file points to :code:`.//sample-obj//Parts01//Parts01.
    * - :code:`.inp`
      - Abaqus input file
      - Beam, Tet, Hex
-   * - :code:`bdf`
+   * - :code:`.bdf`
      - Nastran
      - Beam, Tet, Hex
+   * - :code:`.stl`, :code:`.obj`, :code:`.ply`
+     - Geometry file format
+     - Triangle
+
 
 The result is shown below. 
 

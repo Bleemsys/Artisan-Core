@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//sample-obj//sphere.stl",
+ "la_name" : ".//Test_json//SurfaceLattice//CustomSurfaceLattice_Strut.txt"
+ }
+}
