@@ -1,0 +1,17 @@
+2023-09-08 11:33:32,459 [INFO] This is a testing package of Artisan.
+2023-09-08 11:33:32,459 [INFO] Version: 0.1.8
+2023-09-08 11:33:32,474 [INFO] reading Json file: Test_json\PrimitiveDesign\GenBox.txt
+2023-09-08 11:33:32,474 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-5.0, 5.0], [-5.0, 5.0], [-5.0, 5.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.05, 0.05, 0.05], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Geometry': {'Name': 'Box', 'k_factor': 0.0, 'push2GeomField': False, 'Paras': {'ori': [0.0, 0.0, 0.0], 'normal': [0, 0, 1], 'length': [2, 2, 2]}}}, '2': {'Add_Geometry': {'Name': 'Cylinder', 'k_factor': 0.7, 'push2GeomField': False, 'Paras': {'pa': [0.0, 0.0, 0.0], 'pb': [0.0, 0.0, 5.0], 'r': 1.0}}}, '3': {'Subtract_Geometry': {'Name': 'Sphere', 'k_factor': 0.5, 'push2GeomField': False, 'Paras': {'ori': [-2.0, 0.0, 0.0], 'r': 1.5}}}, '4': {'Export': {'outfile': './/Test_results/GenBox.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': True}}
+2023-09-08 11:33:32,474 [INFO] Setup basic fill domain......
+2023-09-08 11:33:32,474 [INFO] Number of Domain Partition: 1
+2023-09-08 11:33:32,474 [INFO] Calculating Sub-Domain:1
+2023-09-08 11:33:32,474 [INFO] Building Up Sample Domain
+2023-09-08 11:33:32,969 [INFO] Workflow Calculation: 
+2023-09-08 11:33:32,969 [INFO] Calculating Add_Geometry
+2023-09-08 11:33:33,133 [INFO] Calculating Add_Geometry
+2023-09-08 11:33:33,302 [INFO] Calculating Subtract_Geometry
+2023-09-08 11:33:33,412 [INFO] Calculating Export
+2023-09-08 11:33:33,537 [INFO] PostProcessing Meshes......
+2023-09-08 11:33:33,537 [INFO] Only one partition file, merging meshes will not be conducted.
+2023-09-08 11:33:33,553 [INFO] Process finished, check the result file.
+2023-09-08 11:33:33,553 [INFO] Peak Memory Usage: 328.6777677536011 MB

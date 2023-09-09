@@ -116,6 +116,6 @@ An comparison from the other side.
 
 .. image:: ./pictures/SK_Stress_OP03.png
 
-Please note that, above examples takes large data set as interpolation inputs and can run over 1 hours time. More data points included in the field data could result longer computational time. The current field operation function can only handle the material thickening operation. We will work on the features and algorithm by extending the function to the lattice size and lattice types. 
+Please note that, above examples takes large data set as interpolation inputs and can be a very time consuming operation. More data points included in the field data could result longer computational time. The current field operation function can only handle the material thickening operation. We will work on the features and algorithm by extending the function to the lattice size and lattice types. 
 
  

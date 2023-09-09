@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": ".//Test_json//PrimitiveDesign//BoxMesh.med",
+  "la_name" : "BC",
+  "la_domain": "Hex"
+ }
+}

@@ -1,0 +1,16 @@
+2023-09-08 15:01:16,803 [INFO] This is a testing package of Artisan.
+2023-09-08 15:01:16,803 [INFO] Version: 0.1.8
+2023-09-08 15:01:16,803 [INFO] reading Json file: Test_json\PrimitiveDesign\GenBox_Intersection.txt
+2023-09-08 15:01:16,819 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-10.0, 10.0], [-10.0, 10.0], [-10.0, 10.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.1, 0.1, 0.1], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Geometry': {'Name': 'Box', 'k_factor': 0.0, 'push2GeomField': False, 'Paras': {'ori': [0.0, 0.0, 0.0], 'normal': [0, 0, 1], 'length': [3, 4, 3]}}}, '2': {'Intersect_Geometry': {'Name': 'Box', 'k_factor': 1.7, 'push2GeomField': False, 'Paras': {'ori': [-5.0, 2.0, 0.0], 'normal': [1, 0, 1], 'length': [3, 3, 4]}}}, '3': {'Export': {'outfile': './/Test_results/GenBox_Intersection.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': True}}
+2023-09-08 15:01:16,819 [INFO] Setup basic fill domain......
+2023-09-08 15:01:16,819 [INFO] Number of Domain Partition: 1
+2023-09-08 15:01:16,819 [INFO] Calculating Sub-Domain:1
+2023-09-08 15:01:16,819 [INFO] Building Up Sample Domain
+2023-09-08 15:01:17,257 [INFO] Workflow Calculation: 
+2023-09-08 15:01:17,257 [INFO] Calculating Add_Geometry
+2023-09-08 15:01:17,413 [INFO] Calculating Intersect_Geometry
+2023-09-08 15:01:17,586 [INFO] Calculating Export
+2023-09-08 15:01:17,679 [INFO] PostProcessing Meshes......
+2023-09-08 15:01:17,679 [INFO] Only one partition file, merging meshes will not be conducted.
+2023-09-08 15:01:17,695 [INFO] Process finished, check the result file.
+2023-09-08 15:01:17,695 [INFO] Peak Memory Usage: 328.6774559020996 MB

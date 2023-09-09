@@ -2,8 +2,8 @@ joblib==1.1.0
 laspy==2.2.0
 meshio==5.3.4
 numexpr==2.7.3
-numpy==1.20.1
+numpy==1.22.4
 open3d==0.16.0
-pyvista==0.37.0
 requests==2.26.0
 scipy==1.7.1
+vtk==9.2.2

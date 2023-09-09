@@ -36,3 +36,8 @@ This is simple change log recording the major and minor updates
 - Add surface lattice functions through conformal lattice
 - Add primitive meshes - cylindrical domain and spherical domain
 - Fixed a few minor bugs on conformal lattice
+
+0.1.8
+- Major re-coding for infrastructure, e.g. python to C++, add openMP.
+- Add more functions for geometric handling and primitive design.
+- Doc update

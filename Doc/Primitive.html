@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Primitive Design &#8212; Artisan 0.1.7 documentation</title>
+    <title>Primitive Design &#8212; Artisan 0.1.8 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -74,7 +74,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">Artisan 0.1.7 documentation</h1>
+      <h1 class="site-logo" id="site-title">Artisan 0.1.8 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -300,6 +300,16 @@ title="Print to PDF"
    Spherical Domain
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#box-domain">
+   Box Domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#primitive-shape-and-geometry-handling">
+   Primitive Shape and Geometry handling
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -327,6 +337,16 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#spherical-domain">
    Spherical Domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#box-domain">
+   Box Domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#primitive-shape-and-geometry-handling">
+   Primitive Shape and Geometry handling
   </a>
  </li>
 </ul>
@@ -505,6 +525,302 @@ title="Print to PDF"
 <img alt="_images/spherical_mesh.png" src="_images/spherical_mesh.png" />
 <p>Similar to the <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code>, the keywords <code class="code docutils literal notranslate"><span class="pre">Gen_SphericalMesh</span></code> can also change the spanning of domain. In the case above, we have a complete <span class="math notranslate nohighlight">\(\phi\)</span> direction spanning, and the spanning of <span class="math notranslate nohighlight">\(\theta\)</span> is between <code class="code docutils literal notranslate"><span class="pre">0.3</span></code> to <code class="code docutils literal notranslate"><span class="pre">0.7</span></code> - <span class="math notranslate nohighlight">\(0.3\times\pi\)</span> to <span class="math notranslate nohighlight">\(0.7\times\pi\)</span>. User may alter both <code class="code docutils literal notranslate"><span class="pre">phi_range</span></code> and <code class="code docutils literal notranslate"><span class="pre">theta_range</span></code> to generate various combined spanning of the domain. The illustration below shows the case with parameter value <code class="code docutils literal notranslate"><span class="pre">&quot;phi_range&quot;:[0.2,</span> <span class="pre">0.8]</span></code>.</p>
 <img alt="_images/spherical_mesh_part.png" src="_images/spherical_mesh_part.png" />
+</section>
+<section id="box-domain">
+<h2>Box Domain<a class="headerlink" href="#box-domain" title="Permalink to this headline">#</a></h2>
+<p>User may define a hex mesh in the box-shape domain, and then conformal the lattice structure. This will produce the exact same results as the conventional way of lattice filling in the domain. The conformal lattice uses a different algorithm to compute the infill to the conventional periodic lattice infill. The base code of conformal lattice use openMP to accelerate the calculations, this can be dramatically faster when number of infill is huge. This functionality aims to provide an easy access to the faster algorithm in order to improve the efficiency. Below shows an example of filling lattice using the generated box mesh. The example file can be found at <code class="code docutils literal notranslate"><span class="pre">\\PrimitiveDesign\\GenBoxConformalMesh.txt</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">],</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_BoxMesh&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;x_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">15.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;y_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">15.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">15.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;ori&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                 </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//PrimitiveDesign//BoxMesh.med&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//PrimitiveDesign//GenBoxConformalMesh.mld&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">           </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/BoxMesh_ConformalLattice.stl&quot;</span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">               </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The result, as expected, is lattice infill in a box.</p>
+<img alt="_images/BoxDomainMesh.png" src="_images/BoxDomainMesh.png" />
+<p>Here is the explanation of parameters.</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">num_elem</span></code></p></td>
+<td><p>it is a list parameter containing 3 elements. Each elements defines the number of lattice units in each direction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">x_range</span></code></p></td>
+<td><p>a list parameter containing 2 elements. The lower and upper bounds of the in x direction - the direction before rotation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">y_range</span></code></p></td>
+<td><p>a list parameter containing 2 elements. The lower and upper bounds of the in y direction - the direction before rotation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">z_range</span></code></p></td>
+<td><p>a list parameter containing 2 elements. The lower and upper bounds of the in z direction - the direction before rotation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">ori</span></code></p></td>
+<td><p>a list parameter defining the coordinate of origin of the cylinder shape.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Normal</span></code></p></td>
+<td><p>a list containing 3 elements, and it is the definition of the normal direction of the box. If the direction is not aligned with [0.0, 0.0, 1.0], the box will be rotated accordantly.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Mesh_file</span></code></p></td>
+<td><p>the file path to store the results.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="primitive-shape-and-geometry-handling">
+<h2>Primitive Shape and Geometry handling<a class="headerlink" href="#primitive-shape-and-geometry-handling" title="Permalink to this headline">#</a></h2>
+<p>A few simple geometry handling functions have been integrated into Artisan. It could be useful if adding some geometric entity after lattice infill. It has to mention that, the whole geometry handling is based on implicit modelling concept, explicit modelling capability is not available. In general, user may <code class="code docutils literal notranslate"><span class="pre">Add</span></code>, <code class="code docutils literal notranslate"><span class="pre">Subtract</span></code> and <code class="code docutils literal notranslate"><span class="pre">Intersect</span></code> on the shape <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code> and other user defined geometries.</p>
+<p>In the example file <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\PrimitiveDesign\\GenBox.txt</span></code>, a simple geometry was constructed using <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],[</span><span class="mf">-5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],[</span><span class="mf">-5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">],</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span><span class="w"></span>
+<span class="w">               </span><span class="p">},</span><span class="w"></span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Paras&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"></span>
+<span class="w">                       </span><span class="p">}</span><span class="w"></span>
+<span class="w">                   </span><span class="p">}</span><span class="w"></span>
+<span class="w">              </span><span class="p">},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cylinder&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Paras&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;pa&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;pb&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;r&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="w"></span>
+<span class="w">                       </span><span class="p">}</span><span class="w"></span>
+<span class="w">                   </span><span class="p">}</span><span class="w"></span>
+<span class="w">              </span><span class="p">},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Subtract_Geometry&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sphere&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">&quot;Paras&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">&quot;r&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="w"></span>
+<span class="w">                       </span><span class="p">}</span><span class="w"></span>
+<span class="w">                   </span><span class="p">}</span><span class="w"></span>
+<span class="w">              </span><span class="p">},</span><span class="w"></span>
+<span class="w">         </span><span class="nt">&quot;4&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">             </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/GenBox.stl&quot;</span><span class="p">}</span><span class="w"></span>
+<span class="w">             </span><span class="p">}</span><span class="w"></span>
+<span class="w">                  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Above JSON will produce a result of two combined shape with a subtracted spherical indent.</p>
+<img alt="_images/GenBox.png" src="_images/GenBox.png" />
+<p>There are other three examples in the folder <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\</span></code>, called <code class="code docutils literal notranslate"><span class="pre">GenBox_Add.txt</span></code>, <code class="code docutils literal notranslate"><span class="pre">GenBox_Subtract.txt</span></code> and <code class="code docutils literal notranslate"><span class="pre">GenBox_Intersection.txt</span></code>. Three examples demonstrates the different operations between two boxes. Below shows the overlapping of three results. The red part is intersection part, the blue and grey makes the adding union results, and the grey is the cut result. All operation used the smooth transitions.</p>
+<img alt="_images/PrimitiveShapes.png" src="_images/PrimitiveShapes.png" />
+<img alt="_images/PrimitiveShapes_02.png" src="_images/PrimitiveShapes_02.png" />
+<p>The keywords <code class="code docutils literal notranslate"><span class="pre">Add_Geometry</span></code> and <code class="code docutils literal notranslate"><span class="pre">Subtract_Geometry</span></code> manipulate the geometry handling, such as adding and subtracting. Along with the keywords <code class="code docutils literal notranslate"><span class="pre">Intersect_Geometry</span></code>, three keywords shared same parameters.</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Name</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">&quot;Sphere&quot;</span></code>, <code class="code docutils literal notranslate"><span class="pre">&quot;Box&quot;</span></code>, <code class="code docutils literal notranslate"><span class="pre">&quot;Cylinder&quot;</span></code> or the file path to the geometry file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">k_factor</span></code></p></td>
+<td><p>A float number above 0.0. It represents the smoothness transition around the conjunction areas. If <code class="code docutils literal notranslate"><span class="pre">0.0</span></code>, no smoothness. It should be a number less than <code class="code docutils literal notranslate"><span class="pre">1.0</span></code> in most of cases, but may beyond <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">&quot;push2GeomField&quot;</span></code></p></td>
+<td><p>If <code class="code docutils literal notranslate"><span class="pre">true</span></code>, the geometry handling will be applied to geometric field. If <code class="code docutils literal notranslate"><span class="pre">false</span></code>, the operation is applied to lattice field.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">&quot;Paras&quot;</span></code></p></td>
+<td><p>The parameters used for the primitive shapes and geometries.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Box</span></code> shape has following parameters:</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">ori</span></code></p></td>
+<td><p>The center point coordinate of the box.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>A directional vector which forms the rotation from [0.0, 0.0, 1.0] to this given vector. If it is aligned with [0.0, 0.0, 1.0], no rotation.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code> shape has following parameters:</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">ori</span></code></p></td>
+<td><p>The center point coordinate of the sphere.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>the radius of the sphere.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code> shape has following parameters:</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">pa</span></code></p></td>
+<td><p>The center point coordinate of the box.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">pb</span></code></p></td>
+<td><p>A directional vector which forms the rotation from [0.0, 0.0, 1.0] to this given vector. If it is aligned with [0.0, 0.0, 1.0], no rotation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>The radius of the cylindrical body.</p></td>
+</tr>
+</tbody>
+</table>
+<p>It is possible to load external geometry, as demonstrated below. The JSON shows the parameter <code class="code docutils literal notranslate"><span class="pre">Name</span></code> in the keyword <code class="code docutils literal notranslate"><span class="pre">Add_Geometry</span></code> became a file path string. It is interpreted as an external geometry, not an integrated primitive shape.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.05</span><span class="p">],</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span><span class="w"></span>
+<span class="w">              </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span><span class="w"></span>
+
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Klemmwinkel Form A.stl&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                   </span><span class="nt">&quot;Paras&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                       </span><span class="nt">&quot;Scale&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w"></span>
+<span class="w">                       </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                       </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"></span>
+<span class="w">                      </span><span class="p">}</span><span class="w"></span>
+<span class="w">                  </span><span class="p">}</span><span class="w"></span>
+<span class="w">             </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cubic&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">                  </span><span class="p">}</span><span class="w"></span>
+<span class="w">             </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/GenGeom.stl&quot;</span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">                 </span><span class="p">},</span><span class="w"></span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<span class="w">              </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this case, parameter <code class="code docutils literal notranslate"><span class="pre">Paras</span></code> has the following operation parameters, i.e. <code class="code docutils literal notranslate"><span class="pre">Scale</span></code>, <code class="code docutils literal notranslate"><span class="pre">Trans</span></code> and <code class="code docutils literal notranslate"><span class="pre">Rot</span></code>. The operation sequences is scale, translation, then rotation.</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Scale</span></code></p></td>
+<td><p>a list containing 3 elements, representing scales in three dimensions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Trans</span></code></p></td>
+<td><p>a list containing 3 elements, translational vector before rotation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Rot</span></code></p></td>
+<td><p>a list of three radiuses defining the rotation using x, y and z axis.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The JSON reads an external geometry, conducted scale and translation, and push to geometric field, then conduct the periodic lattice infill in the geometry.</p>
+<img alt="_images/GenGeom.png" src="_images/GenGeom.png" />
 </section>
 </section>
 
