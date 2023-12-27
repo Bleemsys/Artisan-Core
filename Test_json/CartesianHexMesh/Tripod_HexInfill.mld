@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//Test_json//CartesianHexMesh//TripodeHexMesh.med",
+ "la_name" : "Cubic"
+ }
+}

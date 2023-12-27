@@ -1,0 +1,16 @@
+2023-12-21 15:30:54,251 [INFO] This is a testing package of Artisan.
+2023-12-21 15:30:54,251 [INFO] Version: 0.1.9.dev
+2023-12-21 15:30:54,251 [INFO] reading Json file: Test_json\FieldOpt\Box_EdgeEnhance.txt
+2023-12-21 15:30:54,251 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj//cube_1mm.ply', 'Rot': [0.0, 0.0, 0.0], 'res': [10.0, 10.0, 10.0], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'Cubic', 'size': [100.0, 100.0, 100.0], 'thk': 20.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '2': {'OP_EdgeEnhance': {'Angles': [1.57, 1.6], 'r': 100.0, 'max_offset': 100.0, 'min_offset': 0.0, 'meshfile': './/sample-obj//cube_1mm.ply', 'MergeNodes': True, 'Fill': True}}, '3': {'Export': {'outfile': './/Test_results/Box_EdgeEnhance.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2023-12-21 15:30:54,267 [INFO] Setup basic fill domain......
+2023-12-21 15:30:54,267 [INFO] Number of Domain Partition: 1
+2023-12-21 15:30:54,267 [INFO] Calculating Sub-Domain:1
+2023-12-21 15:30:54,267 [INFO] Building Up GeomDomain......
+2023-12-21 15:30:54,362 [INFO] Workflow Calculation: 
+2023-12-21 15:30:54,362 [INFO] Calculating Add_Lattice
+2023-12-21 15:30:54,424 [INFO] Calculating OP_EdgeEnhance
+2023-12-21 15:30:54,472 [INFO] Calculating Export
+2023-12-21 15:30:54,633 [INFO] PostProcessing Meshes......
+2023-12-21 15:30:54,633 [INFO] Only one partition file, merging meshes will not be conducted.
+2023-12-21 15:30:54,660 [INFO] Process finished, check the result file.
+2023-12-21 15:30:54,660 [INFO] Peak Memory Usage: 85.10005950927734 MB

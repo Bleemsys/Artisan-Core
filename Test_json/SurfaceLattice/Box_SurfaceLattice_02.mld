@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//Test_json//SurfaceLattice//BoxShellMesh.obj",
+ "la_name" : ".//Test_json//SurfaceLattice//CustomSurfaceLattice_Strut_02.txt"
+ }
+}

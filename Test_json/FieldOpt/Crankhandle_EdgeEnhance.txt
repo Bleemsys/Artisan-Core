@@ -1,0 +1,51 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[-11.0, 11.0],[-11.0, 65.0],[-80.0, 0.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1, 0.1, 0.1],
+                "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {
+               "Gen_BasicQuadMesh":{
+                 "num_elem": [20, 60, 60],
+                 "x_range": [0.0, 23.0],
+                 "y_range": [0.0, 76.0],
+                 "z_range": [0.0, 80.0],
+                 "ori":[-12.0,-12.0,-80.0],
+                 "Normal": [0.0,0.0,1.0],
+                 "Meshfile": ".//Test_json//SurfaceLattice//CrankhandleSurfQuadMesh.med",
+                 "Geomfile": ".//sample-obj//crank_handle.stl",
+                 "isProjection": true,  
+                 "numCoverNodes": 1,
+		 "isSplitTris": false
+                }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//SurfaceLattice//Crankhandle_SurfQuadLattice.mld", 
+                    "size": [1.0,1.0,1.0], "thk":0.2, 
+                    "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+           "3":{
+                "OP_EdgeEnhance":{"Angles":[1.4, 1.6], 
+                                  "r": 3.0, 
+                                  "max_offset": 0.6,
+				  "min_offset": 0.0,
+				  "meshfile": ".//sample-obj//crank_handle.stl",
+				  "MergeNodes": true,
+				  "Fill": false
+				 }
+              },
+           "4":{
+              "Export": {"outfile": ".//Test_results//Crankhandle_SurfMeshLattice_EdgeEnhance.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}
