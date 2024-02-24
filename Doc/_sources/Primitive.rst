@@ -184,6 +184,7 @@ User may define a hex mesh in the box-shape domain, and then conformal the latti
                      "z_range": [0.0, 15.0],
                      "ori":[0.0,0.0,0.0],
                      "Normal": [0.0,0.0,1.0],
+                     "z_angle": 0.0,
                      "Mesh_file": ".//Test_json//PrimitiveDesign//BoxMesh.med"
                     }
                },
@@ -227,6 +228,8 @@ Here is the explanation of parameters.
      - a list parameter defining the coordinate of origin of the cylinder shape.  
    * - :code:`Normal`
      - a list containing 3 elements, and it is the definition of the normal direction of the box. If the direction is not aligned with [0.0, 0.0, 1.0], the box will be rotated accordantly.
+   * - :code:`z_angle`
+     - a float number ranging from 0.0 to 2π (6.283), it defines the counter-clock wise rotation around the vector :code:`Normal`.
    * - :code:`Mesh_file`
      - the file path to store the results.
 
@@ -258,6 +261,7 @@ In the example file :code:`\\Test_json\\PrimitiveDesign\\GenBox.txt`, a simple g
                      "Paras": {
                          "ori": [0.0, 0.0, 0.0],
                          "normal": [0, 0, 1],
+                         "z_angle": 0.0,
                          "length": [2, 2, 2]
                         }
                     }
@@ -335,6 +339,8 @@ The :code:`Box` shape has following parameters:
      - The center point coordinate of the box.
    * - :code:`normal`
      - A directional vector which forms the rotation from [0.0, 0.0, 1.0] to this given vector. If it is aligned with [0.0, 0.0, 1.0], no rotation.
+   * - :code:`z_angle`
+     - a float number ranging from 0.0 to 2π (6.283), it defines the counter-clock wise rotation around the vector :code:`normal`.
 
 The :code:`Sphere` shape has following parameters:
 

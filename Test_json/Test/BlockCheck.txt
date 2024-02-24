@@ -1,0 +1,27 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0, 200.0],[0.0, 200.0],[0.0, 200.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.3, 0.3, 0.3],
+                "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 1073741824000000
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": "SchwarzDiamond", 
+                    "size": [5.0,5.0,10.0], "thk":0.6, 
+                    "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+           
+           "2":{
+              "Export": {"outfile": ".//Test_results//BlockTest.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

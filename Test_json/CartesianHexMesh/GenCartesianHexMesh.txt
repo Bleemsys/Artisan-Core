@@ -15,9 +15,10 @@
                  "z_range": [0.0, 26.0],
                  "ori":[-48.0,-20.0,0.0],
                  "Normal": [0.0,0.0,1.0],
+                 "z_angle": 0.0,
                  "Meshfile": ".//Test_json//CartesianHexMesh//TripodeHexMesh.med",
                  "Geomfile": ".//sample-obj//telecope_tripode_base.stl",
-                 "numPrjLayers": 0, 
+                 "numPrjLayers": 1, 
                  "LayerDepth": 1.0, 
                  "numCoverNodes": -1
                 }

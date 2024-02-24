@@ -19,8 +19,6 @@
                                             "InterpType": "Linear",
                                             "pt_01":[300.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 
                                             "pt_02":[900.0,0.0,0.0], "n_vec_02":[-1.0,0.0,0.0], 
-                                            "nJobs": 4.0,
-                                            "ScratchPath" : ".//Test_results//Scratch//",
                                             "Transition": {}
                                             },
                                  "Fill":false, "Cube_Request": {}

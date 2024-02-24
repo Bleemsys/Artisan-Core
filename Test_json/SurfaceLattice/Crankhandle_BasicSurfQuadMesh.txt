@@ -20,7 +20,7 @@
                  "Geomfile": ".//sample-obj//crank_handle.stl",
                  "isProjection": true,  
                  "numCoverNodes": 1,
-		 "isSplitTris": false
+		       "isSplitTris": false
                 }
                },
           "2": {"Add_Lattice":{

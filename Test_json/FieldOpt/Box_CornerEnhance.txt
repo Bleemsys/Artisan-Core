@@ -1,0 +1,36 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//cube_1mm.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[5.0,5.0,5.0],
+                "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": "Cubic", 
+                    "size": [100.0,100.0,100.0], "thk":20.0, 
+                    "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], 
+                    "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2":{
+                "OP_CornerEnhance":{"k": 0.04,
+                                    "threshold": 0.95, 
+                                    "r": 400.0, 
+                                    "max_offset": 40.0,
+							 "min_offset": 0.0,
+							 "meshfile": ".//sample-obj//cube_1mm.stl",
+							 "Fill": true,
+                                    "param": {"sigma_factor": 0.025,
+                                              "grid_factor": 5}
+				}
+              },
+          "3":{"Export": {"outfile": ".//Test_results/Box_CornerEnhance.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

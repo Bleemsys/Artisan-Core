@@ -1,0 +1,17 @@
+2024-02-23 22:39:09,928 [INFO] This is a testing package of Artisan. 
+2024-02-23 22:39:09,928 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2024-02-23 22:39:09,928 [INFO] Version: 0.1.10.dev
+2024-02-23 22:39:09,928 [INFO] reading Json file: Test_json\FieldOpt\Box_CornerEnhance.txt
+2024-02-23 22:39:09,928 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj//cube_1mm.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [5.0, 5.0, 5.0], 'Padding': 4, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'Cubic', 'size': [100.0, 100.0, 100.0], 'thk': 20.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '2': {'OP_CornerEnhance': {'k': 0.04, 'threshold': 0.95, 'r': 400.0, 'max_offset': 40.0, 'min_offset': 0.0, 'meshfile': './/sample-obj//cube_1mm.stl', 'Fill': True, 'param': {'sigma_factor': 0.025, 'grid_factor': 5}}}, '3': {'Export': {'outfile': './/Test_results/Box_CornerEnhance.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2024-02-23 22:39:09,928 [INFO] Setup basic fill domain......
+2024-02-23 22:39:09,940 [INFO] Number of Domain Partition: 1
+2024-02-23 22:39:09,941 [INFO] Calculating Sub-Domain:1
+2024-02-23 22:39:09,941 [INFO] Building Up GeomDomain......
+2024-02-23 22:39:10,725 [INFO] Workflow Calculation: 
+2024-02-23 22:39:10,725 [INFO] Calculating Add_Lattice
+2024-02-23 22:39:11,228 [INFO] Calculating OP_CornerEnhance
+2024-02-23 22:39:14,365 [INFO] Calculating Export
+2024-02-23 22:39:14,992 [INFO] PostProcessing Meshes......
+2024-02-23 22:39:14,992 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-02-23 22:39:15,156 [INFO] Process finished, check the result file.
+2024-02-23 22:39:15,156 [INFO] Peak Memory Usage: 1624.8399982452393 MB

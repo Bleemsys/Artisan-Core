@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Lattice Transition &#8212; Artisan 0.1.9 documentation</title>
+    <title>Lattice Transition &#8212; Artisan 0.1.10 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.1.9 documentation</p>
+    <p class="title logo__title">Artisan 0.1.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -322,8 +322,6 @@ document.write(`
 <span class="w">                                        </span><span class="nt">&quot;InterpType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_01&quot;</span><span class="p">:[</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;n_vec_01&quot;</span><span class="p">:[</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_02&quot;</span><span class="p">:[</span><span class="mf">90.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;n_vec_02&quot;</span><span class="p">:[</span><span class="mf">-1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;nJobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;ScratchPath&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//Scratch//&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;Transition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 <span class="w">                                        </span><span class="p">},</span>
 <span class="w">                             </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
@@ -352,14 +350,15 @@ document.write(`
 <tr class="row-even"><th class="stub"><p><code class="code docutils literal notranslate"><span class="pre">pt_02</span></code>, <code class="code docutils literal notranslate"><span class="pre">n_vec_02</span></code></p></th>
 <td><p>Defines the plane that ends the transition at the second field. <code class="code docutils literal notranslate"><span class="pre">pt_02</span></code> is the point location, <code class="code docutils literal notranslate"><span class="pre">n_vec_02</span></code> is the normal vector.</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p><code class="code docutils literal notranslate"><span class="pre">nJobs</span></code>, <code class="code docutils literal notranslate"><span class="pre">ScratchPath</span></code></p></th>
-<td><p><code class="code docutils literal notranslate"><span class="pre">nJobs</span></code> defines the number of parallel threading used for computation. If it is <code class="code docutils literal notranslate"><span class="pre">0</span></code> or negative number, it will use all available resources, if <code class="code docutils literal notranslate"><span class="pre">1</span></code>, normal serial computation. <code class="code docutils literal notranslate"><span class="pre">ScratchPath</span></code> defines the working folder for exchange of data during parallel computation.</p></td>
-</tr>
-<tr class="row-even"><th class="stub"><p><code class="code docutils literal notranslate"><span class="pre">Transition</span></code></p></th>
+<tr class="row-odd"><th class="stub"><p><code class="code docutils literal notranslate"><span class="pre">Transition</span></code></p></th>
 <td><p>This parameter defines the influence lattice that used to guide the transition between two fields. If it is empty, no transition computation will be initiated.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Artisan 0.1.10 and later version does NOT require <code class="code docutils literal notranslate"><span class="pre">nJobs</span></code> and <code class="code docutils literal notranslate"><span class="pre">ScratchPath</span></code> parameters for the keywords <code class="code docutils literal notranslate"><span class="pre">OP_FieldMerge</span></code>. Historically <code class="code docutils literal notranslate"><span class="pre">nJobs</span></code> defines the number of parallel threading used for computation. If it is <code class="code docutils literal notranslate"><span class="pre">0</span></code> or negative number, it will use all available resources, if <code class="code docutils literal notranslate"><span class="pre">1</span></code>, normal serial computation. <code class="code docutils literal notranslate"><span class="pre">ScratchPath</span></code> defines the working folder for exchange of data during parallel computation.</p>
+</div>
 <p>The transition of two lattices should be looks like below. The vertical and horizontal beams were gradually growing until merged together.</p>
 <img alt="_images/FieldMerge_01.png" src="_images/FieldMerge_01.png" />
 <p>Like many algorithm, the plain transition may not produce a “perfect” results. For instance, below shows a case that <code class="code docutils literal notranslate"><span class="pre">BC</span></code> lattice transiting to the <code class="code docutils literal notranslate"><span class="pre">Cubic</span></code> lattice.</p>
@@ -385,8 +384,6 @@ document.write(`
 <span class="w">                                        </span><span class="nt">&quot;InterpType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_01&quot;</span><span class="p">:[</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;n_vec_01&quot;</span><span class="p">:[</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_02&quot;</span><span class="p">:[</span><span class="mf">90.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;n_vec_02&quot;</span><span class="p">:[</span><span class="mf">-1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;nJobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;ScratchPath&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//Scratch//&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;Transition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="s2">&quot;BCCubic&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:[</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;f_trans&quot;</span><span class="p">:</span><span class="mf">0.15</span><span class="p">}</span>
 <span class="w">                                        </span><span class="p">},</span>
 <span class="w">                             </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
@@ -443,8 +440,6 @@ document.write(`
 <span class="w">                                        </span><span class="nt">&quot;InterpType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Attractor&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_att&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">],</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_r&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">125.0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;nJobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;ScratchPath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//Scratch//&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;Transition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 <span class="w">                                       </span><span class="p">},</span>
 <span class="w">                             </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
@@ -488,8 +483,6 @@ document.write(`
 <span class="w">                                        </span><span class="nt">&quot;InterpType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_01&quot;</span><span class="p">:[</span><span class="mf">300.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;n_vec_01&quot;</span><span class="p">:[</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">                                        </span><span class="nt">&quot;pt_02&quot;</span><span class="p">:[</span><span class="mf">900.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;n_vec_02&quot;</span><span class="p">:[</span><span class="mf">-1.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;nJobs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;ScratchPath&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//Scratch//&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;Transition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 <span class="w">                                        </span><span class="p">},</span>
 <span class="w">                             </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
@@ -539,7 +532,7 @@ document.write(`
 <img alt="_images/FieldMerge_05.png" src="_images/FieldMerge_05.png" />
 <p>Here are a few hits and keypoints of using <code class="code docutils literal notranslate"><span class="pre">OP_FieldMerge</span></code> algorithm:</p>
 <ol class="arabic simple">
-<li><p>The best pairing of two merged lattices shall have a topological similarity. This ensures a smooth and continuously connected transition.</p></li>
+<li><p>The best pairing of two merged lattices shall have some topological similarities. This ensures a smooth and continuously connected transition.</p></li>
 <li><p>The bridging lattice has to be considered to assist the lattices which have no close topological or geometric similarity.</p></li>
 <li><p>User may requires standard shape cases studies, e.g. on the box or bar shape, to check the lattice transition before applying to actual design.</p></li>
 <li><p>The computation of the merging algorithm is heavy, and requires longer time to finish the task. User shall expect a long computation time on the complex design.</p></li>

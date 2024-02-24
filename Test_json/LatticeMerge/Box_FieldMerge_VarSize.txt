@@ -18,8 +18,6 @@
                                             "InterpType": "Attractor",
                                             "pt_att": [100.0,100.0,100.0],
                                             "pt_r": 125.0,
-                                            "nJobs": 6.0,
-                                            "ScratchPath": ".//Test_results//Scratch//",
                                             "Transition": {}
                                            },
                                  "Fill":true, "Cube_Request": {}

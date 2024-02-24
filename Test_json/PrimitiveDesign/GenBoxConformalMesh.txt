@@ -15,6 +15,7 @@
                      "z_range": [0.0, 15.0],
                      "ori":[0.0,0.0,0.0],
                      "Normal": [0.0,0.0,1.0],
+                     "z_angle": 0.0,
                      "Mesh_file": ".//Test_json//PrimitiveDesign//BoxMesh.med"
                     }
                },

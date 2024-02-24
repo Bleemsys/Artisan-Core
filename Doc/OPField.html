@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Field Operation &#8212; Artisan 0.1.9 documentation</title>
+    <title>Field Operation &#8212; Artisan 0.1.10 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.1.9 documentation</p>
+    <p class="title logo__title">Artisan 0.1.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -296,7 +296,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#external-field-enhancement">External Field Enhancement</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-feature-enhancement">Geometry Feature Enhancement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-feature-enhancement">Geometry Feature Enhancement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sharpe-edge-enhancement">Sharpe Edge Enhancement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#corner-enhancement">Corner Enhancement</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -403,7 +407,9 @@ document.write(`
 <section id="geometry-feature-enhancement">
 <h2>Geometry Feature Enhancement<a class="headerlink" href="#geometry-feature-enhancement" title="Permalink to this headline">#</a></h2>
 <p>Geometry frequently incorporates various distinctive features along its edges, like sharp edges, which typically serve functional purposes. In design, emphasizing these features can be crucial for improving mechanical performance. Artisan offers straightforward methods to identify and capture these key features and it transforms these captured feature lines into field based operations that enhance the functional features.</p>
-<p>The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle.</p>
+<section id="sharpe-edge-enhancement">
+<h3>Sharpe Edge Enhancement<a class="headerlink" href="#sharpe-edge-enhancement" title="Permalink to this headline">#</a></h3>
+<p>Artisan has the keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> to identify the given mesh sharp edges, and build the cylindrical shape offset fields in order to enhance the material thickness around the cylindrical volume. The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle. The JSON file can be find at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.txt</span></code></p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.ply&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -478,6 +484,86 @@ document.write(`
 <img alt="_images/crank_handle_EdgeEnhance.png" src="_images/crank_handle_EdgeEnhance.png" />
 <img alt="_images/crank_handle_EdgeEnhance_02.png" src="_images/crank_handle_EdgeEnhance_02.png" />
 </section>
+<section id="corner-enhancement">
+<h3>Corner Enhancement<a class="headerlink" href="#corner-enhancement" title="Permalink to this headline">#</a></h3>
+<p>Corner features can be identified through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code>. Corners are considered as the center points of the sphere which is the influence volume in this keywords. The offset field is then added to the lattice field in order to varying the material thickness. A simple example (user may find it at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.txt</span></code>) of enhancing the 4 corner of a box shape is shown in the JSON below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">           </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],</span>
+<span class="w">           </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
+<span class="w">           </span><span class="p">},</span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">     </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">               </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cubic&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">20.0</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">               </span><span class="p">}</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">     </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span>
+<span class="w">           </span><span class="nt">&quot;OP_CornerEnhance&quot;</span><span class="p">:{</span><span class="nt">&quot;k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.04</span><span class="p">,</span>
+<span class="w">                               </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span><span class="p">,</span>
+<span class="w">                               </span><span class="nt">&quot;r&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">400.0</span><span class="p">,</span>
+<span class="w">                               </span><span class="nt">&quot;max_offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">40.0</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;min_offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                               </span><span class="nt">&quot;param&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;sigma_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.025</span><span class="p">,</span>
+<span class="w">                                         </span><span class="nt">&quot;grid_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">}</span>
+<span class="w">                           </span><span class="p">}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w">     </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Box_CornerEnhance.stl&quot;</span><span class="p">}}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code> has similar parameters as <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code>. Generally the parameters helps the algorithm to identify the corner on the given mesh, and the calculation parameters that may need turning for better capturing of the corner.</p>
+<table class="colwidths-given table">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">k</span></code></p></td>
+<td><p>the sensitivities of algorithm for capturing the corner, ranging from 0.04 to 0.06;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">threshold</span></code></p></td>
+<td><p>the sharpness of the corner, ranging from 0.01 to 0.99.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">r</span></code></p></td>
+<td><p>it is a float number defining the influence radius of spherical volume;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Max_offset</span></code></p></td>
+<td><p>the maximum thickness offset that happened at the edge. The offset level will be reduced in accordance with the influence radius <code class="code docutils literal notranslate"><span class="pre">r</span></code>;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Min_offset</span></code></p></td>
+<td><p>the minimum thickness offset happens at the end of the influence radius;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Meshfile</span></code></p></td>
+<td><p>a string of the path to the mesh file contains the geometry, mesh has to be a cluster of triangles forming the geometric boundary.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">param</span></code></p></td>
+<td><p>contains two parameters, <code class="code docutils literal notranslate"><span class="pre">sigma_factor</span></code> and <code class="code docutils literal notranslate"><span class="pre">grid_factor</span></code>. The algorithm may captures a set of points around the same corner, this can be reduced by increasing the grid_factor (the value of <code class="code docutils literal notranslate"><span class="pre">5</span></code> is recommended as first try). If few corners were found, user could try to increase the <code class="code docutils literal notranslate"><span class="pre">sigma_factor</span></code> (the recommended value <code class="code docutils literal notranslate"><span class="pre">0.05</span></code>).</p></td>
+</tr>
+</tbody>
+</table>
+<p>The algorithm relies on the fineness of the field (i.e. the resolution), and identifies the corner locations using field grid mesh, therefore may not exactly at the location of the mesh surface. The JSON above produce the results below.</p>
+<img alt="_images/BoxCornerEnhance.png" src="_images/BoxCornerEnhance.png" />
+</section>
+</section>
 </section>
 
 
@@ -525,7 +611,11 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#external-field-enhancement">External Field Enhancement</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-feature-enhancement">Geometry Feature Enhancement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-feature-enhancement">Geometry Feature Enhancement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sharpe-edge-enhancement">Sharpe Edge Enhancement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#corner-enhancement">Corner Enhancement</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

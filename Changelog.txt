@@ -41,3 +41,15 @@ This is simple change log recording the major and minor updates
 - Major re-coding for infrastructure, e.g. python to C++, add openMP.
 - Add more functions for geometric handling and primitive design.
 - Doc update
+
+0.1.9
+- Geometry feature enhancement
+- Cartesian Mesher and Surface Quad/Tet Mesher
+- Doc update
+
+0.1.10
+- Geometry feature enhancement - Corner enhancement
+- Lattice triansition/merge core re-development and removed joblib dependency
+- fix the box mesh, box shape z-axis rotation issue 
+- Doc update
+

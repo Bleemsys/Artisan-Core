@@ -130,7 +130,12 @@ Geometry Feature Enhancement
 
 Geometry frequently incorporates various distinctive features along its edges, like sharp edges, which typically serve functional purposes. In design, emphasizing these features can be crucial for improving mechanical performance. Artisan offers straightforward methods to identify and capture these key features and it transforms these captured feature lines into field based operations that enhance the functional features.
 
-The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle.  
+
+-----------------------
+Sharpe Edge Enhancement
+-----------------------
+
+Artisan has the keywords :code:`OP_EdgeEnhance` to identify the given mesh sharp edges, and build the cylindrical shape offset fields in order to enhance the material thickness around the cylindrical volume. The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle. The JSON file can be find at :code:`FieldOpt\\Box_EdgeEnhance.txt`
 
 .. code-block:: json
 
@@ -200,6 +205,78 @@ The example at :code:`FieldOpt\\Crankhandle_EdgeEnhance.txt` shows a more compli
 
 .. image:: ./pictures/crank_handle_EdgeEnhance_02.png
 
+
+------------------
+Corner Enhancement
+------------------
+
+Corner features can be identified through the keywords :code:`OP_CornerEnhance`. Corners are considered as the center points of the sphere which is the influence volume in this keywords. The offset field is then added to the lattice field in order to varying the material thickness. A simple example (user may find it at :code:`FieldOpt\\Box_EdgeEnhance.txt`) of enhancing the 4 corner of a box shape is shown in the JSON below.
+
+.. code-block:: json
+
+     {"Setup":{ "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//cube_1mm.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[5.0,5.0,5.0],
+                "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+     "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": "Cubic", 
+                    "size": [100.0,100.0,100.0], "thk":20.0, 
+                    "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], 
+                    "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2":{
+                "OP_CornerEnhance":{"k": 0.04,
+                                    "threshold": 0.95, 
+                                    "r": 400.0, 
+                                    "max_offset": 40.0,
+							 "min_offset": 0.0,
+							 "meshfile": ".//sample-obj//cube_1mm.stl",
+							 "Fill": true,
+                                    "param": {"sigma_factor": 0.025,
+                                              "grid_factor": 5}
+				}
+              },
+          "3":{"Export": {"outfile": ".//Test_results/Box_CornerEnhance.stl"}}
+           },
+     "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+     }
+
+The keywords :code:`OP_CornerEnhance` has similar parameters as :code:`OP_EdgeEnhance`. Generally the parameters helps the algorithm to identify the corner on the given mesh, and the calculation parameters that may need turning for better capturing of the corner. 
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`k`
+     - the sensitivities of algorithm for capturing the corner, ranging from 0.04 to 0.06;
+   * - :code:`threshold` 
+     - the sharpness of the corner, ranging from 0.01 to 0.99.
+   * - :code:`r` 
+     - it is a float number defining the influence radius of spherical volume;  
+   * - :code:`Max_offset`
+     - the maximum thickness offset that happened at the edge. The offset level will be reduced in accordance with the influence radius :code:`r`;
+   * - :code:`Min_offset`
+     - the minimum thickness offset happens at the end of the influence radius;
+   * - :code:`Meshfile`
+     - a string of the path to the mesh file contains the geometry, mesh has to be a cluster of triangles forming the geometric boundary. 
+   * - :code:`param`
+     - contains two parameters, :code:`sigma_factor` and :code:`grid_factor`. The algorithm may captures a set of points around the same corner, this can be reduced by increasing the grid_factor (the value of :code:`5` is recommended as first try). If few corners were found, user could try to increase the :code:`sigma_factor` (the recommended value :code:`0.05`).
+
+The algorithm relies on the fineness of the field (i.e. the resolution), and identifies the corner locations using field grid mesh, therefore may not exactly at the location of the mesh surface. The JSON above produce the results below.
+
+.. image:: ./pictures/BoxCornerEnhance.png
 
 
 

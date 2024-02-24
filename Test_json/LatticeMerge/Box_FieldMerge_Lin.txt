@@ -18,9 +18,7 @@
                                             "InterpType": "Linear",
                                             "pt_01":[10.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 
                                             "pt_02":[90.0,0.0,0.0], "n_vec_02":[-1.0,0.0,0.0], 
-                                            "nJobs": 4.0,
-                                            "ScratchPath" : ".//Test_results//Scratch//",
-                                            "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.2, "f_trans":0.15}
+                                            "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.2, "f_trans":0.3}
                                             },
                                  "Fill":true, "Cube_Request": {}
 							   }

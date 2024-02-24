@@ -18,8 +18,6 @@
                                             "InterpType": "Attractor",
                                             "pt_att": [100.0,100.0,100.0],
                                             "pt_r": 100.0,  
-                                            "nJobs": 4.0,
-                                            "ScratchPath" : ".//Test_results//Scratch//",
                                             "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.8, "f_trans":0.5}
                                             },
                                  "Fill":true, "Cube_Request": {}

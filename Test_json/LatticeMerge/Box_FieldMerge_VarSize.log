@@ -1,0 +1,18 @@
+2024-02-23 23:33:13,143 [INFO] This is a testing package of Artisan. 
+2024-02-23 23:33:13,143 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2024-02-23 23:33:13,144 [INFO] Version: 0.1.10.dev
+2024-02-23 23:33:13,144 [INFO] reading Json file: Test_json\LatticeMerge\Box_FieldMerge_VarSize.txt
+2024-02-23 23:33:13,154 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[0.0, 100.0], [0.0, 100.0], [0.0, 100.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.5, 0.5, 0.5], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'Cubic', 'size': [10.0, 10.0, 10.0], 'thk': 1.2, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '2': {'OP_FieldMerge': {'la_name': 'Cubic', 'size': [5.0, 5.0, 5.0], 'thk': 1.2, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'OP_para': {'InterpType': 'Attractor', 'pt_att': [100.0, 100.0, 100.0], 'pt_r': 125.0, 'Transition': {}}, 'Fill': True, 'Cube_Request': {}}}, '3': {'Field_Boundary': {'Boundary': 'Box'}}, '4': {'Export': {'outfile': './/Test_results/Box_FieldMerge_VarSize.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2024-02-23 23:33:13,154 [INFO] Setup basic fill domain......
+2024-02-23 23:33:13,155 [INFO] Number of Domain Partition: 1
+2024-02-23 23:33:13,155 [INFO] Calculating Sub-Domain:1
+2024-02-23 23:33:13,155 [INFO] Building Up Sample Domain
+2024-02-23 23:33:13,500 [INFO] Workflow Calculation: 
+2024-02-23 23:33:13,500 [INFO] Calculating Add_Lattice
+2024-02-23 23:33:13,918 [INFO] Calculating OP_FieldMerge
+2024-02-23 23:34:22,491 [INFO] Calculating Field_Boundary
+2024-02-23 23:34:22,675 [INFO] Calculating Export
+2024-02-23 23:34:23,240 [INFO] PostProcessing Meshes......
+2024-02-23 23:34:23,240 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-02-23 23:34:23,396 [INFO] Process finished, check the result file.
+2024-02-23 23:34:23,396 [INFO] Peak Memory Usage: 456.66881942749023 MB

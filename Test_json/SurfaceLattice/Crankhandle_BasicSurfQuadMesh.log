@@ -1,16 +1,16 @@
-2023-12-20 18:49:59,109 [INFO] This is a testing package of Artisan.
-2023-12-20 18:49:59,109 [INFO] Version: 0.1.9.dev
-2023-12-20 18:49:59,109 [INFO] reading Json file: Test_json\SurfaceLattice\Crankhandle_BasicSurfQuadMesh.txt
-2023-12-20 18:49:59,109 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-11.0, 11.0], [-11.0, 65.0], [-80.0, 0.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.1, 0.1, 0.1], 'Padding': 4, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Gen_BasicQuadMesh': {'num_elem': [20, 60, 60], 'x_range': [0.0, 23.0], 'y_range': [0.0, 76.0], 'z_range': [0.0, 80.0], 'ori': [-12.0, -12.0, -80.0], 'Normal': [0.0, 0.0, 1.0], 'Meshfile': './/Test_json//SurfaceLattice//CrankhandleSurfQuadMesh.med', 'Geomfile': './/sample-obj//crank_handle.stl', 'isProjection': True, 'numCoverNodes': 1, 'isSplitTris': False}}, '2': {'Add_Lattice': {'la_name': './/Test_json//SurfaceLattice//Crankhandle_SurfQuadLattice.mld', 'size': [1.0, 1.0, 1.0], 'thk': 0.2, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results//Crankhandle_SurfMeshLattice.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': True}}
-2023-12-20 18:49:59,121 [INFO] Setup basic fill domain......
-2023-12-20 18:49:59,121 [INFO] Number of Domain Partition: 1
-2023-12-20 18:49:59,121 [INFO] Calculating Sub-Domain:1
-2023-12-20 18:49:59,121 [INFO] Building Up Sample Domain
-2023-12-20 18:50:06,303 [INFO] Workflow Calculation: 
-2023-12-20 18:50:06,303 [INFO] Calculating Gen_BasicQuadMesh
-2023-12-20 18:50:06,806 [INFO] Calculating Add_Lattice
-2023-12-20 18:50:29,910 [INFO] Calculating Export
-2023-12-20 18:50:34,014 [INFO] PostProcessing Meshes......
-2023-12-20 18:50:34,014 [INFO] Only one partition file, merging meshes will not be conducted.
-2023-12-20 18:50:34,178 [INFO] Process finished, check the result file.
-2023-12-20 18:50:34,178 [INFO] Peak Memory Usage: 5472.262161254883 MB
+2024-01-13 15:05:08,887 [INFO] This is a testing package of Artisan.
+2024-01-13 15:05:08,887 [INFO] Version: 0.1.9
+2024-01-13 15:05:08,887 [INFO] reading Json file: Test_json\SurfaceLattice\Crankhandle_BasicSurfQuadMesh.txt
+2024-01-13 15:05:08,887 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-11.0, 11.0], [-11.0, 65.0], [-80.0, 0.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.1, 0.1, 0.1], 'Padding': 4, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Gen_BasicQuadMesh': {'num_elem': [20, 60, 60], 'x_range': [0.0, 23.0], 'y_range': [0.0, 76.0], 'z_range': [0.0, 80.0], 'ori': [-12.0, -12.0, -80.0], 'Normal': [0.0, 0.0, 1.0], 'Meshfile': './/Test_json//SurfaceLattice//CrankhandleSurfQuadMesh.med', 'Geomfile': './/sample-obj//crank_handle.stl', 'isProjection': True, 'numCoverNodes': 1, 'isSplitTris': False}}, '2': {'Add_Lattice': {'la_name': './/Test_json//SurfaceLattice//Crankhandle_SurfQuadLattice.mld', 'size': [1.0, 1.0, 1.0], 'thk': 0.2, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results//Crankhandle_SurfMeshLattice.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': True}}
+2024-01-13 15:05:08,887 [INFO] Setup basic fill domain......
+2024-01-13 15:05:08,887 [INFO] Number of Domain Partition: 1
+2024-01-13 15:05:08,887 [INFO] Calculating Sub-Domain:1
+2024-01-13 15:05:08,887 [INFO] Building Up Sample Domain
+2024-01-13 15:05:15,196 [INFO] Workflow Calculation: 
+2024-01-13 15:05:15,196 [INFO] Calculating Gen_BasicQuadMesh
+2024-01-13 15:05:15,809 [INFO] Calculating Add_Lattice
+2024-01-13 15:05:38,081 [INFO] Calculating Export
+2024-01-13 15:05:40,847 [INFO] PostProcessing Meshes......
+2024-01-13 15:05:40,847 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-01-13 15:05:41,036 [INFO] Process finished, check the result file.
+2024-01-13 15:05:41,036 [INFO] Peak Memory Usage: 5472.262161254883 MB

@@ -29,8 +29,6 @@ Considering to fill a bar region with two different lattices, :code:`BC` on one 
                                             "InterpType": "Linear",
                                             "pt_01":[10.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 
                                             "pt_02":[90.0,0.0,0.0], "n_vec_02":[-1.0,0.0,0.0], 
-                                            "nJobs": 4.0,
-                                            "ScratchPath" : ".//Test_results//Scratch//",
                                             "Transition": {}
                                             },
                                  "Fill":true, "Cube_Request": {}
@@ -55,10 +53,12 @@ The item :code:`"2"` keywords :code:`OP_FieldMerge` in :code:`WorkFlow` defines 
      - Defines the plane that starts the transition from the main field. :code:`pt_01` is the point location, :code:`n_vec_01` is the normal vector.
    * - :code:`pt_02`, :code:`n_vec_02`
      - Defines the plane that ends the transition at the second field. :code:`pt_02` is the point location, :code:`n_vec_02` is the normal vector.
-   * - :code:`nJobs`, :code:`ScratchPath`
-     - :code:`nJobs` defines the number of parallel threading used for computation. If it is :code:`0` or negative number, it will use all available resources, if :code:`1`, normal serial computation. :code:`ScratchPath` defines the working folder for exchange of data during parallel computation. 
    * - :code:`Transition`
      - This parameter defines the influence lattice that used to guide the transition between two fields. If it is empty, no transition computation will be initiated.  
+
+.. note::
+  
+  Artisan 0.1.10 and later version does NOT require :code:`nJobs` and :code:`ScratchPath` parameters for the keywords :code:`OP_FieldMerge`. Historically :code:`nJobs` defines the number of parallel threading used for computation. If it is :code:`0` or negative number, it will use all available resources, if :code:`1`, normal serial computation. :code:`ScratchPath` defines the working folder for exchange of data during parallel computation. 
 
 The transition of two lattices should be looks like below. The vertical and horizontal beams were gradually growing until merged together. 
 
@@ -92,8 +92,6 @@ The transition was mathematically right, but the resultant geometry had a large 
                                             "InterpType": "Linear",
                                             "pt_01":[10.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 
                                             "pt_02":[90.0,0.0,0.0], "n_vec_02":[-1.0,0.0,0.0], 
-                                            "nJobs": 4.0,
-                                            "ScratchPath" : ".//Test_results//Scratch//",
                                             "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.2, "f_trans":0.15}
                                             },
                                  "Fill":true, "Cube_Request": {}
@@ -151,8 +149,6 @@ In addition to :code:`Linear` transition, :code:`OP_FieldMerge` supports :code:`
                                             "InterpType": "Attractor",
                                             "pt_att": [100.0,100.0,100.0],
                                             "pt_r": 125.0,
-                                            "nJobs": 6.0,
-                                            "ScratchPath": ".//Test_results//Scratch//",
                                             "Transition": {}
                                            },
                                  "Fill":true, "Cube_Request": {}
@@ -207,8 +203,6 @@ The transition supports all lattice definitions in all circumstances. In other w
                                             "InterpType": "Linear",
                                             "pt_01":[300.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 
                                             "pt_02":[900.0,0.0,0.0], "n_vec_02":[-1.0,0.0,0.0], 
-                                            "nJobs": 4.0,
-                                            "ScratchPath" : ".//Test_results//Scratch//",
                                             "Transition": {}
                                             },
                                  "Fill":false, "Cube_Request": {}
@@ -268,7 +262,7 @@ The results below shows a good smooth transition from a customer defined geometr
 
 Here are a few hits and keypoints of using :code:`OP_FieldMerge` algorithm:
 
-1. The best pairing of two merged lattices shall have a topological similarity. This ensures a smooth and continuously connected transition. 
+1. The best pairing of two merged lattices shall have some topological similarities. This ensures a smooth and continuously connected transition. 
 2. The bridging lattice has to be considered to assist the lattices which have no close topological or geometric similarity. 
 3. User may requires standard shape cases studies, e.g. on the box or bar shape, to check the lattice transition before applying to actual design. 
 4. The computation of the merging algorithm is heavy, and requires longer time to finish the task. User shall expect a long computation time on the complex design.

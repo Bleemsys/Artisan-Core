@@ -80,3 +80,9 @@ This testing package is the copyrighted & closed source freeware. This testing p
 This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 You may copy and redistribute this testing package material in any medium or format under the condition for non-commercial purpose. For commercial applications, please contact us at info@bleemsys.com. We are also happy to offer the customized development and consulting services.
+
+## Supports
+Website: http://bleemsys.com/Artisan.html
+Facebook: https://www.facebook.com/Bleemsys
+Telegram group: https://t.me/LatticeStructures
+

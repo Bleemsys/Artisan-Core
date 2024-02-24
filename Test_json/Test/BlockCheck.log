@@ -1,0 +1,15 @@
+2024-01-21 01:52:39,763 [INFO] This is a testing package of Artisan.
+2024-01-21 01:52:39,763 [INFO] Version: 0.1.10.dev
+2024-01-21 01:52:39,763 [INFO] reading Json file: Test_json\Test\BlockCheck.txt
+2024-01-21 01:52:39,763 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[0.0, 200.0], [0.0, 200.0], [0.0, 200.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.3, 0.3, 0.3], 'Padding': 4, 'onGPU': False, 'memorylimit': 1073741824000000}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'SchwarzDiamond', 'size': [5.0, 5.0, 10.0], 'thk': 0.6, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '2': {'Export': {'outfile': './/Test_results//BlockTest.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2024-01-21 01:52:39,763 [INFO] Setup basic fill domain......
+2024-01-21 01:52:39,763 [INFO] Number of Domain Partition: 1
+2024-01-21 01:52:39,763 [INFO] Calculating Sub-Domain:1
+2024-01-21 01:52:39,763 [INFO] Building Up Sample Domain
+2024-01-21 01:52:54,592 [INFO] Workflow Calculation: 
+2024-01-21 01:52:54,592 [INFO] Calculating Add_Lattice
+2024-01-21 01:56:53,716 [INFO] Calculating Export
+2024-01-21 01:57:46,974 [INFO] PostProcessing Meshes......
+2024-01-21 01:57:47,015 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-01-21 01:59:10,877 [INFO] Process finished, check the result file.
+2024-01-21 01:59:10,893 [INFO] Peak Memory Usage: 22414.202991485596 MB
