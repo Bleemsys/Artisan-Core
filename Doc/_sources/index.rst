@@ -30,6 +30,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Primitive Design <Primitive.rst>
    Field Operation <OPField.rst>
    Lattice Transition <TransLattice.rst>
+   Compression <Compression.rst>
    API Interface <API.rst>
    Supports <Supports.rst>
 

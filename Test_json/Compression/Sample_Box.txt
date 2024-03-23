@@ -1,0 +1,28 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,40.0],[0.0,40.0],[0.0,40.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+    "1": {"Add_Geometry":{
+        "Name": "Sphere", 
+        "k_factor": 0.0,
+        "push2GeomField": false,
+        "Paras": {
+            "ori": [20.0, 20.0, 20.0],
+            "r": 15
+                }
+        }
+        },
+          "2":{"OP_Compress": {"compressed_file": ".//Test_results/compressed_file_box.smd"}},
+          "3":{"Export": {"outfile": ".//Test_results/Test_Sample_Ball.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

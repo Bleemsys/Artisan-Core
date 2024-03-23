@@ -1,0 +1,58 @@
+{"Setup":{      "Type": "Geometry",
+                "Geomfile": ".//sample-obj//femur_cortical.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.3,0.3,0.3],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 10737418240000
+                },
+ "WorkFlow":{
+        "1": {
+            "Gen_BasicCartesianHexMesh":{
+                    "num_elem": [18, 12, 55],
+                    "x_range":  [0.0, 120.0],
+                    "y_range":  [0.0, 80.0],
+                    "z_range":  [0.0, 440.0],
+                    "ori": [-60.0,-40.0,-220.0],
+                    "z_angle": 0.0,
+                    "Normal": [0.0,0.0,1.0],
+                    "Meshfile": ".//Test_json//Cases//FemurCortical//femur_hex_mesh.med",
+                    "Geomfile": ".//sample-obj//femur_cortical.stl",
+                    "isProjection": true,  
+                    "numCoverNodes": 1,
+                    "numPrjLayers": 1, 
+                    "LayerDepth": 1.0 
+                }
+            },
+        "2": {
+            "Add_Lattice":{
+                    "la_name": ".//Test_json//Cases//FemurCortical//femur_hex_infill.mld", 
+                    "size": [12.0,12.0,12.0], 
+                    "thk": 0.5, 
+                    "Rot": [0.0,0.0,0.0], 
+                    "Trans": [0.0,0.0,0.0], 
+                    "Inv": false, 
+                    "Fill": false, 
+                    "Cube_Request": {}
+                    }
+            },
+        "3": {
+            "Add_Attractor": {
+                "la_name": ".//Test_json//Cases//FemurCortical//femur_hex_infill.mld",
+                "size": [12.0,12.0,12.0], "thk": 5.5, 
+                "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                "pt":[0.0, 20.0, 0.0], "r":100.0,
+                "Inv": false, 
+                "Fill": true,
+                "Cube_Request": {}
+                }
+                },
+        "4": {
+            "Export": {"outfile": ".//Test_results/femur_hex_infill.stl"}
+           }
+        },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

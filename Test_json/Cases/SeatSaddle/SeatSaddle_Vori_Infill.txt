@@ -1,0 +1,36 @@
+{"Setup":{      "Type": "Sample",
+                "Sample": {"Domain" : [[-135.0, 136.0],[-65.0, 2.0],[-69.0,69.0]], "Shape": "Box"},
+                "Geomfile": ".//sample-obj//SeatSaddle//Seat.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.3,0.3,0.3],
+                "Padding": 3,
+                "onGPU": false,
+                "memorylimit": 10737418240000
+                },
+ "WorkFlow":{
+          
+        "1": {"Gen_VoronoiPolyMesh":{
+                    "Geomfile": ".//sample-obj//SeatSaddle//Seat.stl",
+                    "size": [7.0, 7.0, 20.0],
+                    "Meshfile": ".//sample-obj//SeatSaddle//Seat_VorMesh.med",
+                    "remove_tol": 4.0
+                }
+             },
+        "2": {
+               "Add_Lattice":{
+                    "la_name": ".//Test_json//Cases//SeatSaddle//GenVorMesh.mld", 
+		          "size": [12.0, 12.0, 12.0], "thk":0.6, 
+ 		          "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], 
+		          "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+        "3": {
+               "Export": {"outfile": ".//Test_results//SeatInfill_vor_regional.stl"}
+               }
+               },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

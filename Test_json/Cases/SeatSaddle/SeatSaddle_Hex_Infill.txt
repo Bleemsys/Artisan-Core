@@ -1,0 +1,111 @@
+{"Setup":{      "Type": "Sample",
+                "Sample": {"Domain" : [[-135.0, 136.0],[-65.0, 2.0],[-69.0,69.0]], "Shape": "Box"},
+                "Geomfile": ".//sample-obj//SeatSaddle//Seat.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.3,0.3,0.3],
+                "Padding": 3,
+                "onGPU": false,
+                "memorylimit": 10737418240000
+                },
+ "WorkFlow":{
+        "1": {"Gen_BasicCartesianHexMesh":{
+                     "num_elem": [60, 25, 36],
+                     "x_range": [0.0, 271.0],
+                     "y_range": [0.0, 67.0],
+                     "z_range": [0.0, 138.0],
+                     "ori":[-135.0, -65.0, -69.0],
+                     "Normal": [0.0,0.0,1.0],
+                     "z_angle": 0.0,
+                     "Meshfile": ".//sample-obj//SeatSaddle//Seat_Hex_Mesh.med",
+                     "Geomfile": ".//sample-obj//SeatSaddle//Seat.stl",
+                     "numPrjLayers": 1, 
+                     "LayerDepth": 1.0, 
+                     "numCoverNodes": 1
+              }
+             },
+        "2": {
+               "Add_Lattice":{
+                    "la_name": ".//Test_json//Cases//SeatSaddle//GenHexMesh.mld", 
+		          "size": [6.0, 6.0, 6.0], "thk":0.6, 
+ 		          "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], 
+		          "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+        "3": {"Gen_BasicCartesianHexMesh":{
+                     "num_elem": [60, 25, 36],
+                     "x_range": [0.0, 271.0],
+                     "y_range": [0.0, 67.0],
+                     "z_range": [0.0, 138.0],
+                     "ori":[-135.0, -65.0, -69.0],
+                     "Normal": [0.0,0.0,1.0],
+                     "z_angle": 0.0,
+                     "Meshfile": ".//sample-obj//SeatSaddle//Seat_Hex_Mesh.med",
+                     "Geomfile": ".//sample-obj//SeatSaddle//Seat.stl",
+                     "numPrjLayers": 1, 
+                     "LayerDepth": 1.0, 
+                     "numCoverNodes": -1
+              }
+             },
+        "4": {
+              "Add_Lattice":{
+                   "la_name": ".//Test_json//Cases//SeatSaddle//GenHexMesh.mld", 
+                       "size": [6.0, 6.0, 6.0], "thk":0.6, 
+                        "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], 
+                       "Inv": false, "Fill": false, 
+                   "Cube_Request": {}
+                   }
+              },
+       
+        "5":{
+               "Add_Attractor": {
+                         "la_name": ".//Test_json//Cases//SeatSaddle//GenHexMesh.mld",
+                         "size": [6.0, 6.0, 6.0], "thk":4.0, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                         "pt":[-70.0, -1.6, 25.0], "r": 35.0,
+                         "Inv": false, "Fill": false,
+                         "Cube_Request": {}
+                         }
+                       },
+
+        "6":{
+               "Add_Attractor": {
+                                "la_name": ".//Test_json//Cases//SeatSaddle//GenHexMesh.mld",
+                                "size": [6.0, 6.0, 6.0], "thk":4.0, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                                "pt":[-70.0, -1.6, -25.0], "r": 35.0,
+                                "Inv": false, "Fill": false,
+                                "Cube_Request": {}
+                                }
+                              },
+         
+        "7": {"Add_Geometry":{
+                     "Name": ".//sample-obj//SeatSaddle//Base.stl",
+                     "k_factor": 0.0,
+                     "push2GeomField": false,
+                     "Paras": {
+                         "Scale": [1.0, 1.0, 1.0],
+                         "Trans": [0.0, 0.0, 0.0],
+                         "Rot": [0, 0, 0]
+                        }
+                    }
+               },
+        "8": {"Add_Geometry":{
+                     "Name": ".//sample-obj//SeatSaddle//Rail.stl",
+                     "k_factor": 0.0,
+                     "push2GeomField": false,
+                     "Paras": {
+                         "Scale": [1.0, 1.0, 1.0],
+                         "Trans": [0.0, 0.0, 0.0],
+                         "Rot": [0, 0, 0]
+                        }
+                    }
+               },
+  
+        "9": {
+               "Export": {"outfile": ".//Test_results//Seat_Hex_Infill.stl"}
+               }
+               },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

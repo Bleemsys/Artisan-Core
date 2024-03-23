@@ -1,0 +1,34 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,100.0],[0.0,100.0],[0.0,100.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.5,0.5,0.5],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {"Add_Lattice":{
+                    "la_name": "BC", "size": [10.0,10.0,10.0], "thk":1.2, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "2":{"OP_FieldMerge":{ "la_name":"Cubic", "size":[10.0,10.0,10.0], "thk":1.2, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
+                                 "OP_para":{
+                                            "InterpType": "Annulus",
+                                            "pt_att": [100.0,100.0,100.0],
+                                            "inner_r": 40.0,
+                                            "outer_r": 100.0,  
+                                            "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.8, "f_trans":0.5}
+                                            },
+                                 "Fill":true, "Cube_Request": {}
+							   }
+              },
+          "3":{"Field_Boundary": {"Boundary": "Box"}},
+          "4":{"Export": {"outfile": ".//Test_results/Box_FieldMerge_AnnulusAttractor.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

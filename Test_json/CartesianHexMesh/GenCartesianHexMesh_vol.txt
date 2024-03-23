@@ -1,0 +1,43 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//telecope_tripode_base.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1, 0.1, 0.1],
+		      "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360000000
+                },
+ "WorkFlow":{
+          "1": {
+               "Gen_BasicCartesianHexMesh":{
+                 "num_elem": [20, 13, 13],
+                 "x_range": [0.0, 60.0],
+                 "y_range": [0.0, 27.0],
+                 "z_range": [0.0, 26.0],
+                 "ori":[-48.0,-20.0,0.0],
+                 "Normal": [0.0,0.0,1.0],
+                 "z_angle": 0.0,
+                 "Meshfile": ".//Test_json//CartesianHexMesh//TripodeHexMesh.med",
+                 "Geomfile": ".//sample-obj//telecope_tripode_base.stl",
+                 "numPrjLayers": 1, 
+                 "LayerDepth": 1.0, 
+                 "numCoverNodes": -1
+                }
+               },
+          "2": {
+               "Add_Lattice":{
+                    "la_name": ".//Test_json//CartesianHexMesh//Tripod_HexInfill.mld", 
+		                "size": [8.0, 8.0, 8.0], "thk":0.2, 
+ 		                "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
+		                "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3": {
+               "Export": {"outfile": ".//Test_results//Tripod_HexInfill.stl"}
+               }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Customization &#8212; Artisan 0.1.10 documentation</title>
+    <title>Customization &#8212; Artisan 0.2.0 documentation</title>
   
   
   
@@ -129,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.1.10 documentation</p>
+    <p class="title logo__title">Artisan 0.2.0 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -148,6 +148,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
 </ul>
@@ -332,8 +333,8 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>We will gradually expand this list above in future development. The strut and TPMS lattice generally used in hexahedron domain which contains 6 faces and 8 nodes, such as a cube. The strut lattice in tetrahedron domain is mainly used in conformal lattice generation when tetrahedron meshes were given. Artisan will not check the lattice domain types in filling process, but please note that, the mismatched lattices types will produce unexpected results. The lattice in tetrahedron domain will be demonstrated in later section.</p>
-<p>This may not meet all user’s needs at some stage. Artisan has a capability of taking user’s lattice definition into the design. User may define a lattice through three different ways:</p>
+<p>We plan to expand the list mentioned above in future developments. Strut and TPMS lattices are generally used in hexahedral domains, which have 6 faces and 8 nodes, such as a cube. Strut lattices in tetrahedral domains are primarily utilized in the generation of conformal lattices when tetrahedral meshes are provided. It’s important to note that Artisan does not check the lattice domain types during the filling process, but be aware that using mismatched lattice types can lead to unexpected results. Lattices in tetrahedral domains will be discussed in a later section.</p>
+<p>We understand that this might not satisfy all users’ requirements at certain stages. Artisan is capable of incorporating users’ lattice definitions into the design. Users can define a lattice in three different ways:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Strut lattice, i.e. topological connections;</p></li>
@@ -341,8 +342,8 @@ document.write(`
 <li><p>Geometric shape, i.e. a file contains geometry mesh.</p></li>
 </ul>
 </div></blockquote>
-<p>In practice, user only need to define <code class="code docutils literal notranslate"><span class="pre">la_name</span></code> parameters in all keywords to the file of definitions. Please note this file has to be with extension of txt. Artisan automatically detects the customized definition and then interprets the content. The definition file contains a JSON structure that defines the type of customized lattice, and how the lattice defined.</p>
-<p>Here we presented a few examples with keywords <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code>, user may extend this feature to <code class="code docutils literal notranslate"><span class="pre">Lin_Interpolate</span></code>, <code class="code docutils literal notranslate"><span class="pre">HS_Interpolate</span></code> and <code class="code docutils literal notranslate"><span class="pre">Attractor</span></code> keywords.</p>
+<p>In practice, users only need to set the <code class="code docutils literal notranslate"><span class="pre">la_name</span></code> parameter in all keywords to the file containing the definitions. Please note that this file must have a .txt extension. Artisan automatically detects the customized definition and interprets its content. The definition file contains a JSON structure that specifies the type of customized lattice and how it is defined.</p>
+<p>We have presented a few examples with the <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> keyword. Users can extend this feature to the <code class="code docutils literal notranslate"><span class="pre">Lin_Interpolate</span></code>, <code class="code docutils literal notranslate"><span class="pre">HS_Interpolate</span></code>, and <code class="code docutils literal notranslate"><span class="pre">Attractor</span></code> keywords.</p>
 <section id="strut-lattice">
 <h2>Strut Lattice<a class="headerlink" href="#strut-lattice" title="Permalink to this headline">#</a></h2>
 <p>Defining a strut lattice requires the nodal coordinates, and topological conductivities, e.g. connection between two nodes. We use a simple geometry fill to demonstrate this functionality. Below is main example JSON which calls the user defined lattice.</p>

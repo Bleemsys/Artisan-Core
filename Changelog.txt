@@ -53,3 +53,12 @@ This is simple change log recording the major and minor updates
 - fix the box mesh, box shape z-axis rotation issue 
 - Doc update
 
+0.2.0
+- Add compression and decompression
+- Field based lattice triansition/merge, annulus shape lattice transition/merge; 
+- Add HexSplit keywords to tet and vori mesh generation;
+- fix bugs
+- Add more soloPkg prompting info 
+- Doc update, fix impecfects.
+
+

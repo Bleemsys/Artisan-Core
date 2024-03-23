@@ -1,0 +1,6 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": ".//sample-obj//SeatSaddle//Seat_Hex_Mesh.med"
+    }
+}

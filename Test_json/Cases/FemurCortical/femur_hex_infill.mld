@@ -1,0 +1,7 @@
+{
+  "type": "ConformalLattice",
+  "definition": {
+   "meshfile": ".//Test_json//Cases//FemurCortical//femur_hex_mesh.med",
+   "la_name" : "VertexOcta"
+   }
+  }

@@ -1,0 +1,18 @@
+{"Setup":{      "Type": "Geometry",
+                "Geomfile": ".//sample-obj//EngineBracket.STL",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.9,0.1,0.9],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 10737418240000
+                },
+ "WorkFlow":{
+          "1":{"OP_Decompress": {"compressed_file": ".//Test_results/compressed_file_EngineBracket.smd", "rebuild": false, "OP_type": "Build"}},
+          "2":{
+          "Export": {"outfile": ".//Test_results/EngineBracket_HS_Lin_TPMS_Infill_LR_Decompress.stl"}
+           }},
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+}

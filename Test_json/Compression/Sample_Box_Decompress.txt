@@ -1,0 +1,19 @@
+{
+ "Setup":{  "Type" : "Sample",
+            "Sample": {"Domain" : [[0.0,40.0],[0.0,40.0],[0.0,40.0]], "Shape": "Box"},
+            "Geomfile": "",
+            "Rot" : [0.0,0.0,0.0],
+            "res":[0.25, 0.25, 0.25],
+            "Padding": 1,
+            "onGPU": false,
+            "memorylimit": 1073741824000
+        },
+ "WorkFlow":{
+          "1":{"OP_Decompress": {"compressed_file": ".//Test_results/compressed_file_box.smd", "rebuild": false, "OP_type": "Build"}},
+          "2":{"Export": {"outfile": ".//Test_results/Test_Sample_Strut_Infill_Decompressed.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

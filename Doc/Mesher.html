@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Meshing &#8212; Artisan 0.1.10 documentation</title>
+    <title>Meshing &#8212; Artisan 0.2.0 documentation</title>
   
   
   
@@ -129,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.1.10 documentation</p>
+    <p class="title logo__title">Artisan 0.2.0 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -148,6 +148,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
@@ -358,6 +359,8 @@ document.write(`
 <img alt="_images/BallMeshLattice.png" src="_images/BallMeshLattice.png" />
 <p>The cross-sectional view below clearly showed the lattices were stacked layer by layer, from exterior surface towards center.</p>
 <img alt="_images/BallMeshLattice_CrossSection.png" src="_images/BallMeshLattice_CrossSection.png" />
+<p>The second tetrahedron mesher is activated using the <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code> keyword. It shares the same parameters with <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code>. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example :code:GenTetBasicMesh_HexSplit.txt, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape’s surface and volumetric domain.</p>
+<img alt="_images/TetBasic_HexSplit.png" src="_images/TetBasic_HexSplit.png" />
 <p>Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow.</p>
 </section>
 <section id="voronoi-polygon">
@@ -408,7 +411,7 @@ document.write(`
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360000000</span>
 <span class="w">            </span><span class="p">},</span>
@@ -446,13 +449,14 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The result is shown as below. As mentioned before, the current mesh strategy may not handle the sharp edge very well, and in general, it produces a good fitting of Voronoi polygons.</p>
+<p>The result is shown as below. As mentioned before, the current mesh strategy may not handle the sharp edge very well, but, in general, it produces a good fitting of Voronoi polygons.</p>
 <img alt="_images/crank_handle_vori_mesh.png" src="_images/crank_handle_vori_mesh.png" />
+<p>Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that utilizes the vertices of the Cartesian mesh. The example file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh_HexSplit.txt</span></code> includes the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_VoronoiPolyMesh</span></code>, which generates a partial Voronoi mesh using the vertices of the Cartesian mesh.</p>
+<img alt="_images/VoriBasic_HexSplit.png" src="_images/VoriBasic_HexSplit.png" />
 </section>
 <section id="cartesian-mesher">
 <h2>Cartesian Mesher<a class="headerlink" href="#cartesian-mesher" title="Permalink to this headline">#</a></h2>
-<p>Artisan has an integrated Cartesian mesher, user may use it to generate the approximated conformal hex mesh. Please note that the mesher use projection method to shift the boundary mesh nodes to the given geometry surface, it meant that the results in some cases may not be the real conformal hex mesh. Even the boundary mesh may be highly distorted, user may still utilize the resultant mesh to further produce the lattice that follows the given boundary shape.</p>
-<p>Here is an example that generates the hex-dominant elements on the  geometry, user may find this example at <code class="code docutils literal notranslate"><span class="pre">CartesianHexMesh\\GenCartesianHexMesh.txt</span></code>.</p>
+<p>Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It’s important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file <code class="code docutils literal notranslate"><span class="pre">CartesianHexMesh\\GenCartesianHexMesh.txt</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//telecope_tripode_base.stl&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -470,6 +474,7 @@ document.write(`
 <span class="w">             </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">26.0</span><span class="p">],</span>
 <span class="w">             </span><span class="nt">&quot;ori&quot;</span><span class="p">:[</span><span class="mf">-48.0</span><span class="p">,</span><span class="mf">-20.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">             </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">             </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
 <span class="w">             </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//CartesianHexMesh//TripodeHexMesh.med&quot;</span><span class="p">,</span>
 <span class="w">             </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//telecope_tripode_base.stl&quot;</span><span class="p">,</span>
 <span class="w">             </span><span class="nt">&quot;numPrjLayers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
@@ -523,16 +528,18 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p>Above example produce the following results. The tripod geometry is overladed with the cubic lattice using the generated mesh.</p>
+<p>Above example produce the following results. The tripod geometry is overlapped with the cubic lattice using the generated mesh.</p>
 <img alt="_images/Tripod_HexInfill.png" src="_images/Tripod_HexInfill.png" />
 <img alt="_images/Tripod_HexInfill_v02.png" src="_images/Tripod_HexInfill_v02.png" />
-<p>Note that, in above JSON, the center of the hex element was used to check whether the element should be removed. User may use this example to try different removal strategy to check how the parameter <code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code> affect the final results. Below is the other example that parameter <code class="code docutils literal notranslate"><span class="pre">numPrjLayer</span></code> is <code class="code docutils literal notranslate"><span class="pre">0</span></code>. The jig-saw shaped elements cluster showed the Cartesian mesh that approximated the outline of the geometry. The projection may not guaranty high quality hex element, but it produces a hex-dominant mesh that may be used for the hex lattice infill.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter <code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code> impacts the final results. In the following example, the parameter <code class="code docutils literal notranslate"><span class="pre">numPrjLayer</span></code> is set to <code class="code docutils literal notranslate"><span class="pre">0</span></code>. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.</p>
+</div>
 <img alt="_images/Tripod_HexInfill_v03.png" src="_images/Tripod_HexInfill_v03.png" />
 </section>
 <section id="surface-mesher-for-quad-elements">
 <h2>Surface Mesher for Quad Elements<a class="headerlink" href="#surface-mesher-for-quad-elements" title="Permalink to this headline">#</a></h2>
-<p>Surface mesher is an function based on the Cartesian mesher algorithm. It extract the exterior element surface, and projects the boundary nodes back to the geometry surface. Similar to the Cartesian mesher, the surface mesher produce an approximated all-quad, or quad dominant mesh, which can be used to generate the surface lattice. Please note that, the mesher only supports the closed surface body.</p>
-<p>Here is a simple example of producing a quad element dominant mesh on a ball. User may find this example at <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\\Gen_BasicSurfQuadMesh.txt</span></code>.</p>
+<p>The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry’s surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\\Gen_BasicSurfQuadMesh.txt</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">],[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">],[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -551,6 +558,7 @@ document.write(`
 <span class="w">             </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">],</span>
 <span class="w">             </span><span class="nt">&quot;ori&quot;</span><span class="p">:[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">-10.0</span><span class="p">],</span>
 <span class="w">             </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">             </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
 <span class="w">             </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//SurfaceLattice//BallSurfQuadMesh.med&quot;</span><span class="p">,</span>
 <span class="w">             </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.stl&quot;</span><span class="p">,</span>
 <span class="w">             </span><span class="nt">&quot;isProjection&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>

@@ -1,0 +1,23 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,40.0],[0.0,40.0],[0.0,40.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+            "1":{"Add_Lattice":{
+                    "la_name": "Auxetic", "size": [10.0, 10.0, 10.0], 
+                    "thk":1.0, "Rot":[0.7853981633974483, 0.0, 0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                }},
+          "2":{"OP_Compress": {"compressed_file": ".//Test_results/compressed_file_box_infill.smd"}},
+          "3":{"Export": {"outfile": ".//Test_results/Test_Sample_Lattice.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

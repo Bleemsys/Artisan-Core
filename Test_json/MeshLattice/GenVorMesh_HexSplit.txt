@@ -1,0 +1,31 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Ball_Mesh.STL",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[5.0,5.0,5.0],
+		"Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Gen_VoronoiPolyMesh_HexSplit":{
+                    "Geomfile": ".//sample-obj//Ball_Mesh.STL", 
+		    "size": [100.0,100.0,100.0],
+		    "Meshfile": ".//sample-obj//Ball_VorMesh.med",
+		    "remove_tol": 10.0
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//GenVorMesh.mld", 
+                    "size": [150.0,150.0,150.0], "thk":10.0, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/BallVoriMesh_Lattice.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}

@@ -59,6 +59,10 @@ The cross-sectional view below clearly showed the lattices were stacked layer by
 
 .. image:: ./pictures/BallMeshLattice_CrossSection.png
 
+The second tetrahedron mesher is activated using the :code:`Gen_TetBasicMesh_HexSplit` keyword. It shares the same parameters with :code:`Gen_TetBasicMesh`. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example :code:GenTetBasicMesh_HexSplit.txt, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape's surface and volumetric domain.
+
+.. image:: ./pictures/TetBasic_HexSplit.png 
+
 Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow.  
 
 ===============
@@ -121,7 +125,7 @@ We can certainly apply this to a more complex geometry. The example below (:code
                 "Geomfile": ".//sample-obj//crank_handle.stl",
                 "Rot" : [0.0,0.0,0.0],
                 "res":[0.25,0.25,0.25],
-		        "Padding": 4,
+		      "Padding": 4,
                 "onGPU": false,
                 "memorylimit": 16106127360000000
                 },
@@ -160,17 +164,19 @@ And the mesh lattice defintion (:code:`GenVorMesh_crank_handle.mld`) is:
         }
     }
 
-The result is shown as below. As mentioned before, the current mesh strategy may not handle the sharp edge very well, and in general, it produces a good fitting of Voronoi polygons. 
+The result is shown as below. As mentioned before, the current mesh strategy may not handle the sharp edge very well, but, in general, it produces a good fitting of Voronoi polygons. 
 
 .. image:: ./pictures/crank_handle_vori_mesh.png
+
+Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that utilizes the vertices of the Cartesian mesh. The example file :code:`GenVorMesh_HexSplit.txt` includes the keyword :code:`Gen_VoronoiPolyMesh`, which generates a partial Voronoi mesh using the vertices of the Cartesian mesh.
+
+.. image:: ./pictures/VoriBasic_HexSplit.png
 
 ================
 Cartesian Mesher 
 ================
 
-Artisan has an integrated Cartesian mesher, user may use it to generate the approximated conformal hex mesh. Please note that the mesher use projection method to shift the boundary mesh nodes to the given geometry surface, it meant that the results in some cases may not be the real conformal hex mesh. Even the boundary mesh may be highly distorted, user may still utilize the resultant mesh to further produce the lattice that follows the given boundary shape.   
-
-Here is an example that generates the hex-dominant elements on the  geometry, user may find this example at :code:`CartesianHexMesh\\GenCartesianHexMesh.txt`. 
+Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It's important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file :code:`CartesianHexMesh\\GenCartesianHexMesh.txt`.
 
 .. code-block:: json 
 
@@ -191,6 +197,7 @@ Here is an example that generates the hex-dominant elements on the  geometry, us
                  "z_range": [0.0, 26.0],
                  "ori":[-48.0,-20.0,0.0],
                  "Normal": [0.0,0.0,1.0],
+                 "z_angle": 0.0,
                  "Meshfile": ".//Test_json//CartesianHexMesh//TripodeHexMesh.med",
                  "Geomfile": ".//sample-obj//telecope_tripode_base.stl",
                  "numPrjLayers": 1, 
@@ -234,14 +241,14 @@ The keywords :code:`Gen_BasicCartesianHexMesh` calls the function of producing t
    * - :code:`numCoverNodes`
      - an integer number of nodes covered in the boundary layer. It shall be between :code:`1` to :code:`8`. Any elements will the number of node insider geometry less than this definition will be removed. If defines as :code:`-1`, the center point of the element will be used to checked whether the element is inside or outside of geometry. The element outside of geometry will be removed.   
 
-Above example produce the following results. The tripod geometry is overladed with the cubic lattice using the generated mesh. 
+Above example produce the following results. The tripod geometry is overlapped with the cubic lattice using the generated mesh. 
 
 .. image:: ./pictures/Tripod_HexInfill.png
 
 .. image:: ./pictures/Tripod_HexInfill_v02.png
 
-Note that, in above JSON, the center of the hex element was used to check whether the element should be removed. User may use this example to try different removal strategy to check how the parameter :code:`numCoverNodes` affect the final results. Below is the other example that parameter :code:`numPrjLayer` is :code:`0`. The jig-saw shaped elements cluster showed the Cartesian mesh that approximated the outline of the geometry. The projection may not guaranty high quality hex element, but it produces a hex-dominant mesh that may be used for the hex lattice infill.
-
+.. note::
+     In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter :code:`numCoverNodes` impacts the final results. In the following example, the parameter :code:`numPrjLayer` is set to :code:`0`. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.
 
 .. image:: ./pictures/Tripod_HexInfill_v03.png
 
@@ -250,9 +257,7 @@ Note that, in above JSON, the center of the hex element was used to check whethe
 Surface Mesher for Quad Elements 
 ================================
 
-Surface mesher is an function based on the Cartesian mesher algorithm. It extract the exterior element surface, and projects the boundary nodes back to the geometry surface. Similar to the Cartesian mesher, the surface mesher produce an approximated all-quad, or quad dominant mesh, which can be used to generate the surface lattice. Please note that, the mesher only supports the closed surface body.
-
-Here is a simple example of producing a quad element dominant mesh on a ball. User may find this example at :code:`SurfaceLattice\\Gen_BasicSurfQuadMesh.txt`. 
+The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry's surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file :code:`SurfaceLattice\\Gen_BasicSurfQuadMesh.txt`.
 
 .. code-block:: json 
 
@@ -274,6 +279,7 @@ Here is a simple example of producing a quad element dominant mesh on a ball. Us
                  "z_range": [0.0, 20.0],
                  "ori":[-10.0,-10.0,-10.0],
                  "Normal": [0.0,0.0,1.0],
+                 "z_angle": 0.0,
                  "Meshfile": ".//Test_json//SurfaceLattice//BallSurfQuadMesh.med",
                  "Geomfile": ".//sample-obj//Ball_Mesh.stl",
                  "isProjection": true,  

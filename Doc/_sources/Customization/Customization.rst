@@ -15,17 +15,17 @@ Artisan integrates a number of lattice design, including:
      - Rhombic, Star, Icosahedral, Voronoi, Kagome, Tetrahedron
 
 
-We will gradually expand this list above in future development. The strut and TPMS lattice generally used in hexahedron domain which contains 6 faces and 8 nodes, such as a cube. The strut lattice in tetrahedron domain is mainly used in conformal lattice generation when tetrahedron meshes were given. Artisan will not check the lattice domain types in filling process, but please note that, the mismatched lattices types will produce unexpected results. The lattice in tetrahedron domain will be demonstrated in later section. 
+We plan to expand the list mentioned above in future developments. Strut and TPMS lattices are generally used in hexahedral domains, which have 6 faces and 8 nodes, such as a cube. Strut lattices in tetrahedral domains are primarily utilized in the generation of conformal lattices when tetrahedral meshes are provided. It's important to note that Artisan does not check the lattice domain types during the filling process, but be aware that using mismatched lattice types can lead to unexpected results. Lattices in tetrahedral domains will be discussed in a later section.
 
-This may not meet all user's needs at some stage. Artisan has a capability of taking user's lattice definition into the design. User may define a lattice through three different ways:
+We understand that this might not satisfy all users' requirements at certain stages. Artisan is capable of incorporating users' lattice definitions into the design. Users can define a lattice in three different ways:
 
  - Strut lattice, i.e. topological connections;
  - Surface lattice, i.e. mathematical/implicit equations such as TPMS;   
  - Geometric shape, i.e. a file contains geometry mesh.
 
-In practice, user only need to define :code:`la_name` parameters in all keywords to the file of definitions. Please note this file has to be with extension of txt. Artisan automatically detects the customized definition and then interprets the content. The definition file contains a JSON structure that defines the type of customized lattice, and how the lattice defined. 
+In practice, users only need to set the :code:`la_name` parameter in all keywords to the file containing the definitions. Please note that this file must have a .txt extension. Artisan automatically detects the customized definition and interprets its content. The definition file contains a JSON structure that specifies the type of customized lattice and how it is defined.
 
-Here we presented a few examples with keywords :code:`Add_Lattice`, user may extend this feature to :code:`Lin_Interpolate`, :code:`HS_Interpolate` and :code:`Attractor` keywords. 
+We have presented a few examples with the :code:`Add_Lattice` keyword. Users can extend this feature to the :code:`Lin_Interpolate`, :code:`HS_Interpolate`, and :code:`Attractor` keywords.
 
 =============
 Strut Lattice

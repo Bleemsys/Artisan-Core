@@ -9,7 +9,7 @@
  "WorkFlow":{
           "1": {
                "Gen_BasicCartesianHexMesh":{
-                 "num_elem": [40, 25, 25],
+                 "num_elem": [40, 26, 26],
                  "x_range": [0.0, 60.0],
                  "y_range": [0.0, 27.0],
                  "z_range": [0.0, 26.0],
@@ -26,7 +26,7 @@
           "2": {
                "Add_Lattice":{
                     "la_name": ".//Test_json//CartesianHexMesh//Tripod_HexInfill.mld", 
-		                "size": [1.0, 1.0, 1.0], "thk":0.2, 
+		                "size": [8.0, 8.0, 8.0], "thk":0.2, 
  		                "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
 		                "Inv": false, "Fill": false, 
                     "Cube_Request": {}
