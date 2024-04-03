@@ -1,0 +1,22 @@
+2024-04-01 22:13:56,905 [INFO] This is a testing package of Artisan. 
+2024-04-01 22:13:56,905 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2024-04-01 22:13:56,905 [INFO] Version: 0.2.1.dev
+2024-04-01 22:13:56,907 [INFO] reading Json file: Test_json\MeshLattice\GenTetBasicMesh_HexSplit.txt
+2024-04-01 22:13:56,916 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj//Ball_Mesh.STL', 'Rot': [0.0, 0.0, 0.0], 'res': [5.0, 5.0, 5.0], 'Padding': 4, 'onGPU': False, 'memorylimit': 16106127360}, 'WorkFlow': {'1': {'Gen_TetBasicMesh_HexSplit': {'Geomfile': './/sample-obj//Ball_Mesh.STL', 'size': [100.0, 100.0, 100.0], 'Meshfile': './/sample-obj//Ball_Mesh.med', 'ConvertTet2Beam': True, 'MultiSize': {'Type': 'Attractor', 'Data': [[105, 45, 90, 100, 0.9]]}}}, '2': {'Add_Lattice': {'la_name': './/Test_json//MeshLattice//GenTetBasicMesh.mld', 'size': [150.0, 150.0, 150.0], 'thk': 10.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results/BallBasicTetNMesh_Lattice.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': True}}
+2024-04-01 22:13:56,917 [INFO] Setup basic fill domain......
+2024-04-01 22:13:56,978 [INFO] Number of Domain Partition: 1
+2024-04-01 22:13:56,978 [INFO] Calculating Sub-Domain:1
+2024-04-01 22:13:56,978 [INFO] Building Up GeomDomain......
+2024-04-01 22:14:01,359 [INFO] Geometry & Field Domain Infomation: 
+2024-04-01 22:14:01,360 [INFO] Domain: 
+2024-04-01 22:14:01,360 [INFO] Lower Bound: [-639.41266 -639.8532  -640.     ]
+2024-04-01 22:14:01,361 [INFO] Upper Bound: [640.     639.8532 640.    ]
+2024-04-01 22:14:01,361 [INFO] Resolution: [5. 5. 5.]
+2024-04-01 22:14:01,361 [INFO] Workflow Calculation: 
+2024-04-01 22:14:01,362 [INFO] Calculating Gen_TetBasicMesh_HexSplit
+2024-04-01 22:14:02,269 [INFO] Calculating Add_Lattice
+2024-04-01 22:14:06,113 [INFO] Calculating Export
+2024-04-01 22:14:07,638 [INFO] PostProcessing Meshes......
+2024-04-01 22:14:07,638 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-04-01 22:14:08,095 [INFO] Process finished, check the result file.
+2024-04-01 22:14:08,095 [INFO] Peak Memory Usage: 764.7190952301025 MB

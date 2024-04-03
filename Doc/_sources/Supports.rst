@@ -9,3 +9,6 @@ Or just email us:
 
     info@bleemsys.com
 
+For applications and more wider topics and discussion, you may join our Discord channel:
+
+     https://discord.gg/6yqr8rUn

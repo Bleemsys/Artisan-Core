@@ -1,0 +1,22 @@
+2024-04-03 09:34:06,991 [INFO] This is a testing package of Artisan. 
+2024-04-03 09:34:06,991 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2024-04-03 09:34:06,991 [INFO] Version: 0.2.1.dev
+2024-04-03 09:34:06,997 [INFO] reading Json file: Test_json\PrimitiveDesign\GenCylindricalConformalMesh.txt
+2024-04-03 09:34:06,997 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-10.0, 10.0], [-10.0, 10.0], [-10.0, 10.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.1, 0.1, 0.1], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Gen_CylindricalMesh': {'num_elem': [3, 10, 3], 'r_range': [2.0, 8.0], 'phi_range': [0.0, 1.0], 'ori': [0.0, 0.0, -2.0], 'Height': 10.0, 'Normal': [0.0, 0.0, 1.0], 'Mesh_file': './/Test_json//PrimitiveDesign//CylindricalMesh.med'}}, '2': {'Add_Lattice': {'la_name': './/Test_json//PrimitiveDesign//GenCylindricalConformalMesh.mld', 'size': [3.0, 3.0, 3.0], 'thk': 0.25, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results/CylindricalMesh_ConformalLattice.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': True}}
+2024-04-03 09:34:06,997 [INFO] Setup basic fill domain......
+2024-04-03 09:34:06,997 [INFO] Number of Domain Partition: 1
+2024-04-03 09:34:06,997 [INFO] Calculating Sub-Domain:1
+2024-04-03 09:34:06,997 [INFO] Building Up Sample Domain
+2024-04-03 09:34:07,386 [INFO] Geometry & Field Domain Infomation: 
+2024-04-03 09:34:07,386 [INFO] Domain: 
+2024-04-03 09:34:07,386 [INFO] Lower Bound: [-10.200001 -10.200001 -10.200001]
+2024-04-03 09:34:07,386 [INFO] Upper Bound: [10.200001 10.200001 10.200001]
+2024-04-03 09:34:07,386 [INFO] Resolution: [0.1 0.1 0.1]
+2024-04-03 09:34:07,386 [INFO] Workflow Calculation: 
+2024-04-03 09:34:07,386 [INFO] Calculating Gen_CylindricalMesh
+2024-04-03 09:34:07,544 [INFO] Calculating Add_Lattice
+2024-04-03 09:34:08,956 [INFO] Calculating Export
+2024-04-03 09:34:09,240 [INFO] PostProcessing Meshes......
+2024-04-03 09:34:09,240 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-04-03 09:34:09,307 [INFO] Process finished, check the result file.
+2024-04-03 09:34:09,307 [INFO] Peak Memory Usage: 328.7515230178833 MB

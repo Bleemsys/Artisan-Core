@@ -1,0 +1,31 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj/EngineBracket.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.4,0.4,0.4],
+		"Padding": 1,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+        "1": {"Gen_SurfaceReMesh":{"size":[3.0, 3.0, 3.0], 
+              "mesh_file":".//sample-obj//EngineBracket.stl",
+              "ShortEdgeThreshold": 1.0,
+              "export_mesh": ".//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl"}
+             },
+
+        "2": {"Add_Lattice":{
+                "la_name": ".//Test_json//MeshLattice//Remesh//EngineBracket.mld", 
+                "size": [3.5, 3.5, 3.5], "thk":0.5, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                "Cube_Request": {}
+                }
+           },
+        "3":{
+          "Export": {"outfile": ".//Test_results/EngineBracket_Remesh_MeshLattice.stl"}
+          }
+
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+}

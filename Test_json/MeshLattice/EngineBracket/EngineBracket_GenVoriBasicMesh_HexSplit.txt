@@ -1,0 +1,31 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//EngineBracket.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.30, 0.30, 0.30],
+			 "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Gen_VoronoiPolyMesh_HexSplit":{
+                "Geomfile": ".//sample-obj//EngineBracket.stl", 
+		"size": [5.5, 5.5, 5.5],
+		"Meshfile": ".//Test_json//MeshLattice//EngineBracket//EngineBracket.med",
+                "remove_tol": 1.0
+                }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//EngineBracket//GenTetBasicMesh.mld", 
+                    "size": [6.0, 6.0, 6.0], "thk":0.7, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results//EngineBracket_BasicVoriHexSplit.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}

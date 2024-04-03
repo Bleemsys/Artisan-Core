@@ -61,4 +61,12 @@ This is simple change log recording the major and minor updates
 - Add more soloPkg prompting info 
 - Doc update, fix impecfects.
 
+0.2.1
+- Improve the meshing functions 
+- Introduce multisize in Gen_BasicCartesianHexMesh_MultiSize and Gen_TetBasicMesh_HexSplit
+- fix bugs, improve the conformal calculation strategy/algorithm for TPMS and Geom. 
+- Doc update
+
+
+
 

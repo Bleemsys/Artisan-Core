@@ -1,0 +1,32 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj/EngineBracket.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.30, 0.30, 0.30],
+			 "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Gen_TetBasicMesh_HexSplit":{
+                "Geomfile": ".//sample-obj/EngineBracket.stl", 
+		        "size": [6.0, 6.0, 6.0],
+		        "Meshfile": ".//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med",
+                "ConvertTet2Beam": false,
+                "MultiSize":{"Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]]}
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//EngineBracket_MultiSize//GenTetBasicMesh.mld", 
+                    "size": [12.0, 12.0, 12.0], "thk":0.7, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/EngineBracket_BasicTetHexSplit_MS.stl"}
+              }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+}

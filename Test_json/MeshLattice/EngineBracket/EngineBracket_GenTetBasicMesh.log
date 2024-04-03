@@ -1,0 +1,22 @@
+2024-04-01 23:01:47,315 [INFO] This is a testing package of Artisan. 
+2024-04-01 23:01:47,315 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2024-04-01 23:01:47,315 [INFO] Version: 0.2.1.dev
+2024-04-01 23:01:47,316 [INFO] reading Json file: Test_json\MeshLattice\EngineBracket\EngineBracket_GenTetBasicMesh.txt
+2024-04-01 23:01:47,316 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Geomfile': './/sample-obj/EngineBracket.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [0.3, 0.3, 0.3], 'Padding': 4, 'onGPU': False, 'memorylimit': 16106127360}, 'WorkFlow': {'1': {'Gen_TetBasicMesh': {'Geomfile': './/sample-obj/EngineBracket.stl', 'size': [5.5, 5.5, 5.5], 'Meshfile': './/Test_json//MeshLattice//EngineBracket//EngineBracket.med', 'ConvertTet2Beam': False}}, '2': {'Add_Lattice': {'la_name': './/Test_json//MeshLattice//EngineBracket//GenTetBasicMesh.mld', 'size': [6.0, 6.0, 6.0], 'thk': 0.7, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '3': {'Export': {'outfile': './/Test_results/EngineBracket_BasicTet.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': True}}
+2024-04-01 23:01:47,316 [INFO] Setup basic fill domain......
+2024-04-01 23:01:47,355 [INFO] Number of Domain Partition: 1
+2024-04-01 23:01:47,355 [INFO] Calculating Sub-Domain:1
+2024-04-01 23:01:47,356 [INFO] Building Up GeomDomain......
+2024-04-01 23:01:59,770 [INFO] Geometry & Field Domain Infomation: 
+2024-04-01 23:01:59,770 [INFO] Domain: 
+2024-04-01 23:01:59,771 [INFO] Lower Bound: [-2.3853822 -2.4       -2.3745637]
+2024-04-01 23:01:59,772 [INFO] Upper Bound: [180.79987  64.84538 110.58366]
+2024-04-01 23:01:59,772 [INFO] Resolution: [0.3 0.3 0.3]
+2024-04-01 23:01:59,772 [INFO] Workflow Calculation: 
+2024-04-01 23:01:59,772 [INFO] Calculating Gen_TetBasicMesh
+2024-04-01 23:03:09,323 [INFO] Calculating Add_Lattice
+2024-04-01 23:03:20,146 [INFO] Calculating Export
+2024-04-01 23:03:23,288 [INFO] PostProcessing Meshes......
+2024-04-01 23:03:23,289 [INFO] Only one partition file, merging meshes will not be conducted.
+2024-04-01 23:03:23,920 [INFO] Process finished, check the result file.
+2024-04-01 23:03:23,920 [INFO] Peak Memory Usage: 1977.19681930542 MB

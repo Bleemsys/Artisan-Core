@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//Test_json//Test//Bdd.med",
+ "la_name": "Gyroid"
+ }
+}
