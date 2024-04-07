@@ -1,7 +1,7 @@
 {"Setup":{      "Type" : "Geometry",
                 "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
                 "Rot" : [0.0,0.0,0.0],
-                "res":[0.5,0.5,0.5],
+                "res":[0.35,0.35,0.35],
 		"Padding": 1,
                 "onGPU": false,
                 "memorylimit": 16106127360

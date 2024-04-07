@@ -67,6 +67,10 @@ This is simple change log recording the major and minor updates
 - fix bugs, improve the conformal calculation strategy/algorithm for TPMS and Geom. 
 - Doc update
 
+0.2.1.Rev01
+- Bug fix. TPMS in periodic lattice setup has trouble to setup the correct size. This release fixed this problem
+- No further updates, no docs update required
+
 
 
 

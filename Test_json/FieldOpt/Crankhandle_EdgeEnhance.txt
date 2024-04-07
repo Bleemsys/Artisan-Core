@@ -16,6 +16,7 @@
                  "z_range": [0.0, 80.0],
                  "ori":[-12.0,-12.0,-80.0],
                  "Normal": [0.0,0.0,1.0],
+		 "z_angle": 0.0,
                  "Meshfile": ".//Test_json//SurfaceLattice//CrankhandleSurfQuadMesh.med",
                  "Geomfile": ".//sample-obj//crank_handle.stl",
                  "isProjection": true,  
