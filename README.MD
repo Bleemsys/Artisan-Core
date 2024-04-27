@@ -70,6 +70,14 @@ ArtiasnMain.py will read the json file and interpret the keys and then perform t
 
 Above commands will perform the complex lattice filling in EngineBracket model. The results are stored at "Test_results", or user may modify the json file to save the results at the desired location. 
 
+If GUI is preferred, user may launch the ArtGUI app through
+
+    python ArtGUI.py
+
+In the all-in-one package, user may start it by. 
+
+    ArtGUI.exe
+
 ## Documentation
 
 The online version of the documentation is available at http://bleemsys.com/Artisan/docs/index.html. Or you may find the same docs under the Doc folder. The documents are regularly updated to reflect the latest features, applications and the tips of the tool.
@@ -84,6 +92,5 @@ You may copy and redistribute this testing package material in any medium or for
 ## Supports
 Website: http://bleemsys.com/Artisan.html
 Facebook: https://www.facebook.com/Bleemsys
-Telegram group: https://t.me/LatticeStructures
 Discord channel: https://discord.gg/6yqr8rUn
 

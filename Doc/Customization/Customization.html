@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Customization &#8212; Artisan 0.2.1 documentation</title>
+    <title>Customization &#8212; Artisan 0.2.2 documentation</title>
   
   
   
@@ -129,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.1 documentation</p>
+    <p class="title logo__title">Artisan 0.2.2 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -143,6 +143,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher.html">Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
@@ -150,6 +151,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ArtGUI.html">GUI for Artisan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
 </ul>
 
@@ -314,11 +316,11 @@ document.write(`
   <section id="customization">
 <h1>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">#</a></h1>
 <p>Artisan integrates a number of lattice design, including:</p>
-<table class="colwidths-given table">
+<table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 30%" />
-<col style="width: 40%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Strut Lattice</p></th>
@@ -419,7 +421,7 @@ document.write(`
 \[\cos(x) + \cos(y) + \cos(z) = 0\]</div>
 <p>We also need to tells Artisan the single unit length of the given euqation, here it is <code class="code docutils literal notranslate"><span class="pre">2*pi</span></code> meaning <span class="math notranslate nohighlight">\(2\pi\)</span> . Artisan uses numexpr package to interpret the mathematical equations and inputs. User may refer to the documentation for referencing the acceptable math symbols and equations.</p>
 <p>Github: <a class="github reference external" href="https://github.com/pydata/numexpr">pydata/numexpr</a></p>
-<p>Documentation: <a class="reference external" href="https://numexpr.readthedocs.io/projects/NumExpr3/en/latest/">https://numexpr.readthedocs.io/projects/NumExpr3/en/latest/</a></p>
+<p>Documentation: <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/user_guide.html">https://numexpr.readthedocs.io/en/latest/user_guide.html</a></p>
 <p>We can then have a TPMS style infill. Please note that, the <code class="code docutils literal notranslate"><span class="pre">size</span></code> and <code class="code docutils literal notranslate"><span class="pre">thk</span></code> in the keywords <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> will automatically define the unit lattice size and thicks the surface with correct thickness.</p>
 <img alt="../_images/custom_TPMS.png" src="../_images/custom_TPMS.png" />
 </section>

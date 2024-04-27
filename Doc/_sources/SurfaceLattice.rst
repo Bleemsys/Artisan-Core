@@ -7,7 +7,7 @@ Surface lattice can be a design option for lightweight structural component. It 
 Strut Surface Lattice
 =====================
 
-Here is an example (filename: :code:`BallSurfaceLattice.txt`) of using customized strut lattice definition to generate surface lattice on a ball. 
+Here is an example (filename: :code:`BallSurfaceLattice.json`) of using customized strut lattice definition to generate surface lattice on a ball. 
 
 .. code-block:: json
 
@@ -75,7 +75,7 @@ Note that the parameter :code:`ladomain` is :code:`triangle` that defines the 2D
 .. note:: 
     User may take advantage of triangle divisions in the :code:`stl/obj/ply` file format. User may use mesh lattice setup to read in these geometric information to generate the surface lattice. 
 
-Addition example in file :code:`Crankhandle_SurfaceLattice.txt` shows the same style surface lattice on more complicated geometry.
+Addition example in file :code:`Crankhandle_SurfaceLattice.json` shows the same style surface lattice on more complicated geometry.
 
 .. image:: ./pictures/crankhandle_Surface_Lattice.png
 
@@ -83,7 +83,7 @@ Addition example in file :code:`Crankhandle_SurfaceLattice.txt` shows the same s
 Geometry Surface Lattice
 ========================
 
-Geometry surface lattice basically morphs the given 2D geometry onto the given mesh. Here is example (filename: :code:`Box_SurfaceLattice.txt`) of morphing irregular geometry onto a cube with quadrilateral elements with the unit element as showing below.
+Geometry surface lattice basically morphs the given 2D geometry onto the given mesh. Here is example (filename: :code:`Box_SurfaceLattice.json`) of morphing irregular geometry onto a cube with quadrilateral elements with the unit element as showing below.
 
 .. image:: ./pictures/Box_Surface_Lattice_unit.png
 

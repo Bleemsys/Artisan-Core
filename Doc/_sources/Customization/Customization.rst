@@ -118,7 +118,7 @@ We also need to tells Artisan the single unit length of the given euqation, here
 
 Github: https://github.com/pydata/numexpr
 
-Documentation: https://numexpr.readthedocs.io/projects/NumExpr3/en/latest/
+Documentation: https://numexpr.readthedocs.io/en/latest/user_guide.html
 
 We can then have a TPMS style infill. Please note that, the :code:`size` and :code:`thk` in the keywords :code:`Add_Lattice` will automatically define the unit lattice size and thicks the surface with correct thickness.
 

@@ -3,7 +3,7 @@ Compression
 
 Designing complex lattice structures often involves multiple steps, resulting in long computational times. This process can be further slowed down by intensive computations across various design stages. Additionally, the resulting files, when stored in standard formats, tend to be large (often exceeding 100MB), posing challenges in file management and frequent reloading. Artisan offers users the option to retain the original JSON text. This enables the reproduction of design steps and the modification of parameters to generate alternative designs. Alternatively, users can choose to store only the final design results in a compressed, non-standard format to optimize storage and efficiency.
 
-The example JSON file, at :code:`Test_json\\Compression\\EngineBracket_HS_Infill_Lin_LR_Compress.txt`, shows a standard design flow applied on the engine bracket model. 
+The example JSON file, at :code:`Test_json\\Compression\\EngineBracket_HS_Infill_Lin_LR_Compress.json`, shows a standard design flow applied on the engine bracket model. 
 
 .. code-block:: json
 
@@ -109,7 +109,7 @@ The illustrations below shows the comparison between original stl and decompress
 
 .. image:: ./pictures/compression_comparison.png
 
-Under the folder :code:`\\Test_json\\Compression\\` there are three sets of compression and decompression examples. Besides two showed above, :code:`Sample_Box.txt` and :code:`Sample_Box_Decompress.txt` showed the simple box shape in field compressed & saved, and decompressed; :code:`Sample_Box_Infill_Compress.txt` and :code:`Sample_Box_Infill_Decompress.txt` used a simple lattice infill of a box to demonstrate the field data compressed/save and decompression/load. One other benefits with new keywords here is that, user may save and reload the files without the original JSON design file.
+Under the folder :code:`\\Test_json\\Compression\\` there are three sets of compression and decompression examples. Besides two showed above, :code:`Sample_Box.json` and :code:`Sample_Box_Decompress.json` showed the simple box shape in field compressed & saved, and decompressed; :code:`Sample_Box_Infill_Compress.json` and :code:`Sample_Box_Infill_Decompress.json` used a simple lattice infill of a box to demonstrate the field data compressed/save and decompression/load. One other benefits with new keywords here is that, user may save and reload the files without the original JSON design file.
 
 .. note::
     The compression ratio may be vary. The tested cases here showed about 11 times compression ratio, it means the saved field data in the file is about 1/11-th original stl file size. However, this could be different in different design. 

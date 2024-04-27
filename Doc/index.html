@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Artisan’s documentation &#8212; Artisan 0.2.1 documentation</title>
+    <title>Artisan’s documentation &#8212; Artisan 0.2.2 documentation</title>
   
   
   
@@ -127,7 +127,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.1 documentation</p>
+    <p class="title logo__title">Artisan 0.2.2 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -141,6 +141,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher.html">Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
@@ -148,6 +149,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -314,7 +316,11 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Intro.html#license">License</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="OtherTools.html#artgui">ArtGUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OtherTools.html#third-party-apps">Third Party Apps</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#fill-a-box">Fill a box</a></li>
 <li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#two-lattices">Two Lattices</a></li>
@@ -343,6 +349,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Mesher.html#surface-remesh">Surface Remesh</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Conformal.html#lattice-in-hexahedron-domain">Lattice in hexahedron domain</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal.html#lattice-in-tetrahedron-domain">Lattice in tetrahedron domain</a></li>
@@ -364,6 +371,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#external-field-enhancement">External Field Enhancement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#geometry-feature-enhancement">Geometry Feature Enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OPField.html#mathematical-expression">Mathematical Expression</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a><ul>
@@ -376,6 +384,13 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="API.html#python-api">Python API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="API.html#c-api">C++ API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#launch-application">Launch Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#load-save-and-generate">Load, Save and Generate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#view-model">View Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#help">Help</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>

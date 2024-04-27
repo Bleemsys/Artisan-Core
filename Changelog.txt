@@ -71,6 +71,13 @@ This is simple change log recording the major and minor updates
 - Bug fix. TPMS in periodic lattice setup has trouble to setup the correct size. This release fixed this problem
 - No further updates, no docs update required
 
+0.2.2
+- Add ArtGUI version 0.0.1 
+- Add math expression based field manipulation
+- Add field driven meshing function for hexsplit core (tet and hex)
+- Doc updates
+
+
 
 
 

@@ -105,6 +105,14 @@ Checking the version:
     
     python ArtisanMain.py -v
 
+User shall can activate the ArtGUI through:
+
+.. code-block::
+
+    python ArtGUI.py
+
+or just simply double click :code:`ArtGUI.exe` in the stand-alone package.
+
 =======
 License
 =======

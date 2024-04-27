@@ -1,0 +1,6 @@
+{
+"type": "MeshLattice",
+"definition": {
+ "meshfile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//BoxHexMesh.med"
+ }
+}

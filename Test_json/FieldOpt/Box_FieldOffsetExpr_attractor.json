@@ -1,0 +1,79 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//cube_1mm.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Add_Lattice": {
+                "la_name": "SchwarzPrimitive",
+                "size": [
+                    100.0,
+                    100.0,
+                    100.0
+                ],
+                "thk": 10.0,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": true,
+                "Cube_Request": {}
+            }
+        },
+        "2": {
+            "OP_Expr_OffsetField": {
+                "expr": "(1 - sqrt(x**2+y**2+z**2)/200)*3.5",
+                "Fill": false
+            }
+        },
+        "3": {
+            "Export": {
+                "outfile": ".//Test_results/Box_FieldOffset_Expr.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

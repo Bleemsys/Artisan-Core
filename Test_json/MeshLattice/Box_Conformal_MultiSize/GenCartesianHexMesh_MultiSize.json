@@ -22,7 +22,7 @@
                 "numPrjLayers": 1,
                 "LayerDepth": 1.0,
                 "numCoverNodes": -1,
-                "MultiSize":{"Type":"Attractor", "Data":[[0, 0, 0, 500, 0.5], [1000, 1000, 1000, 1000, 0.5], [0, 1000, 1000, 350, 0.8]]}
+                "MultiSize":{"Type":"Attractor", "Data":[[0, 0, 0, 500, 0.5], [1000, 1000, 1000, 1000, 0.5], [0, 1000, 1000, 350, 0.8]], "FieldFile":""}
          }
         },
           "2": {"Add_Lattice":{

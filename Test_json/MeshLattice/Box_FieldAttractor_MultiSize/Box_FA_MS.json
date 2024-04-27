@@ -1,0 +1,120 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    80.0
+                ],
+                [
+                    0.0,
+                    80.0
+                ],
+                [
+                    0.0,
+                    80.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.25,
+            0.25,
+            0.25
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BasicCartesianHexMesh_MultiSize": {
+                "num_elem": [
+                    10,
+                    10,
+                    10
+                ],
+                "x_range": [
+                    0.0,
+                    80.0
+                ],
+                "y_range": [
+                    0.0,
+                    80.0
+                ],
+                "z_range": [
+                    0.0,
+                    80.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "Meshfile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//BoxHexMesh.med",
+                "Geomfile": ".//sample-obj//cube_1mm.stl",
+                "numPrjLayers": 0,
+                "LayerDepth": 1.0,
+                "numCoverNodes": 0,
+                "MultiSize": {
+                    "Type": "Field_Attractor",
+                    "Data": [
+                        [
+                            30,
+                            0.5
+                        ]
+                    ],
+                    "FieldFile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//field_data.csv"
+                }
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//GenHexMesh.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "thk": 1.0,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "3": {
+            "Export": {
+                "outfile": ".//Test_results/BoxHexMesh_FieldAttractor_MultiSize.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

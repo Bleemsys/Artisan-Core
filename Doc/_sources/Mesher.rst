@@ -7,7 +7,7 @@ One way of creating lattice infill is mapping the given lattice unit, such strut
 Cartesian Mesher 
 ================
 
-Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It's important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file :code:`CartesianHexMesh\\GenCartesianHexMesh.txt`.
+Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It's important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file :code:`CartesianHexMesh\\GenCartesianHexMesh.json`.
 
 .. code-block:: json 
 
@@ -83,7 +83,7 @@ Above example produce the following results. The tripod geometry is overlapped w
 
 .. image:: ./pictures/Tripod_HexInfill_v03.png
 
-The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function :code:`Gen_BasicCartesianHexMesh_MultiSize` allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file :code:`Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.txt`. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The :code:`SchwarzPrimitive` lattice is then conformed to the generated mesh. For conformal lattice, user may refer to :ref:`Conformal Lattice`.
+The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function :code:`Gen_BasicCartesianHexMesh_MultiSize` allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file :code:`Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json`. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The :code:`SchwarzPrimitive` lattice is then conformed to the generated mesh. For conformal lattice, user may refer to :ref:`Conformal Lattice`.
 
 .. code-block:: json
 
@@ -148,7 +148,7 @@ The results below shows the varied mesh size. The blue beams shows the boundary 
 Surface Mesher for Quad Elements 
 ================================
 
-The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry's surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file :code:`SurfaceLattice\\Gen_BasicSurfQuadMesh.txt`.
+The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry's surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file :code:`SurfaceLattice\\Gen_BasicSurfQuadMesh.json`.
 
 .. code-block:: json 
 
@@ -203,7 +203,7 @@ Or we could split the quad as two triangle by :code:`"isSplitTris": true`.
 
 .. image:: ./pictures/BasicQuadMesh_Split.png
 
-This function can certainly be applied to more complicated geometry. The provided example JSON can be located in the file named :code:`SurfaceLattice\Gen_BasicSurfQuadMesh.txt`. This specific example illustrates the geometry of a crank handle, which is primarily composed of quadrilateral elements. It is important to note that while the majority of the elements in this mesh are quadrilaterals, some of these elements may exhibit significant distortion, resulting in shapes that closely resemble triangles. Despite this, the overall structure of the mesh predominantly consists of quadrilateral elements, making it a quad-dominant mesh. 
+This function can certainly be applied to more complicated geometry. The provided example JSON can be located in the file named :code:`SurfaceLattice\Gen_BasicSurfQuadMesh.json`. This specific example illustrates the geometry of a crank handle, which is primarily composed of quadrilateral elements. It is important to note that while the majority of the elements in this mesh are quadrilaterals, some of these elements may exhibit significant distortion, resulting in shapes that closely resemble triangles. Despite this, the overall structure of the mesh predominantly consists of quadrilateral elements, making it a quad-dominant mesh. 
 
 .. image:: ./pictures/crank_handle_quadmesh.png
 
@@ -215,7 +215,7 @@ This function can certainly be applied to more complicated geometry. The provide
 Tetrahedron Mesher
 ==================
 
-Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file :code:`GenTetBasicMesh.txt`, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh. 
+Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file :code:`GenTetBasicMesh.json`, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh. 
 
 .. code-block:: json
 
@@ -273,11 +273,11 @@ For the more complicated case, user may refer to the example in the file :code:`
 
 Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow. Or user shall use the :code:`Gen_TetBasicMesh_HexSplit` to generate a better evenly sized or controlled-size mesh in order to fit the geometric shape. 
 
-The :code:`Gen_TetBasicMesh_HexSplit` keyword shares the same parameters with :code:`Gen_TetBasicMesh`. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example :code:`GenTetBasicMesh_HexSplit.txt`, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape's surface and volumetric domain.
+The :code:`Gen_TetBasicMesh_HexSplit` keyword shares the same parameters with :code:`Gen_TetBasicMesh`. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example :code:`GenTetBasicMesh_HexSplit.json`, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape's surface and volumetric domain.
 
 .. image:: ./pictures/TetBasic_HexSplit.png 
 
-Similar to :code:`Gen_BasicCartesianHexMesh_MultiSize`, the local mesh variation can be included as well. The example in the file :code:`EngineBracket_MultiSize\\EngineBracket_GenTetBasicMesh_HexSplit_MS.txt` shows a more complicated case, the Engine Bracket model with a local attractor controlled mesh size. 
+Similar to :code:`Gen_BasicCartesianHexMesh_MultiSize`, the local mesh variation can be included as well. The example in the file :code:`EngineBracket_MultiSize\\EngineBracket_GenTetBasicMesh_HexSplit_MS.json` shows a more complicated case, the Engine Bracket model with a local attractor controlled mesh size. 
 
 .. code-block:: json
 
@@ -321,7 +321,7 @@ The area on the left of Bracket ring has higher mesh density, or smaller mesh si
 
 .. image:: ./pictures/EngineBracket_MS_02.png
 
-For comparison, below shows the mesh without the local attractors, the example file is at :code:`EngineBracket\\EngineBracket_GenTetBasicMesh_HexSplit.txt`.
+For comparison, below shows the mesh without the local attractors, the example file is at :code:`EngineBracket\\EngineBracket_GenTetBasicMesh_HexSplit.json`.
 
 .. image:: ./pictures/EngineBracket_NoMS_01.png
 
@@ -334,7 +334,7 @@ Voronoi Polygon
 
 A Voronoi diagram, also known as a Voronoi tessellation or Voronoi decomposition, is a geometric structure that partitions a space into regions based on the proximity to a set of given points. In a Voronoi diagram, each point in the set is associated with a unique region that consists of all locations in the space that are closer to that point than any other point. It is named after the Russian mathematician Georgy Voronoi, who first introduced the idea. Voronoi polygons have various applications, such as in computer graphics, spatial analysis, geographical information systems, and computational biology. They provide a way to partition space based on proximity and are useful in solving proximity-based problems and analyzing spatial patterns. In additive manufacturing, this structure is often used on the components which suppose to bear loading with cushioning effect. 
 
-Setup the generation of the Voronoi polygons on the given geometry is similar to the tet mesher. Below shows the piece of setup JSON (the file :code:`GenVorMesh.txt`).
+Setup the generation of the Voronoi polygons on the given geometry is similar to the tet mesher. Below shows the piece of setup JSON (the file :code:`GenVorMesh.json`).
 
 .. code-block:: json
 
@@ -380,7 +380,7 @@ And the cross-section view shows how the mesher generates the element layer by l
 
 .. image:: ./pictures/VoriMeshBall_CrossSection.png
 
-We can certainly apply this to a more complex geometry. The example below (:code:`GenVorMesh_crank_handle.txt`) shows the generation of the Voronoi polygons on a real world component. 
+We can certainly apply this to a more complex geometry. The example below (:code:`GenVorMesh_crank_handle.json`) shows the generation of the Voronoi polygons on a real world component. 
 
 .. code-block:: json
 
@@ -431,7 +431,7 @@ The result is shown as below. As mentioned before, the current mesh strategy may
 
 .. image:: ./pictures/crank_handle_vori_mesh.png
 
-Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that utilizes the vertices of the Cartesian mesh. The example file :code:`GenVorMesh_HexSplit.txt` includes the keyword :code:`Gen_VoronoiPolyMesh`, which generates a partial Voronoi mesh using the vertices of the Cartesian mesh.
+Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that utilizes the vertices of the Cartesian mesh. The example file :code:`GenVorMesh_HexSplit.json` includes the keyword :code:`Gen_VoronoiPolyMesh`, which generates a partial Voronoi mesh using the vertices of the Cartesian mesh.
 
 .. image:: ./pictures/VoriBasic_HexSplit.png
 
@@ -439,7 +439,7 @@ Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that u
 Surface Remesh
 ==============
 
-The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword :code:`Gen_SurfaceReMesh` does the combined functions. User may find the example of Engine bracket remeshing at :code:`Remesh\\EngineBracket_Infill_LR.txt`.
+The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword :code:`Gen_SurfaceReMesh` does the combined functions. User may find the example of Engine bracket remeshing at :code:`Remesh\\EngineBracket_Infill_LR.json`.
 
 .. code-block:: json
 

@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Surface Lattice &#8212; Artisan 0.2.1 documentation</title>
+    <title>Surface Lattice &#8212; Artisan 0.2.2 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.1 documentation</p>
+    <p class="title logo__title">Artisan 0.2.2 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -142,6 +142,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher.html">Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
@@ -149,6 +150,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -314,7 +316,7 @@ document.write(`
 <p>Surface lattice can be a design option for lightweight structural component. It is easy to generate the surface lattice using existing meshes of the geometry. In Artisan 0.1.7, user can use existing conformal lattice generation functionality to morphy 2D geometric surface or strut-based lattice onto the 2D <code class="code docutils literal notranslate"><span class="pre">Triangle</span></code> or <code class="code docutils literal notranslate"><span class="pre">Quad</span></code> elements of meshes. All examples here are stored under <code class="code docutils literal notranslate"><span class="pre">//Test_json//SurfaceLattice//</span></code>. User may consider the integrated surface mesher to generate the surface subdivisions for morphing the lattice, please refer to the meshing section for more details.</p>
 <section id="strut-surface-lattice">
 <h2>Strut Surface Lattice<a class="headerlink" href="#strut-surface-lattice" title="Permalink to this headline">#</a></h2>
-<p>Here is an example (filename: <code class="code docutils literal notranslate"><span class="pre">BallSurfaceLattice.txt</span></code>) of using customized strut lattice definition to generate surface lattice on a ball.</p>
+<p>Here is an example (filename: <code class="code docutils literal notranslate"><span class="pre">BallSurfaceLattice.json</span></code>) of using customized strut lattice definition to generate surface lattice on a ball.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//sphere.stl&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -374,13 +376,13 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>User may take advantage of triangle divisions in the <code class="code docutils literal notranslate"><span class="pre">stl/obj/ply</span></code> file format. User may use mesh lattice setup to read in these geometric information to generate the surface lattice.</p>
-</div>
-<p>Addition example in file <code class="code docutils literal notranslate"><span class="pre">Crankhandle_SurfaceLattice.txt</span></code> shows the same style surface lattice on more complicated geometry.</p>
+</aside>
+<p>Addition example in file <code class="code docutils literal notranslate"><span class="pre">Crankhandle_SurfaceLattice.json</span></code> shows the same style surface lattice on more complicated geometry.</p>
 <img alt="_images/crankhandle_Surface_Lattice.png" src="_images/crankhandle_Surface_Lattice.png" />
 </section>
 <section id="geometry-surface-lattice">
 <h2>Geometry Surface Lattice<a class="headerlink" href="#geometry-surface-lattice" title="Permalink to this headline">#</a></h2>
-<p>Geometry surface lattice basically morphs the given 2D geometry onto the given mesh. Here is example (filename: <code class="code docutils literal notranslate"><span class="pre">Box_SurfaceLattice.txt</span></code>) of morphing irregular geometry onto a cube with quadrilateral elements with the unit element as showing below.</p>
+<p>Geometry surface lattice basically morphs the given 2D geometry onto the given mesh. Here is example (filename: <code class="code docutils literal notranslate"><span class="pre">Box_SurfaceLattice.json</span></code>) of morphing irregular geometry onto a cube with quadrilateral elements with the unit element as showing below.</p>
 <img alt="_images/Box_Surface_Lattice_unit.png" src="_images/Box_Surface_Lattice_unit.png" />
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">200.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">200.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">200.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>

@@ -25,6 +25,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Customization <Customization/Customization.rst>
    Mesh Lattice <Mesh.rst>
    Meshing <Mesher.rst>
+   Field Driven Meshing  <Mesher_02.rst>
    Conformal Lattice <Conformal.rst>
    Surface Lattice <SurfaceLattice.rst>
    Primitive Design <Primitive.rst>
@@ -32,6 +33,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Lattice Transition <TransLattice.rst>
    Compression <Compression.rst>
    API Interface <API.rst>
+   GUI for Artisan <ArtGUI.rst>
    Supports <Supports.rst>
 
 

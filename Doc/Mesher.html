@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Meshing &#8212; Artisan 0.2.1 documentation</title>
+    <title>Meshing &#8212; Artisan 0.2.2 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Mesher';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Conformal Lattice" href="Conformal.html" />
+    <link rel="next" title="Field Driven Meshing" href="Mesher_02.html" />
     <link rel="prev" title="Mesh Lattice" href="Mesh.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -129,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.1 documentation</p>
+    <p class="title logo__title">Artisan 0.2.2 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -143,6 +143,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
@@ -150,6 +151,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -318,7 +320,7 @@ document.write(`
 <p>One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the <a class="reference internal" href="Conformal.html#conformal-lattice"><span class="std std-ref">Conformal Lattice</span></a> generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder <code class="code docutils literal notranslate"><span class="pre">Test_json\MeshLattice</span></code>, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter <a class="reference internal" href="Primitive.html#primitive-design"><span class="std std-ref">Primitive Design</span></a>.</p>
 <section id="cartesian-mesher">
 <h2>Cartesian Mesher<a class="headerlink" href="#cartesian-mesher" title="Permalink to this headline">#</a></h2>
-<p>Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It’s important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file <code class="code docutils literal notranslate"><span class="pre">CartesianHexMesh\\GenCartesianHexMesh.txt</span></code>.</p>
+<p>Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It’s important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file <code class="code docutils literal notranslate"><span class="pre">CartesianHexMesh\\GenCartesianHexMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//telecope_tripode_base.stl&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -365,10 +367,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh</span></code> calls the function of producing the Cartesian mesh. Its parameters are very similar to block mesh generation. User may refer to the section <code class="code docutils literal notranslate"><span class="pre">Primitive</span> <span class="pre">Design</span></code> for details. Here only lists the additional parameters.</p>
-<table class="colwidths-given table">
+<table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -396,9 +398,9 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter <code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code> impacts the final results. In the following example, the parameter <code class="code docutils literal notranslate"><span class="pre">numPrjLayer</span></code> is set to <code class="code docutils literal notranslate"><span class="pre">0</span></code>. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.</p>
-</div>
+</aside>
 <img alt="_images/Tripod_HexInfill_v03.png" src="_images/Tripod_HexInfill_v03.png" />
-<p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.txt</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <a class="reference internal" href="Conformal.html#conformal-lattice"><span class="std std-ref">Conformal Lattice</span></a>.</p>
+<p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <a class="reference internal" href="Conformal.html#conformal-lattice"><span class="std std-ref">Conformal Lattice</span></a>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -451,13 +453,13 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The parameter <code class="code docutils literal notranslate"><span class="pre">Type</span></code> only supports <code class="code docutils literal notranslate"><span class="pre">Āttractor</span></code> at this stage. Other types of mesh size variation will be added in future development. If there is no local attractor, or other variational types, set <code class="code docutils literal notranslate"><span class="pre">&quot;MultiSize&quot;:{}</span></code>.</p>
-</div>
+</aside>
 <img alt="_images/Box_MultiSize.png" src="_images/Box_MultiSize.png" />
 <img alt="_images/Box_MultiSize_02.png" src="_images/Box_MultiSize_02.png" />
 </section>
 <section id="surface-mesher-for-quad-elements">
 <h2>Surface Mesher for Quad Elements<a class="headerlink" href="#surface-mesher-for-quad-elements" title="Permalink to this headline">#</a></h2>
-<p>The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry’s surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\\Gen_BasicSurfQuadMesh.txt</span></code>.</p>
+<p>The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry’s surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\\Gen_BasicSurfQuadMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">],[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">],[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -506,13 +508,13 @@ document.write(`
 <img alt="_images/BasicQuadMesh.png" src="_images/BasicQuadMesh.png" />
 <p>Or we could split the quad as two triangle by <code class="code docutils literal notranslate"><span class="pre">&quot;isSplitTris&quot;:</span> <span class="pre">true</span></code>.</p>
 <img alt="_images/BasicQuadMesh_Split.png" src="_images/BasicQuadMesh_Split.png" />
-<p>This function can certainly be applied to more complicated geometry. The provided example JSON can be located in the file named <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\Gen_BasicSurfQuadMesh.txt</span></code>. This specific example illustrates the geometry of a crank handle, which is primarily composed of quadrilateral elements. It is important to note that while the majority of the elements in this mesh are quadrilaterals, some of these elements may exhibit significant distortion, resulting in shapes that closely resemble triangles. Despite this, the overall structure of the mesh predominantly consists of quadrilateral elements, making it a quad-dominant mesh.</p>
+<p>This function can certainly be applied to more complicated geometry. The provided example JSON can be located in the file named <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\Gen_BasicSurfQuadMesh.json</span></code>. This specific example illustrates the geometry of a crank handle, which is primarily composed of quadrilateral elements. It is important to note that while the majority of the elements in this mesh are quadrilaterals, some of these elements may exhibit significant distortion, resulting in shapes that closely resemble triangles. Despite this, the overall structure of the mesh predominantly consists of quadrilateral elements, making it a quad-dominant mesh.</p>
 <img alt="_images/crank_handle_quadmesh.png" src="_images/crank_handle_quadmesh.png" />
 <img alt="_images/crank_handle_quadmesh_02.png" src="_images/crank_handle_quadmesh_02.png" />
 </section>
 <section id="tetrahedron-mesher">
 <h2>Tetrahedron Mesher<a class="headerlink" href="#tetrahedron-mesher" title="Permalink to this headline">#</a></h2>
-<p>Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh.txt</span></code>, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh.</p>
+<p>Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh.json</span></code>, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -557,9 +559,9 @@ document.write(`
 <p>For the more complicated case, user may refer to the example in the file <code class="code docutils literal notranslate"><span class="pre">EngineBracket_GenTetBasicMesh.txt</span></code>.</p>
 <img alt="_images/EngineBracket_BasicTet.png" src="_images/EngineBracket_BasicTet.png" />
 <p>Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow. Or user shall use the <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code> to generate a better evenly sized or controlled-size mesh in order to fit the geometric shape.</p>
-<p>The <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code> keyword shares the same parameters with <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code>. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh_HexSplit.txt</span></code>, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape’s surface and volumetric domain.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code> keyword shares the same parameters with <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code>. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh_HexSplit.json</span></code>, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape’s surface and volumetric domain.</p>
 <img alt="_images/TetBasic_HexSplit.png" src="_images/TetBasic_HexSplit.png" />
-<p>Similar to <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code>, the local mesh variation can be included as well. The example in the file <code class="code docutils literal notranslate"><span class="pre">EngineBracket_MultiSize\\EngineBracket_GenTetBasicMesh_HexSplit_MS.txt</span></code> shows a more complicated case, the Engine Bracket model with a local attractor controlled mesh size.</p>
+<p>Similar to <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code>, the local mesh variation can be included as well. The example in the file <code class="code docutils literal notranslate"><span class="pre">EngineBracket_MultiSize\\EngineBracket_GenTetBasicMesh_HexSplit_MS.json</span></code> shows a more complicated case, the Engine Bracket model with a local attractor controlled mesh size.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj/EngineBracket.stl&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -598,14 +600,14 @@ document.write(`
 <p>The area on the left of Bracket ring has higher mesh density, or smaller mesh size, whereas other region has comparatively bigger mesh size.</p>
 <img alt="_images/EngineBracket_MS_01.png" src="_images/EngineBracket_MS_01.png" />
 <img alt="_images/EngineBracket_MS_02.png" src="_images/EngineBracket_MS_02.png" />
-<p>For comparison, below shows the mesh without the local attractors, the example file is at <code class="code docutils literal notranslate"><span class="pre">EngineBracket\\EngineBracket_GenTetBasicMesh_HexSplit.txt</span></code>.</p>
+<p>For comparison, below shows the mesh without the local attractors, the example file is at <code class="code docutils literal notranslate"><span class="pre">EngineBracket\\EngineBracket_GenTetBasicMesh_HexSplit.json</span></code>.</p>
 <img alt="_images/EngineBracket_NoMS_01.png" src="_images/EngineBracket_NoMS_01.png" />
 <img alt="_images/EngineBracket_NoMS_02.png" src="_images/EngineBracket_NoMS_02.png" />
 </section>
 <section id="voronoi-polygon">
 <h2>Voronoi Polygon<a class="headerlink" href="#voronoi-polygon" title="Permalink to this headline">#</a></h2>
 <p>A Voronoi diagram, also known as a Voronoi tessellation or Voronoi decomposition, is a geometric structure that partitions a space into regions based on the proximity to a set of given points. In a Voronoi diagram, each point in the set is associated with a unique region that consists of all locations in the space that are closer to that point than any other point. It is named after the Russian mathematician Georgy Voronoi, who first introduced the idea. Voronoi polygons have various applications, such as in computer graphics, spatial analysis, geographical information systems, and computational biology. They provide a way to partition space based on proximity and are useful in solving proximity-based problems and analyzing spatial patterns. In additive manufacturing, this structure is often used on the components which suppose to bear loading with cushioning effect.</p>
-<p>Setup the generation of the Voronoi polygons on the given geometry is similar to the tet mesher. Below shows the piece of setup JSON (the file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh.txt</span></code>).</p>
+<p>Setup the generation of the Voronoi polygons on the given geometry is similar to the tet mesher. Below shows the piece of setup JSON (the file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh.json</span></code>).</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -645,7 +647,7 @@ document.write(`
 <img alt="_images/VoriMeshBall.png" src="_images/VoriMeshBall.png" />
 <p>And the cross-section view shows how the mesher generates the element layer by layer.</p>
 <img alt="_images/VoriMeshBall_CrossSection.png" src="_images/VoriMeshBall_CrossSection.png" />
-<p>We can certainly apply this to a more complex geometry. The example below (<code class="code docutils literal notranslate"><span class="pre">GenVorMesh_crank_handle.txt</span></code>) shows the generation of the Voronoi polygons on a real world component.</p>
+<p>We can certainly apply this to a more complex geometry. The example below (<code class="code docutils literal notranslate"><span class="pre">GenVorMesh_crank_handle.json</span></code>) shows the generation of the Voronoi polygons on a real world component.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -690,12 +692,12 @@ document.write(`
 </div>
 <p>The result is shown as below. As mentioned before, the current mesh strategy may not handle the sharp edge very well, but, in general, it produces a good fitting of Voronoi polygons.</p>
 <img alt="_images/crank_handle_vori_mesh.png" src="_images/crank_handle_vori_mesh.png" />
-<p>Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that utilizes the vertices of the Cartesian mesh. The example file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh_HexSplit.txt</span></code> includes the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_VoronoiPolyMesh</span></code>, which generates a partial Voronoi mesh using the vertices of the Cartesian mesh.</p>
+<p>Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that utilizes the vertices of the Cartesian mesh. The example file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh_HexSplit.json</span></code> includes the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_VoronoiPolyMesh</span></code>, which generates a partial Voronoi mesh using the vertices of the Cartesian mesh.</p>
 <img alt="_images/VoriBasic_HexSplit.png" src="_images/VoriBasic_HexSplit.png" />
 </section>
 <section id="surface-remesh">
 <h2>Surface Remesh<a class="headerlink" href="#surface-remesh" title="Permalink to this headline">#</a></h2>
-<p>The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SurfaceReMesh</span></code> does the combined functions. User may find the example of Engine bracket remeshing at <code class="code docutils literal notranslate"><span class="pre">Remesh\\EngineBracket_Infill_LR.txt</span></code>.</p>
+<p>The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SurfaceReMesh</span></code> does the combined functions. User may find the example of Engine bracket remeshing at <code class="code docutils literal notranslate"><span class="pre">Remesh\\EngineBracket_Infill_LR.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj/EngineBracket.stl&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -731,10 +733,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SurfaceReMesh</span></code> has the following parameters definitions.</p>
-<table class="colwidths-given table">
+<table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -782,11 +784,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="Conformal.html"
+       href="Mesher_02.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Conformal Lattice</p>
+        <p class="prev-next-title">Field Driven Meshing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

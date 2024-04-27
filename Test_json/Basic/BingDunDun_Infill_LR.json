@@ -1,0 +1,73 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.75,
+            0.75,
+            0.75
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 16106127360
+    },
+    "WorkFlow": {
+        "1": {
+            "Add_Lattice": {
+                "la_name": "Cubic",
+                "size": [
+                    8.0,
+                    12.0,
+                    4.0
+                ],
+                "thk": 1.2,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": true,
+                "Cube_Request": {}
+            }
+        },
+        "2": {
+            "Export": {
+                "outfile": ".//Test_results/BingDunDun_Infill.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

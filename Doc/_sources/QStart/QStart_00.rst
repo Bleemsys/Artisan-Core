@@ -35,11 +35,11 @@ The JSON contains three sections,
 
  - :code:`PostProcess` implements simple post processes on the resultant geometries. In this example, we would only combine the meshes if the automatic partitions were made. 
 
-Save the JSON as :code:`Sample_box.txt`,  and type
+Save the JSON as :code:`Sample_box.json`,  and type
 
 .. code-block::
 
-    python ArtisanMain.pt -f .//Test_json//Sample_box.txt
+    python ArtisanMain.pt -f .//Test_json//Sample_box.json
 
 You should see the results stl file at the folder Test_results, and launch the paraview, loads the file, you should be able to see the following.
 

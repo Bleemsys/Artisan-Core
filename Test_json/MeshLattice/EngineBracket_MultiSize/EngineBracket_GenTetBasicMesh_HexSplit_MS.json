@@ -12,7 +12,7 @@
 		        "size": [6.0, 6.0, 6.0],
 		        "Meshfile": ".//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med",
                 "ConvertTet2Beam": false,
-                "MultiSize":{"Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]]}
+                "MultiSize":{"Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]], "FieldFile":""}
                     }
                },
           "2": {"Add_Lattice":{

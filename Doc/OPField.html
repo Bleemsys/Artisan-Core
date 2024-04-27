@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Field Operation &#8212; Artisan 0.2.1 documentation</title>
+    <title>Field Operation &#8212; Artisan 0.2.2 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.1 documentation</p>
+    <p class="title logo__title">Artisan 0.2.2 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -142,6 +142,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher.html">Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
@@ -149,6 +150,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -302,6 +304,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#corner-enhancement">Corner Enhancement</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-expression">Mathematical Expression</a></li>
 </ul>
             </nav>
         </div>
@@ -314,7 +317,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="field-operation">
-<h1>Field Operation<a class="headerlink" href="#field-operation" title="Permalink to this headline">#</a></h1>
+<span id="chapter-fieldopt"></span><h1>Field Operation<a class="headerlink" href="#field-operation" title="Permalink to this headline">#</a></h1>
 <p>User may use field, defined externally or with geometric features, to enhance the lattice infill. In the field operation, the concept refers to use external data or spatial field to enhance (e.g. thickening) to lattice thickness, or to detect geometry features and therefore enhance the lattice infill using the geometry feature lines.</p>
 <section id="external-field-enhancement">
 <h2>External Field Enhancement<a class="headerlink" href="#external-field-enhancement" title="Permalink to this headline">#</a></h2>
@@ -349,7 +352,7 @@ document.write(`
 <span class="w">   </span><span class="p">}</span>
 </pre></div>
 </div>
-<p>The item <code class="code docutils literal notranslate"><span class="pre">2</span></code> in the <code class="code docutils literal notranslate"><span class="pre">WorkFlow</span></code> shows a new keywords <code class="code docutils literal notranslate"><span class="pre">OP_OffsetField</span></code>. It takes the maximum and minimum values in the field data and perform linear interpolation local material thickness offset corresponding to the field value data. In this case, for example, the maximum offset 1.5 mm (i.e. the keywords <code class="code docutils literal notranslate"><span class="pre">Max_Offset</span></code> defined) will be added to the region where has the maximum stress data, whereas the minimum field value (i.e. the keywords <code class="code docutils literal notranslate"><span class="pre">Min_Offset</span></code> defined) 0.001 mm is applied to the spot with lowest stress value. The offset value which the field values lies between max and min will be interpolated using the <code class="code docutils literal notranslate"><span class="pre">Min_Offset</span></code> and <code class="code docutils literal notranslate"><span class="pre">Max_Offset</span></code>. the results are as shown below. User can find this example <code class="code docutils literal notranslate"><span class="pre">Bar_FieldOffset.txt</span></code> at the Test_json folder.</p>
+<p>The item <code class="code docutils literal notranslate"><span class="pre">2</span></code> in the <code class="code docutils literal notranslate"><span class="pre">WorkFlow</span></code> shows a new keywords <code class="code docutils literal notranslate"><span class="pre">OP_OffsetField</span></code>. It takes the maximum and minimum values in the field data and perform linear interpolation local material thickness offset corresponding to the field value data. In this case, for example, the maximum offset 1.5 mm (i.e. the keywords <code class="code docutils literal notranslate"><span class="pre">Max_Offset</span></code> defined) will be added to the region where has the maximum stress data, whereas the minimum field value (i.e. the keywords <code class="code docutils literal notranslate"><span class="pre">Min_Offset</span></code> defined) 0.001 mm is applied to the spot with lowest stress value. The offset value which the field values lies between max and min will be interpolated using the <code class="code docutils literal notranslate"><span class="pre">Min_Offset</span></code> and <code class="code docutils literal notranslate"><span class="pre">Max_Offset</span></code>. the results are as shown below. User can find this example <code class="code docutils literal notranslate"><span class="pre">Bar_FieldOffset.json</span></code> at the Test_json folder.</p>
 <img alt="_images/BarLatticeStressField.png" src="_images/BarLatticeStressField.png" />
 <p>The top and lower lattices where close to the fixation side were thickened in corresponding to the field values.</p>
 <p>The field offset operation certainly can apply to other lattice, such as conformal or mesh lattices. Here we use the steering knuckle as example to demonstrate a simple design work flow to reduce the weight and reinforce the local lattice structure. Please note that, this example is only for demonstrating the application of software functionalities, and has no implication on any products.</p>
@@ -357,7 +360,7 @@ document.write(`
 <p>Steering knuckle is a piece of cast iron made component that ideally should be lightweight in order to improve vehicle’s efficiency and handling. Below is comparison between the original component design and mesh lattice filled geometry.</p>
 <img alt="_images/SK_original.png" src="_images/SK_original.png" />
 <img alt="_images/SK_Lattice.png" src="_images/SK_Lattice.png" />
-<p>The steering knuckle has to be verified by a series load cases in order to meet the structural integrity criterion. The stress distribution is therefore generated by applying the boundary conditions which reflects the loads in these scenarios. This stress filed was then exported as a csv file, and later imported as inputs for the design calculation. User may find the full JSON in the file <code class="code docutils literal notranslate"><span class="pre">SteeringKnuckle_Mesh_Infill_LR.txt</span></code>.</p>
+<p>The steering knuckle has to be verified by a series load cases in order to meet the structural integrity criterion. The stress distribution is therefore generated by applying the boundary conditions which reflects the loads in these scenarios. This stress filed was then exported as a csv file, and later imported as inputs for the design calculation. User may find the full JSON in the file <code class="code docutils literal notranslate"><span class="pre">SteeringKnuckle_Mesh_Infill_LR.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//SteeringKnuckle//SteeringKnuckle.stl&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -410,7 +413,7 @@ document.write(`
 <p>Geometry frequently incorporates various distinctive features along its edges, like sharp edges, which typically serve functional purposes. In design, emphasizing these features can be crucial for improving mechanical performance. Artisan offers straightforward methods to identify and capture these key features and it transforms these captured feature lines into field based operations that enhance the functional features.</p>
 <section id="sharpe-edge-enhancement">
 <h3>Sharpe Edge Enhancement<a class="headerlink" href="#sharpe-edge-enhancement" title="Permalink to this headline">#</a></h3>
-<p>Artisan has the keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> to identify the given mesh sharp edges, and build the cylindrical shape offset fields in order to enhance the material thickness around the cylindrical volume. The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle. The JSON file can be find at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.txt</span></code></p>
+<p>Artisan has the keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> to identify the given mesh sharp edges, and build the cylindrical shape offset fields in order to enhance the material thickness around the cylindrical volume. The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle. The JSON file can be find at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.ply&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -448,10 +451,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> captures the given geometry’s edges angles formed by their two neighboring triangles. Here is the details of each parameter.</p>
-<table class="colwidths-given table">
+<table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -481,13 +484,13 @@ document.write(`
 </table>
 <p>The box contains the edge enhancement is presented below. The box sharp edges which forms the shape has been dramatically enhanced with the cubic lattice infill.</p>
 <img alt="_images/BoxEdgeEnhance.png" src="_images/BoxEdgeEnhance.png" />
-<p>The example at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Crankhandle_EdgeEnhance.txt</span></code> shows a more complicated case that captures the sharp edge and thickening the surface lattice accordantly.</p>
+<p>The example at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Crankhandle_EdgeEnhance.json</span></code> shows a more complicated case that captures the sharp edge and thickening the surface lattice accordantly.</p>
 <img alt="_images/crank_handle_EdgeEnhance.png" src="_images/crank_handle_EdgeEnhance.png" />
 <img alt="_images/crank_handle_EdgeEnhance_02.png" src="_images/crank_handle_EdgeEnhance_02.png" />
 </section>
 <section id="corner-enhancement">
 <h3>Corner Enhancement<a class="headerlink" href="#corner-enhancement" title="Permalink to this headline">#</a></h3>
-<p>Corner features can be identified through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code>. Corners are considered as the center points of the sphere which is the influence volume in this keywords. The offset field is then added to the lattice field in order to varying the material thickness. A simple example (user may find it at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.txt</span></code>) of enhancing the 4 corner of a box shape is shown in the JSON below.</p>
+<p>Corner features can be identified through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code>. Corners are considered as the center points of the sphere which is the influence volume in this keywords. The offset field is then added to the lattice field in order to varying the material thickness. A simple example (user may find it at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.json</span></code>) of enhancing the 4 corner of a box shape is shown in the JSON below.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -527,10 +530,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code> has similar parameters as <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code>. Generally the parameters helps the algorithm to identify the corner on the given mesh, and the calculation parameters that may need turning for better capturing of the corner.</p>
-<table class="colwidths-given table">
+<table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -564,6 +567,48 @@ document.write(`
 <p>The algorithm relies on the fineness of the field (i.e. the resolution), and identifies the corner locations using field grid mesh, therefore may not exactly at the location of the mesh surface. The JSON above produce the results below.</p>
 <img alt="_images/BoxCornerEnhance.png" src="_images/BoxCornerEnhance.png" />
 </section>
+</section>
+<section id="mathematical-expression">
+<h2>Mathematical Expression<a class="headerlink" href="#mathematical-expression" title="Permalink to this headline">#</a></h2>
+<p>User may conduct manipulation of the lattice thickness on the lattice field directly through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_Expr_OffsetField</span></code>. For instance, the JSON (the example file: <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FieldOpt//Box_FieldOffsetExpr.json</span></code>) below shows the periodic changes on the lattice thickness.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                  </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SchwarzPrimitive&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">],</span>
+<span class="w">                  </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                  </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">             </span><span class="p">},</span>
+
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span><span class="nt">&quot;OP_Expr_OffsetField&quot;</span><span class="p">:</span>
+<span class="w">              </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5 * sin(2 * pi * x / 200)&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Box_FieldOffset_Expr.stl&quot;</span><span class="p">}}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The parameter <code class="code docutils literal notranslate"><span class="pre">expr</span></code> defines the mathematical expression. Similar to the customized TPMS, the back end of the function is supported by the package <code class="code docutils literal notranslate"><span class="pre">numexpr</span></code> (online manual: <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/user_guide.html">https://numexpr.readthedocs.io/en/latest/user_guide.html</a>). The parameter <code class="code docutils literal notranslate"><span class="pre">Fill</span></code> tells whether the cut operation with the geometric field conducts. As a result, the following shape should be produced. The thickness of the TPMS were changed periodically along with x-axis.</p>
+<img alt="_images/MathExprOPField_01.png" src="_images/MathExprOPField_01.png" />
+<p>We certainly could also try make an attractor type thickness change, for example (the example file: <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FieldOpt//Box_FieldOffsetExpr_attractor.json</span></code>), by defining <code class="code docutils literal notranslate"><span class="pre">&quot;expr&quot;:</span> <span class="pre">&quot;(1</span> <span class="pre">-</span> <span class="pre">sqrt(x**2+y**2+z**2)/200)*3.5&quot;</span></code>.</p>
+<img alt="_images/MathExprOPField_02.png" src="_images/MathExprOPField_02.png" />
 </section>
 </section>
 
@@ -617,6 +662,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#corner-enhancement">Corner Enhancement</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-expression">Mathematical Expression</a></li>
 </ul>
   </nav></div>
 

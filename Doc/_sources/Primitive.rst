@@ -9,7 +9,7 @@ Cylindrical Domain
 
 The design on the cylindrical domain is common in most of industrial applications, for instance, the heat exchanger in the pressurized vessel application. Artisan integrates a simple mesh generator for the cylindrical domain. User may use this infrastructure to further produce conformal lattice. The definition of the cylindrical domain requires the radius, :math:`\phi` and height.
 
-The following example can be find in the file :code:`GenCylindricalConformalMesh.txt`.    
+The following example can be find in the file :code:`GenCylindricalConformalMesh.json`.    
 
 .. code-block:: json
 
@@ -86,7 +86,7 @@ The parameter :code:`phi_range` provides a more interesting design features, tha
 Spherical Domain
 ================
 
-User can generate lattices on the spherical domain through the keywords :code:`Gen_SphericalMesh`. The JSON below (filename: :code:`GenSphericalConformalMesh.txt`) shows a demonstration of this feature using TPMS lattice.
+User can generate lattices on the spherical domain through the keywords :code:`Gen_SphericalMesh`. The JSON below (filename: :code:`GenSphericalConformalMesh.json`) shows a demonstration of this feature using TPMS lattice.
 
 .. code-block:: json
 
@@ -163,7 +163,7 @@ Similar to the :code:`Gen_CylindricalMesh`, the keywords :code:`Gen_SphericalMes
 Box Domain
 ==========
 
-User may define a hex mesh in the box-shape domain, and then conformal the lattice structure. This will produce the exact same results as the conventional way of lattice filling in the domain. The conformal lattice uses a different algorithm to compute the infill to the conventional periodic lattice infill. The base code of conformal lattice use openMP to accelerate the calculations, this can be dramatically faster when number of infill is huge. This functionality aims to provide an easy access to the faster algorithm in order to improve the efficiency. Below shows an example of filling lattice using the generated box mesh. The example file can be found at :code:`\\PrimitiveDesign\\GenBoxConformalMesh.txt`. 
+User may define a hex mesh in the box-shape domain, and then conformal the lattice structure. This will produce the exact same results as the conventional way of lattice filling in the domain. The conformal lattice uses a different algorithm to compute the infill to the conventional periodic lattice infill. The base code of conformal lattice use openMP to accelerate the calculations, this can be dramatically faster when number of infill is huge. This functionality aims to provide an easy access to the faster algorithm in order to improve the efficiency. Below shows an example of filling lattice using the generated box mesh. The example file can be found at :code:`\\PrimitiveDesign\\GenBoxConformalMesh.json`. 
 
 .. code-block:: json
 
@@ -240,7 +240,7 @@ Primitive Shape and Geometry handling
 
 A few simple geometry handling functions have been integrated into Artisan. It could be useful if adding some geometric entity after lattice infill. It has to mention that, the whole geometry handling is based on implicit modelling concept, explicit modelling capability is not available. In general, user may :code:`Add`, :code:`Subtract` and :code:`Intersect` on the shape :code:`Sphere`, :code:`Box`, :code:`Cylinder` and other user defined geometries. 
 
-In the example file :code:`\\Test_json\\PrimitiveDesign\\GenBox.txt`, a simple geometry was constructed using :code:`Sphere`, :code:`Box`, :code:`Cylinder`.
+In the example file :code:`\\Test_json\\PrimitiveDesign\\GenBox.json`, a simple geometry was constructed using :code:`Sphere`, :code:`Box`, :code:`Cylinder`.
 
 .. code-block:: json
 

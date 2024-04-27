@@ -167,7 +167,7 @@ In addition to :code:`Linear` transition, :code:`OP_FieldMerge` supports :code:`
                 "ExportLazPts": false}
     }
 
-The parameter :code:`pt_att` defines the coordinate of the attractor, and :code:`pt_r` defines the radius of the ball which covers the whole transition. The results are shown below. User may find the complete JSON in the file :code:`Box_FieldMerge_Attractor.txt`.
+The parameter :code:`pt_att` defines the coordinate of the attractor, and :code:`pt_r` defines the radius of the ball which covers the whole transition. The results are shown below. User may find the complete JSON in the file :code:`Box_FieldMerge_Attractor.json`.
 
 .. image:: ./pictures/FieldMerge_06.png
 
@@ -180,7 +180,7 @@ The parameter :code:`pt_att` defines the coordinate of the attractor, and :code:
 
 .. image:: ./pictures/FieldMerge_09.png
 
-The third option is the :code:`Annulus` transition. It defines the inner radius and outer radius, and the transition happens between-in the range of annulus area. User may find the example file :code:`Box_FieldMerge_Annulus.txt`.
+The third option is the :code:`Annulus` transition. It defines the inner radius and outer radius, and the transition happens between-in the range of annulus area. User may find the example file :code:`Box_FieldMerge_Annulus.json`.
 
 .. code-block:: json
 
@@ -227,7 +227,7 @@ The above JSON produce the result below. The inner radius defined a large area f
 Field Based Transition
 ======================
 
-The physical quantities, such as stress, strain, and force, or other field can serve as external design parameters influencing the lattice transition. Similar to field operations, the keyword :code:`OP_FieldMerge` can be employed to read a field, evaluate the target lattice, and ultimately combine the current field with the global field. This merging operation is demonstrated using the bar model case - the same example from the field operation section. This example īs the file :code:`Bar_FieldMerge_Field.txt`.
+The physical quantities, such as stress, strain, and force, or other field can serve as external design parameters influencing the lattice transition. Similar to field operations, the keyword :code:`OP_FieldMerge` can be employed to read a field, evaluate the target lattice, and ultimately combine the current field with the global field. This merging operation is demonstrated using the bar model case - the same example from the field operation section. This example īs the file :code:`Bar_FieldMerge_Field.json`.
 
 .. code-block:: json
 
