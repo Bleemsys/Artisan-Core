@@ -72,14 +72,16 @@ The keywords :code:`Gen_BasicCartesianHexMesh` calls the function of producing t
    * - :code:`numCoverNodes`
      - an integer number of nodes covered in the boundary layer. It shall be between :code:`1` to :code:`8`. Any elements will the number of node insider geometry less than this definition will be removed. If defines as :code:`-1`, the center point of the element will be used to checked whether the element is inside or outside of geometry. The element outside of geometry will be removed.   
 
+
+
+In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter :code:`numCoverNodes` impacts the final results. In the following example, the parameter :code:`numPrjLayer` is set to :code:`0`. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.
+
+
 Above example produce the following results. The tripod geometry is overlapped with the cubic lattice using the generated mesh. 
 
 .. image:: ./pictures/Tripod_HexInfill.png
 
 .. image:: ./pictures/Tripod_HexInfill_v02.png
-
-.. note::
-     In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter :code:`numCoverNodes` impacts the final results. In the following example, the parameter :code:`numPrjLayer` is set to :code:`0`. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.
 
 .. image:: ./pictures/Tripod_HexInfill_v03.png
 
@@ -134,10 +136,7 @@ The mesh can be generated with varying mesh sizes while maintaining the same top
                 "ExportLazPts": true}
      }
 
-The results below shows the varied mesh size. The blue beams shows the boundary of cell unit. 
-
-.. note::
-     The parameter :code:`Type` only supports :code:`Āttractor` at this stage. Other types of mesh size variation will be added in future development. If there is no local attractor, or other variational types, set :code:`"MultiSize":{}`.
+The results below shows the varied mesh size. The blue beams shows the boundary of cell unit. The parameter :code:`Type` only supports :code:`Āttractor` at this stage. Other types of mesh size variation will be added in future development. If there is no local attractor, or other variational types, set :code:`"MultiSize":{}`.
 
 
 .. image:: ./pictures/Box_MultiSize.png

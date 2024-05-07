@@ -1,0 +1,10 @@
+{
+"type": "TPMS",
+"definition": {
+"unit_x_len": "2*pi",
+"unit_y_len": "2*pi",
+"unit_z_len": "2*pi",
+"expr": "cos(x)+cos(y)+cos(z)",
+"ladomain": "Hex"
+}
+}

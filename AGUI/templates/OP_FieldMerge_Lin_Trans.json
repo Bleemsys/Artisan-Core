@@ -1,0 +1,11 @@
+{"9999":{"OP_FieldMerge":{ "la_name":"Cubic", "size":[10.0,10.0,10.0], "thk":1.2, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
+                                 "OP_para":{
+                                            "InterpType": "Linear",
+                                            "pt_01":[10.0,0.0,0.0], "n_vec_01":[ 1.0,0.0,0.0], 
+                                            "pt_02":[90.0,0.0,0.0], "n_vec_02":[-1.0,0.0,0.0], 
+                                            "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.2, "f_trans":0.3}
+                                            },
+                                 "Fill":true, "Cube_Request": {}
+							   }
+              }
+            }

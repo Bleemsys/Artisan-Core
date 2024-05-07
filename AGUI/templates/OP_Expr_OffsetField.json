@@ -1,0 +1,8 @@
+{
+    "9999": {
+        "OP_Expr_OffsetField": {
+            "expr": "5 * sin(2 * pi * x / 200)",
+            "Fill": false
+        }
+    }
+}

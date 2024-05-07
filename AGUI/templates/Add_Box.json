@@ -1,0 +1,15 @@
+{
+    "9999": {
+        "Add_Geometry":{
+            "Name": "Box",
+            "k_factor": 0.0,
+            "push2GeomField": false,
+            "Paras": {
+                "ori": [0.0, 0.0, 0.0],
+                "normal": [0, 0, 1],
+                "z_angle": 0.0,
+                "length": [2, 2, 2]
+               }
+           }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "9999":{
+        "Gen_SurfaceReMesh":{
+            "size":[3.0, 3.0, 3.0],
+            "mesh_file":".//your_path//your_stl-obj-ply_mesh_file_name.stl",
+            "ShortEdgeThreshold": 1.0,
+            "export_mesh": ".//your_path//your_exported_mesh_file.stl"}
+           }
+}

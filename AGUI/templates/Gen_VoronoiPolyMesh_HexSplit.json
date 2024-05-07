@@ -1,0 +1,10 @@
+{
+    "9999": {
+        "Gen_VoronoiPolyMesh_HexSplit":{
+            "Geomfile": ".//your_path//your_model_file_name.stl", 
+            "size": [5.5, 5.5, 5.5],
+            "Meshfile": ".//your_path//your_export_mesh_file_name.med",
+            "remove_tol": 1.0
+            }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "9999": {
+        "Gen_TetBasicMesh_HexSplit":{
+            "Geomfile": ".//your_path//your_input_geometry_file_name.stl", 
+            "size": [6.0, 6.0, 6.0],
+            "Meshfile": ".//your_path//your_export_mesh_file_name.med",
+            "ConvertTet2Beam": false,
+            "MultiSize":{}
+                }
+    }
+}

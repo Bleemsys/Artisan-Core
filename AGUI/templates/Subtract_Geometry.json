@@ -1,0 +1,13 @@
+{
+    "9999": {"Subtract_Geometry":{
+                   "Name": ".//your_path//your_input_geometry_file_name.stl",
+                   "k_factor": 0.0,
+                   "push2GeomField": true,
+                   "Paras": {
+                       "Scale": [0.5, 0.5, 0.5],
+                       "Trans": [0.0, 0.0, 5.0],
+                       "Rot": [0, 0, 0]
+                      }
+                  }
+             }
+}

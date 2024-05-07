@@ -1,0 +1,10 @@
+{
+    "9999": {
+        "Gen_VoronoiPolyMesh":{
+            "Geomfile": ".//sample-obj/EngineBracket.stl", 
+            "size": [5.5, 5.5, 5.5],
+            "Meshfile": ".//Test_json//MeshLattice//EngineBracket//EngineBracket.med",
+            "remove_tol": 2.5
+            }
+    }
+}

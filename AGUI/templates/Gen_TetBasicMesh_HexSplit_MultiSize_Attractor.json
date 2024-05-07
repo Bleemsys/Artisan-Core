@@ -1,0 +1,11 @@
+{
+    "9999": {
+        "Gen_TetBasicMesh_HexSplit":{
+            "Geomfile": ".//sample-obj/EngineBracket.stl", 
+            "size": [6.0, 6.0, 6.0],
+            "Meshfile": ".//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med",
+            "ConvertTet2Beam": false,
+            "MultiSize":{"Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]], "FieldFile":""}
+                }
+    }
+}

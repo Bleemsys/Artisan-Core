@@ -46,17 +46,22 @@ def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, do
     }
 
     #workflow_text = workflow_text_widget.get("1.0", tk.END).strip()
-    workflow_text = workflow_text_widget.get("1.0", tk.END).strip()
+    workflow_text = workflow_text_widget.get()
     
-    if workflow_text == "":
-        
-        workflow_dict = json.loads("{}")
+    if type(workflow_text) == dict:
+        workflow_dict = workflow_text
     else:
-        try:
-            workflow_dict = json.loads(workflow_text)
-        except json.JSONDecodeError as e:
-            messagebox.showerror("Error", "Invalid JSON format: " + str(e))
-            return None
+        messagebox.showerror("Error", "Invalid JSON format.")
+        return None
+
+    # if workflow_text == "":
+    #     workflow_dict = json.loads("{}")
+    # else:
+    #     try:
+    #         workflow_dict = json.loads(workflow_text)
+    #     except json.JSONDecodeError as e:
+    #         messagebox.showerror("Error", "Invalid JSON format: " + str(e))
+    #         return None
         
     post_process_data = {
         "CombineMeshes": combine_meshes_var.get(),
@@ -71,8 +76,9 @@ def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, do
         "PostProcess": post_process_data
     }
 
-    if sessionfile == None:
+    filepath = None
 
+    if sessionfile == None:
         filepath = filedialog.asksaveasfilename(initialdir="/", title="Save Configuration",
                                             defaultextension=".json",
                                             filetypes=[("JSON files", "*.json"), ("All files", "*.*")])
@@ -83,6 +89,10 @@ def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, do
         with open(filepath, 'w') as file:
             json.dump(data_to_save, file, indent=4)
         #messagebox.showinfo("Save Configuration", f"Configuration saved successfully to {filepath}")
+
+    if filepath == "":
+        filepath = None
+    
     return filepath
 
 
@@ -170,8 +180,10 @@ def load_configuration(type_entry, domain_x_lb, domain_x_ub, domain_y_lb, domain
         
         #print(type(data.get("WorkFlow", "")))
 
-        workflow_text_widget.delete("1.0", tk.END)
-        workflow_text_widget.insert("1.0", json.dumps(data.get("WorkFlow", ""), indent=4))
+        # workflow_text_widget.delete("1.0", tk.END)
+        # workflow_text_widget.insert("1.0", json.dumps(data.get("WorkFlow", ""), indent=4))
+        workflow_text_widget.clear_all()
+        workflow_text_widget.insert_json("", data["WorkFlow"])
 
         combine_meshes_var.set(data["PostProcess"].get("CombineMeshes", False))
         remove_partition_var.set(data["PostProcess"].get("RemovePartitionMeshFile", False))

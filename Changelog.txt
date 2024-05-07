@@ -77,6 +77,10 @@ This is simple change log recording the major and minor updates
 - Add field driven meshing function for hexsplit core (tet and hex)
 - Doc updates
 
+0.2.2
+- Add ArtGUI version 0.0.2 
+- Doc Updates
+- No changes on Artisan 0.2.2
 
 
 

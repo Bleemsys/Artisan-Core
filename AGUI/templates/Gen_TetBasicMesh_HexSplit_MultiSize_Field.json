@@ -1,0 +1,24 @@
+{
+    "9999": {
+        "Gen_TetBasicMesh_HexSplit": {
+            "Geomfile": ".//your_path//your_model_file.stl",
+            "size": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Meshfile": ".//your_path//your_exported_mesh_file.med",
+            "ConvertTet2Beam": false,
+            "MultiSize": {
+                "Type": "Field_Attractor",
+                "Data": [
+                    [
+                        30,
+                        0.5
+                    ]
+                ],
+                "FieldFile": ".//your_path//your_imported_field_file_name.csv"
+            }
+        }
+    }
+}

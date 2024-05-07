@@ -23,6 +23,7 @@ class ModelViewer:
 
         self.renderWindowInteractor = vtk.vtkRenderWindowInteractor()
         self.renderWindowInteractor.SetRenderWindow(self.renderWindow)
+        # self.renderWindowInteractor.SetDesiredUpdateRate(0.1)
 
         style = vtk.vtkInteractorStyleTrackballCamera()
         self.renderWindowInteractor.SetInteractorStyle(style)

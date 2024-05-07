@@ -1,0 +1,10 @@
+{
+    "9999": {
+        "Gen_TetBasicMesh":{
+            "Geomfile": ".//sample-obj//Ball_Mesh.STL", 
+          "size": [100.0,100.0,100.0],
+          "Meshfile": ".//sample-obj//Ball_Mesh.med",
+            "ConvertTet2Beam": true
+            }
+    }
+}

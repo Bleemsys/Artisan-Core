@@ -1,0 +1,6 @@
+{
+"type": "MeshLattice",
+"definition": {
+ "meshfile": "your_path//your_input_mesh_file_name.med"
+ }
+}

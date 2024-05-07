@@ -1,0 +1,13 @@
+{
+    "9999":{
+        "Gen_SphericalMesh":{
+            "num_elem": [3, 10, 4],
+            "r_range": [3.0, 8.0],
+            "phi_range": [0.0, 1.0],
+            "theta_range":[0.3, 0.7],
+            "ori":[0.0,0.0,0.0],
+            "Normal": [1.0,1.0,0.0],
+            "Mesh_file": ".//Test_json//PrimitiveDesign//SphericalMesh.med"
+           }
+              }
+}

@@ -299,8 +299,9 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-application">Launch Application</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-save-and-generate">Load, Save and Generate</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#view-model">View Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-edit-and-save">Load, Edit and Save</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-and-view-model">Generate and View Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#help">Help</a></li>
 </ul>
             </nav>
@@ -316,29 +317,64 @@ document.write(`
   <section id="artgui">
 <span id="chapter-artgui"></span><h1>ArtGUI<a class="headerlink" href="#artgui" title="Permalink to this headline">#</a></h1>
 <p>ArtGUI is an intuitive graphical user interface designed to streamline the Artisan design workflow. Users can load their design file, i.e. JSON configuration, and perform editing, generation, and viewing of lattice structures all within a single application. ArtGUI emphasizes a user-friendly interface, catering to essential tasks while maintaining overall simplicity. For more complex mesh and geometric operations, users may need to utilize a professional CAD system. In future, we will gradually expand ArtGUI’s functions and applications. We use a simple example below to guide user how to interact with this application.</p>
+<p>This is the documentation for ArtGUI version 0.0.2.</p>
 <section id="launch-application">
 <h2>Launch Application<a class="headerlink" href="#launch-application" title="Permalink to this headline">#</a></h2>
 <p>User may launch the application just type the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">ArtGUI</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-<p>In the all-in-one standalone package, user may activate the ArtGUI by double click <code class="code docutils literal notranslate"><span class="pre">ArtGUI.exe</span></code>.</p>
+<p>In the all-in-one standalone package, user may activate the ArtGUI by double clicking <code class="code docutils literal notranslate"><span class="pre">ArtGUI.exe</span></code>.</p>
 </section>
-<section id="load-save-and-generate">
-<h2>Load, Save and Generate<a class="headerlink" href="#load-save-and-generate" title="Permalink to this headline">#</a></h2>
-<p>The graphic below shows an overall view of the application. The interface includes four functional areas, setup, workflow, post process and the message panel. Each of section corresponds to JSON configuration of the file. User may able to enter the setup, workflow and post process sections, and save to a standard JSON configuration. Here we only load an existing example configuration for a quick demonstration.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<p>The graphic below shows an overall view of the application. The interface includes five functional areas, the ribbon-style tool bar, setup, workflow, post process and the message panel. Each of section corresponds to JSON configuration of the file. User may able to enter the setup, workflow and post process sections, and save to a standard JSON configuration, or just uses the top tool bar to insert the keywords, or editing the definition files.</p>
 <img alt="_images/overall_view.png" src="_images/overall_view.png" />
-<p>On top, user shall find the file menu that includes <code class="code docutils literal notranslate"><span class="pre">Save</span></code>, <code class="code docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span></code> and <code class="code docutils literal notranslate"><span class="pre">Load</span></code>. Click the load, then navigate to the <code class="code docutils literal notranslate"><span class="pre">Test_json</span></code> folder, where many examples were stored, find a configuration file and load it. Here we pick up <code class="code docutils literal notranslate"><span class="pre">Test_json\EngineBracket_HS_Infill_Lin_LR.txt</span></code>, as shown below. The ArtGUI will parse the given JSON file, fill the setup, post-process sections, and load the workflow text into the workflow section.</p>
-<img alt="_images/Loadfiles.png" src="_images/Loadfiles.png" />
-<img alt="_images/Loadfiles_01.png" src="_images/Loadfiles_01.png" />
-<p>The workflow panel shows the highlighted JSOn keywords and structures. Please note that, the JSON format is enforced in the text panel, after key in the items, and press enter it will automatically apply highlight and indentation in order to improve readability. If any editing has done, user has to save it (i.e. the shortcut Ctrl + S) may click the generate button under the workflow panel. ArtGUI shall trigger the Artisan backend to work. In this case we just would like to give the example file a run, so hit the generate button. Then you shall see the computational progress message on the message panel.</p>
-<img alt="_images/Loadfiles_02.png" src="_images/Loadfiles_02.png" />
+<p>In general, the GUI’s main areas are:</p>
+<table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Area</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Ribbon Tool Bar</p></td>
+<td><p>It contains File operation, and keywords insert functions. User may insert keywords by click the corresponding buttons. The tool tab provides the mini editor for mesh lattice, conformal lattice and customer lattice definition files. User shall edit, and save the definition files here, and refer to these files in the workflow.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Main WorkFlow Editor</p></td>
+<td><p>User may change the keywords parameters or work flow orders in the editor, or directly edit the JSON here.</p></td>
+</tr>
+<tr class="row-even"><td><p>Environment setup and results monitoring</p></td>
+<td><p>Setup basic computational Environment parameter, and monitoring the progress of the computation, use the update viewer button to view the results.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Basic Work flow should be as following.
+* load, or construct the setup parameters and the work flow;
+* Generate the lattice, and check results;
+* iteratively generate the results which meets the requirements.</p>
 </section>
-<section id="view-model">
-<h2>View Model<a class="headerlink" href="#view-model" title="Permalink to this headline">#</a></h2>
-<p>Click the view model button, user should see the view port screen here. User may rotate, pan or zoom in/out to check the results.</p>
+<section id="load-edit-and-save">
+<h2>Load, Edit and Save<a class="headerlink" href="#load-edit-and-save" title="Permalink to this headline">#</a></h2>
+<p>On the top, user shall find the file tab that includes <code class="code docutils literal notranslate"><span class="pre">Save</span></code>, <code class="code docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span></code> and <code class="code docutils literal notranslate"><span class="pre">Load</span></code>. Click the load, then navigate to the <code class="code docutils literal notranslate"><span class="pre">Test_json</span></code> folder, where many examples were stored, find a configuration file and load it. Here we pick up <code class="code docutils literal notranslate"><span class="pre">Test_json\EngineBracket_HS_Infill_Lin_LR.txt</span></code>, as shown below. The ArtGUI will parse the given JSON file, fill the setup, post-process sections, and load the workflow text into the workflow section. Each item in the workflow will be presented as tree view, by expanding the treeview, user can navigate through all parameters and values. For editing the values or keys, just clicking the item.</p>
+<img alt="_images/Load_example.png" src="_images/Load_example.png" />
+<p>Or use the editor button at the bottom section to editing original JSON file, and do not forgot the click refresh button to update back to the treeview GUI.</p>
+<img alt="_images/Load_example_02.png" src="_images/Load_example_02.png" />
+<p>Please note that, in the JSON editor, the JSON format is enforced in the text panel, after key in the items, and press enter it will automatically apply highlight and indentation in order to improve readability. If any editing has done, user has to save it, may click the generate button under the workflow panel. ArtGUI shall trigger the Artisan backend to work. In this case we just would like to give the example file a run, so hit the generate button. Then you shall see the computational progress message on the message panel.</p>
+<img alt="_images/Load_example_03.png" src="_images/Load_example_03.png" />
+<p>The top ribbon offers a toolbar with multiple keyword buttons, enabling users to easily insert JSON snippets by simply clicking the appropriate keyword button. Please remember to edit the step number, which defaults to either 9999 or 10000. This step number should reflect the sequencies of the design steps. Other parameters should also be reviewed and adjusted to ensure they align with the intended values. Users can leverage the functions available under the “Tools” tab to edit mesh lattices, conformal lattices, or define custom lattice structures. A mini tree view editor will pop up, pre-loaded with the appropriate template, allowing for seamless customization.</p>
+<img alt="_images/Definition_mini_editor.png" src="_images/Definition_mini_editor.png" />
+<p>Users can copy and paste JSON strings directly into the tree view area. This can be done by using the bottom buttons or by right-clicking to reveal the context menu. ArtGUI will then automatically parse the JSON string into the appropriate format.</p>
+</section>
+<section id="generate-and-view-model">
+<h2>Generate and View Model<a class="headerlink" href="#generate-and-view-model" title="Permalink to this headline">#</a></h2>
+<p>After editing is complete, clicking the “Generate” button initiates the backend computation. Users can monitor the progress in the message panel. Once the computation is finished, clicking the “View Model” button opens the viewport screen. Here, users can rotate, pan, or zoom in and out to inspect the results.</p>
 <img alt="_images/Loadfiles_03.png" src="_images/Loadfiles_03.png" />
-<p>User may change the design parameters in the JSON workflow, and re-generate a new lattice result, just click the update view, the new result should be updated in the view port. At the bottom of the view port, user shall be able to see the bounding lengths, and the lower point and upper point of the bounding box. Please note that, if the JSON workflow last line does not contain the keywords <code class="code docutils literal notranslate"><span class="pre">Export</span></code> and did not give a result file, the view port will not be updated.</p>
+<p>User may change the design parameters in the workflow, and re-generate a new lattice result, just click the update view, the new result should be updated in the view port. At the bottom of the view port, user shall be able to see the bounding lengths, and the lower point and upper point of the bounding box. Please note that, if the JSON workflow last line does not contain the keywords <code class="code docutils literal notranslate"><span class="pre">Export</span></code> and did not give a result file, the view port will not be updated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The edited JSON must be saved before generating. Artisan at the backend only read the JSON and conduct the calculation, and will not have interaction with ArtGUI.</p>
@@ -396,8 +432,9 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-application">Launch Application</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-save-and-generate">Load, Save and Generate</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#view-model">View Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-edit-and-save">Load, Edit and Save</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-and-view-model">Generate and View Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#help">Help</a></li>
 </ul>
   </nav></div>
@@ -422,7 +459,7 @@ By Bleemsys
     
   <p class="copyright">
     
-      © Copyright 2023, Bleemsys Ltd.
+      © Copyright 2024, Bleemsys Ltd.
       <br/>
     
   </p>

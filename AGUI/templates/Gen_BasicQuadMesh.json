@@ -1,0 +1,18 @@
+{
+    "9999":{
+            "Gen_BasicQuadMesh":{
+              "num_elem": [20, 20, 20],
+              "x_range": [0.0, 20.0],
+              "y_range": [0.0, 20.0],
+              "z_range": [0.0, 20.0],
+              "ori":[-10.0,-10.0,-10.0],
+              "Normal": [0.0,0.0,1.0],
+              "z_angle": 0.0,
+              "Meshfile": ".//Test_json//SurfaceLattice//BallSurfQuadMesh.med",
+              "Geomfile": ".//sample-obj//Ball_Mesh.stl",
+              "isProjection": true,
+              "numCoverNodes": 1,
+                      "isSplitTris": false
+             }
+        }
+}

@@ -1,0 +1,17 @@
+{"9999": {
+               "Gen_BasicCartesianHexMesh":{
+                 "num_elem": [40, 26, 26],
+                 "x_range": [0.0, 60.0],
+                 "y_range": [0.0, 27.0],
+                 "z_range": [0.0, 26.0],
+                 "ori":[-48.0,-20.0,0.0],
+                 "Normal": [0.0,0.0,1.0],
+                 "z_angle": 0.0,
+                 "Meshfile": ".//your_path//your_exported_mesh_file_name.med",
+                 "Geomfile": ".//your_path//your_geometry_file_name.stl",
+                 "numPrjLayers": 1, 
+                 "LayerDepth": 1.0, 
+                 "numCoverNodes": -1
+                }
+               }
+}

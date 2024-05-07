@@ -405,17 +405,11 @@ document.write(`
 </tbody>
 </table>
 <p>The illustrations below shows the comparison between original stl and decompressed and exported stl. Two overlapped model showed no dis-match on colours, and can be considered as identical.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>The time consumption between compress and decompressed can be quite different. <code class="code docutils literal notranslate"><span class="pre">OP_Compress</span></code> only takes the key data from field and encode the data into more compacted form, whereas <code class="code docutils literal notranslate"><span class="pre">OP_Decompress</span></code> has to re-generate the data from the given data records, hence longer computational time. If user selected to rebuild the field for further design work, <code class="code docutils literal notranslate"><span class="pre">OP_Decompress</span></code> takes additional step to re-compute the whole field data. Please bear in mind, these operations do not apply to stl models, but act on the lattice field data.</p>
 <p>The value <code class="code docutils literal notranslate"><span class="pre">&quot;Build&quot;</span></code> in the parameter <code class="code docutils literal notranslate"><span class="pre">OP_Type</span></code> in <code class="code docutils literal notranslate"><span class="pre">OP_Compress</span></code> will discard all current field setup (user will lose all previous lattice design if exists), and reconstruct the field by using the given saved field data file, then new design work can be keep working on the new field.</p>
-</aside>
 <img alt="_images/compression_comparison.png" src="_images/compression_comparison.png" />
 <p>Under the folder <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\Compression\\</span></code> there are three sets of compression and decompression examples. Besides two showed above, <code class="code docutils literal notranslate"><span class="pre">Sample_Box.json</span></code> and <code class="code docutils literal notranslate"><span class="pre">Sample_Box_Decompress.json</span></code> showed the simple box shape in field compressed &amp; saved, and decompressed; <code class="code docutils literal notranslate"><span class="pre">Sample_Box_Infill_Compress.json</span></code> and <code class="code docutils literal notranslate"><span class="pre">Sample_Box_Infill_Decompress.json</span></code> used a simple lattice infill of a box to demonstrate the field data compressed/save and decompression/load. One other benefits with new keywords here is that, user may save and reload the files without the original JSON design file.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>The compression ratio may be vary. The tested cases here showed about 11 times compression ratio, it means the saved field data in the file is about 1/11-th original stl file size. However, this could be different in different design.</p>
-</aside>
 </section>
 
 
@@ -472,7 +466,7 @@ By Bleemsys
     
   <p class="copyright">
     
-      © Copyright 2023, Bleemsys Ltd.
+      © Copyright 2024, Bleemsys Ltd.
       <br/>
     
   </p>

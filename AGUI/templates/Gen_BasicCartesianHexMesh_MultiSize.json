@@ -1,0 +1,19 @@
+{
+        "9999": {
+            "Gen_BasicCartesianHexMesh_MultiSize":{
+                "num_elem": [10, 10, 10],
+                "x_range": [0.0, 1000.0],
+                "y_range": [0.0, 1000.0],
+                "z_range": [0.0, 1000.0],
+                "ori": [0.0, 0.0, 0.0],
+                "Normal": [0.0,0.0,1.0],
+                "z_angle": 0.0,
+                "Meshfile": ".//your_path//your_export_model_file_name.med",
+                "Geomfile": ".//your_path//your_model_file_name.stl",
+                "numPrjLayers": 1,
+                "LayerDepth": 1.0,
+                "numCoverNodes": -1,
+                "MultiSize":{"Type":"Attractor", "Data":[[0, 0, 0, 500, 0.5], [1000, 1000, 1000, 1000, 0.5], [0, 1000, 1000, 350, 0.8]], "FieldFile":""}
+         }
+        }
+    }

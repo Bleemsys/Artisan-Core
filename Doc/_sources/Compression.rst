@@ -102,14 +102,12 @@ The keywords :code:`OP_Decompress` does the operation of decoding and restoring 
 
 The illustrations below shows the comparison between original stl and decompressed and exported stl. Two overlapped model showed no dis-match on colours, and can be considered as identical. 
 
-.. note::
-    The time consumption between compress and decompressed can be quite different. :code:`OP_Compress` only takes the key data from field and encode the data into more compacted form, whereas :code:`OP_Decompress` has to re-generate the data from the given data records, hence longer computational time. If user selected to rebuild the field for further design work, :code:`OP_Decompress` takes additional step to re-compute the whole field data. Please bear in mind, these operations do not apply to stl models, but act on the lattice field data.
-    
-    The value :code:`"Build"` in the parameter :code:`OP_Type` in :code:`OP_Compress` will discard all current field setup (user will lose all previous lattice design if exists), and reconstruct the field by using the given saved field data file, then new design work can be keep working on the new field.
+The time consumption between compress and decompressed can be quite different. :code:`OP_Compress` only takes the key data from field and encode the data into more compacted form, whereas :code:`OP_Decompress` has to re-generate the data from the given data records, hence longer computational time. If user selected to rebuild the field for further design work, :code:`OP_Decompress` takes additional step to re-compute the whole field data. Please bear in mind, these operations do not apply to stl models, but act on the lattice field data.
+
+The value :code:`"Build"` in the parameter :code:`OP_Type` in :code:`OP_Compress` will discard all current field setup (user will lose all previous lattice design if exists), and reconstruct the field by using the given saved field data file, then new design work can be keep working on the new field.
 
 .. image:: ./pictures/compression_comparison.png
 
 Under the folder :code:`\\Test_json\\Compression\\` there are three sets of compression and decompression examples. Besides two showed above, :code:`Sample_Box.json` and :code:`Sample_Box_Decompress.json` showed the simple box shape in field compressed & saved, and decompressed; :code:`Sample_Box_Infill_Compress.json` and :code:`Sample_Box_Infill_Decompress.json` used a simple lattice infill of a box to demonstrate the field data compressed/save and decompression/load. One other benefits with new keywords here is that, user may save and reload the files without the original JSON design file.
 
-.. note::
-    The compression ratio may be vary. The tested cases here showed about 11 times compression ratio, it means the saved field data in the file is about 1/11-th original stl file size. However, this could be different in different design. 
+The compression ratio may be vary. The tested cases here showed about 11 times compression ratio, it means the saved field data in the file is about 1/11-th original stl file size. However, this could be different in different design. 

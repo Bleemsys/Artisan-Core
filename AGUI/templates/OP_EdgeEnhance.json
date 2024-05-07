@@ -1,0 +1,13 @@
+{
+    "9999":{
+                "OP_EdgeEnhance":{"Angles":[1.57, 1.6], 
+                                  "r": 100.0, 
+                                  "max_offset": 100.0,
+								  "min_offset": 0.0,
+								  "meshfile": ".//your_path//your_model_file_name.ply",
+								  "MergeNodes": true,
+								  "Fill": true
+				}
+        }
+
+}

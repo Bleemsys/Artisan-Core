@@ -15,7 +15,7 @@ import tkinter as tk
 from AGUI.wizard import ArtisanWizard
 
 __AppName__ = 'ArtGUI'
-__version_info__ = ('0', '0', '1')
+__version_info__ = ('0', '0', '2')
 __version__ = '.'.join(__version_info__)
 
 if __name__ == "__main__":

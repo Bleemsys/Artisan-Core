@@ -1,0 +1,5 @@
+{
+        "9999": {
+            "OP_Compress": {"compressed_file": ".//your_path/your_compressed_model_file.smd"}
+        }
+    }

@@ -1,0 +1,26 @@
+{
+    "9999": {
+            "Add_Lattice": {
+                "la_name": "SchwarzDiamond",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "thk": 0.2,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+    }
+}

@@ -1,0 +1,4 @@
+{
+    "9999":{"OP_OffsetField":{"Max_Offset":2.0,"Min_Offset":-1.0,
+                                 "FieldFile":".//your_path//your_field_file_name.csv", "Fill": true}}
+}

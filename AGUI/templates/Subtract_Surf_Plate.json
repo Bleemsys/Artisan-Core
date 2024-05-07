@@ -1,0 +1,7 @@
+{
+    "9999": {
+        "Substract_Surf_Plate":{
+            "Surffile": ".//sample-obj//Shore//Shoes_Top.stl","thk":3.5,
+            "GeomTrim": false}
+    }
+}

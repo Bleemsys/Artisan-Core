@@ -1,0 +1,36 @@
+{
+    "9999": {
+        "OP_FieldMerge": {
+            "la_name": "Cubic",
+            "size": [
+                10.0,
+                10.0,
+                10.0
+            ],
+            "thk": 1.2,
+            "Rot": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Trans": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "OP_para": {
+                "InterpType": "Annulus",
+                "pt_att": [
+                    100.0,
+                    100.0,
+                    100.0
+                ],
+                "inner_r": 40.0,
+                "outer_r": 100.0,
+                "Transition": {}
+            },
+            "Fill": true,
+            "Cube_Request": {}
+        }
+    }
+}

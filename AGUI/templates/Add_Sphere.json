@@ -1,0 +1,13 @@
+{
+    "9999": {
+        "Add_Geometry":{
+            "Name": "Sphere",
+            "k_factor": 0.5,
+            "push2GeomField": false,
+            "Paras": {
+                "ori": [-2.0, 0.0, 0.0],
+                "r": 1.5
+               }
+           }
+    }
+}

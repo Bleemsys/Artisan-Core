@@ -1,0 +1,7 @@
+{
+        "9999": {
+            "OP_Decompress": {"compressed_file": ".//your_path//your_compressed_model_file.smd",
+            "rebuild": false,
+            "OP_type": "Build"}
+        }
+    }

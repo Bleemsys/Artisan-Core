@@ -1,0 +1,7 @@
+{
+    "9999": {
+        "Add_Surf_Plate":{
+            "Surffile": ".your_file_path//your_file_name.stl","thk":0.5,
+            "GeomTrim": true}
+    }
+}

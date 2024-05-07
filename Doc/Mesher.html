@@ -392,13 +392,10 @@ document.write(`
 </tr>
 </tbody>
 </table>
+<p>In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter <code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code> impacts the final results. In the following example, the parameter <code class="code docutils literal notranslate"><span class="pre">numPrjLayer</span></code> is set to <code class="code docutils literal notranslate"><span class="pre">0</span></code>. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.</p>
 <p>Above example produce the following results. The tripod geometry is overlapped with the cubic lattice using the generated mesh.</p>
 <img alt="_images/Tripod_HexInfill.png" src="_images/Tripod_HexInfill.png" />
 <img alt="_images/Tripod_HexInfill_v02.png" src="_images/Tripod_HexInfill_v02.png" />
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In the JSON example above, the center of the hex element was used to determine whether the element should be removed. Users can experiment with different removal strategies to see how the parameter <code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code> impacts the final results. In the following example, the parameter <code class="code docutils literal notranslate"><span class="pre">numPrjLayer</span></code> is set to <code class="code docutils literal notranslate"><span class="pre">0</span></code>. The resulting jig-saw shaped element cluster demonstrates how the Cartesian mesh approximates the outline of the geometry. While this projection method may not guarantee high-quality hex elements, it does produce a hex-dominant mesh that can be utilized for hex lattice infill.</p>
-</aside>
 <img alt="_images/Tripod_HexInfill_v03.png" src="_images/Tripod_HexInfill_v03.png" />
 <p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <a class="reference internal" href="Conformal.html#conformal-lattice"><span class="std std-ref">Conformal Lattice</span></a>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
@@ -449,11 +446,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The results below shows the varied mesh size. The blue beams shows the boundary of cell unit.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The parameter <code class="code docutils literal notranslate"><span class="pre">Type</span></code> only supports <code class="code docutils literal notranslate"><span class="pre">Āttractor</span></code> at this stage. Other types of mesh size variation will be added in future development. If there is no local attractor, or other variational types, set <code class="code docutils literal notranslate"><span class="pre">&quot;MultiSize&quot;:{}</span></code>.</p>
-</aside>
+<p>The results below shows the varied mesh size. The blue beams shows the boundary of cell unit. The parameter <code class="code docutils literal notranslate"><span class="pre">Type</span></code> only supports <code class="code docutils literal notranslate"><span class="pre">Āttractor</span></code> at this stage. Other types of mesh size variation will be added in future development. If there is no local attractor, or other variational types, set <code class="code docutils literal notranslate"><span class="pre">&quot;MultiSize&quot;:{}</span></code>.</p>
 <img alt="_images/Box_MultiSize.png" src="_images/Box_MultiSize.png" />
 <img alt="_images/Box_MultiSize_02.png" src="_images/Box_MultiSize_02.png" />
 </section>
@@ -835,7 +828,7 @@ By Bleemsys
     
   <p class="copyright">
     
-      © Copyright 2023, Bleemsys Ltd.
+      © Copyright 2024, Bleemsys Ltd.
       <br/>
     
   </p>

@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": "your_path//your_mesh_file_name.med",
+ "la_name" : "BC"
+ }
+}

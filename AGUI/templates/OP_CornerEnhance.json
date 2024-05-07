@@ -1,0 +1,14 @@
+{
+    "9999":{
+        "OP_CornerEnhance":{"k": 0.04,
+                            "threshold": 0.95, 
+                            "r": 400.0, 
+                            "max_offset": 40.0,
+                     "min_offset": 0.0,
+                     "meshfile": ".//your_path//your_mesh_file_name.stl",
+                     "Fill": true,
+                            "param": {"sigma_factor": 0.025,
+                                      "grid_factor": 5}
+        }
+      }
+}

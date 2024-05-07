@@ -1,0 +1,13 @@
+{
+    "9999":{"OP_FieldMerge":{ "la_name":"BCCubic", "size":[25.0, 25.0, 25.0], "thk":2.5, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0],
+                                 "OP_para":{
+                                            "InterpType": "Field",
+                                            "FieldFile": ".//sample-obj//Bar//fielddata.csv",
+                                            "max_cap": 4500000,
+                                            "min_cap": 3500000,  
+                                            "Transition": {"la_name":"BCCubic", "size":[10.0,10.0,10.0], "thk":1.2, "Weight": 0.8, "f_trans":0.5}
+                                            },
+                                 "Fill":true, "Cube_Request": {}
+							   }
+            }
+}
