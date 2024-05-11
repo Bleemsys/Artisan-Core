@@ -82,6 +82,10 @@ This is simple change log recording the major and minor updates
 - Doc Updates
 - No changes on Artisan 0.2.2
 
+0.2.2.Rev01
+- Bug fix, subtract_lattice keywords not working properly. 
+- No other changes, no doc updates
+
 
 
 

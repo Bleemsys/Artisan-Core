@@ -1,38 +1,121 @@
-{"Setup":{      "Type" : "Sample",
-                "Sample": {"Domain" : [[-10.0,10.0],[-10.0,10.0],[-10.0,10.0]], "Shape": "Box"},
-                "Geomfile": "",
-                "Rot" : [0.0,0.0,0.0],
-                "res":[0.05,0.05,0.05],
-                "Padding": 1,
-                "onGPU": false,
-                "memorylimit": 1073741824000
-                },
- "WorkFlow":{
-          
-          "1": {"Add_Geometry":{
-                     "Name": ".//sample-obj//Klemmwinkel Form A.stl", 
-                     "k_factor": 0.0,
-                     "push2GeomField": true,
-                     "Paras": {
-                         "Scale": [0.5, 0.5, 0.5],
-                         "Trans": [0.0, 0.0, 5.0],
-                         "Rot": [0, 0, 0]
-                        }
-                    }
-               },
-          "2": {"Add_Lattice":{
-                    "la_name": "Cubic", "size": [2.0,2.0,2.0], "thk":0.1, 
-                    "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
-                    "Inv": false, "Fill": true, 
-                    "Cube_Request": {}
-                    }
-               },
-          "3":{
-              "Export": {"outfile": ".//Test_results/GenGeom.stl"}
-              }
-		   },
- "PostProcess":{"CombineMeshes": true,
-                "RemovePartitionMeshFile": false,
-                "RemoveIsolatedParts": true, 
-                "ExportLazPts": true}
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.05,
+            0.05,
+            0.05
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Add_Geometry": {
+                "Name": ".//sample-obj//Klemmwinkel Form A.stl",
+                "k_factor": 0.0,
+                "push2GeomField": true,
+                "Paras": {
+                    "Scale": [
+                        0.5,
+                        0.5,
+                        0.5
+                    ],
+                    "Trans": [
+                        0.0,
+                        0.0,
+                        5.0
+                    ],
+                    "Rot": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": "Cubic",
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": true,
+                "Cube_Request": {},
+                "thk": 0.25
+            }
+        },
+        "3": {
+            "Subtract_Lattice": {
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Cube_Request": {},
+                "la_name": "Cubic",
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ],
+                "thk": 0.1,
+                "Fill": true
+            }
+        },
+        "4": {
+            "Export": {
+                "outfile": ".//Test_results/GenGeom.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
 }

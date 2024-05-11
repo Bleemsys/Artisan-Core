@@ -139,7 +139,7 @@ class ArtisanWizard(tk.Tk):
         # Lattice Tab
         Lattice_Button_data = {
             "Add Lattice": ["Add_Lattice", ".//AGUI//templates//Add_Lattice.json"],
-            "Subtract Lattice": ["Subtract_Lattice", ".//AGUI//templates//Substract_Lattice.json"],
+            "Subtract Lattice": ["Subtract_Lattice", ".//AGUI//templates//Subtract_Lattice.json"],
             "Lin Interpolation": ["Lin_Interpolate", ".//AGUI//templates//Lin_Interpolate.json"],
             "Add Attractor": ["Add_Attractor", ".//AGUI//templates//Add_Attractor.json"],
             "HS_Interpolate": ["HS_Interpolate", ".//AGUI//templates//HS_Interpolate.json"]
