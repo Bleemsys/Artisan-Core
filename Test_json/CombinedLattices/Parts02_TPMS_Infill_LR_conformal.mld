@@ -1,7 +1,8 @@
 {
-"type": "ConformalLattice",
-"definition": {
- "meshfile": ".//sample-obj//Parts02//Parts02.med",
- "la_name" : "SchwarzPrimitive"
- }
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//sample-obj//Parts02//Parts02.med",
+        "la_name": "SchwarzPrimitive",
+        "ExportFEAMeshFile": ""
+    }
 }

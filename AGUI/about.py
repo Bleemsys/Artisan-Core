@@ -20,7 +20,7 @@ def show_credit_window(main_gui):
     labelBG = tk.Label(about_window, image=aboutBG)
     labelBG.place(x=0, y=0, relwidth=1, relheight=1)
     # Main info text
-    info_text = ("ArtGUI - Artisan Wizard, Version 0.0.2\n"
+    info_text = ("ArtGUI - Artisan Wizard, Version 0.0.3\n"
                  "Developed by Yikun Wang\n"
                  "ArtGUI is distributed under the MIT License.\n"
                  "Artisan-core is distributed under CC BY-NC-ND 3.0 for non-commercial applications,\n"

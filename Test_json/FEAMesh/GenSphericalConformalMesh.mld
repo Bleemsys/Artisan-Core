@@ -1,0 +1,8 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//Test_json//FEAMesh//SphericalMesh.med",
+        "ExportFEAMeshFile": ".//Test_json//FEAMesh//SpherieFEAMesh.inp",
+        "la_name": "BCCubic"
+    }
+}

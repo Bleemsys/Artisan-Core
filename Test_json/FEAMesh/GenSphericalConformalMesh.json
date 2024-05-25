@@ -1,0 +1,111 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.1,
+            0.1,
+            0.1
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_SphericalMesh": {
+                "num_elem": [
+                    3,
+                    10,
+                    4
+                ],
+                "r_range": [
+                    3.0,
+                    8.0
+                ],
+                "theta_range": [
+                    0.3,
+                    0.7
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Normal": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "Mesh_file": ".//Test_json//FEAMesh//SphericalMesh.med",
+                "phi_range": [
+                    0.2,
+                    0.8
+                ]
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//FEAMesh//GenSphericalConformalMesh.mld",
+                "size": [
+                    3.0,
+                    3.0,
+                    3.0
+                ],
+                "thk": 0.2,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "3": {
+            "Evaluate_Points": {
+                "Inp_meshfile": ".//Test_json//FEAMesh//SphericalMesh.med",
+                "Export_file": ".//Test_json//FEAMesh//Points_SDF.csv"
+            }
+        },
+        "100000": {
+            "Export": {
+                "outfile": ".//Test_results/SphericalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

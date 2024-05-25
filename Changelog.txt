@@ -86,6 +86,15 @@ This is simple change log recording the major and minor updates
 - Bug fix, subtract_lattice keywords not working properly. 
 - No other changes, no doc updates
 
+0.2.3
+- Add FEA beam and shell elements export for conformal lattice
+- Add evaluate SDF at points 
+- Add read in external mesh and refine boundary/interior nodes using geometry field
+- Doc updates
+
+
+
+
 
 
 

@@ -192,6 +192,7 @@ class ArtisanWizard(tk.Tk):
             "Tet Mesh Field": ["Gen_TetBasicMesh_HexSplit MultiSize Field", ".//AGUI//templates//Gen_TetBasicMesh_HexSplit_MultiSize_Field.json"],
             "CartesianHexMesh MultiSize Attractor": ["Gen_BasicCartesianHexMesh MultiSize Attractor", ".//AGUI//templates//Gen_BasicCartesianHexMesh_MultiSize_Attractor.json"],
             "CartesianHexMesh MultiSize Field": ["Gen_BasicCartesianHexMesh_MultiSize Field", ".//AGUI//templates//Gen_BasicCartesianHexMesh_MultiSize_Field.json"],
+            "Gen_ExtHexMesh_Geomfield": ["Gen_ExtHexMesh_Geomfield", ".//AGUI//templates//Gen_ExtHexMesh_Geomfield.json"]
         }
         # Create button creator instance
         self.MeshAdv_button_creator = ButtonCreator(self, MeshAdv_tab, MeshAdv_Button_data, self.AddJSONtoTreeView)
@@ -233,6 +234,7 @@ class ArtisanWizard(tk.Tk):
             "Compress": ["OP_Compress", ".//AGUI//templates//OP_Compress.json"],
             "Decompress": ["OP_Decompress", ".//AGUI//templates//OP_Decompress.json"],
             "Export": ["Export", ".//AGUI//templates//Export.json"],
+            "Evaluate_Points": ["Evaluate_Points", ".//AGUI//templates//Evaluate_Points.json"],
         }
         # Create button creator instance
         self.Export_button_creator = ButtonCreator(self, Export_tab, Export_Button_data, self.AddJSONtoTreeView)

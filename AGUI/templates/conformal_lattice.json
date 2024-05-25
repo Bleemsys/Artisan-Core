@@ -2,6 +2,7 @@
 "type": "ConformalLattice",
 "definition": {
  "meshfile": "your_path//your_mesh_file_name.med",
- "la_name" : "BC"
+ "la_name" : "BC",
+ "ExportFEAMeshFile": ".//your_path//your_mesh_file_name.inp"
  }
 }

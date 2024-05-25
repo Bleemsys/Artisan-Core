@@ -32,9 +32,11 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Field Operation <OPField.rst>
    Lattice Transition <TransLattice.rst>
    Compression <Compression.rst>
+   FEA Interface <FEAInter.rst>
    API Interface <API.rst>
    GUI for Artisan <ArtGUI.rst>
    Supports <Supports.rst>
+   
 
 
 ..

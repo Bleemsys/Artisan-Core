@@ -1,0 +1,116 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/shell_1_of_bdd_.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.5,
+            0.5,
+            0.5
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BoxMesh": {
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "Mesh_file": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh.med",
+                "y_range": [
+                    0.0,
+                    140.0
+                ],
+                "z_range": [
+                    0.0,
+                    200.0
+                ],
+                "ori": [
+                    -190.0,
+                    -68.0,
+                    -2.0
+                ],
+                "x_range": [
+                    0.0,
+                    200.0
+                ],
+                "num_elem": [
+                    25,
+                    18,
+                    18
+                ]
+            }
+        },
+        "2": {
+            "Gen_ExtHexMesh_Geomfield": {
+                "Geomfile": "",
+                "out_meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh_Field.med",
+                "isPreAttraction": false,
+                "inp_meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh.med",
+                "numCoverNodes": 4,
+                "AttractionRatio": 0.1
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "thk": 1.0,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "la_name": ".//Test_json//MeshLattice//ExtMesh//Bdd_MeshLattice.mld",
+                "size": [
+                    13.0,
+                    13.0,
+                    13.0
+                ]
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results//ExMesh_Geomfield.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

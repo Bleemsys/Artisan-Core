@@ -1,0 +1,8 @@
+{
+    "10000":{
+        "Evaluate_Points":{
+            "Inp_meshfile":".//your_path//your_file_name.med",
+            "Export_meshfile":".//your_path//your_file_name.csv"
+        }
+    }
+}

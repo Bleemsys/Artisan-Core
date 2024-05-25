@@ -1,0 +1,73 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//Parts02//Parts02.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.4,
+            0.4,
+            0.4
+        ],
+        "Padding": 3,
+        "onGPU": false,
+        "memorylimit": 16106127360
+    },
+    "WorkFlow": {
+        "1": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//FEAMesh//Parts02_TPMS_Infill_LR_conformal.mld",
+                "size": [
+                    15.0,
+                    15.0,
+                    15.0
+                ],
+                "thk": 1.5,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "3": {
+            "Export": {
+                "outfile": ".//Test_results/Parts02_Combined_Infill_02.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

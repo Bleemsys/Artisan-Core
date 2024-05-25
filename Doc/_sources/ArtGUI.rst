@@ -90,6 +90,6 @@ User may change the design parameters in the workflow, and re-generate a new lat
 Help
 ====
 
-The help menu just provide an easy access to the Artisan's online manual, as shown below. 
+The help menu provides an easy access to the Artisan's online manual. 
 
 .. image:: ./pictures/ArtGUI/helpshow.png

@@ -1,0 +1,12 @@
+{
+    "9999":{
+        "Gen_ExtHexMesh_Geomfield":{
+            "Geomfile":".//your_path//your_file_name.stl", 
+            "inp_meshfile": ".//your_path//your_file_name.med", 
+            "out_meshfile": ".//your_path//your_file_name.med",                                               
+            "numCoverNodes": 1, 
+            "AttractionRatio": 0.3, 
+            "isPreAttraction": false
+        }
+    }
+}
