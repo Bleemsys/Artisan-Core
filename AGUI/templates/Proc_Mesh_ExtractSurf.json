@@ -1,0 +1,10 @@
+{
+    "9999":{
+        "Proc_Mesh_ExtractSurf":{
+            "inp_meshfile":".//your_path//your_input_file_name.med", 
+            "out_meshfile":".//your_path//your_export_file_name.med", 
+            "Elem_Type" : "Hex", 
+            "isSplitTris": false
+        }
+    }
+}

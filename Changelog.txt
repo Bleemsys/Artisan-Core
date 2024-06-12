@@ -92,6 +92,10 @@ This is simple change log recording the major and minor updates
 - Add read in external mesh and refine boundary/interior nodes using geometry field
 - Doc updates
 
+0.2.4
+- Add Mesh process functions, Extract the surface mesh, and generate octree mesh
+- Doc updates
+
 
 
 

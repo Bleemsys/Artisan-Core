@@ -1,0 +1,106 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj/EngineBracket.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.3,
+            0.3,
+            0.3
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 16106127360
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_TetBasicMesh_HexSplit": {
+                "Geomfile": ".//sample-obj/EngineBracket.stl",
+                "size": [
+                    6.0,
+                    6.0,
+                    6.0
+                ],
+                "Meshfile": ".//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med",
+                "ConvertTet2Beam": false,
+                "MultiSize": {
+                    "Type": "Attractor",
+                    "Data": [
+                        [
+                            105,
+                            45,
+                            90,
+                            100,
+                            0.9
+                        ]
+                    ],
+                    "FieldFile": ""
+                }
+            }
+        },
+        "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "inp_meshfile": ".//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med",
+                "out_meshfile": ".//Test_json//MeshLattice//ExtractMeshSurf//EBMeshSurf.med",
+                "isSplitTris": false,
+                "Elem_Type": "Tet"
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//ExtractMeshSurf//GenEBSurfMesh.mld",
+                "size": [
+                    12.0,
+                    12.0,
+                    12.0
+                ],
+                "thk": 0.7,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "9999": {
+            "Export": {
+                "outfile": ".//Test_results/EngineBracket_BasicTetHexSplit_MS.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

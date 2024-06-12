@@ -1,0 +1,113 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.1,
+            0.1,
+            0.1
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_SphericalMesh": {
+                "r_range": [
+                    3.0,
+                    8.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Normal": [
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "Mesh_file": ".//Test_json//MeshLattice//ExtractMeshSurf//SphericalMesh.med",
+                "theta_range": [
+                    0.0,
+                    1.0
+                ],
+                "num_elem": [
+                    5,
+                    10,
+                    10
+                ],
+                "phi_range": [
+                    0.2,
+                    0.8
+                ]
+            }
+        },
+        "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "inp_meshfile": ".//Test_json//MeshLattice//ExtractMeshSurf//SphericalMesh.med",
+                "out_meshfile": ".//Test_json//MeshLattice//ExtractMeshSurf//SphereMeshSurf.med",
+                "Elem_Type": "Hex",
+                "isSplitTris": false
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//ExtractMeshSurf//GenSphericalSurfMesh.mld",
+                "size": [
+                    3.0,
+                    3.0,
+                    3.0
+                ],
+                "thk": 0.2,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "9999": {
+            "Export": {
+                "outfile": ".//Test_results/SphericalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

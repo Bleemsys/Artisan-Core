@@ -1,0 +1,117 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//Ball_Mesh.STL",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BoxMesh": {
+                "num_elem": [
+                    5,
+                    5,
+                    5
+                ],
+                "x_range": [
+                    0.0,
+                    1200.0
+                ],
+                "y_range": [
+                    0.0,
+                    1200.0
+                ],
+                "z_range": [
+                    0.0,
+                    1200.0
+                ],
+                "ori": [
+                    -600.0,
+                    -600.0,
+                    -600.0
+                ],
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "Mesh_file": ".//Test_json//MeshLattice//OctTree//BoxMesh.med"
+            }
+        },
+        "2": {
+            "Proc_Mesh_Octree": {
+                "Type": "Geom",
+                "inp_meshfile": ".//Test_json//MeshLattice//OctTree//BoxMesh.med",
+                "out_meshfile": ".//Test_json//MeshLattice//OctTree//BoxMeshOut.inp",
+                "Fieldfile": ".//sample-obj/Ball_Mesh.STL",
+                "numCoverNodes": 4,
+                "refine_stepsize": 150,
+                "num_refinements": 3
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//OctTree//OctTreeConformal.mld",
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 15.0,
+                "size": [
+                    20.0,
+                    20.0,
+                    20.0
+                ]
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results//OctTreeMesh.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

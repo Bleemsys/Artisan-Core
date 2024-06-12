@@ -1,0 +1,8 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "la_name": "Cubic",
+        "ExportFEAMeshFile": "",
+        "meshfile": ".//Test_json//MeshLattice//OctTree//BoxMeshOut.inp"
+    }
+}

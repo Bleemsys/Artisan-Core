@@ -1,0 +1,13 @@
+{
+    "9999":{
+        "Proc_Mesh_Octree":{
+            "Type": "Geom",
+            "inp_meshfile": ".//your_path//your_file_name.med", 
+            "out_meshfile": ".//your_path//your_file_name.med", 
+            "Fieldfile":".//your_path//your_file_name.stl", 
+            "numCoverNodes": 2,
+            "num_refinements": 3, 
+            "refine_stepsize": 5.0
+        }
+    }
+}
