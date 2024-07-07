@@ -1,0 +1,123 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/crank_handle.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.25,
+            0.25,
+            0.25
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BoxMesh": {
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "ori": [
+                    -11.0,
+                    -11.0,
+                    -80.0
+                ],
+                "x_range": [
+                    0.0,
+                    25.0
+                ],
+                "y_range": [
+                    0.0,
+                    76.0
+                ],
+                "z_range": [
+                    0.0,
+                    79.0
+                ],
+                "Mesh_file": ".//Test_json//FEAMesh//MeshTrim//BaseMesh.med",
+                "num_elem": [
+                    5,
+                    15,
+                    15
+                ]
+            }
+        },
+        "2": {
+            "Gen_ConformalLatticeMesh": {
+                "definition_file": ".//Test_json//FEAMesh//MeshTrim//ConformalLattice.mld",
+                "out_meshfile": ".//Test_json//FEAMesh//MeshTrim//BaseMeshConformal.med"
+            }
+        },
+        "3": {
+            "Proc_Mesh_Trim": {
+                "inp_meshfile": ".//Test_json//FEAMesh//MeshTrim//BaseMeshConformal.med",
+                "out_meshfile": ".//Test_json//FEAMesh//MeshTrim//TrimMesh.inp",
+                "Geomfile": "",
+                "elem_type": "Line",
+                "tol": 0.01,
+                "num_beam_refinement": 2,
+                "remove_short_beams": true
+            }
+        },
+        "4": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//FEAMesh//MeshTrim//MeshLattice.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.5
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results//FEA_TrimMesh.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

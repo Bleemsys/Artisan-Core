@@ -96,6 +96,10 @@ This is simple change log recording the major and minor updates
 - Add Mesh process functions, Extract the surface mesh, and generate octree mesh
 - Doc updates
 
+0.2.5
+- Add Gen_ComformalLatticeMesh, Proc_Mesh_Trim to produce the conformal mesh and trimmed mesh.
+- Doc updates
+
 
 
 

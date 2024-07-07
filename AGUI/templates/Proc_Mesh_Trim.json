@@ -1,0 +1,13 @@
+{
+    "9999":{
+        "Proc_Mesh_Trim":{
+            "inp_meshfile": ".//your_path//your_file_name.med", 
+            "out_meshfile": ".//your_path//your_file_name.med", 
+            "Geomfile":".//your_path//your_file_name.stl",
+            "elem_type": "Line",
+            "tol": 0.01,
+            "num_beam_refinement": 2,
+            "remove_short_beams": true
+        }
+    }
+}

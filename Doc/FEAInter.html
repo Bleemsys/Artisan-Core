@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Interface to FEA &#8212; Artisan 0.2.4 documentation</title>
+    <title>Interface to FEA &#8212; Artisan 0.2.5 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.4 documentation</p>
+    <p class="title logo__title">Artisan 0.2.5 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -319,111 +319,57 @@ document.write(`
 <p>Computer-aided engineering, particularly finite element analysis (FEA), plays a critical role in digitally verifying product performance before conducting physical tests and initiating production. In lattice design, creating the geometry and mesh presents significant challenges for FEA. Artisan offers basic outputs for lattice mesh and can also calculate the signed distance field value for given spatial points. This capability significantly enhances the efficiency of assembling FEA models and supports the customized development of FEA applications for lattice structures.</p>
 <section id="mesh-export">
 <h2>Mesh Export<a class="headerlink" href="#mesh-export" title="Permalink to this headline">#</a></h2>
-<p>The exporting mesh in the current version supports the strut and TPMS based conformal lattice. User may export the shell elements for TPMS type lattice, or the beam element for strut lattice. No additional keywords are required, only need additional setup in the conformal lattice definition file. Here is an example (the example file: <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FEAMesh//GenSphericalConformalMesh.json</span></code>) below showing the exports of the beam elements for a conformal lattice infilled structure.</p>
+<p>User may utilize the meshing function to create the volumetric mesh for various application, such as CFD analysis. Here we introduce the export of 1D and 2D elements for mechanical analysis, that dramatically reduces the efforts on meshing and computational time. The exporting mesh in the current version supports the strut and TPMS based conformal lattice. User may export the shell elements for TPMS type lattice, or the beam element for strut lattice. Only a simple additional setup is required in the conformal lattice definition file. Here is an example (the example file: <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FEAMesh//GenSphericalConformalMesh.json</span></code>) below showing the exports of the beam elements for a conformal lattice infilled structure. Please note that, the fineness of the element is controlled by the resolution setup.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">-10.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">10.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">-10.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">10.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">-10.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">10.0</span>
-<span class="w">            </span><span class="p">]</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">]],</span>
+<span class="w">            </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">0.0</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">        </span><span class="mf">0.1</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
-<span class="p">},</span>
-<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Gen_SphericalMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">                </span><span class="mi">10</span><span class="p">,</span>
-<span class="w">                </span><span class="mi">4</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;r_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">3.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">8.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;theta_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.3</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.7</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//SphericalMesh.med&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;phi_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.2</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.8</span>
-<span class="w">            </span><span class="p">]</span>
+<span class="w">    </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Gen_SphericalMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;r_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;theta_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//SphericalMesh.med&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;phi_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//GenSphericalConformalMesh.mld&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;100000&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/SphericalMesh_ConformalLattice.stl&quot;</span>
+<span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//GenSphericalConformalMesh.mld&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">3.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">3.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">3.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;100000&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/SphericalMesh_ConformalLattice.stl&quot;</span>
-<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">    </span><span class="p">}</span>
-<span class="p">},</span>
-<span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -444,6 +390,120 @@ document.write(`
 <img alt="_images/FEA_Strut_Results.png" src="_images/FEA_Strut_Results.png" />
 <p>Similarly, user may find the TPMS example (the example file: <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FEAMesh//Parts02_Export_TPMS_conformal.json</span></code>). Same as the strut lattice, the TPMS shell elements can be imported into any major FEA solver for further analysis. Below shows a simple compression case that the bottom edges were fixed and the load applied on top edges.</p>
 <img alt="_images/FEA_TPMS_Results.png" src="_images/FEA_TPMS_Results.png" />
+<p>Alternatively, users can use the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_ConformalLatticeMesh</span></code> to generate a conformal mesh based on the existing definition file. The example below demonstrates how to create the FEA mesh for a periodic lattice using <code class="code docutils literal notranslate"><span class="pre">Gen_ConformalLatticeMesh</span></code> and <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Trim</span></code>. The process is straightforward: first, generate a conformal lattice within a domain box that contains the geometry. Then, apply <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Trim</span></code> to trim the lattice to match the geometry’s boundary. User may find the examples under the folder <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FEAMesh//MeshTrim</span></code> for strut lattice, and <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FEAMesh//MeshTrim_TPMS</span></code> for the TPMS lattice. Here we use TPMS lattice infill as an example.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]],</span>
+<span class="w">            </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Gen_BoxMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-11.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-11.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-80.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;x_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">25.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;y_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">76.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">79.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//BaseMesh.med&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">]</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Gen_ConformalLatticeMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;definition_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//ConformalLattice.mld&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Proc_Mesh_Trim&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;num_beam_refinement&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;remove_short_beams&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Triangle&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//TrimMesh.stl&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="code docutils literal notranslate"><span class="pre">Gen_ConformalLatticeMesh</span></code> generates the conformal mesh, and <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Trim</span></code> trims the conformal mesh in the box domain to the given geometry boundary. The parameters for the <code class="code docutils literal notranslate"><span class="pre">Gen_ConformalLatticeMesh</span></code> are listed below.</p>
+<table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">definition_file</span></code></p></td>
+<td><p>the file path to the <code class="code docutils literal notranslate"><span class="pre">.mld</span></code> definition file for conformal lattice.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>file path to export the conformed mesh.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The parameters for the <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Trim</span></code> are listed below.</p>
+<table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>imports the beam or triangle elements from <code class="code docutils literal notranslate"><span class="pre">.med</span></code>, <code class="code docutils literal notranslate"><span class="pre">.inp</span></code>, <code class="code docutils literal notranslate"><span class="pre">stl</span></code>, <code class="code docutils literal notranslate"><span class="pre">obj</span></code>, <code class="code docutils literal notranslate"><span class="pre">ply</span></code> etc. files.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Geomfile</span></code></p></td>
+<td><p>file path to the geometry which used for trimming the mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>file path for the export mesh file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">num_beam_refinement</span></code></p></td>
+<td><p>Numbers of refinements applies to the beam elements, if <code class="code docutils literal notranslate"><span class="pre">elem_type</span></code> is <code class="code docutils literal notranslate"><span class="pre">Triangle</span></code>, the parameter does not play role.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">elem_type</span></code></p></td>
+<td><p>Currently only supports <code class="code docutils literal notranslate"><span class="pre">Line</span></code> for the beam elements, <code class="code docutils literal notranslate"><span class="pre">Triangle</span></code> for the triangle elements.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">remove_short_beams</span></code></p></td>
+<td><p>If true, the short beam (less then <code class="code docutils literal notranslate"><span class="pre">tol</span></code>) shall be removed from the mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">tol</span></code></p></td>
+<td><p>The tolerance that mesh snaps to the geometry, inside of function, this number also will be used for identifying the small elements.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In this case, we shall have the mesh like below.</p>
+<img alt="_images/Trim_P_TPMS.png" src="_images/Trim_P_TPMS.png" />
+<p>Similarly user may apply the same work flow to get strut elements (The strut lattice example is at <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FEAMesh//MeshTrim</span></code>).</p>
+<img alt="_images/Trim_P_Strut.png" src="_images/Trim_P_Strut.png" />
 </section>
 <section id="sdf-export">
 <h2>SDF Export<a class="headerlink" href="#sdf-export" title="Permalink to this headline">#</a></h2>
@@ -452,33 +512,12 @@ document.write(`
 <span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">-10.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">10.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">-10.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">10.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">-10.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">10.0</span>
-<span class="w">                </span><span class="p">]</span>
-<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">]],</span>
 <span class="w">            </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.0</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.1</span>
-<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span>
 <span class="w">        </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
@@ -486,55 +525,22 @@ document.write(`
 <span class="w">    </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;Gen_SphericalMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">10</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">4</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;r_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">3.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">8.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;theta_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.3</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.7</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span>
-<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;r_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;theta_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//SphericalMesh.med&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;phi_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.2</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.8</span>
-<span class="w">                </span><span class="p">]</span>
+<span class="w">                </span><span class="nt">&quot;phi_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">]</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//GenSphericalConformalMesh.mld&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">3.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">3.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">3.0</span>
-<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span>
-<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
@@ -567,13 +573,13 @@ document.write(`
 </section>
 <section id="limitations">
 <h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">#</a></h2>
-<p>Here are a few limitations and recommended pre-process before assembling the FEA model.</p>
+<p>Here are a few limitations and recommended pre-processing steps before assembling the FEA model:</p>
 <blockquote>
-<div><ul class="simple">
-<li><p>The exported beam element and shell element mesh must check through professional FEA pre-processor. The mesh may contain low quality element, and user shall remove the defect elements, or conduct re-meshing based on the given mesh if necessary.</p></li>
-<li><p>Merging nodes is highly recommended since the mesh were exported through lattice array. The neighboring elements are not connected.</p></li>
-<li><p>Only single conformal lattice can be exported. Other lattice types or complex lattice design are not supported, the future development will focus on expanding the meshing capability on other lattice type.</p></li>
-</ul>
+<div><ol class="arabic simple">
+<li><p>Mesh Quality: The exported beam and shell element meshes must be reviewed using a professional FEA pre-processor. The mesh may contain low-quality elements, and users should remove defective elements or perform re-meshing if necessary.</p></li>
+<li><p>Node Merging: Merging nodes is highly recommended, as the mesh is exported through a lattice array and neighboring elements may not be connected.</p></li>
+<li><p>Lattice Types: Currently, only single conformal lattices can be exported. Other lattice types or complex lattice designs are not supported. Future development will focus on expanding meshing capabilities for other lattice types.</p></li>
+</ol>
 </div></blockquote>
 </section>
 </section>

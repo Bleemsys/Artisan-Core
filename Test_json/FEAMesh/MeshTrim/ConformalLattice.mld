@@ -1,0 +1,8 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//Test_json//FEAMesh//MeshTrim//BaseMesh.med",
+        "la_name": "BC",
+        "ExportFEAMeshFile": ""
+    }
+}
