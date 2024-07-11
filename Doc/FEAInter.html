@@ -421,7 +421,8 @@ document.write(`
 <span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;Gen_ConformalLatticeMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;definition_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//ConformalLattice.mld&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med&quot;</span>
+<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -462,6 +463,9 @@ document.write(`
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
 <td><p>file path to export the conformed mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>this parameter with the global resolutions is used to calculate the triangle mesh fineness. The smaller division of resolutions over size leads to a finer mesh.</p></td>
 </tr>
 </tbody>
 </table>
@@ -578,7 +582,6 @@ document.write(`
 <div><ol class="arabic simple">
 <li><p>Mesh Quality: The exported beam and shell element meshes must be reviewed using a professional FEA pre-processor. The mesh may contain low-quality elements, and users should remove defective elements or perform re-meshing if necessary.</p></li>
 <li><p>Node Merging: Merging nodes is highly recommended, as the mesh is exported through a lattice array and neighboring elements may not be connected.</p></li>
-<li><p>Lattice Types: Currently, only single conformal lattices can be exported. Other lattice types or complex lattice designs are not supported. Future development will focus on expanding meshing capabilities for other lattice types.</p></li>
 </ol>
 </div></blockquote>
 </section>

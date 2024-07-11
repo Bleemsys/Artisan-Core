@@ -2,7 +2,8 @@
     "9999":{
         "Gen_ConformalLatticeMesh":{
             "definition_file": ".//your_path//your_definition_file.mld", 
-            "out_meshfile":".//your_path//your_definition_file.inp"
+            "out_meshfile":".//your_path//your_definition_file.inp",
+            "size": [5.0, 5.0, 5.0]
            }
         }
 }

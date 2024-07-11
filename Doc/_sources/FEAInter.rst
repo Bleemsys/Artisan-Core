@@ -124,7 +124,8 @@ Alternatively, users can use the keyword :code:`Gen_ConformalLatticeMesh` to gen
             "2": {
                 "Gen_ConformalLatticeMesh": {
                     "definition_file": ".//Test_json//FEAMesh//MeshTrim_TPMS//ConformalLattice.mld",
-                    "out_meshfile": ".//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med"
+                    "out_meshfile": ".//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med",
+                    "size": [1.0, 1.0, 1.0]
                 }
             },
             "3": {
@@ -159,6 +160,8 @@ Alternatively, users can use the keyword :code:`Gen_ConformalLatticeMesh` to gen
      - the file path to the :code:`.mld` definition file for conformal lattice.
    * - :code:`out_meshfile` 
      - file path to export the conformed mesh.
+   * - :code:`size` 
+     - this parameter with the global resolutions is used to calculate the triangle mesh fineness. The smaller division of resolutions over size leads to a finer mesh. 
 
 The parameters for the :code:`Proc_Mesh_Trim` are listed below.
 
@@ -277,5 +280,4 @@ Here are a few limitations and recommended pre-processing steps before assemblin
 
     2. Node Merging: Merging nodes is highly recommended, as the mesh is exported through a lattice array and neighboring elements may not be connected.
     
-    3. Lattice Types: Currently, only single conformal lattices can be exported. Other lattice types or complex lattice designs are not supported. Future development will focus on expanding meshing capabilities for other lattice types.
 

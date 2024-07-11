@@ -1,7 +1,7 @@
 {
-"type": "ConformalLattice",
-"definition": {
- "meshfile": ".//sample-obj//Shore//Shoes_02.med",
- "la_name" : "Icosahedral"
- }
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//sample-obj//Shore//Shoes_02.med",
+        "la_name": "Tetrahedron"
+    }
 }

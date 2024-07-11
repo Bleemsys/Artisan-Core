@@ -70,7 +70,8 @@
         "2": {
             "Gen_ConformalLatticeMesh": {
                 "definition_file": ".//Test_json//FEAMesh//MeshTrim//ConformalLattice.mld",
-                "out_meshfile": ".//Test_json//FEAMesh//MeshTrim//BaseMeshConformal.med"
+                "out_meshfile": ".//Test_json//FEAMesh//MeshTrim//BaseMeshConformal.med",
+                "size": [1.0, 1.0, 1.0]
             }
         },
         "3": {
