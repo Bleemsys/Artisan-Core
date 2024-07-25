@@ -1,0 +1,82 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/crank_handle.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.2,
+            0.2,
+            0.2
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "4": {
+            "Proc_Mesh_SurfMeshMap": {
+                "inp_meshfile": ".//Test_json//FEAMesh//MeshTrim_SurfMap//TrimMesh.med",
+                "out_meshfile": ".//Test_json//FEAMesh//MeshTrim_SurfMap//TrimMesh_SurfMap.med",
+                "Geomfile": "",
+                "tol": 0.1,
+                "isCvt2beam": true
+            }
+        },
+        "6": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//FEAMesh//MeshTrim_SurfMap//MeshLattice_Skin.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.25
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results//FEA_TrimMesh.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

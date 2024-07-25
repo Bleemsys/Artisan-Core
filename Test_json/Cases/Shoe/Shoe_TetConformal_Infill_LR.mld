@@ -1,0 +1,8 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//sample-obj//Shore//Shoes_02.med",
+        "la_name": "Tetrahedron",
+	"ExportFEAMeshFile": ".//Test_json//Cases//Shoe//ShoeMesh.inp"
+    }
+}

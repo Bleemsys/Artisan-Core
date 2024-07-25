@@ -1,0 +1,6 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": ".//Test_json//Cases//Shoe_02//ShoeSurfMesh.med"
+    }
+}

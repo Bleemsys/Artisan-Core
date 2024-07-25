@@ -1,0 +1,6 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": ".//Test_json//FEAMesh//MeshTrim//TrimMesh.inp"
+    }
+}

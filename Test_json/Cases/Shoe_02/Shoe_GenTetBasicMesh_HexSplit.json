@@ -1,0 +1,118 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/Shore/Shoes.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.3,
+            0.3,
+            0.3
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1610612736000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_TetBasicMesh_HexSplit": {
+                "Geomfile": ".//sample-obj//Shore//Shoes.stl",
+                "Meshfile": ".//Test_json//Cases//Shoe_02//ShoeVolMesh.med",
+                "ConvertTet2Beam": false,
+                "MultiSize": {},
+                "size": [
+                    14.0,
+                    14.0,
+                    14.0
+                ]
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//Cases//Shoe_02//GenTetBasicMesh.mld",
+                "size": [
+                    12.0,
+                    12.0,
+                    12.0
+                ],
+                "thk": 0.7,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "3": {
+            "Proc_Mesh_ExtractSurf": {
+                "inp_meshfile": ".//Test_json//Cases//Shoe_02//ShoeVolMesh.med",
+                "out_meshfile": ".//Test_json//Cases//Shoe_02//ShoeSurfMesh.med",
+                "Elem_Type": "Tet",
+                "isSplitTris": false
+            }
+        },
+        "4": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//Cases//Shoe_02//GenSurfBasicMesh.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 1.4
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results/ShoeSurfVolInfill.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

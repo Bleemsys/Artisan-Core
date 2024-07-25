@@ -1,0 +1,11 @@
+{
+    "9999":{
+        "Proc_Mesh_SurfMeshMap":{
+            "inp_meshfile":".//your_path//your_input_file_name.med", 
+            "out_meshfile":".//your_path//your_export_file_name.med", 
+            "Geomfile": "",
+            "tol": 0.01,
+            "isCvt2beam": false
+        }
+    }
+}
