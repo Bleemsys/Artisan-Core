@@ -1,0 +1,6 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": ".\\Test_json\\MeshLattice\\GenSkin\\TrimMesh_wSkin.inp"
+    }
+}

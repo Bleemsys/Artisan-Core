@@ -1,7 +1,7 @@
 {
     "type": "ConformalLattice",
     "definition": {
-        "meshfile": ".//Test_json//FEAMesh//MeshTrim_TPMS//BaseMesh.med",
+        "meshfile": ".//Test_json//MeshLattice//GenSkin//BaseMesh.med",
         "la_name": "SchwarzPrimitive",
         "ExportFEAMeshFile": ""
     }

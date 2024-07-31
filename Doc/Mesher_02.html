@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Field Driven Meshing &#8212; Artisan 0.2.5 documentation</title>
+    <title>Meshing 02 &#8212; Artisan 0.2.6 documentation</title>
   
   
   
@@ -42,11 +42,12 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Mesher_02';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Mesh Process" href="ProcMesh.html" />
-    <link rel="prev" title="Meshing" href="Mesher.html" />
+    <link rel="next" title="Field Driven Meshing" href="Mesher_99.html" />
+    <link rel="prev" title="Meshing 01" href="Mesher_01.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -128,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.5 documentation</p>
+    <p class="title logo__title">Artisan 0.2.6 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -141,8 +142,9 @@
 <li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Mesher.html">Meshing</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
@@ -290,7 +292,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Field Driven Meshing</h1>
+    <h1>Meshing 02</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -300,8 +302,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-field">Scaler Field</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-field">Geometry Field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
 </ul>
             </nav>
         </div>
@@ -313,280 +315,144 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="field-driven-meshing">
-<h1>Field Driven Meshing<a class="headerlink" href="#field-driven-meshing" title="Permalink to this headline">#</a></h1>
-<p>Fields can serve as design parameters for mesh generation in Artisan. Within this framework, fields can be applied to either modify local material thickness or adjust the size of lattice units.</p>
-<section id="scaler-field">
-<h2>Scaler Field<a class="headerlink" href="#scaler-field" title="Permalink to this headline">#</a></h2>
-<p>The variation in unit cell size can be achieved using specific keywords: <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> and <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code>. The former keyword allows for the creation of hex elements with varying sizes, while the latter facilitates the generation of tet elements with varying sizes. User shall find all examples below at <code class="code docutils literal notranslate"><span class="pre">.\\Test_json\\MeshLattice\\Box_FieldAttractor_MultiSize</span></code>.</p>
-<p>Similar to previously demonstrated applications, users can activate a specific function in Artisan by setting the parameter <code class="code docutils literal notranslate"><span class="pre">&quot;Type&quot;:</span> <span class="pre">&quot;Field_Attractor&quot;</span></code>. This configuration prompts Artisan to import a field, represented as a spatial data cloud containing field values. This potential map are utilized to create an attraction field. This field influences the mesh nodes, driving their deformation. As a result, this process generates elements of varying sizes throughout the mesh. This functionality allows for the tailored manipulation of mesh structures to align with specific design criteria or performance requirements, for example, user may use stress or strain mapping as design parameters to drive the local element size.</p>
-<p>The example in the file <code class="code docutils literal notranslate"><span class="pre">Box_FA_MS.json</span></code> demonstrates how the local field changes a box mesh element size, as shown below.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span>
-<span class="w">            </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">]</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
-<span class="p">},</span>
-<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Gen_BasicCartesianHexMesh_MultiSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mi">10</span><span class="p">,</span>
-<span class="w">                </span><span class="mi">10</span><span class="p">,</span>
-<span class="w">                </span><span class="mi">10</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;x_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">80.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;y_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">80.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">80.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">1.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//BoxHexMesh.med&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;numPrjLayers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;LayerDepth&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;numCoverNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;MultiSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field_Attractor&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="p">[</span>
-<span class="w">                        </span><span class="mi">30</span><span class="p">,</span>
-<span class="w">                        </span><span class="mf">0.5</span>
-<span class="w">                    </span><span class="p">]</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;FieldFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//field_data.csv&quot;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//GenHexMesh.mld&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">5.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">5.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">5.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">0.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/BoxHexMesh_FieldAttractor_MultiSize.stl&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">},</span>
-<span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+  <section id="meshing-02">
+<h1>Meshing 02<a class="headerlink" href="#meshing-02" title="Permalink to this headline">#</a></h1>
+<p>Mesher for tetrahedron elements may be more useful for creating the mesh conforming complex geometry. This chapter presents two sets of the mesher, the mesher with uneven tetrahedron elements size, and the mesher for more uniformly same, or similar size of tetrahedron shape.</p>
+<section id="tetrahedron-mesher">
+<h2>Tetrahedron Mesher<a class="headerlink" href="#tetrahedron-mesher" title="Permalink to this headline">#</a></h2>
+<p>Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh.json</span></code>, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],</span>
+<span class="w">                            </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_TetBasicMesh&quot;</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.STL&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">],</span>
+<span class="w">                                    </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Ball_Mesh.med&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;ConvertTet2Beam&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">           </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json_03//GenTetBasicMesh.mld&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">150.0</span><span class="p">,</span><span class="mf">150.0</span><span class="p">,</span><span class="mf">150.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">           </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/BallBasicTetNMesh_Lattice.stl&quot;</span><span class="p">}</span>
+<span class="w">           </span><span class="p">}</span>
+<span class="w">                      </span><span class="p">},</span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code> activates the algorithm. The parameter <code class="code docutils literal notranslate"><span class="pre">&quot;Geomfile&quot;</span></code> defines the location of the target meshing geometry, <code class="code docutils literal notranslate"><span class="pre">Meshfile</span></code> indicates where the mesh would be stored. Currently it supports Abaqus <code class="code docutils literal notranslate"><span class="pre">inp</span></code>, Ansys fluent <code class="code docutils literal notranslate"><span class="pre">msh</span></code> and Salome <code class="code docutils literal notranslate"><span class="pre">med</span></code> file format. The parameter <code class="code docutils literal notranslate"><span class="pre">&quot;size&quot;</span></code> defines the lattice size at current layer as</p>
+<div class="math notranslate nohighlight">
+\[num_{nodes} = area / (size[0]*size[1]*0.5)\]</div>
+<p><code class="code docutils literal notranslate"><span class="pre">num_{nodes}</span></code> is the number of nodes at current layer, and they were evenly and randomly distributed over the current layer surface. The value <code class="code docutils literal notranslate"><span class="pre">size[2]</span></code>, which is the third element in <code class="code docutils literal notranslate"><span class="pre">size</span></code>, defines the layer depth, here 100 mm depth. The parameter <code class="code docutils literal notranslate"><span class="pre">ConvertTet2Beam</span></code> is boolean type definition, that <code class="code docutils literal notranslate"><span class="pre">&quot;true&quot;</span></code> meant the mesher will convert generated tetrahedron to the beam element (a 2-node-strut-like element), <code class="code docutils literal notranslate"><span class="pre">false</span></code> will keep tetrahedron element. One of the benefits is user may import the beam element into the FEA solver for further analysis if the mesh lattice is desired.</p>
+<p>Above JSON produced a mesh lattice filled ball geometry as shown below.</p>
+<img alt="_images/BallMeshLattice.png" src="_images/BallMeshLattice.png" />
+<p>The cross-sectional view below clearly showed the lattices were stacked layer by layer, from exterior surface towards center.</p>
+<img alt="_images/BallMeshLattice_CrossSection.png" src="_images/BallMeshLattice_CrossSection.png" />
+<p>For the more complicated case, user may refer to the example in the file <code class="code docutils literal notranslate"><span class="pre">EngineBracket_GenTetBasicMesh.txt</span></code>.</p>
+<img alt="_images/EngineBracket_BasicTet.png" src="_images/EngineBracket_BasicTet.png" />
+<p>Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow. Or user shall use the <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code> to generate a better evenly sized or controlled-size mesh in order to fit the geometric shape.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code> keyword shares the same parameters with <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh</span></code>. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example <code class="code docutils literal notranslate"><span class="pre">GenTetBasicMesh_HexSplit.json</span></code>, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape’s surface and volumetric domain.</p>
+<img alt="_images/TetBasic_HexSplit.png" src="_images/TetBasic_HexSplit.png" />
+<p>Similar to <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code>, the local mesh variation can be included as well. The example in the file <code class="code docutils literal notranslate"><span class="pre">EngineBracket_MultiSize\\EngineBracket_GenTetBasicMesh_HexSplit_MS.json</span></code> shows a more complicated case, the Engine Bracket model with a local attractor controlled mesh size.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj/EngineBracket.stl&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">           </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.30</span><span class="p">,</span><span class="w"> </span><span class="mf">0.30</span><span class="p">,</span><span class="w"> </span><span class="mf">0.30</span><span class="p">],</span>
+<span class="w">                    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span>
+<span class="w">           </span><span class="p">},</span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">     </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_TetBasicMesh_HexSplit&quot;</span><span class="p">:{</span>
+<span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj/EngineBracket.stl&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">],</span>
+<span class="w">                 </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med&quot;</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;ConvertTet2Beam&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;MultiSize&quot;</span><span class="p">:{</span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="s2">&quot;Attractor&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Data&quot;</span><span class="p">:[[</span><span class="mi">105</span><span class="p">,</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mf">0.9</span><span class="p">]]}</span>
+<span class="w">           </span><span class="p">}</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">     </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">               </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//EngineBracket_MultiSize//GenTetBasicMesh.mld&quot;</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">12.0</span><span class="p">,</span><span class="w"> </span><span class="mf">12.0</span><span class="p">,</span><span class="w"> </span><span class="mf">12.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.7</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">               </span><span class="p">}</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">     </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span>
+<span class="w">         </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/EngineBracket_BasicTetHexSplit_MS.stl&quot;</span><span class="p">}</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">              </span><span class="p">},</span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">           </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>}</p>
-<p>Here the parameter <code class="code docutils literal notranslate"><span class="pre">MultiSize</span></code> contains three setup parameters:</p>
-<table class="table">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Details</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Type</span></code></p></td>
-<td><p>supports <code class="code docutils literal notranslate"><span class="pre">Attractor</span></code> and <code class="code docutils literal notranslate"><span class="pre">Field_Attractor</span></code>, former produce sphere shape attractor, latter use field as attractor source;</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Data</span></code></p></td>
-<td><p>when <code class="code docutils literal notranslate"><span class="pre">&quot;Type&quot;:</span> <span class="pre">&quot;Field_Attractor&quot;</span></code>, it shall be list with 2 elements, the first element defines the lower bound of field that used to be attract mesh nodes, the second one defines the scale to the intensity.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">FieldFile</span></code></p></td>
-<td><p>This defines the field file path, i.e. csv file. The field file shall contains the x, y, z and field value. Use shall refer to <span class="xref std std-ref">Field Operation</span> for file format details.</p></td>
-</tr>
-</tbody>
-</table>
-<img alt="_images/FieldDrivenMesh_01.png" src="_images/FieldDrivenMesh_01.png" />
-<p>In the example, the csv file contains many spatial data points, this could lead longer computational time. The example <code class="code docutils literal notranslate"><span class="pre">Box_FA_tetmesh_MS.json</span></code> demonstrates the operations on the tet mesh. The section that defines the field operation is as below.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;Gen_TetBasicMesh_HexSplit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mf">100.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">100.0</span><span class="p">,</span>
-<span class="w">                </span><span class="mf">100.0</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//BoxHexMesh.med&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;ConvertTet2Beam&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;MultiSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field_Attractor&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;Data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="p">[</span>
-<span class="w">                        </span><span class="mi">30</span><span class="p">,</span>
-<span class="w">                        </span><span class="mf">0.5</span>
-<span class="w">                    </span><span class="p">]</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;FieldFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//tetmesh_field_data.csv&quot;</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-</pre></div>
-</div>
-<p>The results is below. Please note that two examples here used different domain size and fields. The field can be either full coverage on the domain, or partially covers the interested areas. It is highly recommend to place more spatial points on the high interested area in order to interpolate the field values at the nodal positions.</p>
-<img alt="_images/FieldDrivenMesh_02.png" src="_images/FieldDrivenMesh_02.png" />
+<p>The area on the left of Bracket ring has higher mesh density, or smaller mesh size, whereas other region has comparatively bigger mesh size.</p>
+<img alt="_images/EngineBracket_MS_01.png" src="_images/EngineBracket_MS_01.png" />
+<img alt="_images/EngineBracket_MS_02.png" src="_images/EngineBracket_MS_02.png" />
+<p>For comparison, below shows the mesh without the local attractors, the example file is at <code class="code docutils literal notranslate"><span class="pre">EngineBracket\\EngineBracket_GenTetBasicMesh_HexSplit.json</span></code>.</p>
+<img alt="_images/EngineBracket_NoMS_01.png" src="_images/EngineBracket_NoMS_01.png" />
+<img alt="_images/EngineBracket_NoMS_02.png" src="_images/EngineBracket_NoMS_02.png" />
 </section>
-<section id="geometry-field">
-<h2>Geometry Field<a class="headerlink" href="#geometry-field" title="Permalink to this headline">#</a></h2>
-<p>The geometric distance field can be served as the design parameter that varies the local mesh size. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_ExtHexMesh_Geomfield</span></code> provides a simple interface that reads the external mesh, projects the exterior nodes on the given geometry’s exterior surface, and then use geometric distance field adjust the interior nodes position. The example <code class="code docutils literal notranslate"><span class="pre">.//Test_json//MeshLattice//ExtMesh//Mesh_GeomField.json</span></code> shows how to read the external mesh (generated using <code class="code docutils literal notranslate"><span class="pre">Gen_BoxMesh</span></code>) and fill a geometry.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="p">{</span>
+<section id="implicit-tetrahedron-mesher">
+<h2>Implicit Tetrahedron Mesher<a class="headerlink" href="#implicit-tetrahedron-mesher" title="Permalink to this headline">#</a></h2>
+<p>Artisan integrates an simple implicit based tetrahedron mesher that generates uniform size elements (infill domain for unit lattice). This mesher is able to capture the geometrical features, such as corner or sharp edges, that can produce better quality tet mesh which are evenly distributed over the geometry domain. User may find the example below at <code class="code docutils literal notranslate"><span class="pre">.\\Test_json\\MeshLattice\\TetwF\\crankhandleTetMesher.json</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">1.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">1.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">1.0</span>
-<span class="w">                </span><span class="p">]</span>
-<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]],</span>
 <span class="w">            </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.0</span>
-<span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="mf">0.5</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.5</span><span class="p">,</span>
-<span class="w">            </span><span class="mf">0.5</span>
-<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span>
 <span class="w">        </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;Gen_BoxMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">1.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//ExtMesh//Base_Mesh.med&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;y_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">140.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">200.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">-190.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">-68.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">-2.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;x_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">200.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">25</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">18</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">18</span>
-<span class="w">                </span><span class="p">]</span>
+<span class="w">            </span><span class="nt">&quot;Gen_TetBasicMesh_wFeature&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;Meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//TetwF//crank_handle.inp&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;init_seed_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;convergence_tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;max_iter&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;elem_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;Gen_ExtHexMesh_Geomfield&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//ExtMesh//Base_Mesh_Field.med&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;isPreAttraction&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//ExtMesh//Base_Mesh.med&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;numCoverNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;AttractionRatio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">0.0</span>
-<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//TetwF//TetConformal.mld&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//ExtMesh//Bdd_MeshLattice.mld&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mf">13.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">13.0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mf">13.0</span>
-<span class="w">                </span><span class="p">]</span>
+<span class="w">                </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;10000&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//ExMesh_Geomfield.stl&quot;</span>
+<span class="w">                </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crankhandle_tet_infill.stl&quot;</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
@@ -599,7 +465,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_ExtHexMesh_Geomfield</span></code> parameters are listed below.</p>
+<p>The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_wFeature</span></code> defines the mesh generation.</p>
 <table class="table">
 <colgroup>
 <col style="width: 30.0%" />
@@ -612,27 +478,30 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Geomfile</span></code></p></td>
-<td><p>the geometry file path, if empty, it will take the geometry defined in setup;</p></td>
+<td><p>The skin mesh inputs file, if empty, Artisan will take the Geomfile in setup;</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
-<td><p>resultant mesh file;</p></td>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">MeshFile</span></code></p></td>
+<td><p>The export file for generated tet mesh;</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
-<td><p>the read-in external mesh file;</p></td>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">init_seed_size</span></code></p></td>
+<td><p>The parameter defines the initial nodes points placements within the bounding box of the geometry;</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code></p></td>
-<td><p>the read-in mesh will check the coverage by using number of nodes, the elements having less number of nodes covered will be removed.</p></td>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">elem_size</span></code></p></td>
+<td><p>The target element size, please note that the final mesh may not reach to this size due to number of nodes placed over the domain;</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">isPreAttraction</span></code></p></td>
-<td><p>If true, the mesh nodes would adjust using the geometric distance field, if false, the interior nodes will be adjusted after the elements removal.</p></td>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">tol</span></code></p></td>
+<td><p>The tolerance of the convergence for mesh generation, recommend the value of <code class="code docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">*</span> <span class="pre">elem_size</span></code> as initial try;</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">AttractionRatio</span></code></p></td>
-<td><p>the multiple scale to the nodal movement magnitude, if 0, field effect will not be applied.</p></td>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">max_iter</span></code></p></td>
+<td><p>The maximum iteration for mesh generation, recommend <code class="code docutils literal notranslate"><span class="pre">20</span></code> as initial try.</p></td>
 </tr>
 </tbody>
 </table>
-<p>Above case generates the following infill. In practices, use may consider use other professional mesher to forms a general approximated mesh, and then use this keyword to refine the boundary projection, and the interior nodes positions.</p>
-<img alt="_images/ExMeshGeomfield.png" src="_images/ExMeshGeomfield.png" />
+<p>Above example produces a tetrahedron mesh based infill.</p>
+<img alt="_images/ImpTetMesher_01.png" src="_images/ImpTetMesher_01.png" />
+<img alt="_images/ImpTetMesher_02.png" src="_images/ImpTetMesher_02.png" />
+<img alt="_images/ImpTetMesher_03.png" src="_images/ImpTetMesher_03.png" />
+<p>Note that, the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_wFeature</span></code> does not support the varying size of the elements in the current version, but it shall be supported in future development.</p>
 </section>
 </section>
 
@@ -648,20 +517,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Mesher.html"
+       href="Mesher_01.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Meshing</p>
+        <p class="prev-next-title">Meshing 01</p>
       </div>
     </a>
     <a class="right-next"
-       href="ProcMesh.html"
+       href="Mesher_99.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Mesh Process</p>
+        <p class="prev-next-title">Field Driven Meshing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -680,8 +549,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-field">Scaler Field</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-field">Geometry Field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
 </ul>
   </nav></div>
 

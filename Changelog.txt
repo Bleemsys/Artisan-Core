@@ -100,6 +100,11 @@ This is simple change log recording the major and minor updates
 - Add Gen_ComformalLatticeMesh, Proc_Mesh_Trim to produce the conformal mesh and trimmed mesh.
 - Doc updates
 
+0.2.6
+- Add implicit tet mesher
+- Add GenSkin keyword to regenerate the skin
+- Doc updates
+
 
 
 

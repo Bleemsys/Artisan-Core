@@ -1,0 +1,13 @@
+{
+    "9999": {
+        "Gen_TetBasicMesh_wFeature":{
+            "Geomfile": ".//sample-obj//Ball_Mesh.STL", 
+            "elem_size": 1.0,
+            "init_seed_size": [1.0,1.0,1.0],
+            "Meshfile": ".//sample-obj//Ball_Mesh.med",
+            "convergence_tol": 0.1,
+            "max_iter": 20,
+            "MultiSize":{}
+            }
+    }
+}

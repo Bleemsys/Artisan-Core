@@ -1,0 +1,161 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//crank_handle.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.1,
+            0.1,
+            0.1
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BoxMesh": {
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "ori": [
+                    -11.0,
+                    -11.0,
+                    -80.0
+                ],
+                "x_range": [
+                    0.0,
+                    25.0
+                ],
+                "y_range": [
+                    0.0,
+                    76.0
+                ],
+                "z_range": [
+                    0.0,
+                    79.0
+                ],
+                "Mesh_file": ".//Test_json//MeshLattice//GenSkin//BaseMesh.med",
+                "num_elem": [
+                    8,
+                    20,
+                    20
+                ]
+            }
+        },
+        "2": {
+            "Gen_ConformalLatticeMesh": {
+                "definition_file": ".//Test_json//MeshLattice//GenSkin//ConformalLattice_Beam.mld",
+                "out_meshfile": ".//Test_json//MeshLattice//GenSkin//BaseMeshConformal.med",
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            }
+        },
+        "3": {
+            "Proc_Mesh_Trim": {
+                "inp_meshfile": ".//Test_json//MeshLattice//GenSkin//BaseMeshConformal.med",
+                "Geomfile": "",
+                "num_beam_refinement": 2,
+                "remove_short_beams": true,
+                "elem_type": "Line",
+                "tol": 0.001,
+                "out_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh.inp"
+            }
+        },
+        "4": {
+            "Proc_Mesh_GenSkin": {
+                "Geomfile": "",
+                "lattice_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh.inp",
+                "out_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh_wSkin.inp",
+                "tol": 0.0025,
+                "long_edge_tol": 5.0
+            }
+        },
+        "5": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//GenSkin//meshlattice_skin.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.2
+            }
+        },
+        "6": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//GenSkin//meshlattice_beamlattice.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.15
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results//crankhandle_beam_wSkin.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

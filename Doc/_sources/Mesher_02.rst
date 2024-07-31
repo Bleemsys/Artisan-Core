@@ -1,289 +1,173 @@
-Field Driven Meshing 
-********************
+Meshing 02
+**********
 
-Fields can serve as design parameters for mesh generation in Artisan. Within this framework, fields can be applied to either modify local material thickness or adjust the size of lattice units. 
+Mesher for tetrahedron elements may be more useful for creating the mesh conforming complex geometry. This chapter presents two sets of the mesher, the mesher with uneven tetrahedron elements size, and the mesher for more uniformly same, or similar size of tetrahedron shape. 
 
-============
-Scaler Field
-============
+==================
+Tetrahedron Mesher
+==================
 
-The variation in unit cell size can be achieved using specific keywords: :code:`Gen_BasicCartesianHexMesh_MultiSize` and :code:`Gen_TetBasicMesh_HexSplit`. The former keyword allows for the creation of hex elements with varying sizes, while the latter facilitates the generation of tet elements with varying sizes. User shall find all examples below at :code:`.\\Test_json\\MeshLattice\\Box_FieldAttractor_MultiSize`. 
-
-Similar to previously demonstrated applications, users can activate a specific function in Artisan by setting the parameter :code:`"Type": "Field_Attractor"`. This configuration prompts Artisan to import a field, represented as a spatial data cloud containing field values. This potential map are utilized to create an attraction field. This field influences the mesh nodes, driving their deformation. As a result, this process generates elements of varying sizes throughout the mesh. This functionality allows for the tailored manipulation of mesh structures to align with specific design criteria or performance requirements, for example, user may use stress or strain mapping as design parameters to drive the local element size.
-
-The example in the file :code:`Box_FA_MS.json` demonstrates how the local field changes a box mesh element size, as shown below.
+Artisan has an integrated simple tetrahedron elements mesher that automatically meshes the given geometry using Delaunay triangulation algorithm. This basic meshing algorithm discretize the geometry layer-by-layer that conforms the geometric shape. The following JSON, that stores at the file :code:`GenTetBasicMesh.json`, meshed a sphere with the radius of 600 mm and generated the mesh lattice by using the exactly same mesh. 
 
 .. code-block:: json
+
+    {"Setup":{  "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Ball_Mesh.STL",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[5.0,5.0,5.0],
+				"Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+    "WorkFlow":{
+          "1": {"Gen_TetBasicMesh":{
+                    "Geomfile": ".//sample-obj//Ball_Mesh.STL", 
+					"size": [100.0,100.0,100.0],
+					"Meshfile": ".//sample-obj//Ball_Mesh.med",
+                    "ConvertTet2Beam": true
+                    }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json_03//GenTetBasicMesh.mld", 
+                    "size": [150.0,150.0,150.0], "thk":10.0, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": false, "Cube_Request": {}
+                    }
+               },
+          "3": {
+                "Export": {"outfile": ".//Test_results/BallBasicTetNMesh_Lattice.stl"}
+               }
+		          },
+    "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+     }
+
+The keywords :code:`Gen_TetBasicMesh` activates the algorithm. The parameter :code:`"Geomfile"` defines the location of the target meshing geometry, :code:`Meshfile` indicates where the mesh would be stored. Currently it supports Abaqus :code:`inp`, Ansys fluent :code:`msh` and Salome :code:`med` file format. The parameter :code:`"size"` defines the lattice size at current layer as 
+
+.. math::
+
+  num_{nodes} = area / (size[0]*size[1]*0.5)
+
+:code:`num_{nodes}` is the number of nodes at current layer, and they were evenly and randomly distributed over the current layer surface. The value :code:`size[2]`, which is the third element in :code:`size`, defines the layer depth, here 100 mm depth. The parameter :code:`ConvertTet2Beam` is boolean type definition, that :code:`"true"` meant the mesher will convert generated tetrahedron to the beam element (a 2-node-strut-like element), :code:`false` will keep tetrahedron element. One of the benefits is user may import the beam element into the FEA solver for further analysis if the mesh lattice is desired.
+
+Above JSON produced a mesh lattice filled ball geometry as shown below. 
+
+.. image:: ./pictures/BallMeshLattice.png
+
+The cross-sectional view below clearly showed the lattices were stacked layer by layer, from exterior surface towards center. 
+
+.. image:: ./pictures/BallMeshLattice_CrossSection.png
+
+For the more complicated case, user may refer to the example in the file :code:`EngineBracket_GenTetBasicMesh.txt`.
+
+.. image:: ./pictures/EngineBracket_BasicTet.png
+
+Please note that, this simple mesher may apply to the geometry with less dramatic change and more continuously smooth surface change. The quality of mesh may vary depending on the geometry features and definitions of mesh size etc.. For more complex mesh pattern, user may consider use professional mesher and import the results as input in mesh lattice generation workflow. Or user shall use the :code:`Gen_TetBasicMesh_HexSplit` to generate a better evenly sized or controlled-size mesh in order to fit the geometric shape. 
+
+The :code:`Gen_TetBasicMesh_HexSplit` keyword shares the same parameters with :code:`Gen_TetBasicMesh`. This mesher accepts the nodes of the Cartesian Hex Mesh (refer to the Cartesian Mesher section) as input vertices and applies the tetrahedron algorithm to generate all tetrahedral elements. Users can refer to the example :code:`GenTetBasicMesh_HexSplit.json`, as illustrated below. One advantage of this method is that the mesher produces approximately evenly spaced vertices that are distributed across the shape's surface and volumetric domain.
+
+.. image:: ./pictures/TetBasic_HexSplit.png 
+
+Similar to :code:`Gen_BasicCartesianHexMesh_MultiSize`, the local mesh variation can be included as well. The example in the file :code:`EngineBracket_MultiSize\\EngineBracket_GenTetBasicMesh_HexSplit_MS.json` shows a more complicated case, the Engine Bracket model with a local attractor controlled mesh size. 
+
+.. code-block:: json
+
+     {"Setup":{ "Type" : "Geometry",
+                "Geomfile": ".//sample-obj/EngineBracket.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.30, 0.30, 0.30],
+			 "Padding": 4,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+     "WorkFlow":{
+          "1": {"Gen_TetBasicMesh_HexSplit":{
+                "Geomfile": ".//sample-obj/EngineBracket.stl", 
+		      "size": [6.0, 6.0, 6.0],
+		      "Meshfile": ".//Test_json//MeshLattice//EngineBracket_MultiSize//EngineBracket.med",
+                "ConvertTet2Beam": false,
+                "MultiSize":{"Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]]}
+                }
+               },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshLattice//EngineBracket_MultiSize//GenTetBasicMesh.mld", 
+                    "size": [12.0, 12.0, 12.0], "thk":0.7, 
+                    "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{
+              "Export": {"outfile": ".//Test_results/EngineBracket_BasicTetHexSplit_MS.stl"}
+              }
+		   },
+     "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": true}
+     }
+
+The area on the left of Bracket ring has higher mesh density, or smaller mesh size, whereas other region has comparatively bigger mesh size. 
+
+.. image:: ./pictures/EngineBracket_MS_01.png
+
+.. image:: ./pictures/EngineBracket_MS_02.png
+
+For comparison, below shows the mesh without the local attractors, the example file is at :code:`EngineBracket\\EngineBracket_GenTetBasicMesh_HexSplit.json`.
+
+.. image:: ./pictures/EngineBracket_NoMS_01.png
+
+.. image:: ./pictures/EngineBracket_NoMS_02.png
+
+
+===========================
+Implicit Tetrahedron Mesher
+===========================
+
+Artisan integrates an simple implicit based tetrahedron mesher that generates uniform size elements (infill domain for unit lattice). This mesher is able to capture the geometrical features, such as corner or sharp edges, that can produce better quality tet mesh which are evenly distributed over the geometry domain. User may find the example below at :code:`.\\Test_json\\MeshLattice\\TetwF\\crankhandleTetMesher.json`.
+
+.. code-block:: json 
 
     {
-    "Setup": {
-        "Type": "Sample",
-        "Sample": {
-            "Domain": [
-                [0.0, 80.0],
-                [0.0, 80.0],
-                [0.0, 80.0]
-            ],
-            "Shape": "Box"
-        },
-        "Geomfile": "",
-        "Rot": [ 0.0, 0.0, 0.0],
-        "res": [ 0.25, 0.25, 0.25],
-        "Padding": 4,
-        "onGPU": false,
-        "memorylimit": 1073741824000
-    },
-    "WorkFlow": {
-        "1": {
-            "Gen_BasicCartesianHexMesh_MultiSize": {
-                "num_elem": [
-                    10,
-                    10,
-                    10
-                ],
-                "x_range": [
-                    0.0,
-                    80.0
-                ],
-                "y_range": [
-                    0.0,
-                    80.0
-                ],
-                "z_range": [
-                    0.0,
-                    80.0
-                ],
-                "ori": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "Normal": [
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "z_angle": 0.0,
-                "Meshfile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//BoxHexMesh.med",
-                "Geomfile": ".//sample-obj//cube_1mm.stl",
-                "numPrjLayers": 0,
-                "LayerDepth": 1.0,
-                "numCoverNodes": 0,
-                "MultiSize": {
-                    "Type": "Field_Attractor",
-                    "Data": [
-                        [
-                            30,
-                            0.5
-                        ]
-                    ],
-                    "FieldFile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//field_data.csv"
-                }
-            }
-        },
-        "2": {
-            "Add_Lattice": {
-                "la_name": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//GenHexMesh.mld",
-                "size": [
-                    5.0,
-                    5.0,
-                    5.0
-                ],
-                "thk": 1.0,
-                "Rot": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "Trans": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "Inv": false,
-                "Fill": false,
-                "Cube_Request": {}
-            }
-        },
-        "3": {
-            "Export": {
-                "outfile": ".//Test_results/BoxHexMesh_FieldAttractor_MultiSize.stl"
-            }
-        }
-    },
-    "PostProcess": {
-        "CombineMeshes": true,
-        "RemovePartitionMeshFile": false,
-        "RemoveIsolatedParts": true,
-        "ExportLazPts": false
-    }
-}
-
-
-Here the parameter :code:`MultiSize` contains three setup parameters:
-
-.. list-table:: 
-   :widths: 30 70
-   :header-rows: 1
-
-   * - Parameter
-     - Details
-   * - :code:`Type`
-     - supports :code:`Attractor` and :code:`Field_Attractor`, former produce sphere shape attractor, latter use field as attractor source;
-   * - :code:`Data` 
-     - when :code:`"Type": "Field_Attractor"`, it shall be list with 2 elements, the first element defines the lower bound of field that used to be attract mesh nodes, the second one defines the scale to the intensity. 
-   * - :code:`FieldFile`
-     - This defines the field file path, i.e. csv file. The field file shall contains the x, y, z and field value. Use shall refer to :ref:`Field Operation<_chapter-FieldOpt>` for file format details. 
-
-
-.. image:: ./pictures/FieldDrivenMesh_01.png
-
-In the example, the csv file contains many spatial data points, this could lead longer computational time. The example :code:`Box_FA_tetmesh_MS.json` demonstrates the operations on the tet mesh. The section that defines the field operation is as below. 
-
-.. code-block:: json
-
-    "1": {
-            "Gen_TetBasicMesh_HexSplit": {
-                "Geomfile": ".//sample-obj//cube_1mm.stl",
-                "size": [
-                    100.0,
-                    100.0,
-                    100.0
-                ],
-                "Meshfile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//BoxHexMesh.med",
-                "ConvertTet2Beam": false,
-                "MultiSize": {
-                    "Type": "Field_Attractor",
-                    "Data": [
-                        [
-                            30,
-                            0.5
-                        ]
-                    ],
-                    "FieldFile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//tetmesh_field_data.csv"
-                }
-            }
-        },
-
-The results is below. Please note that two examples here used different domain size and fields. The field can be either full coverage on the domain, or partially covers the interested areas. It is highly recommend to place more spatial points on the high interested area in order to interpolate the field values at the nodal positions. 
-
-.. image:: ./pictures/FieldDrivenMesh_02.png
-
-
-==============
-Geometry Field
-==============
-
-The geometric distance field can be served as the design parameter that varies the local mesh size. The keyword :code:`Gen_ExtHexMesh_Geomfield` provides a simple interface that reads the external mesh, projects the exterior nodes on the given geometry's exterior surface, and then use geometric distance field adjust the interior nodes position. The example :code:`.//Test_json//MeshLattice//ExtMesh//Mesh_GeomField.json` shows how to read the external mesh (generated using :code:`Gen_BoxMesh`) and fill a geometry. 
-
-.. code-block:: json
-
-        {
         "Setup": {
             "Type": "Geometry",
             "Sample": {
-                "Domain": [
-                    [
-                        0.0,
-                        1.0
-                    ],
-                    [
-                        0.0,
-                        1.0
-                    ],
-                    [
-                        0.0,
-                        1.0
-                    ]
-                ],
+                "Domain": [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]],
                 "Shape": "Box"
             },
-            "Geomfile": "C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/shell_1_of_bdd_.stl",
-            "Rot": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "res": [
-                0.5,
-                0.5,
-                0.5
-            ],
+            "Geomfile": ".//sample-obj//crank_handle.stl",
+            "Rot": [0.0, 0.0, 0.0],
+            "res": [0.1, 0.1, 0.1],
             "Padding": 4,
             "onGPU": false,
             "memorylimit": 1073741824000
         },
         "WorkFlow": {
             "1": {
-                "Gen_BoxMesh": {
-                    "Normal": [
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "z_angle": 0.0,
-                    "Mesh_file": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh.med",
-                    "y_range": [
-                        0.0,
-                        140.0
-                    ],
-                    "z_range": [
-                        0.0,
-                        200.0
-                    ],
-                    "ori": [
-                        -190.0,
-                        -68.0,
-                        -2.0
-                    ],
-                    "x_range": [
-                        0.0,
-                        200.0
-                    ],
-                    "num_elem": [
-                        25,
-                        18,
-                        18
-                    ]
+                "Gen_TetBasicMesh_wFeature": {
+                    "Meshfile": ".//Test_json//MeshLattice//TetwF//crank_handle.inp",
+                    "Geomfile": ".//sample-obj//crank_handle.stl",
+                    "init_seed_size": [2.0, 2.0, 2.0],
+                    "convergence_tol": 0.01,
+                    "max_iter": 100,
+                    "elem_size": 2.0
                 }
             },
             "2": {
-                "Gen_ExtHexMesh_Geomfield": {
-                    "Geomfile": "",
-                    "out_meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh_Field.med",
-                    "isPreAttraction": false,
-                    "inp_meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh.med",
-                    "numCoverNodes": 4,
-                    "AttractionRatio": 0.1
-                }
-            },
-            "3": {
                 "Add_Lattice": {
-                    "thk": 1.0,
-                    "Rot": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "Trans": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
+                    "la_name": ".//Test_json//MeshLattice//TetwF//TetConformal.mld",
+                    "size": [2.0, 2.0, 2.0],
+                    "thk": 0.2,
+                    "Rot": [0.0, 0.0, 0.0],
+                    "Trans": [0.0, 0.0, 0.0],
                     "Inv": false,
                     "Fill": false,
-                    "Cube_Request": {},
-                    "la_name": ".//Test_json//MeshLattice//ExtMesh//Bdd_MeshLattice.mld",
-                    "size": [
-                        13.0,
-                        13.0,
-                        13.0
-                    ]
+                    "Cube_Request": {}
                 }
             },
             "10000": {
                 "Export": {
-                    "outfile": ".//Test_results//ExMesh_Geomfield.stl"
+                    "outfile": ".//Test_results//crankhandle_tet_infill.stl"
                 }
             }
         },
@@ -295,8 +179,7 @@ The geometric distance field can be served as the design parameter that varies t
         }
     }
 
-
-The keywords :code:`Gen_ExtHexMesh_Geomfield` parameters are listed below. 
+The keyword :code:`Gen_TetBasicMesh_wFeature` defines the mesh generation. 
 
 .. list-table:: 
    :widths: 30 70
@@ -305,19 +188,25 @@ The keywords :code:`Gen_ExtHexMesh_Geomfield` parameters are listed below.
    * - Parameter
      - Details
    * - :code:`Geomfile`
-     - the geometry file path, if empty, it will take the geometry defined in setup;
-   * - :code:`out_meshfile` 
-     - resultant mesh file; 
-   * - :code:`inp_meshfile`
-     - the read-in external mesh file;   
-   * - :code:`numCoverNodes`
-     - the read-in mesh will check the coverage by using number of nodes, the elements having less number of nodes covered will be removed.
-   * - :code:`isPreAttraction`
-     - If true, the mesh nodes would adjust using the geometric distance field, if false, the interior nodes will be adjusted after the elements removal. 
-   * - :code:`AttractionRatio`
-     - the multiple scale to the nodal movement magnitude, if 0, field effect will not be applied.
+     - The skin mesh inputs file, if empty, Artisan will take the Geomfile in setup;
+   * - :code:`MeshFile` 
+     - The export file for generated tet mesh;
+   * - :code:`init_seed_size`
+     - The parameter defines the initial nodes points placements within the bounding box of the geometry;
+   * - :code:`elem_size`
+     - The target element size, please note that the final mesh may not reach to this size due to number of nodes placed over the domain;
+   * - :code:`tol`
+     - The tolerance of the convergence for mesh generation, recommend the value of :code:`0.1 * elem_size` as initial try;
+   * - :code:`max_iter`
+     - The maximum iteration for mesh generation, recommend :code:`20` as initial try. 
 
-Above case generates the following infill. In practices, use may consider use other professional mesher to forms a general approximated mesh, and then use this keyword to refine the boundary projection, and the interior nodes positions. 
+Above example produces a tetrahedron mesh based infill. 
 
-.. image:: ./pictures/ExMeshGeomfield.png
+.. image:: ./pictures/ImpTetMesher_01.png
 
+.. image:: ./pictures/ImpTetMesher_02.png
+
+.. image:: ./pictures/ImpTetMesher_03.png
+
+Note that, the keyword :code:`Gen_TetBasicMesh_wFeature` does not support the varying size of the elements in the current version, but it shall be supported in future development.
+   

@@ -1,0 +1,11 @@
+{
+    "9999":{
+        "Proc_Mesh_GenSkin":{
+            "Geomfile": ".//your_path//your_input_file_name.med", 
+            "lattice_meshfile": ".//your_path//your_input_file_name.med", 
+            "out_meshfile": ".//your_path//your_input_file_name.med", 
+            "tol": 0.001,
+            "long_edge_tol": 5.0
+        }
+    }
+}

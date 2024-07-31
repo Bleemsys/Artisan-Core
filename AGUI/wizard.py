@@ -77,6 +77,7 @@ class ArtisanWizard(tk.Tk):
         Geometry_tab = ttk.Frame(self.ribbon)
         Mesh_tab = ttk.Frame(self.ribbon)
         MeshAdv_tab = ttk.Frame(self.ribbon)
+        ProcessMesh_tab = ttk.Frame(self.ribbon)
         Field_tab = ttk.Frame(self.ribbon)
         FieldAdv_tab = ttk.Frame(self.ribbon)
         Export_tab = ttk.Frame(self.ribbon)
@@ -89,6 +90,7 @@ class ArtisanWizard(tk.Tk):
         self.ribbon.add(Geometry_tab, text='Geometry')
         self.ribbon.add(Mesh_tab, text='Mesh')
         self.ribbon.add(MeshAdv_tab, text='Mesh Adv.')
+        self.ribbon.add(ProcessMesh_tab, text='Proc. Mesh')
         self.ribbon.add(Field_tab, text='Field')
         self.ribbon.add(FieldAdv_tab, text='Field Adv.')
         self.ribbon.add(Export_tab, text='Export')
@@ -171,6 +173,7 @@ class ArtisanWizard(tk.Tk):
         # Mesh Tab
         Mesh_Button_data = {
             "Tet Mesh": ["Gen_TetBasicMesh", ".//AGUI//templates//Gen_TetBasicMesh.json"],
+            "Tet Mesh wF": ["Gen_TetBasicMesh_wFeature", ".//AGUI//templates//Gen_TetBasicMesh_wFeature.json"],
             "Tet Mesh HexSplit": ["Gen_TetBasicMesh_HexSplit", ".//AGUI//templates//Gen_TetBasicMesh_HexSplit.json"],
             "Voronoi Mesh": ["Gen_VoronoiPolyMesh", ".//AGUI//templates//Gen_VoronoiPolyMesh.json"],
             "Voronoi Mesh HexSplit": ["Gen_VoronoiPolyMesh_HexSplit", ".//AGUI//templates//Gen_VoronoiPolyMesh_HexSplit.json"],
@@ -194,15 +197,25 @@ class ArtisanWizard(tk.Tk):
             "CHM MultiSize Field": ["Gen_BasicCartesianHexMesh_MultiSize Field", ".//AGUI//templates//Gen_BasicCartesianHexMesh_MultiSize_Field.json"],
             "Gen_ExtHexMesh_Geomfield": ["Gen_ExtHexMesh_Geomfield", ".//AGUI//templates//Gen_ExtHexMesh_Geomfield.json"],
             "Gen_ConformalLatticeMesh": ["Gen_ConformalLatticeMesh", ".//AGUI//templates//Gen_ConformalLatticeMesh.json"],
-            "Proc_Mesh_ExtractSurf": ["Proc_Mesh_ExtractSurf", ".//AGUI//templates//Proc_Mesh_ExtractSurf.json"],
-            "Proc_Mesh_Octree":["Proc_Mesh_Octree", ".//AGUI//templates//Proc_Mesh_Octree.json"],
-            "Proc_Mesh_Trim": ["Proc_Mesh_Trim", ".//AGUI//templates//Proc_Mesh_Trim.json"],
-            "Proc_Mesh_SurfMeshMap": ["Proc_Mesh_SurfMeshMap", ".//AGUI//templates//Proc_Mesh_SurfMeshMap.json"]
+            
         }
         # Create button creator instance
         self.MeshAdv_button_creator = ButtonCreator(self, MeshAdv_tab, MeshAdv_Button_data, self.AddJSONtoTreeView)
         # Call create_buttons method to create buttons
         self.MeshAdv_button_creator.create_buttons()
+
+        Process_Mesh_Button_data = {
+            "Proc_Mesh_ExtractSurf": ["Proc_Mesh_ExtractSurf", ".//AGUI//templates//Proc_Mesh_ExtractSurf.json"],
+            "Proc_Mesh_Octree":["Proc_Mesh_Octree", ".//AGUI//templates//Proc_Mesh_Octree.json"],
+            "Proc_Mesh_Trim": ["Proc_Mesh_Trim", ".//AGUI//templates//Proc_Mesh_Trim.json"],
+            "Proc_Mesh_SurfMeshMap": ["Proc_Mesh_SurfMeshMap", ".//AGUI//templates//Proc_Mesh_SurfMeshMap.json"],
+            "Proc_Mesh_GenSkin": ["Proc_Mesh_GenSkin", ".//AGUI//templates//Proc_Mesh_GenSkin.json"]
+        }
+        # Create button creator instance
+        self.ProcessMesh_button_creator = ButtonCreator(self, ProcessMesh_tab, Process_Mesh_Button_data, self.AddJSONtoTreeView)
+        # Call create_buttons method to create buttons
+        self.ProcessMesh_button_creator.create_buttons()
+
 
         # Field Tab
         Field_Button_data = {

@@ -1,0 +1,8 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//Test_json//MeshLattice//GenSkin//BaseMesh.med",
+        "la_name": "BC",
+        "ExportFEAMeshFile": ""
+    }
+}
