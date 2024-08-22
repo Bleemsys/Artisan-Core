@@ -1,0 +1,139 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    1010.0
+                ],
+                [
+                    -10.0,
+                    1010.0
+                ],
+                [
+                    -10.0,
+                    1010.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BoxMesh": {
+                "num_elem": [
+                    10,
+                    10,
+                    10
+                ],
+                "x_range": [
+                    0.0,
+                    1000.0
+                ],
+                "y_range": [
+                    0.0,
+                    1000.0
+                ],
+                "z_range": [
+                    0.0,
+                    1000.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "Mesh_file": ".//Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh.med"
+            }
+        },
+        "2": {
+            "Proc_Mesh_FieldDrivenMesh": {
+                "inp_meshfile": ".//Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh.med",
+                "out_meshfile": ".//Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh_DM.med",
+                "MultiSize": {
+                    "Type": "Attractor",
+                    "Data": [
+                        [
+                            0,
+                            0,
+                            0,
+                            500,
+                            0.5
+                        ],
+                        [
+                            1000,
+                            1000,
+                            1000,
+                            1000,
+                            0.5
+                        ],
+                        [
+                            0,
+                            1000,
+                            1000,
+                            350,
+                            0.8
+                        ]
+                    ],
+                    "FieldFile": ""
+                }
+            }
+        },
+        "10": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshLattice//FieldDrivenMesh//GenHexMesh.mld",
+                "size": [
+                    110.0,
+                    110.0,
+                    110.0
+                ],
+                "thk": 10.0,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results/BoxHexMesh_MultiSize.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": false,
+        "ExportLazPts": true
+    }
+}

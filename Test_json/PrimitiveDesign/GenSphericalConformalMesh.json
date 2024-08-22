@@ -36,11 +36,6 @@
     "WorkFlow": {
         "1": {
             "Gen_SphericalMesh": {
-                "num_elem": [
-                    3,
-                    10,
-                    4
-                ],
                 "r_range": [
                     3.0,
                     8.0
@@ -63,6 +58,11 @@
                 "phi_range": [
                     0.2,
                     0.8
+                ],
+                "num_elem": [
+                    3,
+                    10,
+                    4
                 ]
             }
         },
@@ -74,7 +74,6 @@
                     3.0,
                     3.0
                 ],
-                "thk": 0.2,
                 "Rot": [
                     0.0,
                     0.0,
@@ -85,9 +84,10 @@
                     0.0,
                     0.0
                 ],
-                "Inv": false,
                 "Fill": false,
-                "Cube_Request": {}
+                "Cube_Request": {},
+                "thk": 0.1,
+                "Inv": true
             }
         },
         "3": {

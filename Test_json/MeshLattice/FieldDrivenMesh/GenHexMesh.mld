@@ -1,0 +1,7 @@
+{
+"type": "ConformalLattice",
+"definition": {
+ "meshfile": ".//Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh_DM.med",
+ "la_name": "SchwarzPrimitive"
+ }
+}

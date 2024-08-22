@@ -1,0 +1,105 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.05,
+            0.05,
+            0.05
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_SphericalMesh": {
+                "r_range": [
+                    3.0,
+                    8.0
+                ],
+                "theta_range": [
+                    0.3,
+                    0.7
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Mesh_file": ".//Test_json//PrimitiveDesign//SphericalMesh.med",
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "phi_range": [
+                    0.0,
+                    1.0
+                ],
+                "num_elem": [
+                    1,
+                    6,
+                    3
+                ]
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//PrimitiveDesign//GenSphericalConformalMesh.mld",
+                "size": [
+                    3.0,
+                    3.0,
+                    3.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Cube_Request": {},
+                "Fill": true,
+                "Inv": true,
+                "thk": 0.2
+            }
+        },
+        "3": {
+            "Export": {
+                "outfile": ".//Test_results/SphericalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

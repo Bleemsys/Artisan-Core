@@ -209,7 +209,8 @@ class ArtisanWizard(tk.Tk):
             "Proc_Mesh_Octree":["Proc_Mesh_Octree", ".//AGUI//templates//Proc_Mesh_Octree.json"],
             "Proc_Mesh_Trim": ["Proc_Mesh_Trim", ".//AGUI//templates//Proc_Mesh_Trim.json"],
             "Proc_Mesh_SurfMeshMap": ["Proc_Mesh_SurfMeshMap", ".//AGUI//templates//Proc_Mesh_SurfMeshMap.json"],
-            "Proc_Mesh_GenSkin": ["Proc_Mesh_GenSkin", ".//AGUI//templates//Proc_Mesh_GenSkin.json"]
+            "Proc_Mesh_GenSkin": ["Proc_Mesh_GenSkin", ".//AGUI//templates//Proc_Mesh_GenSkin.json"],
+            "Proc_Mesh_FieldDrivenMesh": ["Proc_Mesh_FieldDrivenMesh", ".//AGUI//templates//Proc_Mesh_FieldDrivenMesh.json"]
         }
         # Create button creator instance
         self.ProcessMesh_button_creator = ButtonCreator(self, ProcessMesh_tab, Process_Mesh_Button_data, self.AddJSONtoTreeView)

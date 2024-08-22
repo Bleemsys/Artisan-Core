@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Mesh Lattice &#8212; Artisan 0.2.6 documentation</title>
+    <title>Mesh Lattice &#8212; Artisan 0.2.7 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.6 documentation</p>
+    <p class="title logo__title">Artisan 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -336,6 +336,7 @@ document.write(`
 <span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span>
 <span class="w"> </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Parts01//Parts01.med&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;k&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -376,6 +377,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+<p>The parameter <code class="code docutils literal notranslate"><span class="pre">k</span></code> is the smooth factor that defines how beams blended together. The higher value shall lead to more material adding and more smooth transition. Here <code class="code docutils literal notranslate"><span class="pre">&quot;k&quot;</span> <span class="pre">:</span> <span class="pre">0.0</span></code> meant no such blending required.</p>
 <p>The result is shown below.</p>
 <img alt="_images/MeshLattice.png" src="_images/MeshLattice.png" />
 <p>One notes that, the parameter of <code class="code docutils literal notranslate"><span class="pre">size</span></code> in the keywords <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> influences the computing performance. Ideally, this parameter shall define approximated size of a single tetrahedron element. In the some cases of mixed size of elements, user may consider use the smallest element size. Bigger or smaller size definition could yield longer computational time.</p>

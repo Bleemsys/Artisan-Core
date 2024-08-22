@@ -95,7 +95,11 @@
                 "lattice_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh.stl",
                 "out_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh_wSkin.stl",
                 "tol": 0.0025,
-                "long_edge_tol": 5.0
+                "long_edge_tol": 5.0,
+                "faces_angles": [
+                    0.0,
+                    1.58
+                ]
             }
         }
     },

@@ -222,4 +222,51 @@ The twisted bar shall be filled by a series of :code:`boxframe.obj` shape. Due t
 
 .. image:: ./pictures/Twisted_Bar_Custom_Geom_Conformal.png
 
+=====================
+Joint Smooth Blending
+=====================
+
+Additional parameter :code:`k` in the conformal lattice defintion can help to define the smooth blending of the multiple beams in strut lattice. User may redefine the :code:`.//Test_json//Parts02_Strut_Infill_LR_conformal.mld` with :code:`k`, which the higher value of :code:`k` leads to more smooth and more material around joint. 
+
+.. code-block:: json
+
+    {
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//sample-obj//Shore//Shoes_02.med",
+        "la_name": "Tetrahedron",
+        "k": 1.8
+        }
+    }
+
+The example :code:`.//Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.json` as shown below, we shall have a shoe sole lattice structure with smoothly blended joints.
+
+.. code-block:: json
+
+    {"Setup":{  "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Shore//Shoes_02.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.4,0.4,0.4],
+    		    "Padding": 5,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                    },
+     "WorkFlow":{
+              "1": {"Add_Lattice":{
+                        "la_name": ".//Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.mld", "size": [18.0,18.0,18.0], "thk":1.2,  "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], "Inv": false, "Fill": false, 
+                        "Cube_Request": {}
+                        }
+                   },
+              "2":{"Export": {"outfile": ".//Test_results/Shoe_TetConformal_Infill_LR.stl"}}
+               },
+     "PostProcess":{"CombineMeshes": true,
+                    "RemovePartitionMeshFile": false,
+                    "RemoveIsolatedParts": false, 
+                    "ExportLazPts": false}
+    }
+
+
+.. image:: ./pictures/Conformal_SmoothBlend_01.png
+
+.. image:: ./pictures/Conformal_SmoothBlend_02.png
 

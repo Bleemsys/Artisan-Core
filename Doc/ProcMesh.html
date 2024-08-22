@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Mesh Process &#8212; Artisan 0.2.6 documentation</title>
+    <title>Mesh Process &#8212; Artisan 0.2.7 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.6 documentation</p>
+    <p class="title logo__title">Artisan 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -304,6 +304,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-external-surface-mesh">Extract External Surface Mesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#octree-mesh">Octree Mesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-regeneration">Skin Regeneration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#field-driven-modification">Field Driven Modification</a></li>
 </ul>
             </nav>
         </div>
@@ -577,7 +578,8 @@ document.write(`
 <span class="w">                </span><span class="nt">&quot;lattice_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//GenSkin//TrimMesh.stl&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//GenSkin//TrimMesh_wSkin.stl&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0025</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;long_edge_tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span>
+<span class="w">                </span><span class="nt">&quot;long_edge_tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;faces_angles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.58</span><span class="p">]</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
@@ -614,6 +616,9 @@ document.write(`
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">long_edge_tol</span></code></p></td>
 <td><p>The tolerance of identifying the long edges in the skin mesh, and if longer, Artisan will divide the long edge by inserting the nodes.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">faces_angles</span></code></p></td>
+<td><p>The selection criteria of the mesh edge using the neighboring face angle. This can be used to identify and select the sharpe edges of the outter geometry.</p></td>
+</tr>
 </tbody>
 </table>
 <p>Above JSON produce the following mesh for the skin cover. One need notice that there are nodes positioned on the boundary where inner lattice met the skin cover.</p>
@@ -625,6 +630,33 @@ document.write(`
 <p>The cross-sectional view is shown below.</p>
 <img alt="_images/GenSkinBeam_02.png" src="_images/GenSkinBeam_02.png" />
 <img alt="_images/GenSkinBeam_03.png" src="_images/GenSkinBeam_03.png" />
+</section>
+<section id="field-driven-modification">
+<h2>Field Driven Modification<a class="headerlink" href="#field-driven-modification" title="Permalink to this headline">#</a></h2>
+<p>The mesh can be modified using the field data. The keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_FieldDrivenMesh</span></code> provides a general access of the field driven modification of the mesh.</p>
+<table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>The input mesh file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>The export mesh file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">MultiSize</span></code></p></td>
+<td><p>The setup of this parameter shall be refer to the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> that shares the exact same setup and details.</p></td>
+</tr>
+</tbody>
+</table>
+<p>User can find the example at <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\MeshLattice\\FieldDrivenMesh\\FieldDrivenMesh_Attractor.json</span></code> which generates exact same results as the example demonstrated for the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code>.</p>
 </section>
 </section>
 
@@ -675,6 +707,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-external-surface-mesh">Extract External Surface Mesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#octree-mesh">Octree Mesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-regeneration">Skin Regeneration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#field-driven-modification">Field Driven Modification</a></li>
 </ul>
   </nav></div>
 

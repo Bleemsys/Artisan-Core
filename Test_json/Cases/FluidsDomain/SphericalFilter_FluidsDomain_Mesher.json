@@ -1,0 +1,59 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.05,
+            0.05,
+            0.05
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_TetBasicMesh_wFeature": {
+                "Geomfile": ".//Test_results/SphericalMesh_ConformalLattice.stl",
+                "max_iter": 20,
+                "MultiSize": {},
+                "convergence_tol": 0.01,
+                "elem_size": 0.3,
+                "init_seed_size": [
+                    0.35,
+                    0.35,
+                    0.35
+                ],
+                "Meshfile": ".//Test_json//Cases//FluidsDomain//FluidsDomain_Mesh.msh"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Primitive Design &#8212; Artisan 0.2.6 documentation</title>
+    <title>Primitive Design &#8212; Artisan 0.2.7 documentation</title>
   
   
   
@@ -129,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.6 documentation</p>
+    <p class="title logo__title">Artisan 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -400,6 +400,30 @@ document.write(`
 <img alt="_images/Cylindrical_Mesh.png" src="_images/Cylindrical_Mesh.png" />
 <p>The parameter <code class="code docutils literal notranslate"><span class="pre">phi_range</span></code> provides a more interesting design features, that may help to control spanning of the cylinder. For example, the illustration below shows the case of the parameter <code class="code docutils literal notranslate"><span class="pre">&quot;phi_range&quot;:</span> <span class="pre">[0,0.5]</span></code>.</p>
 <img alt="_images/Cylindrical_Mesh_half.png" src="_images/Cylindrical_Mesh_half.png" />
+<p>Creating a capped cone mesh follows a similar process to generating a cylindrical mesh. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_CappedConeMesh</span></code>, built upon <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code>, includes additional parameters for generating the cone-shaped mesh. User may find the example at <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\PrimitiveDesign\\GenCappedConeConformalMesh.json</span></code>. The additional parameters are as following:</p>
+<table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">r_bottom</span></code></p></td>
+<td><p>the parameter defines the radius of the bottom side of the cone, normally the end with smaller radius.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span></code></p></td>
+<td><p>this fraction helps to control position where to start the contraction of the radius. If 1.0, it shall generate a cylinder mesh with the radius of <code class="code docutils literal notranslate"><span class="pre">r_bottom</span></code>, if 0.2, for example, the contraction starts from the position 0.2 of the distance from top to bottom.</p></td>
+</tr>
+</tbody>
+</table>
+<p>In the example, <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.3</span></code>, we have the following.</p>
+<img alt="_images/ConeMesh_01.png" src="_images/ConeMesh_01.png" />
+<p>If <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.0</span></code>, we shall have a perfect cone mesh.</p>
+<img alt="_images/ConeMesh_02.png" src="_images/ConeMesh_02.png" />
 </section>
 <section id="spherical-domain">
 <h2>Spherical Domain<a class="headerlink" href="#spherical-domain" title="Permalink to this headline">#</a></h2>

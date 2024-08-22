@@ -37,6 +37,7 @@ You may notice that the value of the parameter :code:`Padding`` has changed to 2
      "type": "MeshLattice",
      "definition": {
           "meshfile": ".//sample-obj//Parts01//Parts01.med",
+          "k" : 0.0
       }
     }
 
@@ -65,6 +66,7 @@ As stated above, the mesh file points to :code:`.//sample-obj//Parts01//Parts01.
      - Geometry file format
      - Triangle
 
+The parameter :code:`k` is the smooth factor that defines how beams blended together. The higher value shall lead to more material adding and more smooth transition. Here :code:`"k" : 0.0` meant no such blending required. 
 
 The result is shown below. 
 

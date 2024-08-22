@@ -2,6 +2,7 @@
     "type": "ConformalLattice",
     "definition": {
         "meshfile": ".//sample-obj//Shore//Shoes_02.med",
-        "la_name": "Tetrahedron"
+        "la_name": "Tetrahedron",
+        "k": 1.8
     }
 }

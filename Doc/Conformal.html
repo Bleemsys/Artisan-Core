@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Conformal Lattice &#8212; Artisan 0.2.6 documentation</title>
+    <title>Conformal Lattice &#8212; Artisan 0.2.7 documentation</title>
   
   
   
@@ -128,7 +128,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.6 documentation</p>
+    <p class="title logo__title">Artisan 0.2.7 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -304,6 +304,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-hexahedron-domain">Lattice in hexahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-tetrahedron-domain">Lattice in tetrahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conformal-geometric-shape-lattice">Conformal Geometric Shape Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-smooth-blending">Joint Smooth Blending</a></li>
 </ul>
             </nav>
         </div>
@@ -502,6 +503,46 @@ document.write(`
 <p>The twisted bar shall be filled by a series of <code class="code docutils literal notranslate"><span class="pre">boxframe.obj</span></code> shape. Due to current algorithm limitation, user are required to give the input of thickness parameter <code class="code docutils literal notranslate"><span class="pre">thk</span></code> (in this case, <code class="code docutils literal notranslate"><span class="pre">&quot;thk&quot;:3.8</span></code>). User may try different thickness level at the low resolution model before moving to the high resolution model generation.</p>
 <img alt="_images/Twisted_Bar_Custom_Geom_Conformal.png" src="_images/Twisted_Bar_Custom_Geom_Conformal.png" />
 </section>
+<section id="joint-smooth-blending">
+<h2>Joint Smooth Blending<a class="headerlink" href="#joint-smooth-blending" title="Permalink to this headline">#</a></h2>
+<p>Additional parameter <code class="code docutils literal notranslate"><span class="pre">k</span></code> in the conformal lattice defintion can help to define the smooth blending of the multiple beams in strut lattice. User may redefine the <code class="code docutils literal notranslate"><span class="pre">.//Test_json//Parts02_Strut_Infill_LR_conformal.mld</span></code> with <code class="code docutils literal notranslate"><span class="pre">k</span></code>, which the higher value of <code class="code docutils literal notranslate"><span class="pre">k</span></code> leads to more smooth and more material around joint.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConformalLattice&quot;</span><span class="p">,</span>
+<span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_02.med&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tetrahedron&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.8</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The example <code class="code docutils literal notranslate"><span class="pre">.//Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.json</span></code> as shown below, we shall have a shoe sole lattice structure with smoothly blended joints.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Shore//Shoes_02.stl&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.4</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">          </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                    </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.mld&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">18.0</span><span class="p">,</span><span class="mf">18.0</span><span class="p">,</span><span class="mf">18.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span><span class="w">  </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">               </span><span class="p">},</span>
+<span class="w">          </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Shoe_TetConformal_Infill_LR.stl&quot;</span><span class="p">}}</span>
+<span class="w">           </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<img alt="_images/Conformal_SmoothBlend_01.png" src="_images/Conformal_SmoothBlend_01.png" />
+<img alt="_images/Conformal_SmoothBlend_02.png" src="_images/Conformal_SmoothBlend_02.png" />
+</section>
 </section>
 
 
@@ -551,6 +592,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-hexahedron-domain">Lattice in hexahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-tetrahedron-domain">Lattice in tetrahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conformal-geometric-shape-lattice">Conformal Geometric Shape Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-smooth-blending">Joint Smooth Blending</a></li>
 </ul>
   </nav></div>
 

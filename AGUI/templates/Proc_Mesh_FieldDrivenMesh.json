@@ -1,0 +1,19 @@
+{
+    "9999":{
+        "Proc_Mesh_FieldDrivenMesh":{
+            "inp_meshfile": ".//your_path//your_file_name.med", 
+            "out_meshfile": ".//your_path//your_file_name.med", 
+            "Geomfile":".//your_path//your_file_name.stl",
+            "MultiSize": {
+                "Type": "Field_Attractor",
+                "Data": [
+                    [
+                        30,
+                        0.5
+                    ]
+                ],
+                "FieldFile": ".//your_path//your_file_name.csv"
+            }
+        }
+    }
+}

@@ -5,6 +5,7 @@
             "lattice_meshfile": ".//your_path//your_input_file_name.med", 
             "out_meshfile": ".//your_path//your_input_file_name.med", 
             "tol": 0.001,
+            "faces_angles":[1.56, 1.58],
             "long_edge_tol": 5.0
         }
     }

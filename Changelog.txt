@@ -105,6 +105,10 @@ This is simple change log recording the major and minor updates
 - Add GenSkin keyword to regenerate the skin
 - Doc updates
 
+0.2.7
+- Add capped cone mesher, field driven mesh modifier, smooth blending
+- Change the skin regeneration with feature angle filter to select edges
+- Doc updates
 
 
 

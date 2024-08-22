@@ -81,6 +81,26 @@ The parameter :code:`phi_range` provides a more interesting design features, tha
 
 .. image:: ./pictures/Cylindrical_Mesh_half.png
 
+Creating a capped cone mesh follows a similar process to generating a cylindrical mesh. The keyword :code:`Gen_CappedConeMesh`, built upon :code:`Gen_CylindricalMesh`, includes additional parameters for generating the cone-shaped mesh. User may find the example at :code:`\\Test_json\\PrimitiveDesign\\GenCappedConeConformalMesh.json`. The additional parameters are as following:
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`r_bottom`
+     - the parameter defines the radius of the bottom side of the cone, normally the end with smaller radius.
+   * - :code:`UB_heightRatio` 
+     - this fraction helps to control position where to start the contraction of the radius. If 1.0, it shall generate a cylinder mesh with the radius of :code:`r_bottom`, if 0.2, for example, the contraction starts from the position 0.2 of the distance from top to bottom.
+
+In the example, :code:`UB_heightRatio = 0.3`, we have the following.
+
+.. image:: ./pictures/ConeMesh_01.png
+
+If :code:`UB_heightRatio = 0.0`, we shall have a perfect cone mesh.
+
+.. image:: ./pictures/ConeMesh_02.png
 
 ================
 Spherical Domain

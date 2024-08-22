@@ -264,7 +264,8 @@ The skin cover on the periodic lattice is a common design for protecting the inf
                     "lattice_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh.stl",
                     "out_meshfile": ".//Test_json//MeshLattice//GenSkin//TrimMesh_wSkin.stl",
                     "tol": 0.0025,
-                    "long_edge_tol": 5.0
+                    "long_edge_tol": 5.0,
+                    "faces_angles": [0.0, 1.58]
                 }
             }
         },
@@ -292,7 +293,9 @@ The keyword :code:`Proc_Mesh_GenSkin` takes the lattice infill and original skin
      - The tolerance of identifying the boundary nodes on the mesh of :code:`lattice_meshfile`` .
    * - :code:`long_edge_tol`
      - The tolerance of identifying the long edges in the skin mesh, and if longer, Artisan will divide the long edge by inserting the nodes. 
-   
+   * - :code:`faces_angles`
+     - The selection criteria of the mesh edge using the neighboring face angle. This can be used to identify and select the sharpe edges of the outter geometry.
+
 Above JSON produce the following mesh for the skin cover. One need notice that there are nodes positioned on the boundary where inner lattice met the skin cover. 
 
 .. image:: ./pictures/GenSkin.png
@@ -310,3 +313,25 @@ The cross-sectional view is shown below.
 .. image:: ./pictures/GenSkinBeam_02.png
 
 .. image:: ./pictures/GenSkinBeam_03.png
+
+=========================
+Field Driven Modification
+=========================
+
+The mesh can be modified using the field data. The keyword :code:`Proc_Mesh_FieldDrivenMesh` provides a general access of the field driven modification of the mesh. 
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`inp_meshfile`
+     - The input mesh file.
+   * - :code:`out_meshfile` 
+     - The export mesh file. 
+   * - :code:`MultiSize`
+     - The setup of this parameter shall be refer to the keyword :code:`Gen_BasicCartesianHexMesh_MultiSize` that shares the exact same setup and details.
+
+User can find the example at :code:`\\Test_json\\MeshLattice\\FieldDrivenMesh\\FieldDrivenMesh_Attractor.json` which generates exact same results as the example demonstrated for the keyword :code:`Gen_BasicCartesianHexMesh_MultiSize`.
+   
