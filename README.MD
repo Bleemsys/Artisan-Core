@@ -92,6 +92,6 @@ You may copy and redistribute this testing package material in any medium or for
 ## Supports
 Website: http://bleemsys.com/Artisan.html
 Facebook: https://www.facebook.com/Bleemsys
-Discord channel: https://discord.gg/Huf7Psqv
+Discord channel: https://discord.gg/nzXfYXb3Fd
 
 
