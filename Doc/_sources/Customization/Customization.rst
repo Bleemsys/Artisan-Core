@@ -153,3 +153,24 @@ More details here.
 .. image:: ../pictures/custom_geom_details.png
 
 The thickness of the geometric shape lattice is adjustable through defining the parameter :code:`thk`. The initial inputs will be considered as :code:`0.0`, the negative value of :code:`thk` shrinks the shape, whereas the positive value expands the lattice unit. The thickness of the given shape has different definition in conformal lattice, please refer to conformal lattice section for more details.
+
+One need clarify that above example :code:`"type":"Geom"` defines a closed, water tight and solid body mesh geometry. Artisan also supports the single surface mesh defined geometry by change the parameter :code:`"type"` to :code:`"Geom-Plate"`. For instance, we have the following single surface mesh. 
+
+.. image:: ../pictures/SuperCross.png
+
+By change the custom lattice definition, we should have the following results.
+
+.. code-block:: json
+
+    {
+     "type": "Geom-Plate",
+     "definition": {
+                     "file": ".//sample-obj//SuperCross.stl",
+                     "ladomain" : "Hex"
+                    }
+    }
+
+.. image:: ../pictures/custom_geom_infill_Plate.png
+
+
+.. image:: ../pictures/custom_geom_infill_Plate_02.png

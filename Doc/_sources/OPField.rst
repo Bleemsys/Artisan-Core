@@ -331,3 +331,106 @@ We certainly could also try make an attractor type thickness change, for example
 
 .. image:: ./pictures/MathExprOPField_02.png
 
+==============
+Geometry Field
+==============
+
+Artisan supports geometry field operations, enabling precise control of local material thickness in design. By defining influence volumes with geometric shapes, designers can create gradual, controlled variations in material thickness across parts or structures. JSON below shows the basic example of how to use geometry field to control the locally varying material thickness. User may find this example at :code:`:code:`.//Test_json//FieldOpt//CylinderGradeLattice.json`.
+
+.. code-block:: json
+
+  {
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [[-10.0, 10.0], [-10.0, 10.0], [-10.0, 15.0]],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [0.0, 0.0, 0.0],
+        "res": [0.1, 0.1, 0.1],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CylindricalMesh": {
+                "num_elem": [3, 10, 3],
+                "r_range": [2.0, 8.0],
+                "phi_range": [0.0, 1.0],
+                "ori": [0.0, 0.0, -2.0],
+                "Height": 10.0,
+                "Normal": [0.0, 0.0, 1.0],
+                "Mesh_file": ".//Test_json//PrimitiveDesign//CylindricalMesh.med"
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//PrimitiveDesign//GenCylindricalConformalMesh.mld",
+                "Rot": [0.0, 0.0, 0.0],
+                "Trans": [0.0, 0.0, 0.0],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.25,
+                "size": [5.0, 5.0, 5.0]
+            }
+        },
+        "3": {
+            "OP_FieldOffset_GeomField": {
+                "Name": "Cylinder",
+                "Paras": {
+                    "pa": [0.0, 0.0, -10.0],
+                    "r": 10.0,
+                    "pb": [0.0, 0.0, 30.0]
+                },
+                "min_val": 0.0,
+                "min": -5.0,
+                "max_val": 1.0,
+                "max": 0.0,
+                "min_max_opt": [0.0, 0.0],
+            }
+        },
+        "9999": {
+            "Export": {
+                "outfile": ".//Test_results/CylindricalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+ }
+
+The keyword :code:`OP_FieldOffset_GeomField` controls the field operation by defining a geometry that could be either a standard shape or an external shape. This keyword generates the signed distance field of the geometry, and then remaps the user defined :code:`max` and :code:`min` and linearly interpolates the offset values from :code:`max_val` to :code:`min_val`. 
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`Name`
+     - shares the same definition to the parameter :code:`Name` in :code:`Add_Geometry`; 
+   * - :code:`Paras` 
+     - shares the same definition to the parameter :code:`Paras` in :code:`Add_Geometry`;
+   * - :code:`max` 
+     - the maximum value in the SDF of the geometry;  
+   * - :code:`min`
+     - the minimum value in the SDF of the geometry;
+   * - :code:`max_val`
+     - the maximum offset value that remapped to the :code:`max`;
+   * - :code:`min_val`
+     - the minimum offset value that remapped to the :code:`min`; 
+   * - :code:`min_max_opt`
+     - A list of two numbers controlling the maximum and minimum values. If either number is greater than 0, it overrides the corresponding input and is taken directly from the SDF (Signed Distance Field).
+
+
+.. image:: ./pictures/GeomField_Cylinder.png
+
+
+.. image:: ./pictures/GeomField_Cylinder_02.png

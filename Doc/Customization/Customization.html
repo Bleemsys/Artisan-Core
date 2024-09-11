@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Customization &#8212; Artisan 0.2.7 documentation</title>
+    <title>Customization &#8212; Artisan 0.2.8 documentation</title>
   
   
   
@@ -129,7 +129,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.7 documentation</p>
+    <p class="title logo__title">Artisan 0.2.8 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -447,6 +447,20 @@ document.write(`
 <p>More details here.</p>
 <img alt="../_images/custom_geom_details.png" src="../_images/custom_geom_details.png" />
 <p>The thickness of the geometric shape lattice is adjustable through defining the parameter <code class="code docutils literal notranslate"><span class="pre">thk</span></code>. The initial inputs will be considered as <code class="code docutils literal notranslate"><span class="pre">0.0</span></code>, the negative value of <code class="code docutils literal notranslate"><span class="pre">thk</span></code> shrinks the shape, whereas the positive value expands the lattice unit. The thickness of the given shape has different definition in conformal lattice, please refer to conformal lattice section for more details.</p>
+<p>One need clarify that above example <code class="code docutils literal notranslate"><span class="pre">&quot;type&quot;:&quot;Geom&quot;</span></code> defines a closed, water tight and solid body mesh geometry. Artisan also supports the single surface mesh defined geometry by change the parameter <code class="code docutils literal notranslate"><span class="pre">&quot;type&quot;</span></code> to <code class="code docutils literal notranslate"><span class="pre">&quot;Geom-Plate&quot;</span></code>. For instance, we have the following single surface mesh.</p>
+<img alt="../_images/SuperCross.png" src="../_images/SuperCross.png" />
+<p>By change the custom lattice definition, we should have the following results.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geom-Plate&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//SuperCross.stl&quot;</span><span class="p">,</span>
+<span class="w">                 </span><span class="nt">&quot;ladomain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hex&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<img alt="../_images/custom_geom_infill_Plate.png" src="../_images/custom_geom_infill_Plate.png" />
+<img alt="../_images/custom_geom_infill_Plate_02.png" src="../_images/custom_geom_infill_Plate_02.png" />
 </section>
 </section>
 

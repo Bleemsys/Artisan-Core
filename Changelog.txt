@@ -110,6 +110,12 @@ This is simple change log recording the major and minor updates
 - Change the skin regeneration with feature angle filter to select edges
 - Doc updates
 
+0.2.8
+- Re-develop the custom lattice - Geom and Geom-Plate, infill for conformal and periodic lattice infill.
+- Add the geometric SDF based field offset
+- Doc updates
+
+
 
 
 

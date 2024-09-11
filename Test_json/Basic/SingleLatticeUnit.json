@@ -1,0 +1,155 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.05,
+            0.05,
+            0.05
+        ],
+        "Padding": 4,
+        "onGPU": false,
+        "memorylimit": 1073741824000000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_BoxMesh": {
+                "num_elem": [
+                    1,
+                    1,
+                    1
+                ],
+                "x_range": [
+                    0.0,
+                    5.0
+                ],
+                "y_range": [
+                    0.0,
+                    5.0
+                ],
+                "z_range": [
+                    0.0,
+                    5.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "z_angle": 0.0,
+                "Mesh_file": ".//Test_json//Basic//BoxMesh.med"
+            }
+        },
+        "2": {
+            "Add_Geometry": {
+                "Name": "Box",
+                "k_factor": 0.0,
+                "Paras": {
+                    "normal": [
+                        0,
+                        0,
+                        1
+                    ],
+                    "z_angle": 0.0,
+                    "ori": [
+                        2.5,
+                        2.5,
+                        2.5
+                    ],
+                    "length": [
+                        2.5,
+                        2.5,
+                        2.5
+                    ]
+                },
+                "push2GeomField": true
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//Basic//UnitCell.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.5
+            }
+        },
+        "4": {
+            "Subtract_Lattice": {
+                "la_name": ".//Test_json//Basic//UnitCell.mld",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ],
+                "thk": 0.2,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Cube_Request": {},
+                "Fill": true
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results/LatticeUnitCell.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

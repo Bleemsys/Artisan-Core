@@ -1,0 +1,9 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//Test_json//Basic//BoxMesh.med",
+        "ExportFEAMeshFile": "",
+        "k": 0.0,
+        "la_name": ".//Test_json//Basic//CustomLattice_Strut_01.txt"
+    }
+}

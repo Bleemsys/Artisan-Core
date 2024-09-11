@@ -1,5 +1,5 @@
 {
-"type": "Geom",
+"type": "Geom-Plate",
 "definition": {
 "file": ".//sample-obj//boxframe.obj",
 "ladomain": "Hex"}

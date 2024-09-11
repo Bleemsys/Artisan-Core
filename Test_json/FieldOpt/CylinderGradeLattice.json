@@ -1,0 +1,128 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    10.0
+                ],
+                [
+                    -10.0,
+                    15.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.1,
+            0.1,
+            0.1
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CylindricalMesh": {
+                "num_elem": [
+                    3,
+                    10,
+                    3
+                ],
+                "r_range": [
+                    2.0,
+                    8.0
+                ],
+                "phi_range": [
+                    0.0,
+                    1.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    -2.0
+                ],
+                "Height": 10.0,
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "Mesh_file": ".//Test_json//PrimitiveDesign//CylindricalMesh.med"
+            }
+        },
+        "2": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//PrimitiveDesign//GenCylindricalConformalMesh.mld",
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 0.25,
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            }
+        },
+        "3": {
+            "OP_FieldOffset_GeomField": {
+                "Name": "Cylinder",
+                "Paras": {
+                    "pa": [
+                        0.0,
+                        0.0,
+                        -10.0
+                    ],
+                    "r": 10.0,
+                    "pb": [
+                        0.0,
+                        0.0,
+                        30.0
+                    ]
+                },
+                "min_val": 0.0,
+                "min_max_opt": [
+                    0.0,
+                    0.0
+                ],
+                "min": -5.0,
+                "max_val": 1.0,
+                "max": 0.0
+            }
+        },
+        "9999": {
+            "Export": {
+                "outfile": ".//Test_results/CylindricalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

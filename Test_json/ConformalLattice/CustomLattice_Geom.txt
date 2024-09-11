@@ -1,6 +1,7 @@
 {
-"type": "Geom",
-"definition": {
-"file": ".//sample-obj//boxframe.obj",
-"ladomain": "Hex"}
+    "type": "Geom",
+    "definition": {
+        "file": ".//sample-obj//boxframe.obj",
+        "ladomain": "Hex"
+    }
 }

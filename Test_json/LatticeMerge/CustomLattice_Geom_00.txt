@@ -1,0 +1,6 @@
+{
+"type": "Geom-Plate",
+"definition": {
+"file": ".//sample-obj//SuperCross.stl",
+"ladomain": "Hex"}
+}
