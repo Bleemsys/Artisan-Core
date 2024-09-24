@@ -1,7 +1,7 @@
 {
     "type": "Geom",
     "definition": {
-        "file": ".//sample-obj//Klemmwinkel Form A.stl",
+        "file": ".//sample-obj//boxframe.obj",
         "ladomain": "Hex"
     }
 }

@@ -12,7 +12,7 @@
 		          "size": [100.0,100.0,100.0],
 		          "Meshfile": ".//sample-obj//Ball_Mesh.med",
                     "ConvertTet2Beam": true,
-                    "MultiSize":{"Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]]}
+                    "MultiSize":{"FieldFile":"", "Type":"Attractor", "Data":[[105, 45, 90, 100, 0.9]]}
                     }
                },
           "2": {"Add_Lattice":{

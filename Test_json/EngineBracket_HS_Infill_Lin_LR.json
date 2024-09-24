@@ -217,7 +217,7 @@
     },
     "PostProcess": {
         "CombineMeshes": true,
-        "RemovePartitionMeshFile": true,
+        "RemovePartitionMeshFile": false,
         "RemoveIsolatedParts": true,
         "ExportLazPts": false
     }

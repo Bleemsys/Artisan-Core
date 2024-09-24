@@ -29,6 +29,8 @@ Users may define their lattice design through:
  - Surface equation, e.g. the math equation defines a surface;
  - Geometric shape, e.g. shell shape geometry that defines a unit of lattice.
 
+Artisan provides an interface to FEA analysis, including 1D beam, 2D shell and 3D tet mesh generation; Solver can call Artisan to evaluate the material thickness at specific geometric location as well. 
+
 Artisan considers the utilization of hardware, and the resources spending on the computational tasks:
 
  - It supports adaptive division on the given filling shape (called domain) and calculate all sub-divided domains and combines them together at the end of computing. This consumes less memory, therefore the large model generation becomes possible.   
@@ -44,11 +46,13 @@ Artisan does not require any installation. It requires installation of the depen
 Basic requirements:
 
  - Python 3.9 ; 
- - CUDA Toolkit: v10.2 / v11.0 / v11.1 / v11.2 / v11.3 / v11.4 / v11.5
 
 Python: https://www.python.org/downloads/release/python-397/
 
-CUDA Toolkit: https://developer.nvidia.com/cuda-toolkit
+The base code of Artisan uses OpenMP to accelerate the computation. GPU computation is the other optional feature. A few basic keywords supports GPU acceleration,
+
+- CUDA Toolkit: v10.2 / v11.0 / v11.1 / v11.2 / v11.3 / v11.4 / v11.5
+- CUDA Toolkit: https://developer.nvidia.com/cuda-toolkit
 
 Users have to make sure their computers support CUDA GPU computing, 
 
@@ -66,7 +70,7 @@ The application can be launched by
 
 ArtiasnMain.py will read the json file and interpret the keys and then perform the calculations. There are a few example JSON files under the folder "Test_json", and the sample geometry files are at the folder "sample-obj". For example, 
 
-    python ArtisanMain.py -f .//Test_json//EngineBracket_HS_Infill_Lin_LR.txt
+    python ArtisanMain.py -f .//Test_json//EngineBracket_HS_Infill_Lin_LR.json
 
 Above commands will perform the complex lattice filling in EngineBracket model. The results are stored at "Test_results", or user may modify the json file to save the results at the desired location. 
 

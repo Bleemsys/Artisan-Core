@@ -29,7 +29,7 @@
             2.0,
             2.0
         ],
-        "Padding": 3,
+        "Padding": 10,
         "onGPU": false,
         "memorylimit": 16106127360
     },
@@ -55,7 +55,7 @@
                 "Inv": false,
                 "Fill": false,
                 "Cube_Request": {},
-                "thk": 2.5
+                "thk": 2.0
             }
         },
         "3": {
