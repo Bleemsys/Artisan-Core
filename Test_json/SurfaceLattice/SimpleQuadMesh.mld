@@ -1,0 +1,7 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": ".//Test_results//Simple_quad.obj",
+        "k": 0.0
+    }
+}

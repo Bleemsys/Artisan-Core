@@ -119,6 +119,11 @@ This is simple change log recording the major and minor updates
 - Bug fix.
 - Some core codes updated. 
 
+0.2.9
+- Re-coding the base, and removed the several python libs dependency
+- Add QuadMesher
+- Doc updates
+
 
 
 

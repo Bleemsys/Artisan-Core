@@ -158,7 +158,7 @@ One need clarify that above example :code:`"type":"Geom"` defines a closed, wate
 
 .. image:: ../pictures/SuperCross.png
 
-By change the custom lattice definition, we should have the following results.
+By change the custom lattice definition, we should have the following results. Please note that the thickness of lattice is defined by the calling keyword parameter :code:`Thk`. 
 
 .. code-block:: json
 

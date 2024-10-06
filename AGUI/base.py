@@ -6,7 +6,7 @@ Created on Sun Apr 21 21:06:45 2024
 """
 import json
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox
 
     
 def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, domain_y_lb, domain_y_ub,
@@ -200,9 +200,8 @@ def submit_configuration(filename, output_text_widget):
     try:
         import sys
         
-        # cmd = ['python', 'ArtisanMain.py', '-f', filename]
-
         cmd = [sys.executable, 'ArtisanMain.py', '-f', filename]
+        # cmd = ["ArtisanMain.exe", "-f", filename]
         
         output_text_widget.delete('1.0', tk.END)
         output_text_widget.update()

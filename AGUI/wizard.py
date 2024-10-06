@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
-import ast
+
 import json
 # Assuming the import path and function exist as provided
 from AGUI.base import load_configuration, submit_configuration, save_configuration
@@ -179,6 +179,7 @@ class ArtisanWizard(tk.Tk):
             "Voronoi Mesh HexSplit": ["Gen_VoronoiPolyMesh_HexSplit", ".//AGUI//templates//Gen_VoronoiPolyMesh_HexSplit.json"],
             "CartesianHexMesh": ["Gen_BasicCartesianHexMesh", ".//AGUI//templates//Gen_BasicCartesianHexMesh.json"],
             "BasicQuadMesh": ["Gen_BasicQuadMesh", ".//AGUI//templates//Gen_BasicQuadMesh.json"],
+            "SimpleQuadMesh": ["Gen_SimpleQuadMesh", ".//AGUI//templates//Gen_SimpleQuadMesh.json"],
             "SurfaceReMesh": ["Gen_SurfaceReMesh", ".//AGUI//templates//Gen_SurfaceReMesh.json"],
             "CylindricalMesh": ["Gen_CylindricalMesh", ".//AGUI//templates//Gen_CylindricalMesh.json"],
             "SphericalMesh": ["Gen_SphericalMesh", ".//AGUI//templates//Gen_SphericalMesh.json"],

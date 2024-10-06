@@ -1,0 +1,9 @@
+{
+    "9999":{
+            "Gen_SimpleQuadMesh":{
+              "size": [5.0, 5.0, 5.0],
+              "inp_meshfile": ".//your_path//you_inp_filename.stl",
+              "out_meshfile": ".//your_path//your_out_filename.stl"
+             }
+        }
+}

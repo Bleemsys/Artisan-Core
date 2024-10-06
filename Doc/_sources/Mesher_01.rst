@@ -208,6 +208,78 @@ This function can certainly be applied to more complicated geometry. The provide
 
 .. image:: ./pictures/crank_handle_quadmesh_02.png
 
+The :code:`Gen_SimpleQuadMesh` keyword offers an alternative approach for generating quadrilateral elements on a given mesh. The input mesh has to be a water tight closed mesh. The algorithm computes the cross-field of the input triangular mesh, which then guides the alignment of the quadrilateral elements. Users can refer to an example located at :code:`.//Test_json//SurfaceLattice//GenSimpleQuadMesh.json`. This example demonstrates how to fill the exterior surface of a given mesh with quadrilateral elements.
+
+.. code-block:: json 
+
+     {
+          "Setup": {
+              "Type": "Geometry",
+              "Sample": {
+                  "Domain": [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]],
+                  "Shape": "Box"
+              },
+              "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+              "Rot": [0.0, 0.0, 0.0],
+              "res": [0.5, 0.5, 0.5],
+              "Padding": 4,
+              "onGPU": false,
+              "memorylimit": 1073741824000
+          },
+          "WorkFlow": {
+              "1": {
+                  "Gen_SimpleQuadMesh": {
+                      "inp_meshfile": ".//sample-obj//shell_1_of_bdd_.stl",
+                      "out_meshfile": ".//Test_results//Simple_quad.obj",
+                      "size": [5.0, 5.0, 5.0]
+                  }
+              },
+              "2": {
+                  "Add_Lattice": {
+                      "la_name": ".//Test_json//SurfaceLattice//SimpleQuadMesh.mld",
+                      "size": [5.0, 5.0, 5.0],
+                      "Rot": [0.0, 0.0, 0.0],
+                      "Trans": [0.0, 0.0, 0.0],
+                      "Inv": false,
+                      "Fill": false,
+                      "Cube_Request": {},
+                      "thk": 1.0
+                  }
+              },
+              "10000": {
+                  "Export": {
+                      "outfile": ".//Test_results//SimpleQuadMesh.stl"
+                  }
+              }
+          },
+          "PostProcess": {
+              "CombineMeshes": true,
+              "RemovePartitionMeshFile": false,
+              "RemoveIsolatedParts": true,
+              "ExportLazPts": false
+          }
+     }         
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`inp_meshfile`
+     - a string showing the path and file name of the input mesh.
+   * - :code:`out_meshfile` 
+     - a string showing the path and file name of the output mesh. 
+   * - :code:`size`
+     - a list contains three float numbers. The algorithm only takes the first and second elements, and the generated quadrilateral elements approximated the defined size.   
+     
+
+
+.. image:: ./pictures/SimpleGenQuadElem_01.png
+
+.. image:: ./pictures/SimpleGenQuadElem_02.png
+
+
 ===============
 Voronoi Polygon
 ===============

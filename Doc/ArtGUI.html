@@ -3,52 +3,53 @@
 <!DOCTYPE html>
 
 
-<html >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>ArtGUI &#8212; Artisan 0.2.8 documentation</title>
+    <title>ArtGUI &#8212; Artisan 0.2.9 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Supports" href="Supports.html" />
     <link rel="prev" title="API Interface" href="API.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="None"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
   
   
@@ -56,28 +57,23 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -99,12 +95,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -119,6 +123,9 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -128,10 +135,21 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.8 documentation</p>
+    <p class="title logo__title">Artisan 0.2.9 documentation</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
@@ -170,7 +188,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -179,14 +197,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -261,26 +279,28 @@
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -315,14 +335,14 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="artgui">
-<span id="chapter-artgui"></span><h1>ArtGUI<a class="headerlink" href="#artgui" title="Permalink to this headline">#</a></h1>
+<span id="chapter-artgui"></span><h1>ArtGUI<a class="headerlink" href="#artgui" title="Permalink to this heading">#</a></h1>
 <p>ArtGUI is an intuitive graphical user interface designed to streamline the Artisan design workflow. Users can load their design file, i.e. JSON configuration, and perform editing, generation, and viewing of lattice structures all within a single application. ArtGUI emphasizes a user-friendly interface, catering to essential tasks while maintaining overall simplicity. For more complex mesh and geometric operations, users may need to utilize a professional CAD system. In future, we will gradually expand ArtGUI’s functions and applications. We use a simple example below to guide user how to interact with this application.</p>
 <p>This is the documentation for ArtGUI version 0.0.2.</p>
 <section id="launch-application">
-<h2>Launch Application<a class="headerlink" href="#launch-application" title="Permalink to this headline">#</a></h2>
+<h2>Launch Application<a class="headerlink" href="#launch-application" title="Permalink to this heading">#</a></h2>
 <p>User may launch the application just type the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">ArtGUI</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
@@ -330,14 +350,14 @@ document.write(`
 <p>In the all-in-one standalone package, user may activate the ArtGUI by double clicking <code class="code docutils literal notranslate"><span class="pre">ArtGUI.exe</span></code>.</p>
 </section>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>The graphic below shows an overall view of the application. The interface includes five functional areas, the ribbon-style tool bar, setup, workflow, post process and the message panel. Each of section corresponds to JSON configuration of the file. User may able to enter the setup, workflow and post process sections, and save to a standard JSON configuration, or just uses the top tool bar to insert the keywords, or editing the definition files.</p>
 <img alt="_images/overall_view.png" src="_images/overall_view.png" />
 <p>In general, the GUI’s main areas are:</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Area</p></th>
@@ -356,14 +376,15 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>Basic Work flow should be as following.
 * load, or construct the setup parameters and the work flow;
 * Generate the lattice, and check results;
 * iteratively generate the results which meets the requirements.</p>
 </section>
 <section id="load-edit-and-save">
-<h2>Load, Edit and Save<a class="headerlink" href="#load-edit-and-save" title="Permalink to this headline">#</a></h2>
-<p>On the top, user shall find the file tab that includes <code class="code docutils literal notranslate"><span class="pre">Save</span></code>, <code class="code docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span></code> and <code class="code docutils literal notranslate"><span class="pre">Load</span></code>. Click the load, then navigate to the <code class="code docutils literal notranslate"><span class="pre">Test_json</span></code> folder, where many examples were stored, find a configuration file and load it. Here we pick up <code class="code docutils literal notranslate"><span class="pre">Test_json\EngineBracket_HS_Infill_Lin_LR.txt</span></code>, as shown below. The ArtGUI will parse the given JSON file, fill the setup, post-process sections, and load the workflow text into the workflow section. Each item in the workflow will be presented as tree view, by expanding the treeview, user can navigate through all parameters and values. For editing the values or keys, just clicking the item.</p>
+<h2>Load, Edit and Save<a class="headerlink" href="#load-edit-and-save" title="Permalink to this heading">#</a></h2>
+<p>On the top, user shall find the file tab that includes <code class="code docutils literal notranslate"><span class="pre">Save</span></code>, <code class="code docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span></code> and <code class="code docutils literal notranslate"><span class="pre">Load</span></code>. Click the load, then navigate to the <code class="code docutils literal notranslate"><span class="pre">Test_json</span></code> folder, where many examples were stored, find a configuration file and load it. Here we pick up <code class="code docutils literal notranslate"><span class="pre">Test_jsonEngineBracket_HS_Infill_Lin_LR.txt</span></code>, as shown below. The ArtGUI will parse the given JSON file, fill the setup, post-process sections, and load the workflow text into the workflow section. Each item in the workflow will be presented as tree view, by expanding the treeview, user can navigate through all parameters and values. For editing the values or keys, just clicking the item.</p>
 <img alt="_images/Load_example.png" src="_images/Load_example.png" />
 <p>Or use the editor button at the bottom section to editing original JSON file, and do not forgot the click refresh button to update back to the treeview GUI.</p>
 <img alt="_images/Load_example_02.png" src="_images/Load_example_02.png" />
@@ -374,17 +395,17 @@ document.write(`
 <p>Users can copy and paste JSON strings directly into the tree view area. This can be done by using the bottom buttons or by right-clicking to reveal the context menu. ArtGUI will then automatically parse the JSON string into the appropriate format.</p>
 </section>
 <section id="generate-and-view-model">
-<h2>Generate and View Model<a class="headerlink" href="#generate-and-view-model" title="Permalink to this headline">#</a></h2>
+<h2>Generate and View Model<a class="headerlink" href="#generate-and-view-model" title="Permalink to this heading">#</a></h2>
 <p>After editing is complete, clicking the “Generate” button initiates the backend computation. Users can monitor the progress in the message panel. Once the computation is finished, clicking the “View Model” button opens the viewport screen. Here, users can rotate, pan, or zoom in and out to inspect the results.</p>
 <img alt="_images/Loadfiles_03.png" src="_images/Loadfiles_03.png" />
 <p>User may change the design parameters in the workflow, and re-generate a new lattice result, just click the update view, the new result should be updated in the view port. At the bottom of the view port, user shall be able to see the bounding lengths, and the lower point and upper point of the bounding box. Please note that, if the JSON workflow last line does not contain the keywords <code class="code docutils literal notranslate"><span class="pre">Export</span></code> and did not give a result file, the view port will not be updated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The edited JSON must be saved before generating. Artisan at the backend only read the JSON and conduct the calculation, and will not have interaction with ArtGUI.</p>
-</aside>
+</div>
 </section>
 <section id="help">
-<h2>Help<a class="headerlink" href="#help" title="Permalink to this headline">#</a></h2>
+<h2>Help<a class="headerlink" href="#help" title="Permalink to this heading">#</a></h2>
 <p>The help menu provides an easy access to the Artisan’s online manual.</p>
 <img alt="_images/helpshow.png" src="_images/helpshow.png" />
 </section>
@@ -398,8 +419,8 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="API.html"
@@ -427,6 +448,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -460,6 +482,7 @@ By Bleemsys
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2024, Bleemsys Ltd.
@@ -486,8 +509,8 @@ By Bleemsys
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

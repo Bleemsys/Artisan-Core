@@ -3,52 +3,53 @@
 <!DOCTYPE html>
 
 
-<html >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Field Operation &#8212; Artisan 0.2.8 documentation</title>
+    <title>Field Operation &#8212; Artisan 0.2.9 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'OPField';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Lattice Transition" href="TransLattice.html" />
     <link rel="prev" title="Primitive Design" href="Primitive.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="None"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
   
   
@@ -56,28 +57,23 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -99,12 +95,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -119,6 +123,9 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -128,10 +135,21 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.8 documentation</p>
+    <p class="title logo__title">Artisan 0.2.9 documentation</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
@@ -170,7 +188,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -179,14 +197,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -261,26 +279,28 @@
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -318,13 +338,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="field-operation">
-<span id="chapter-fieldopt"></span><h1>Field Operation<a class="headerlink" href="#field-operation" title="Permalink to this headline">#</a></h1>
+<span id="chapter-fieldopt"></span><h1>Field Operation<a class="headerlink" href="#field-operation" title="Permalink to this heading">#</a></h1>
 <p>User may use field, defined externally or with geometric features, to enhance the lattice infill. In the field operation, the concept refers to use external data or spatial field to enhance (e.g. thickening) to lattice thickness, or to detect geometry features and therefore enhance the lattice infill using the geometry feature lines.</p>
 <section id="external-field-enhancement">
-<h2>External Field Enhancement<a class="headerlink" href="#external-field-enhancement" title="Permalink to this headline">#</a></h2>
+<h2>External Field Enhancement<a class="headerlink" href="#external-field-enhancement" title="Permalink to this heading">#</a></h2>
 <p>Often the engineer/designer would like to design a component that accommodates engineering analysis results, such as finite element stress analysis etc., or try to introduce a thicker material layer at the areas suffered higher system loads. In Artisan, these regionally specified design change is considered as a spatially varying field that is added to the existing design field, or being an input variable affecting the local lattice design.</p>
 <p>Artisan can read external field (i.e. a data cloud in 3D spatial space) as input and perform high nonlinear interpolation on the field, and use the field to modify local material thickness. Here we use a bending steel bar as an example to demonstrate how to incorporate with external field data, for instance, in this case, a von Mises stress results generated from Ansys mechanical software. Assuming one side of long steel bar is fixed, the force is applied downward on the bottom edge of the other side. The deformation and stress distribution is shown as below.</p>
 <img alt="_images/BarStressField.png" src="_images/BarStressField.png" />
@@ -413,11 +433,11 @@ document.write(`
 <p>Please note that, above examples takes large data set as interpolation inputs and can be a very time consuming operation. More data points included in the field data could result longer computational time. The current field operation function can only handle the material thickening operation. We will work on the features and algorithm by extending the function to the lattice size and lattice types.</p>
 </section>
 <section id="geometry-feature-enhancement">
-<h2>Geometry Feature Enhancement<a class="headerlink" href="#geometry-feature-enhancement" title="Permalink to this headline">#</a></h2>
+<h2>Geometry Feature Enhancement<a class="headerlink" href="#geometry-feature-enhancement" title="Permalink to this heading">#</a></h2>
 <p>Geometry frequently incorporates various distinctive features along its edges, like sharp edges, which typically serve functional purposes. In design, emphasizing these features can be crucial for improving mechanical performance. Artisan offers straightforward methods to identify and capture these key features and it transforms these captured feature lines into field based operations that enhance the functional features.</p>
 <section id="sharpe-edge-enhancement">
-<h3>Sharpe Edge Enhancement<a class="headerlink" href="#sharpe-edge-enhancement" title="Permalink to this headline">#</a></h3>
-<p>Artisan has the keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> to identify the given mesh sharp edges, and build the cylindrical shape offset fields in order to enhance the material thickness around the cylindrical volume. The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle. The JSON file can be find at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.json</span></code>.</p>
+<h3>Sharpe Edge Enhancement<a class="headerlink" href="#sharpe-edge-enhancement" title="Permalink to this heading">#</a></h3>
+<p>Artisan has the keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> to identify the given mesh sharp edges, and build the cylindrical shape offset fields in order to enhance the material thickness around the cylindrical volume. The one below is a simple example of enhancing the box edges by capturing triangle edges that satisfy the certain criteria of features angle. The JSON file can be find at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\Box_EdgeEnhance.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.ply&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -455,10 +475,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code> captures the given geometry’s edges angles formed by their two neighboring triangles. Here is the details of each parameter.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -486,15 +506,16 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The box contains the edge enhancement is presented below. The box sharp edges which forms the shape has been dramatically enhanced with the cubic lattice infill.</p>
 <img alt="_images/BoxEdgeEnhance.png" src="_images/BoxEdgeEnhance.png" />
-<p>The example at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Crankhandle_EdgeEnhance.json</span></code> shows a more complicated case that captures the sharp edge and thickening the surface lattice accordantly.</p>
+<p>The example at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\Crankhandle_EdgeEnhance.json</span></code> shows a more complicated case that captures the sharp edge and thickening the surface lattice accordantly.</p>
 <img alt="_images/crank_handle_EdgeEnhance.png" src="_images/crank_handle_EdgeEnhance.png" />
 <img alt="_images/crank_handle_EdgeEnhance_02.png" src="_images/crank_handle_EdgeEnhance_02.png" />
 </section>
 <section id="corner-enhancement">
-<h3>Corner Enhancement<a class="headerlink" href="#corner-enhancement" title="Permalink to this headline">#</a></h3>
-<p>Corner features can be identified through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code>. Corners are considered as the center points of the sphere which is the influence volume in this keywords. The offset field is then added to the lattice field in order to varying the material thickness. A simple example (user may find it at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\\Box_EdgeEnhance.json</span></code>) of enhancing the 4 corner of a box shape is shown in the JSON below.</p>
+<h3>Corner Enhancement<a class="headerlink" href="#corner-enhancement" title="Permalink to this heading">#</a></h3>
+<p>Corner features can be identified through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code>. Corners are considered as the center points of the sphere which is the influence volume in this keywords. The offset field is then added to the lattice field in order to varying the material thickness. A simple example (user may find it at <code class="code docutils literal notranslate"><span class="pre">FieldOpt\Box_EdgeEnhance.json</span></code>) of enhancing the 4 corner of a box shape is shown in the JSON below.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -534,10 +555,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">OP_CornerEnhance</span></code> has similar parameters as <code class="code docutils literal notranslate"><span class="pre">OP_EdgeEnhance</span></code>. Generally the parameters helps the algorithm to identify the corner on the given mesh, and the calculation parameters that may need turning for better capturing of the corner.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -568,12 +589,13 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The algorithm relies on the fineness of the field (i.e. the resolution), and identifies the corner locations using field grid mesh, therefore may not exactly at the location of the mesh surface. The JSON above produce the results below.</p>
 <img alt="_images/BoxCornerEnhance.png" src="_images/BoxCornerEnhance.png" />
 </section>
 </section>
 <section id="mathematical-expression">
-<h2>Mathematical Expression<a class="headerlink" href="#mathematical-expression" title="Permalink to this headline">#</a></h2>
+<h2>Mathematical Expression<a class="headerlink" href="#mathematical-expression" title="Permalink to this heading">#</a></h2>
 <p>User may conduct manipulation of the lattice thickness on the lattice field directly through the keywords <code class="code docutils literal notranslate"><span class="pre">OP_Expr_OffsetField</span></code>. For instance, the JSON (the example file: <code class="code docutils literal notranslate"><span class="pre">.//Test_json//FieldOpt//Box_FieldOffsetExpr.json</span></code>) below shows the periodic changes on the lattice thickness.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">              </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//cube_1mm.stl&quot;</span><span class="p">,</span>
@@ -615,7 +637,7 @@ document.write(`
 <img alt="_images/MathExprOPField_02.png" src="_images/MathExprOPField_02.png" />
 </section>
 <section id="geometry-field">
-<h2>Geometry Field<a class="headerlink" href="#geometry-field" title="Permalink to this headline">#</a></h2>
+<h2>Geometry Field<a class="headerlink" href="#geometry-field" title="Permalink to this heading">#</a></h2>
 <p>Artisan supports geometry field operations, enabling precise control of local material thickness in design. By defining influence volumes with geometric shapes, designers can create gradual, controlled variations in material thickness across parts or structures. JSON below shows the basic example of how to use geometry field to control the locally varying material thickness. User may find this example at <code class="code docutils literal notranslate"><span class="pre">:code:</span></code>.//Test_json//FieldOpt//CylinderGradeLattice.json`.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">{</span>
 <span class="w">   </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -686,10 +708,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keyword <code class="code docutils literal notranslate"><span class="pre">OP_FieldOffset_GeomField</span></code> controls the field operation by defining a geometry that could be either a standard shape or an external shape. This keyword generates the signed distance field of the geometry, and then remaps the user defined <code class="code docutils literal notranslate"><span class="pre">max</span></code> and <code class="code docutils literal notranslate"><span class="pre">min</span></code> and linearly interpolates the offset values from <code class="code docutils literal notranslate"><span class="pre">max_val</span></code> to <code class="code docutils literal notranslate"><span class="pre">min_val</span></code>.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -720,6 +742,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <img alt="_images/GeomField_Cylinder.png" src="_images/GeomField_Cylinder.png" />
 <img alt="_images/GeomField_Cylinder_02.png" src="_images/GeomField_Cylinder_02.png" />
 </section>
@@ -733,8 +756,8 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="Primitive.html"
@@ -762,6 +785,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -798,6 +822,7 @@ By Bleemsys
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2024, Bleemsys Ltd.
@@ -824,8 +849,8 @@ By Bleemsys
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

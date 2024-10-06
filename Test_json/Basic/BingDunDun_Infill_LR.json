@@ -31,7 +31,7 @@
         ],
         "Padding": 1,
         "onGPU": false,
-        "memorylimit": 16106127360
+        "memorylimit": 161061273
     },
     "WorkFlow": {
         "1": {

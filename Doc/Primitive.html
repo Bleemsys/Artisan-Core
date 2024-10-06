@@ -3,45 +3,46 @@
 <!DOCTYPE html>
 
 
-<html >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Primitive Design &#8212; Artisan 0.2.8 documentation</title>
+    <title>Primitive Design &#8212; Artisan 0.2.9 documentation</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Primitive';</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -49,7 +50,7 @@
     <link rel="next" title="Field Operation" href="OPField.html" />
     <link rel="prev" title="Surface Lattice" href="SurfaceLattice.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="None"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
   
   
@@ -57,28 +58,23 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -100,12 +96,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -120,6 +124,9 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -129,10 +136,21 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.8 documentation</p>
+    <p class="title logo__title">Artisan 0.2.9 documentation</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
@@ -171,7 +189,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -180,14 +198,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -262,26 +280,28 @@
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -315,13 +335,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="primitive-design">
-<h1>Primitive Design<a class="headerlink" href="#primitive-design" title="Permalink to this headline">#</a></h1>
-<p>Often the design of the lightweight structure requires the lattice generation on a primitive shape, such as cylinder or sphere. Artisan can generate mesh-based discretization of the domain and morph the lattice unit onto the element. All examples in this section can be found under the folder <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\PrimitiveDesign\\</span></code>. Note that, all mesh generation of primitive shapes only supports <code class="code docutils literal notranslate"><span class="pre">.med</span></code> file format.</p>
+<h1>Primitive Design<a class="headerlink" href="#primitive-design" title="Permalink to this heading">#</a></h1>
+<p>Often the design of the lightweight structure requires the lattice generation on a primitive shape, such as cylinder or sphere. Artisan can generate mesh-based discretization of the domain and morph the lattice unit onto the element. All examples in this section can be found under the folder <code class="code docutils literal notranslate"><span class="pre">\Test_json\PrimitiveDesign\</span></code>. Note that, all mesh generation of primitive shapes only supports <code class="code docutils literal notranslate"><span class="pre">.med</span></code> file format.</p>
 <section id="cylindrical-domain">
-<h2>Cylindrical Domain<a class="headerlink" href="#cylindrical-domain" title="Permalink to this headline">#</a></h2>
+<h2>Cylindrical Domain<a class="headerlink" href="#cylindrical-domain" title="Permalink to this heading">#</a></h2>
 <p>The design on the cylindrical domain is common in most of industrial applications, for instance, the heat exchanger in the pressurized vessel application. Artisan integrates a simple mesh generator for the cylindrical domain. User may use this infrastructure to further produce conformal lattice. The definition of the cylindrical domain requires the radius, <span class="math notranslate nohighlight">\(\phi\)</span> and height.</p>
 <p>The following example can be find in the file <code class="code docutils literal notranslate"><span class="pre">GenCylindricalConformalMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
@@ -362,10 +382,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code> contains the parameters as defined in the table below.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -396,15 +416,16 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The results as blow shows a strut lattice generation on the cylinder body. User may certainly change to other types of lattice unit, e.g. TPMS or geometry.</p>
 <img alt="_images/Cylindrical_Mesh.png" src="_images/Cylindrical_Mesh.png" />
 <p>The parameter <code class="code docutils literal notranslate"><span class="pre">phi_range</span></code> provides a more interesting design features, that may help to control spanning of the cylinder. For example, the illustration below shows the case of the parameter <code class="code docutils literal notranslate"><span class="pre">&quot;phi_range&quot;:</span> <span class="pre">[0,0.5]</span></code>.</p>
 <img alt="_images/Cylindrical_Mesh_half.png" src="_images/Cylindrical_Mesh_half.png" />
-<p>Creating a capped cone mesh follows a similar process to generating a cylindrical mesh. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_CappedConeMesh</span></code>, built upon <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code>, includes additional parameters for generating the cone-shaped mesh. User may find the example at <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\PrimitiveDesign\\GenCappedConeConformalMesh.json</span></code>. The additional parameters are as following:</p>
-<table class="table">
+<p>Creating a capped cone mesh follows a similar process to generating a cylindrical mesh. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_CappedConeMesh</span></code>, built upon <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code>, includes additional parameters for generating the cone-shaped mesh. User may find the example at <code class="code docutils literal notranslate"><span class="pre">\Test_json\PrimitiveDesign\GenCappedConeConformalMesh.json</span></code>. The additional parameters are as following:</p>
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -420,13 +441,14 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>In the example, <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.3</span></code>, we have the following.</p>
 <img alt="_images/ConeMesh_01.png" src="_images/ConeMesh_01.png" />
 <p>If <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.0</span></code>, we shall have a perfect cone mesh.</p>
 <img alt="_images/ConeMesh_02.png" src="_images/ConeMesh_02.png" />
 </section>
 <section id="spherical-domain">
-<h2>Spherical Domain<a class="headerlink" href="#spherical-domain" title="Permalink to this headline">#</a></h2>
+<h2>Spherical Domain<a class="headerlink" href="#spherical-domain" title="Permalink to this heading">#</a></h2>
 <p>User can generate lattices on the spherical domain through the keywords <code class="code docutils literal notranslate"><span class="pre">Gen_SphericalMesh</span></code>. The JSON below (filename: <code class="code docutils literal notranslate"><span class="pre">GenSphericalConformalMesh.json</span></code>) shows a demonstration of this feature using TPMS lattice.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -466,10 +488,10 @@ document.write(`
 </pre></div>
 </div>
 <p>The parameters in <code class="code docutils literal notranslate"><span class="pre">Gen_SphericalMesh</span></code> are explained in the table below.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -503,14 +525,15 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>Below presented the resultant lattice on spherical domain.</p>
 <img alt="_images/spherical_mesh.png" src="_images/spherical_mesh.png" />
 <p>Similar to the <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code>, the keywords <code class="code docutils literal notranslate"><span class="pre">Gen_SphericalMesh</span></code> can also change the spanning of domain. In the case above, we have a complete <span class="math notranslate nohighlight">\(\phi\)</span> direction spanning, and the spanning of <span class="math notranslate nohighlight">\(\theta\)</span> is between <code class="code docutils literal notranslate"><span class="pre">0.3</span></code> to <code class="code docutils literal notranslate"><span class="pre">0.7</span></code> - <span class="math notranslate nohighlight">\(0.3\times\pi\)</span> to <span class="math notranslate nohighlight">\(0.7\times\pi\)</span>. User may alter both <code class="code docutils literal notranslate"><span class="pre">phi_range</span></code> and <code class="code docutils literal notranslate"><span class="pre">theta_range</span></code> to generate various combined spanning of the domain. The illustration below shows the case with parameter value <code class="code docutils literal notranslate"><span class="pre">&quot;phi_range&quot;:[0.2,</span> <span class="pre">0.8]</span></code>.</p>
 <img alt="_images/spherical_mesh_part.png" src="_images/spherical_mesh_part.png" />
 </section>
 <section id="box-domain">
-<h2>Box Domain<a class="headerlink" href="#box-domain" title="Permalink to this headline">#</a></h2>
-<p>User may define a hex mesh in the box-shape domain, and then conformal the lattice structure. This will produce the exact same results as the conventional way of lattice filling in the domain. The conformal lattice uses a different algorithm to compute the infill to the conventional periodic lattice infill. The base code of conformal lattice use openMP to accelerate the calculations, this can be dramatically faster when number of infill is huge. This functionality aims to provide an easy access to the faster algorithm in order to improve the efficiency. Below shows an example of filling lattice using the generated box mesh. The example file can be found at <code class="code docutils literal notranslate"><span class="pre">\\PrimitiveDesign\\GenBoxConformalMesh.json</span></code>.</p>
+<h2>Box Domain<a class="headerlink" href="#box-domain" title="Permalink to this heading">#</a></h2>
+<p>User may define a hex mesh in the box-shape domain, and then conformal the lattice structure. This will produce the exact same results as the conventional way of lattice filling in the domain. The conformal lattice uses a different algorithm to compute the infill to the conventional periodic lattice infill. The base code of conformal lattice use openMP to accelerate the calculations, this can be dramatically faster when number of infill is huge. This functionality aims to provide an easy access to the faster algorithm in order to improve the efficiency. Below shows an example of filling lattice using the generated box mesh. The example file can be found at <code class="code docutils literal notranslate"><span class="pre">\PrimitiveDesign\GenBoxConformalMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -552,10 +575,10 @@ document.write(`
 <p>The result, as expected, is lattice infill in a box.</p>
 <img alt="_images/BoxDomainMesh.png" src="_images/BoxDomainMesh.png" />
 <p>Here is the explanation of parameters.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -589,11 +612,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="primitive-shape-and-geometry-handling">
-<h2>Primitive Shape and Geometry handling<a class="headerlink" href="#primitive-shape-and-geometry-handling" title="Permalink to this headline">#</a></h2>
+<h2>Primitive Shape and Geometry handling<a class="headerlink" href="#primitive-shape-and-geometry-handling" title="Permalink to this heading">#</a></h2>
 <p>A few simple geometry handling functions have been integrated into Artisan. It could be useful if adding some geometric entity after lattice infill. It has to mention that, the whole geometry handling is based on implicit modelling concept, explicit modelling capability is not available. In general, user may <code class="code docutils literal notranslate"><span class="pre">Add</span></code>, <code class="code docutils literal notranslate"><span class="pre">Subtract</span></code> and <code class="code docutils literal notranslate"><span class="pre">Intersect</span></code> on the shape <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code> and other user defined geometries.</p>
-<p>In the example file <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\PrimitiveDesign\\GenBox.json</span></code>, a simple geometry was constructed using <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code>.</p>
+<p>In the example file <code class="code docutils literal notranslate"><span class="pre">\Test_json\PrimitiveDesign\GenBox.json</span></code>, a simple geometry was constructed using <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">               </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],[</span><span class="mf">-5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],[</span><span class="mf">-5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">               </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -650,14 +674,14 @@ document.write(`
 </div>
 <p>Above JSON will produce a result of two combined shape with a subtracted spherical indent.</p>
 <img alt="_images/GenBox.png" src="_images/GenBox.png" />
-<p>There are other three examples in the folder <code class="code docutils literal notranslate"><span class="pre">\\Test_json\\</span></code>, called <code class="code docutils literal notranslate"><span class="pre">GenBox_Add.txt</span></code>, <code class="code docutils literal notranslate"><span class="pre">GenBox_Subtract.txt</span></code> and <code class="code docutils literal notranslate"><span class="pre">GenBox_Intersection.txt</span></code>. Three examples demonstrates the different operations between two boxes. Below shows the overlapping of three results. The red part is intersection part, the blue and grey makes the adding union results, and the grey is the cut result. All operation used the smooth transitions.</p>
+<p>There are other three examples in the folder <code class="code docutils literal notranslate"><span class="pre">\Test_json\</span></code>, called <code class="code docutils literal notranslate"><span class="pre">GenBox_Add.txt</span></code>, <code class="code docutils literal notranslate"><span class="pre">GenBox_Subtract.txt</span></code> and <code class="code docutils literal notranslate"><span class="pre">GenBox_Intersection.txt</span></code>. Three examples demonstrates the different operations between two boxes. Below shows the overlapping of three results. The red part is intersection part, the blue and grey makes the adding union results, and the grey is the cut result. All operation used the smooth transitions.</p>
 <img alt="_images/PrimitiveShapes.png" src="_images/PrimitiveShapes.png" />
 <img alt="_images/PrimitiveShapes_02.png" src="_images/PrimitiveShapes_02.png" />
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">Add_Geometry</span></code> and <code class="code docutils literal notranslate"><span class="pre">Subtract_Geometry</span></code> manipulate the geometry handling, such as adding and subtracting. Along with the keywords <code class="code docutils literal notranslate"><span class="pre">Intersect_Geometry</span></code>, three keywords shared same parameters.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -679,11 +703,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">Box</span></code> shape has following parameters:</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -702,11 +727,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code> shape has following parameters:</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -722,11 +748,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code> shape has following parameters:</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -745,6 +772,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>It is possible to load external geometry, as demonstrated below. The JSON shows the parameter <code class="code docutils literal notranslate"><span class="pre">Name</span></code> in the keyword <code class="code docutils literal notranslate"><span class="pre">Add_Geometry</span></code> became a file path string. It is interpreted as an external geometry, not an integrated primitive shape.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">              </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -787,10 +815,10 @@ document.write(`
 </pre></div>
 </div>
 <p>In this case, parameter <code class="code docutils literal notranslate"><span class="pre">Paras</span></code> has the following operation parameters, i.e. <code class="code docutils literal notranslate"><span class="pre">Scale</span></code>, <code class="code docutils literal notranslate"><span class="pre">Trans</span></code> and <code class="code docutils literal notranslate"><span class="pre">Rot</span></code>. The operation sequences is scale, translation, then rotation.</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -809,6 +837,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 <p>The JSON reads an external geometry, conducted scale and translation, and push to geometric field, then conduct the periodic lattice infill in the geometry.</p>
 <img alt="_images/GenGeom.png" src="_images/GenGeom.png" />
 </section>
@@ -822,8 +851,8 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="SurfaceLattice.html"
@@ -851,6 +880,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -883,6 +913,7 @@ By Bleemsys
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2024, Bleemsys Ltd.
@@ -909,8 +940,8 @@ By Bleemsys
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
