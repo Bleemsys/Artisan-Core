@@ -54,7 +54,7 @@ This testing package of Artisan is Windows 10 or higher based. Artisan does not 
 
 Basic requirements:
 
- - Python 3.9 ; 
+ - Python 3.11 ; 
  - CUDA Toolkit: v10.2 / v11.0 / v11.1 / v11.2 / v11.3 / v11.4 / v11.5
 
 Python: https://www.python.org/downloads/release/python-397/
