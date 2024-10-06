@@ -45,7 +45,7 @@ Artisan does not require any installation. It requires installation of the depen
 
 Basic requirements:
 
- - Python 3.9 ; 
+ - Python 3.11 ; 
 
 Python: https://www.python.org/downloads/release/python-397/
 
