@@ -47,8 +47,6 @@ Basic requirements:
 
  - Python 3.11 ; 
 
-Python: https://www.python.org/downloads/release/python-397/
-
 The base code of Artisan uses OpenMP to accelerate the computation. GPU computation is the other optional feature. A few basic keywords supports GPU acceleration,
 
 - CUDA Toolkit: v10.2 / v11.0 / v11.1 / v11.2 / v11.3 / v11.4 / v11.5
