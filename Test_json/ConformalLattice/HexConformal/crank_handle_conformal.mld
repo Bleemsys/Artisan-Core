@@ -1,0 +1,9 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": ".//Test_results//crank_handle_hex_mesh.med",
+        "la_name": "SchwarzPrimitive",
+        "ExportFEAMeshFile": "",
+        "k": 0.0
+    }
+}

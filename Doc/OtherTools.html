@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Tools &#8212; Artisan 0.2.9 documentation</title>
+    <title>Tools &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,20 +28,18 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'OtherTools';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -335,13 +333,13 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="tools">
-<h1>Tools<a class="headerlink" href="#tools" title="Permalink to this heading">#</a></h1>
+<h1>Tools<a class="headerlink" href="#tools" title="Link to this heading">#</a></h1>
 <section id="artgui">
-<h2>ArtGUI<a class="headerlink" href="#artgui" title="Permalink to this heading">#</a></h2>
+<h2>ArtGUI<a class="headerlink" href="#artgui" title="Link to this heading">#</a></h2>
 <p>ArtGUI is a dedicated simple graphic user interface to Artisan-core backend. It aims to provide a simple integrated environment that user could create, assemble and test the lattice design with Artisan. ArtGUI is bundled with Artisan-core, providing an all-in-one standalone package that requires no additional downloads or installations. ArtGUI is coded using python Tkinter for the general setup interface, and use VTK for displaying models. ArtGUI is open source software distributed under MIT license. User may refer to <a class="reference internal" href="ArtGUI.html#chapter-artgui"><span class="std std-ref">ArtGUI</span></a> chapter for more details.</p>
 </section>
 <section id="third-party-apps">
-<h2>Third Party Apps<a class="headerlink" href="#third-party-apps" title="Permalink to this heading">#</a></h2>
+<h2>Third Party Apps<a class="headerlink" href="#third-party-apps" title="Link to this heading">#</a></h2>
 <p>There are a few recommended open source tools for designing lattice structure with Artisan. Please be aware of the licenses of these software as they may be charge for commercial applications.</p>
 <p>Salome Platform: <a class="reference external" href="https://www.salome-platform.org/">https://www.salome-platform.org/</a></p>
 <p>This is a general CAD platform that integrates many useful features for CAD modelling, FEA/CFD mesh generation etc.. Artisan requires meshing inputs to create mesh lattice and conformal lattice. User may install Salome to create their own mesh.</p>

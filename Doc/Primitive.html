@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Primitive Design &#8212; Artisan 0.2.9 documentation</title>
+    <title>Primitive Design &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,20 +28,18 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Primitive';</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -136,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -164,7 +161,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -338,10 +336,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="primitive-design">
-<h1>Primitive Design<a class="headerlink" href="#primitive-design" title="Permalink to this heading">#</a></h1>
+<h1>Primitive Design<a class="headerlink" href="#primitive-design" title="Link to this heading">#</a></h1>
 <p>Often the design of the lightweight structure requires the lattice generation on a primitive shape, such as cylinder or sphere. Artisan can generate mesh-based discretization of the domain and morph the lattice unit onto the element. All examples in this section can be found under the folder <code class="code docutils literal notranslate"><span class="pre">\Test_json\PrimitiveDesign\</span></code>. Note that, all mesh generation of primitive shapes only supports <code class="code docutils literal notranslate"><span class="pre">.med</span></code> file format.</p>
 <section id="cylindrical-domain">
-<h2>Cylindrical Domain<a class="headerlink" href="#cylindrical-domain" title="Permalink to this heading">#</a></h2>
+<h2>Cylindrical Domain<a class="headerlink" href="#cylindrical-domain" title="Link to this heading">#</a></h2>
 <p>The design on the cylindrical domain is common in most of industrial applications, for instance, the heat exchanger in the pressurized vessel application. Artisan integrates a simple mesh generator for the cylindrical domain. User may use this infrastructure to further produce conformal lattice. The definition of the cylindrical domain requires the radius, <span class="math notranslate nohighlight">\(\phi\)</span> and height.</p>
 <p>The following example can be find in the file <code class="code docutils literal notranslate"><span class="pre">GenCylindricalConformalMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
@@ -448,7 +446,7 @@ document.write(`
 <img alt="_images/ConeMesh_02.png" src="_images/ConeMesh_02.png" />
 </section>
 <section id="spherical-domain">
-<h2>Spherical Domain<a class="headerlink" href="#spherical-domain" title="Permalink to this heading">#</a></h2>
+<h2>Spherical Domain<a class="headerlink" href="#spherical-domain" title="Link to this heading">#</a></h2>
 <p>User can generate lattices on the spherical domain through the keywords <code class="code docutils literal notranslate"><span class="pre">Gen_SphericalMesh</span></code>. The JSON below (filename: <code class="code docutils literal notranslate"><span class="pre">GenSphericalConformalMesh.json</span></code>) shows a demonstration of this feature using TPMS lattice.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -532,7 +530,7 @@ document.write(`
 <img alt="_images/spherical_mesh_part.png" src="_images/spherical_mesh_part.png" />
 </section>
 <section id="box-domain">
-<h2>Box Domain<a class="headerlink" href="#box-domain" title="Permalink to this heading">#</a></h2>
+<h2>Box Domain<a class="headerlink" href="#box-domain" title="Link to this heading">#</a></h2>
 <p>User may define a hex mesh in the box-shape domain, and then conformal the lattice structure. This will produce the exact same results as the conventional way of lattice filling in the domain. The conformal lattice uses a different algorithm to compute the infill to the conventional periodic lattice infill. The base code of conformal lattice use openMP to accelerate the calculations, this can be dramatically faster when number of infill is huge. This functionality aims to provide an easy access to the faster algorithm in order to improve the efficiency. Below shows an example of filling lattice using the generated box mesh. The example file can be found at <code class="code docutils literal notranslate"><span class="pre">\PrimitiveDesign\GenBoxConformalMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">20.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -615,7 +613,7 @@ document.write(`
 </div>
 </section>
 <section id="primitive-shape-and-geometry-handling">
-<h2>Primitive Shape and Geometry handling<a class="headerlink" href="#primitive-shape-and-geometry-handling" title="Permalink to this heading">#</a></h2>
+<h2>Primitive Shape and Geometry handling<a class="headerlink" href="#primitive-shape-and-geometry-handling" title="Link to this heading">#</a></h2>
 <p>A few simple geometry handling functions have been integrated into Artisan. It could be useful if adding some geometric entity after lattice infill. It has to mention that, the whole geometry handling is based on implicit modelling concept, explicit modelling capability is not available. In general, user may <code class="code docutils literal notranslate"><span class="pre">Add</span></code>, <code class="code docutils literal notranslate"><span class="pre">Subtract</span></code> and <code class="code docutils literal notranslate"><span class="pre">Intersect</span></code> on the shape <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code> and other user defined geometries.</p>
 <p>In the example file <code class="code docutils literal notranslate"><span class="pre">\Test_json\PrimitiveDesign\GenBox.json</span></code>, a simple geometry was constructed using <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code>, <code class="code docutils literal notranslate"><span class="pre">Box</span></code>, <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>

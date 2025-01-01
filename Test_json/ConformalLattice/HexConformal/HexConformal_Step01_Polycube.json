@@ -1,0 +1,33 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//crank_handle.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[1.0,1.0,1.0],
+		      "Padding": 5,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"Proc_Mesh_PolyCube":{
+                    "inp_meshfile": ".//sample-obj//crank_handle.inp", 
+                    "out_meshfile": ".//Test_results//crank_handle_polycube.inp",                                         
+                    "cube": 5000000.0, 
+                    "smoothness": 1.0, 
+                    "distortion_angle": 1.0, 
+                    "distortion_volume": 1.0, 
+                    "max_iteration": 30
+                    }
+               },
+           "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "inp_meshfile": ".//Test_results//crank_handle_polycube.inp",
+                "out_meshfile": ".//Test_results//crank_handle_polycube_exterior.stl",
+                "isSplitTris": false,
+                "Elem_Type": "Tet"
+            }
+            }
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Meshing 01 &#8212; Artisan 0.2.9 documentation</title>
+    <title>Meshing 01 &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,20 +28,18 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Mesher_01';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -337,10 +335,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="meshing-01">
-<h1>Meshing 01<a class="headerlink" href="#meshing-01" title="Permalink to this heading">#</a></h1>
-<p>One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the <a class="reference internal" href="Conformal.html#conformal-lattice"><span class="std std-ref">Conformal Lattice</span></a> generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder <code class="code docutils literal notranslate"><span class="pre">Test_jsonMeshLattice</span></code>, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter <a class="reference internal" href="Primitive.html#primitive-design"><span class="std std-ref">Primitive Design</span></a>.</p>
+<h1>Meshing 01<a class="headerlink" href="#meshing-01" title="Link to this heading">#</a></h1>
+<p>One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the <span class="xref std std-ref">Conformal Lattice</span> generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder <code class="code docutils literal notranslate"><span class="pre">Test_jsonMeshLattice</span></code>, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter <a class="reference internal" href="Primitive.html#primitive-design"><span class="std std-ref">Primitive Design</span></a>.</p>
 <section id="cartesian-mesher">
-<h2>Cartesian Mesher<a class="headerlink" href="#cartesian-mesher" title="Permalink to this heading">#</a></h2>
+<h2>Cartesian Mesher<a class="headerlink" href="#cartesian-mesher" title="Link to this heading">#</a></h2>
 <p>Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It’s important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file <code class="code docutils literal notranslate"><span class="pre">CartesianHexMesh\GenCartesianHexMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//telecope_tripode_base.stl&quot;</span><span class="p">,</span>
@@ -419,7 +417,7 @@ document.write(`
 <img alt="_images/Tripod_HexInfill.png" src="_images/Tripod_HexInfill.png" />
 <img alt="_images/Tripod_HexInfill_v02.png" src="_images/Tripod_HexInfill_v02.png" />
 <img alt="_images/Tripod_HexInfill_v03.png" src="_images/Tripod_HexInfill_v03.png" />
-<p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <a class="reference internal" href="Conformal.html#conformal-lattice"><span class="std std-ref">Conformal Lattice</span></a>.</p>
+<p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <span class="xref std std-ref">Conformal Lattice</span>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -473,7 +471,7 @@ document.write(`
 <img alt="_images/Box_MultiSize_02.png" src="_images/Box_MultiSize_02.png" />
 </section>
 <section id="surface-mesher-for-quad-elements">
-<h2>Surface Mesher for Quad Elements<a class="headerlink" href="#surface-mesher-for-quad-elements" title="Permalink to this heading">#</a></h2>
+<h2>Surface Mesher for Quad Elements<a class="headerlink" href="#surface-mesher-for-quad-elements" title="Link to this heading">#</a></h2>
 <p>The surface mesher is a function based on the Cartesian mesher algorithm. It extracts the exterior element surfaces and projects the boundary nodes back onto the geometry’s surface. Similar to the Cartesian mesher, the surface mesher produces an approximated all-quad or quad-dominant mesh, which can be used to generate the surface lattice. Please note that the mesher only supports closed surface bodies. Here is a simple example of producing a quad element dominant mesh on a ball. Users can find this example in the file <code class="code docutils literal notranslate"><span class="pre">SurfaceLattice\Gen_BasicSurfQuadMesh.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">],[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">],[</span><span class="mf">-600.0</span><span class="p">,</span><span class="w"> </span><span class="mf">600.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -603,7 +601,7 @@ document.write(`
 <img alt="_images/SimpleGenQuadElem_02.png" src="_images/SimpleGenQuadElem_02.png" />
 </section>
 <section id="voronoi-polygon">
-<h2>Voronoi Polygon<a class="headerlink" href="#voronoi-polygon" title="Permalink to this heading">#</a></h2>
+<h2>Voronoi Polygon<a class="headerlink" href="#voronoi-polygon" title="Link to this heading">#</a></h2>
 <p>A Voronoi diagram, also known as a Voronoi tessellation or Voronoi decomposition, is a geometric structure that partitions a space into regions based on the proximity to a set of given points. In a Voronoi diagram, each point in the set is associated with a unique region that consists of all locations in the space that are closer to that point than any other point. It is named after the Russian mathematician Georgy Voronoi, who first introduced the idea. Voronoi polygons have various applications, such as in computer graphics, spatial analysis, geographical information systems, and computational biology. They provide a way to partition space based on proximity and are useful in solving proximity-based problems and analyzing spatial patterns. In additive manufacturing, this structure is often used on the components which suppose to bear loading with cushioning effect.</p>
 <p>Setup the generation of the Voronoi polygons on the given geometry is similar to the tet mesher. Below shows the piece of setup JSON (the file <code class="code docutils literal notranslate"><span class="pre">GenVorMesh.json</span></code>).</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
@@ -694,7 +692,7 @@ document.write(`
 <img alt="_images/VoriBasic_HexSplit.png" src="_images/VoriBasic_HexSplit.png" />
 </section>
 <section id="surface-remesh">
-<h2>Surface Remesh<a class="headerlink" href="#surface-remesh" title="Permalink to this heading">#</a></h2>
+<h2>Surface Remesh<a class="headerlink" href="#surface-remesh" title="Link to this heading">#</a></h2>
 <p>The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SurfaceReMesh</span></code> does the combined functions. User may find the example of Engine bracket remeshing at <code class="code docutils literal notranslate"><span class="pre">Remesh\EngineBracket_Infill_LR.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj/EngineBracket.stl&quot;</span><span class="p">,</span>

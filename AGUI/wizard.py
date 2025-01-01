@@ -206,12 +206,14 @@ class ArtisanWizard(tk.Tk):
         self.MeshAdv_button_creator.create_buttons()
 
         Process_Mesh_Button_data = {
-            "Proc_Mesh_ExtractSurf": ["Proc_Mesh_ExtractSurf", ".//AGUI//templates//Proc_Mesh_ExtractSurf.json"],
-            "Proc_Mesh_Octree":["Proc_Mesh_Octree", ".//AGUI//templates//Proc_Mesh_Octree.json"],
-            "Proc_Mesh_Trim": ["Proc_Mesh_Trim", ".//AGUI//templates//Proc_Mesh_Trim.json"],
-            "Proc_Mesh_SurfMeshMap": ["Proc_Mesh_SurfMeshMap", ".//AGUI//templates//Proc_Mesh_SurfMeshMap.json"],
-            "Proc_Mesh_GenSkin": ["Proc_Mesh_GenSkin", ".//AGUI//templates//Proc_Mesh_GenSkin.json"],
-            "Proc_Mesh_FieldDrivenMesh": ["Proc_Mesh_FieldDrivenMesh", ".//AGUI//templates//Proc_Mesh_FieldDrivenMesh.json"]
+            "Mesh_ExtractSurf": ["Proc_Mesh_ExtractSurf", ".//AGUI//templates//Proc_Mesh_ExtractSurf.json"],
+            "Mesh_Octree":["Proc_Mesh_Octree", ".//AGUI//templates//Proc_Mesh_Octree.json"],
+            "Mesh_Trim": ["Proc_Mesh_Trim", ".//AGUI//templates//Proc_Mesh_Trim.json"],
+            "Mesh_SurfMeshMap": ["Proc_Mesh_SurfMeshMap", ".//AGUI//templates//Proc_Mesh_SurfMeshMap.json"],
+            "Mesh_GenSkin": ["Proc_Mesh_GenSkin", ".//AGUI//templates//Proc_Mesh_GenSkin.json"],
+            "Mesh_FieldDrivenMesh": ["Proc_Mesh_FieldDrivenMesh", ".//AGUI//templates//Proc_Mesh_FieldDrivenMesh.json"],
+            "Mesh_PolyCube": ["Proc_Mesh_PolyCube", ".//AGUI//templates//Proc_Mesh_PolyCube.json"],
+            "Mesh_MappingHexElem": ["Proc_Mesh_MappingHexElem", ".//AGUI//templates//Proc_Mesh_MappingHexElem.json"],
         }
         # Create button creator instance
         self.ProcessMesh_button_creator = ButtonCreator(self, ProcessMesh_tab, Process_Mesh_Button_data, self.AddJSONtoTreeView)

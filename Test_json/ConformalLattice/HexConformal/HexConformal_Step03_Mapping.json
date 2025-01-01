@@ -1,0 +1,37 @@
+{
+    "Setup": {
+      "Type": "Geometry",
+      "Geomfile": ".//sample-obj//crank_handle.stl",
+      "Rot": [0.0, 0.0, 0.0],
+      "res": [0.2, 0.2, 0.2],
+      "Padding": 5,
+      "onGPU": false,
+      "memorylimit": 16106127360
+    },
+    "WorkFlow": {
+      "1": {
+        "Proc_Mesh_MappingHexElem": {
+          "inp_original_meshfile": ".//Test_results//crank_handle_polycube.inp",
+          "inp_deformed_meshfile": ".//sample-obj//crank_handle.inp",
+          "inp_Hex_meshfile": ".//Test_results//crank_handle_polycube_mesh.med",
+          "out_meshfile": ".//Test_results//crank_handle_hex_mesh.med"
+        }
+      },
+      "2": {"Add_Lattice":{
+                "la_name": ".//Test_json//ConformalLattice//HexConformal//crank_handle_conformal.mld",
+                            "size": [1.0, 1.0, 1.0], "thk":0.15,
+                            "Rot": [0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                            "Inv": false, "Fill": false,
+                "Cube_Request": {}
+                }},
+      "3": {"Export": {"outfile": ".//Test_results//crank_handle_conformal_HexInfill.stl"}}
+
+    },
+    "PostProcess": {
+      "CombineMeshes": true,
+      "RemovePartitionMeshFile": false,
+      "RemoveIsolatedParts": false,
+      "ExportLazPts": false
+    }
+  }
+  

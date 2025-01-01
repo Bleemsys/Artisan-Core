@@ -1,0 +1,36 @@
+{
+    "Setup": {
+      "Type": "Geometry",
+      "Geomfile": ".//sample-obj//crank_handle.stl",
+      "Rot": [0.0, 0.0, 0.0],
+      "res": [1.0, 1.0, 1.0],
+      "Padding": 5,
+      "onGPU": false,
+      "memorylimit": 16106127360
+    },
+    "WorkFlow": {
+      "1": {
+        "Gen_BasicCartesianHexMesh": {
+          "num_elem": [15, 25, 25],
+          "x_range": [0.0, 24.0],
+          "y_range": [0.0, 78.0],
+          "z_range": [0.0, 80.0],
+          "ori": [-12.0, -12.0, -80.0],
+          "Normal": [0.0, 0.0, 1.0],
+          "z_angle": 0.0,
+          "Meshfile": ".//Test_results//crank_handle_polycube_mesh.med",
+          "Geomfile": ".//Test_results//crank_handle_polycube_exterior.stl",
+          "numPrjLayers": 1,
+          "LayerDepth": 2.0,
+          "numCoverNodes": 2
+        }
+      }
+    },
+    "PostProcess": {
+      "CombineMeshes": true,
+      "RemovePartitionMeshFile": false,
+      "RemoveIsolatedParts": false,
+      "ExportLazPts": false
+    }
+  }
+  

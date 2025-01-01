@@ -28,7 +28,8 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Meshing 02 <Mesher_02.rst>
    Field Driven Meshing  <Mesher_99.rst>
    Mesh Process  <ProcMesh.rst>
-   Conformal Lattice <Conformal.rst>
+   Conformal Lattice 01 <Conformal.rst>
+   Conformal Lattice 02 <Conformal_02.rst>
    Surface Lattice <SurfaceLattice.rst>
    Primitive Design <Primitive.rst>
    Field Operation <OPField.rst>

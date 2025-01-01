@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Lattice Transition &#8212; Artisan 0.2.9 documentation</title>
+    <title>Lattice Transition &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,20 +28,18 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'TransLattice';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -336,11 +334,11 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="lattice-transition">
-<h1>Lattice Transition<a class="headerlink" href="#lattice-transition" title="Permalink to this heading">#</a></h1>
+<h1>Lattice Transition<a class="headerlink" href="#lattice-transition" title="Link to this heading">#</a></h1>
 <p>Design a lattice fill often means a combination of various styles and sizes across different parts of the component. The transition amongst these regional features could be a challenge task. Artisan is capable of automatically merging different lattice designs through the field based morphing algorithm.</p>
 <p>Artisan treats the regional lattice designs as various fields, and the fields can be interpolated through certain mathematical ways, for example, a regional attractor or linearly interpolating between two lattices. Here we use a few simple examples to demonstrate the applications. User may find these examples under the folder <code class="code docutils literal notranslate"><span class="pre">\Test_json\FieldMerge\</span></code>.</p>
 <section id="simple-transition">
-<h2>Simple Transition<a class="headerlink" href="#simple-transition" title="Permalink to this heading">#</a></h2>
+<h2>Simple Transition<a class="headerlink" href="#simple-transition" title="Link to this heading">#</a></h2>
 <p>Considering to fill a bar region with two different lattices, <code class="code docutils literal notranslate"><span class="pre">BC</span></code> on one side gradually transits to the other side and merged with <code class="code docutils literal notranslate"><span class="pre">BCCubic</span></code> lattice, see the JSON below.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">100.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">30.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">30.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -543,7 +541,7 @@ document.write(`
 <img alt="_images/FieldMerge_Annulus.png" src="_images/FieldMerge_Annulus.png" />
 </section>
 <section id="field-based-transition">
-<h2>Field Based Transition<a class="headerlink" href="#field-based-transition" title="Permalink to this heading">#</a></h2>
+<h2>Field Based Transition<a class="headerlink" href="#field-based-transition" title="Link to this heading">#</a></h2>
 <p>The physical quantities, such as stress, strain, and force, or other field can serve as external design parameters influencing the lattice transition. Similar to field operations, the keyword <code class="code docutils literal notranslate"><span class="pre">OP_FieldMerge</span></code> can be employed to read a field, evaluate the target lattice, and ultimately combine the current field with the global field. This merging operation is demonstrated using the bar model case - the same example from the field operation section. This example īs the file <code class="code docutils literal notranslate"><span class="pre">Bar_FieldMerge_Field.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Bar//Bar.stl&quot;</span><span class="p">,</span>
@@ -610,7 +608,7 @@ document.write(`
 <img alt="_images/FieldLatticeTransition_02.png" src="_images/FieldLatticeTransition_02.png" />
 </section>
 <section id="transition-on-conformal-lattices">
-<h2>Transition on Conformal Lattices<a class="headerlink" href="#transition-on-conformal-lattices" title="Permalink to this heading">#</a></h2>
+<h2>Transition on Conformal Lattices<a class="headerlink" href="#transition-on-conformal-lattices" title="Link to this heading">#</a></h2>
 <p>The transition supports all lattice definitions in all circumstances. In other words, the lattices can be transformed to any given shape that forms a local lattice field. It would be good that two lattices share a similar geometric or topological similarity. The example below shows the transition of conformed <code class="code docutils literal notranslate"><span class="pre">BC</span></code> lattice to the conformed box-frame object lattice in a twisted bar geometry. Two lattices have similar shape features, however, with many different details.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Twisted_Bar//Twisted_Bar.stl&quot;</span><span class="p">,</span>

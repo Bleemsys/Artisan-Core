@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Surface Lattice &#8212; Artisan 0.2.9 documentation</title>
+    <title>Surface Lattice &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,25 +28,23 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'SurfaceLattice';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Primitive Design" href="Primitive.html" />
-    <link rel="prev" title="Conformal Lattice" href="Conformal.html" />
+    <link rel="prev" title="Conformal Lattice 02" href="Conformal_02.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -335,10 +333,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="surface-lattice">
-<h1>Surface Lattice<a class="headerlink" href="#surface-lattice" title="Permalink to this heading">#</a></h1>
+<h1>Surface Lattice<a class="headerlink" href="#surface-lattice" title="Link to this heading">#</a></h1>
 <p>Surface lattice can be a design option for lightweight structural component. It is easy to generate the surface lattice using existing meshes of the geometry. In Artisan 0.1.7, user can use existing conformal lattice generation functionality to morphy 2D geometric surface or strut-based lattice onto the 2D <code class="code docutils literal notranslate"><span class="pre">Triangle</span></code> or <code class="code docutils literal notranslate"><span class="pre">Quad</span></code> elements of meshes. All examples here are stored under <code class="code docutils literal notranslate"><span class="pre">//Test_json//SurfaceLattice//</span></code>. User may consider the integrated surface mesher to generate the surface subdivisions for morphing the lattice, please refer to the meshing section for more details.</p>
 <section id="strut-surface-lattice">
-<h2>Strut Surface Lattice<a class="headerlink" href="#strut-surface-lattice" title="Permalink to this heading">#</a></h2>
+<h2>Strut Surface Lattice<a class="headerlink" href="#strut-surface-lattice" title="Link to this heading">#</a></h2>
 <p>Here is an example (filename: <code class="code docutils literal notranslate"><span class="pre">BallSurfaceLattice.json</span></code>) of using customized strut lattice definition to generate surface lattice on a ball.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//sphere.stl&quot;</span><span class="p">,</span>
@@ -404,7 +402,7 @@ document.write(`
 <img alt="_images/crankhandle_Surface_Lattice.png" src="_images/crankhandle_Surface_Lattice.png" />
 </section>
 <section id="geometry-surface-lattice">
-<h2>Geometry Surface Lattice<a class="headerlink" href="#geometry-surface-lattice" title="Permalink to this heading">#</a></h2>
+<h2>Geometry Surface Lattice<a class="headerlink" href="#geometry-surface-lattice" title="Link to this heading">#</a></h2>
 <p>Geometry surface lattice basically morphs the given 2D geometry onto the given mesh. Here is example (filename: <code class="code docutils literal notranslate"><span class="pre">Box_SurfaceLattice.json</span></code>) of morphing irregular geometry onto a cube with quadrilateral elements with the unit element as showing below.</p>
 <img alt="_images/Box_Surface_Lattice_unit.png" src="_images/Box_Surface_Lattice_unit.png" />
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
@@ -471,12 +469,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Conformal.html"
+       href="Conformal_02.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Conformal Lattice</p>
+        <p class="prev-next-title">Conformal Lattice 02</p>
       </div>
     </a>
     <a class="right-next"

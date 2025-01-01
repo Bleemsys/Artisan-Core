@@ -1,0 +1,13 @@
+{
+    "9999":{
+        "Proc_Mesh_PolyCube":{
+                    "inp_meshfile": ".//your-path//your-input-filename.inp", 
+                    "out_meshfile": ".//your-path//your-output-filename.inp",                                         
+                    "cube": 5000000.0, 
+                    "smoothness": 1.0, 
+                    "distortion_angle": 1.0, 
+                    "distortion_volume": 1.0, 
+                    "max_iteration": 30
+                    }
+    }
+}

@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>ArtGUI &#8212; Artisan 0.2.9 documentation</title>
+    <title>ArtGUI &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,20 +28,18 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -338,11 +336,11 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="artgui">
-<span id="chapter-artgui"></span><h1>ArtGUI<a class="headerlink" href="#artgui" title="Permalink to this heading">#</a></h1>
+<span id="chapter-artgui"></span><h1>ArtGUI<a class="headerlink" href="#artgui" title="Link to this heading">#</a></h1>
 <p>ArtGUI is an intuitive graphical user interface designed to streamline the Artisan design workflow. Users can load their design file, i.e. JSON configuration, and perform editing, generation, and viewing of lattice structures all within a single application. ArtGUI emphasizes a user-friendly interface, catering to essential tasks while maintaining overall simplicity. For more complex mesh and geometric operations, users may need to utilize a professional CAD system. In future, we will gradually expand ArtGUI’s functions and applications. We use a simple example below to guide user how to interact with this application.</p>
 <p>This is the documentation for ArtGUI version 0.0.2.</p>
 <section id="launch-application">
-<h2>Launch Application<a class="headerlink" href="#launch-application" title="Permalink to this heading">#</a></h2>
+<h2>Launch Application<a class="headerlink" href="#launch-application" title="Link to this heading">#</a></h2>
 <p>User may launch the application just type the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">ArtGUI</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
@@ -350,7 +348,7 @@ document.write(`
 <p>In the all-in-one standalone package, user may activate the ArtGUI by double clicking <code class="code docutils literal notranslate"><span class="pre">ArtGUI.exe</span></code>.</p>
 </section>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
 <p>The graphic below shows an overall view of the application. The interface includes five functional areas, the ribbon-style tool bar, setup, workflow, post process and the message panel. Each of section corresponds to JSON configuration of the file. User may able to enter the setup, workflow and post process sections, and save to a standard JSON configuration, or just uses the top tool bar to insert the keywords, or editing the definition files.</p>
 <img alt="_images/overall_view.png" src="_images/overall_view.png" />
 <p>In general, the GUI’s main areas are:</p>
@@ -383,7 +381,7 @@ document.write(`
 * iteratively generate the results which meets the requirements.</p>
 </section>
 <section id="load-edit-and-save">
-<h2>Load, Edit and Save<a class="headerlink" href="#load-edit-and-save" title="Permalink to this heading">#</a></h2>
+<h2>Load, Edit and Save<a class="headerlink" href="#load-edit-and-save" title="Link to this heading">#</a></h2>
 <p>On the top, user shall find the file tab that includes <code class="code docutils literal notranslate"><span class="pre">Save</span></code>, <code class="code docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span></code> and <code class="code docutils literal notranslate"><span class="pre">Load</span></code>. Click the load, then navigate to the <code class="code docutils literal notranslate"><span class="pre">Test_json</span></code> folder, where many examples were stored, find a configuration file and load it. Here we pick up <code class="code docutils literal notranslate"><span class="pre">Test_jsonEngineBracket_HS_Infill_Lin_LR.txt</span></code>, as shown below. The ArtGUI will parse the given JSON file, fill the setup, post-process sections, and load the workflow text into the workflow section. Each item in the workflow will be presented as tree view, by expanding the treeview, user can navigate through all parameters and values. For editing the values or keys, just clicking the item.</p>
 <img alt="_images/Load_example.png" src="_images/Load_example.png" />
 <p>Or use the editor button at the bottom section to editing original JSON file, and do not forgot the click refresh button to update back to the treeview GUI.</p>
@@ -395,7 +393,7 @@ document.write(`
 <p>Users can copy and paste JSON strings directly into the tree view area. This can be done by using the bottom buttons or by right-clicking to reveal the context menu. ArtGUI will then automatically parse the JSON string into the appropriate format.</p>
 </section>
 <section id="generate-and-view-model">
-<h2>Generate and View Model<a class="headerlink" href="#generate-and-view-model" title="Permalink to this heading">#</a></h2>
+<h2>Generate and View Model<a class="headerlink" href="#generate-and-view-model" title="Link to this heading">#</a></h2>
 <p>After editing is complete, clicking the “Generate” button initiates the backend computation. Users can monitor the progress in the message panel. Once the computation is finished, clicking the “View Model” button opens the viewport screen. Here, users can rotate, pan, or zoom in and out to inspect the results.</p>
 <img alt="_images/Loadfiles_03.png" src="_images/Loadfiles_03.png" />
 <p>User may change the design parameters in the workflow, and re-generate a new lattice result, just click the update view, the new result should be updated in the view port. At the bottom of the view port, user shall be able to see the bounding lengths, and the lower point and upper point of the bounding box. Please note that, if the JSON workflow last line does not contain the keywords <code class="code docutils literal notranslate"><span class="pre">Export</span></code> and did not give a result file, the view port will not be updated.</p>
@@ -405,7 +403,7 @@ document.write(`
 </div>
 </section>
 <section id="help">
-<h2>Help<a class="headerlink" href="#help" title="Permalink to this heading">#</a></h2>
+<h2>Help<a class="headerlink" href="#help" title="Link to this heading">#</a></h2>
 <p>The help menu provides an easy access to the Artisan’s online manual.</p>
 <img alt="_images/helpshow.png" src="_images/helpshow.png" />
 </section>

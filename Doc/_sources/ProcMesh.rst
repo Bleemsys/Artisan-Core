@@ -334,4 +334,10 @@ The mesh can be modified using the field data. The keyword :code:`Proc_Mesh_Fiel
      - The setup of this parameter shall be refer to the keyword :code:`Gen_BasicCartesianHexMesh_MultiSize` that shares the exact same setup and details.
 
 User can find the example at :code:`\\Test_json\\MeshLattice\\FieldDrivenMesh\\FieldDrivenMesh_Attractor.json` which generates exact same results as the example demonstrated for the keyword :code:`Gen_BasicCartesianHexMesh_MultiSize`.
-   
+
+===================
+PolyCube Generation
+===================
+
+Polycube generation keywords were primarily designed to assist with hex element meshing. Users may also utilize the resulting mesh to further create conformal lattice structures. Detailed explanations of polycube generation keywords are provided in the conformal lattice section. 
+

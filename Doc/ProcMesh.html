@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Mesh Process &#8212; Artisan 0.2.9 documentation</title>
+    <title>Mesh Process &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,24 +28,22 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ProcMesh';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Conformal Lattice" href="Conformal.html" />
+    <link rel="next" title="Conformal Lattice 01" href="Conformal.html" />
     <link rel="prev" title="Field Driven Meshing" href="Mesher_99.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -325,6 +323,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#octree-mesh">Octree Mesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-regeneration">Skin Regeneration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#field-driven-modification">Field Driven Modification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polycube-generation">PolyCube Generation</a></li>
 </ul>
             </nav>
         </div>
@@ -337,10 +336,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="mesh-process">
-<h1>Mesh Process<a class="headerlink" href="#mesh-process" title="Permalink to this heading">#</a></h1>
+<h1>Mesh Process<a class="headerlink" href="#mesh-process" title="Link to this heading">#</a></h1>
 <p>A mesh is a discrete approximation of a given shape, consisting of vertices, edges, and faces that define its structure. In Artisan, meshes serve as the foundation for constructing conformal lattice infill, enabling intricate and efficient design configurations. Users can leverage these meshes for a variety of design purposes. Artisan continually enhances its mesh processing capabilities, introducing new functions and tools to expand the possibilities for design.</p>
 <section id="extract-external-surface-mesh">
-<h2>Extract External Surface Mesh<a class="headerlink" href="#extract-external-surface-mesh" title="Permalink to this heading">#</a></h2>
+<h2>Extract External Surface Mesh<a class="headerlink" href="#extract-external-surface-mesh" title="Link to this heading">#</a></h2>
 <p>User may extract the surface mesh (either Quad or Triangle) from the volumetric mesh. The extracted mesh can be used, for instance, as conformal mesh for external reinforcement bars and patterns. Below shows the keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_ExtractSurf</span></code> to extract the surface mesh from user given mesh, user many find this example under the folder <code class="code docutils literal notranslate"><span class="pre">.//Test_json//MeshLattice//ExtractMeshSurf//ExtractMeshSurf.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -438,7 +437,7 @@ document.write(`
 <img alt="_images/Extract_SurfMesh_ExtractTris.png" src="_images/Extract_SurfMesh_ExtractTris.png" />
 </section>
 <section id="octree-mesh">
-<h2>Octree Mesh<a class="headerlink" href="#octree-mesh" title="Permalink to this heading">#</a></h2>
+<h2>Octree Mesh<a class="headerlink" href="#octree-mesh" title="Link to this heading">#</a></h2>
 <p>Octree mesh generation is possible. User only need provide an input mesh to the keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Octree</span></code> and geometric field to generate the octree mesh. Below is a simple example that generates an octree mesh using the input mesh and spherical geometry. Please note that this experimental feature may subject to change in future.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -547,7 +546,7 @@ document.write(`
 <img alt="_images/Octreemesh_02.png" src="_images/Octreemesh_02.png" />
 </section>
 <section id="skin-regeneration">
-<h2>Skin Regeneration<a class="headerlink" href="#skin-regeneration" title="Permalink to this heading">#</a></h2>
+<h2>Skin Regeneration<a class="headerlink" href="#skin-regeneration" title="Link to this heading">#</a></h2>
 <p>The skin cover on the periodic lattice is a common design for protecting the infill and showing a smooth finish of the lattice design. Artisan provides a mesh process function that impresses the interior boundary nodes of lattice on the skin and regenerate the skin cover mesh. The mesh can be used for further design, or the finite element meshing for CAE analysis. User can find the example below at <code class="code docutils literal notranslate"><span class="pre">.\Test_json\GenSkin\Crankhandle_MeshTrim_TPMS.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -655,7 +654,7 @@ document.write(`
 <img alt="_images/GenSkinBeam_03.png" src="_images/GenSkinBeam_03.png" />
 </section>
 <section id="field-driven-modification">
-<h2>Field Driven Modification<a class="headerlink" href="#field-driven-modification" title="Permalink to this heading">#</a></h2>
+<h2>Field Driven Modification<a class="headerlink" href="#field-driven-modification" title="Link to this heading">#</a></h2>
 <p>The mesh can be modified using the field data. The keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_FieldDrivenMesh</span></code> provides a general access of the field driven modification of the mesh.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
@@ -681,6 +680,10 @@ document.write(`
 </table>
 </div>
 <p>User can find the example at <code class="code docutils literal notranslate"><span class="pre">\Test_json\MeshLattice\FieldDrivenMesh\FieldDrivenMesh_Attractor.json</span></code> which generates exact same results as the example demonstrated for the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code>.</p>
+</section>
+<section id="polycube-generation">
+<h2>PolyCube Generation<a class="headerlink" href="#polycube-generation" title="Link to this heading">#</a></h2>
+<p>Polycube generation keywords were primarily designed to assist with hex element meshing. Users may also utilize the resulting mesh to further create conformal lattice structures. Detailed explanations of polycube generation keywords are provided in the conformal lattice section.</p>
 </section>
 </section>
 
@@ -709,7 +712,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Conformal Lattice</p>
+        <p class="prev-next-title">Conformal Lattice 01</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -733,6 +736,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#octree-mesh">Octree Mesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-regeneration">Skin Regeneration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#field-driven-modification">Field Driven Modification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polycube-generation">PolyCube Generation</a></li>
 </ul>
   </nav></div>
 

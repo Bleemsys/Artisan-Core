@@ -3,3 +3,4 @@ numexpr==2.8.4
 numpy==1.24.3
 open3d==0.18.0
 scipy==1.11.1
+h5py==3.12.1

@@ -1,5 +1,5 @@
-Conformal Lattice
-*****************
+Conformal Lattice 01
+********************
 
 Conformal lattice in Artisan is considered the mini morphing of the lattice to the given lattice domain. The domain can be a hexahedron or tetrahedron shape. The lattice in definition is therefore considered as the reference status, and the morphed lattice structure is in a deformed status. The mesh used in FEA/CFD computation are utilized for domain discretization, then the task of lattice generation becomes the morphing of the unit lattice into the lattice domain defined by individual element.
 

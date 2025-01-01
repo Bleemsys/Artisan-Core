@@ -1,0 +1,10 @@
+{
+    "9999":{
+        "Proc_Mesh_MappingHexElem": {
+          "inp_original_meshfile": ".//your-path//your-reference-shape-mesh.inp",
+          "inp_deformed_meshfile": ".//your-path//your-target-shape-mesh.inp",
+          "inp_Hex_meshfile": ".//your-path//your-mapping-polycube-hex-mesh.med",
+          "out_meshfile": ".//your-path//your-export-hex-mesh.med"
+        }
+    }
+}

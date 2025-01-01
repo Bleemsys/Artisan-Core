@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Conformal Lattice &#8212; Artisan 0.2.9 documentation</title>
+    <title>Conformal Lattice 01 &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,24 +28,22 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Conformal';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Surface Lattice" href="SurfaceLattice.html" />
+    <link rel="next" title="Conformal Lattice 02" href="Conformal_02.html" />
     <link rel="prev" title="Mesh Process" href="ProcMesh.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Conformal Lattice</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
@@ -311,7 +309,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Conformal Lattice</h1>
+    <h1>Conformal Lattice 01</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -336,11 +334,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="conformal-lattice">
-<h1>Conformal Lattice<a class="headerlink" href="#conformal-lattice" title="Permalink to this heading">#</a></h1>
+  <section id="conformal-lattice-01">
+<h1>Conformal Lattice 01<a class="headerlink" href="#conformal-lattice-01" title="Link to this heading">#</a></h1>
 <p>Conformal lattice in Artisan is considered the mini morphing of the lattice to the given lattice domain. The domain can be a hexahedron or tetrahedron shape. The lattice in definition is therefore considered as the reference status, and the morphed lattice structure is in a deformed status. The mesh used in FEA/CFD computation are utilized for domain discretization, then the task of lattice generation becomes the morphing of the unit lattice into the lattice domain defined by individual element.</p>
 <section id="lattice-in-hexahedron-domain">
-<h2>Lattice in hexahedron domain<a class="headerlink" href="#lattice-in-hexahedron-domain" title="Permalink to this heading">#</a></h2>
+<h2>Lattice in hexahedron domain<a class="headerlink" href="#lattice-in-hexahedron-domain" title="Link to this heading">#</a></h2>
 <p>The conformal lattice here is the mesh based conformal lattice. Artisan requires an user input of mesh, e.g. FEA mesh, to generate the conformal lattice. For using lattice in hexahedron domain, please note that,</p>
 <blockquote>
 <div><ul class="simple">
@@ -403,7 +401,7 @@ document.write(`
 <img alt="_images/Conformal_combined_lattice.png" src="_images/Conformal_combined_lattice.png" />
 </section>
 <section id="lattice-in-tetrahedron-domain">
-<h2>Lattice in tetrahedron domain<a class="headerlink" href="#lattice-in-tetrahedron-domain" title="Permalink to this heading">#</a></h2>
+<h2>Lattice in tetrahedron domain<a class="headerlink" href="#lattice-in-tetrahedron-domain" title="Link to this heading">#</a></h2>
 <p>Tetrahedron mesh is widely used for domain discretization. It can be applied to most of difficult geometric shape, and has much higher chance of generating the mesh. Unlike the hexahedron element generation which often involves manual domain partition, the tetrahedron element requires less efforts on the domain partition.</p>
 <p>We use a sole of shoes to demonstrate how tetrahedron lattice domain infill works on difficult geometry. Here is the main JSON.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
@@ -484,7 +482,7 @@ document.write(`
 <img alt="_images/Sole_Production_BtmView.png" src="_images/Sole_Production_BtmView.png" />
 </section>
 <section id="conformal-geometric-shape-lattice">
-<h2>Conformal Geometric Shape Lattice<a class="headerlink" href="#conformal-geometric-shape-lattice" title="Permalink to this heading">#</a></h2>
+<h2>Conformal Geometric Shape Lattice<a class="headerlink" href="#conformal-geometric-shape-lattice" title="Link to this heading">#</a></h2>
 <p>The custom geometric shape lattice is also supported. The example below showed the conformal custom geometric shape lattice infill of the twisted bar.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Twisted_Bar//Twisted_Bar.stl&quot;</span><span class="p">,</span>
@@ -524,7 +522,7 @@ document.write(`
 <img alt="_images/Twisted_Bar_Custom_Geom_Conformal.png" src="_images/Twisted_Bar_Custom_Geom_Conformal.png" />
 </section>
 <section id="joint-smooth-blending">
-<h2>Joint Smooth Blending<a class="headerlink" href="#joint-smooth-blending" title="Permalink to this heading">#</a></h2>
+<h2>Joint Smooth Blending<a class="headerlink" href="#joint-smooth-blending" title="Link to this heading">#</a></h2>
 <p>Additional parameter <code class="code docutils literal notranslate"><span class="pre">k</span></code> in the conformal lattice defintion can help to define the smooth blending of the multiple beams in strut lattice. User may redefine the <code class="code docutils literal notranslate"><span class="pre">.//Test_json//Parts02_Strut_Infill_LR_conformal.mld</span></code> with <code class="code docutils literal notranslate"><span class="pre">k</span></code>, which the higher value of <code class="code docutils literal notranslate"><span class="pre">k</span></code> leads to more smooth and more material around joint.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConformalLattice&quot;</span><span class="p">,</span>
@@ -586,11 +584,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="SurfaceLattice.html"
+       href="Conformal_02.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Surface Lattice</p>
+        <p class="prev-next-title">Conformal Lattice 02</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

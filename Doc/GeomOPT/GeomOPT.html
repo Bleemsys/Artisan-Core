@@ -1,15 +1,14 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Guide - Basics 02 &#8212; Artisan 0.2.9 documentation</title>
+    <title>Guide - Basics 02 &#8212; Artisan 0.2.10 documentation</title>
   
   
   
@@ -29,20 +28,18 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js"></script>
+    <script src="../_static/documentation_options.js?v=13578329"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'GeomOPT/GeomOPT';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -135,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.9 documentation</p>
+    <p class="title logo__title">Artisan 0.2.10 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -163,7 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
@@ -336,10 +334,10 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="guide-basics-02">
-<h1>Guide - Basics 02<a class="headerlink" href="#guide-basics-02" title="Permalink to this heading">#</a></h1>
+<h1>Guide - Basics 02<a class="headerlink" href="#guide-basics-02" title="Link to this heading">#</a></h1>
 <p>Now we focus on how to fill geometric shape with lattices.</p>
 <section id="geometry">
-<h2>Geometry<a class="headerlink" href="#geometry" title="Permalink to this heading">#</a></h2>
+<h2>Geometry<a class="headerlink" href="#geometry" title="Link to this heading">#</a></h2>
 <p>Artisan can definitely fill a geometry with lattice. The input geometry file can be <code class="code docutils literal notranslate"><span class="pre">stl</span></code>, <code class="code docutils literal notranslate"><span class="pre">ply`</span></code> or <code class="code docutils literal notranslate"><span class="pre">obj</span></code> files. The surface mesh must be composed by none-self-intersected and none-overlap triangles.</p>
 <p>The following example JSON setup fills the crank handle geometry with Cubic lattice. In the <code class="code docutils literal notranslate"><span class="pre">Setup</span></code> section, the two keywords were changed, <code class="code docutils literal notranslate"><span class="pre">&quot;Type&quot;:</span> <span class="pre">&quot;Geometry&quot;</span></code> and <code class="code docutils literal notranslate"><span class="pre">&quot;Geomfile&quot;:</span> <span class="pre">&quot;.//sample-obj//crank_handle.stl&quot;</span></code>. Former defines the type of computing task - filling a geometry, latter tells Artisan the path to the geometry file.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
@@ -395,7 +393,7 @@ document.write(`
 <img alt="../_images/crank_handle_fill_wShell.png" src="../_images/crank_handle_fill_wShell.png" />
 </section>
 <section id="lattice-operation">
-<h2>Lattice Operation<a class="headerlink" href="#lattice-operation" title="Permalink to this heading">#</a></h2>
+<h2>Lattice Operation<a class="headerlink" href="#lattice-operation" title="Link to this heading">#</a></h2>
 <p>The lattice field is operable. User may add or subtract the lattice fields as many times as they want. For example, a BCCubic lattice can be generated through combining BC and Cubic lattice. Below JSON showed the combination of BC and Cubic lattices with different thickness.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
@@ -455,7 +453,7 @@ document.write(`
 <p>The parameter <code class="code docutils literal notranslate"><span class="pre">Fill</span></code> controls whether the cutting operation with geometry should be conducted. It is often set as <code class="code docutils literal notranslate"><span class="pre">true</span></code> when the keywords is last lattice operation. If fill operation has never performed, the results should be a block of lattice covers the bounding box region of the given geometry.</p>
 </section>
 <section id="boundary-inflation">
-<h2>Boundary Inflation<a class="headerlink" href="#boundary-inflation" title="Permalink to this heading">#</a></h2>
+<h2>Boundary Inflation<a class="headerlink" href="#boundary-inflation" title="Link to this heading">#</a></h2>
 <p>The term of “boundary inflation” meant the thickness of the lattice on the closing geometry surface layer gradually merged with the inner lattices. This may be useful for lightweight design that external structure provides supports to the overall design. Here is an example that adds the boundary inflation on the crank handle infill.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>

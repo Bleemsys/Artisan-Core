@@ -195,40 +195,90 @@ def load_configuration(type_entry, domain_x_lb, domain_x_ub, domain_y_lb, domain
     
     return filepath
 
+# def submit_configuration(filename, output_text_widget):
+#     import subprocess
+#     try:
+#         import sys
+        
+#         cmd = [sys.executable, 'ArtisanMain.py', '-f', filename]
+#         # cmd = ["ArtisanMain.exe", "-f", filename]
+        
+#         output_text_widget.delete('1.0', tk.END)
+#         output_text_widget.update()
+
+#         # Start the subprocess and capture its output
+#         # process = subprocess.run(cmd, shell=False, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+#         process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        
+#         while True:
+#             data = process.stdout.readline()   # Alternatively proc.stdout.read(1024)
+#             if len(data) == 0:
+#                 break
+#             out = str(data.rstrip().decode('utf-8'))
+#             output_text_widget.insert(tk.END, out + "\n")
+#             output_text_widget.update()
+#             output_text_widget.see(tk.END) 
+
+#         if process.stderr:
+#             output_text_widget.insert(tk.END, "Errors:\n" + process.stderr)
+        
+#         process.stdout.close()
+#         # messagebox.showinfo("Success", "Configuration submitted successfully.")
+        
+#     except subprocess.CalledProcessError as e:
+#         output_text_widget.insert(tk.END, f"Execution Failed:\n{str(e)}\n")
+#         messagebox.showerror("Execution Failed", f"Executable failed: {str(e)}")
+#     except Exception as e:
+#         output_text_widget.insert(tk.END, f"Error:\n{str(e)}\n")
+#         messagebox.showerror("Error", f"An error occurred: {str(e)}")
+        
 def submit_configuration(filename, output_text_widget):
     import subprocess
-    try:
-        import sys
-        
-        cmd = [sys.executable, 'ArtisanMain.py', '-f', filename]
-        # cmd = ["ArtisanMain.exe", "-f", filename]
-        
-        output_text_widget.delete('1.0', tk.END)
-        output_text_widget.update()
+    import sys
 
-        # Start the subprocess and capture its output
-        # process = subprocess.run(cmd, shell=False, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        
-        while True:
-            data = process.stdout.readline()   # Alternatively proc.stdout.read(1024)
-            if len(data) == 0:
-                break
-            out = str(data.rstrip().decode('utf-8'))
-            output_text_widget.insert(tk.END, out + "\n")
+    def run_command(cmd):
+        try:
+            output_text_widget.delete('1.0', tk.END)
             output_text_widget.update()
-            output_text_widget.see(tk.END) 
 
-        if process.stderr:
-            output_text_widget.insert(tk.END, "Errors:\n" + process.stderr)
-        
-        process.stdout.close()
-        # messagebox.showinfo("Success", "Configuration submitted successfully.")
-        
-    except subprocess.CalledProcessError as e:
-        output_text_widget.insert(tk.END, f"Execution Failed:\n{str(e)}\n")
-        messagebox.showerror("Execution Failed", f"Executable failed: {str(e)}")
-    except Exception as e:
-        output_text_widget.insert(tk.END, f"Error:\n{str(e)}\n")
-        messagebox.showerror("Error", f"An error occurred: {str(e)}")
+            process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+            while True:
+                data = process.stdout.readline()
+                if len(data) == 0:
+                    break
+                out = str(data.rstrip().decode('utf-8'))
+                output_text_widget.insert(tk.END, out + "\n")
+                output_text_widget.update()
+                output_text_widget.see(tk.END)
+
+            process.stdout.close()
+
+            if process.stderr:
+                output_text_widget.insert(tk.END, "Errors:\n" + process.stderr.read())
+                process.stderr.close()
+
+            # Check if process returned an error code
+            process.wait()
+            if process.returncode != 0:
+                raise subprocess.CalledProcessError(process.returncode, cmd)
+
+            return True  # Command succeeded
+
+        except subprocess.CalledProcessError as e:
+            output_text_widget.insert(tk.END, f"Execution Failed:\n{str(e)}\n")
+            return False  # Command failed
+        except Exception as e:
+            output_text_widget.insert(tk.END, f"Error:\n{str(e)}\n")
+            return False  # Command failed
+
+    # First try running the Python script
+    python_cmd = [sys.executable, 'ArtisanMain.py', '-f', filename]
+    python_success = run_command(python_cmd)
+
+    # If the Python script fails, try the executable
+    if not python_success:
+        exe_cmd = ["ArtisanMain.exe", "-f", filename]
+        exe_success = run_command(exe_cmd)
+
         
