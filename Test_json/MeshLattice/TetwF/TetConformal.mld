@@ -1,7 +1,7 @@
 {
     "type": "ConformalLattice",
     "definition": {
-        "meshfile": ".//Test_json//MeshLattice//TetwF//crank_handle.inp",
+        "meshfile": "crank_handle",
         "la_name": "Icosahedral",
         "ExportFEAMeshFile": ""
     }

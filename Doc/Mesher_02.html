@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Meshing 02 &#8212; Artisan 0.2.10 documentation</title>
+    <title>Meshing 02 &#8212; Artisan 0.2.11 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/documentation_options.js?v=e4929d9c"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -133,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.10 documentation</p>
+    <p class="title logo__title">Artisan 0.2.11 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,6 +322,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a></li>
 </ul>
             </nav>
         </div>
@@ -522,6 +523,112 @@ document.write(`
 <img alt="_images/ImpTetMesher_03.png" src="_images/ImpTetMesher_03.png" />
 <p>Note that, the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_wFeature</span></code> does not support the varying size of the elements in the current version, but it shall be supported in future development.</p>
 </section>
+<section id="mesh-container">
+<h2>Mesh Container<a class="headerlink" href="#mesh-container" title="Link to this heading">#</a></h2>
+<p>The mesh can be stored in container variables for further processing. Exporting the mesh to a file is not necessary; it only needs to be kept in memory and associated with an ID. Users can find various examples at <code class="code docutils literal notranslate"><span class="pre">.\Test_json\MeshLattice\MeshContainer\</span></code>. Below is a simple example, <code class="code docutils literal notranslate"><span class="pre">ExtractMeshSurf.json</span></code>, demonstrating the use of the mesh container.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">-10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">]],</span>
+<span class="w">          </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Gen_CylindricalMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;r_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">8.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;phi_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Height&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CylindricalMesh&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Proc_Mesh_ExtractSurf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;Elem_Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hex&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CylindricalMesh&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CylindricalMeshExterior&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;isSplitTris&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshContainer//GenCylindricalSurfMesh.mld&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;4&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;ExportMeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CylindricalMeshExterior&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/CylindricalMeshExterior.stl&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Triangle&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;9999&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/CylindricalMesh_ConformalLattice.stl&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>And the mesh lattice definition file <code class="code docutils literal notranslate"><span class="pre">.//Test_json//MeshContainer//GenCylindricalSurfMesh.mld</span></code> is shown below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CylindricalMeshExterior&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code> and <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_ExtractSurf</span></code> are used to generate the mesh and extract the surface mesh respectively. The keyword <code class="code docutils literal notranslate"><span class="pre">ExportMeshID</span></code> is used to export the mesh data stored in the container. In the example above, the mesh data stored in the container with the mesh ID <code class="code docutils literal notranslate"><span class="pre">CylindricalMeshExterior</span></code> is exported to the file <code class="code docutils literal notranslate"><span class="pre">CylindricalMeshExterior.stl</span></code>, and the container also was used to provide the mesh data for the mesh lattice generation. User may also use the keyword <code class="code docutils literal notranslate"><span class="pre">ReadMesh</span></code> to read the mesh file and store the data associated with the mesh ID in the container, as shown by the example <code class="code docutils literal notranslate"><span class="pre">Parts01_Mesh_Infill_LR.json</span></code> below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//Parts01//Parts01.stl&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.25</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span>
+<span class="w">              </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ReadMesh&quot;</span><span class="p">:{</span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="s2">&quot;TestMesh&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="s2">&quot;.//sample-obj//Parts01//Parts01.med&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="s2">&quot;Tet&quot;</span><span class="p">}},</span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                  </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshContainer//Parts01_Mesh_Infill_LR.mld&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">             </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results/Parts01_Mesh_Infill.stl&quot;</span><span class="p">}}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -571,6 +678,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a></li>
 </ul>
   </nav></div>
 

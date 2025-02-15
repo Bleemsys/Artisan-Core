@@ -1,7 +1,7 @@
 {
 "type": "ConformalLattice",
 "definition": {
- "meshfile": ".//Test_json//MeshLattice//Box_Conformal_MultiSize//BoxHexMesh.med",
+ "meshfile": "BoxHexMesh",
  "la_name": "SchwarzPrimitive"
  }
 }

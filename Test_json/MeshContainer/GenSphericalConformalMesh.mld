@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": "TestMesh",
+  "la_name" : "BC",
+  "la_domain": "Hex"
+ }
+}

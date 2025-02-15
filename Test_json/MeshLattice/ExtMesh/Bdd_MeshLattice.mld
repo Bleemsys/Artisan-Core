@@ -1,6 +1,6 @@
 {
     "type": "MeshLattice",
     "definition": {
-        "meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh_Field.med"
+        "meshfile": "Base_Mesh_Field"
     }
 }

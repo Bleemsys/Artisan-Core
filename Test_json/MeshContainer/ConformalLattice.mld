@@ -1,0 +1,8 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": "BaseMesh",
+        "la_name": "SchwarzPrimitive",
+        "ExportFEAMeshFile": ""
+    }
+}

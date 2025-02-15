@@ -37,7 +37,7 @@
         "1": {
             "Gen_SimpleQuadMesh": {
                 "inp_meshfile": ".//sample-obj//shell_1_of_bdd_.stl",
-                "out_meshfile": ".//Test_results//Simple_quad.obj",
+                "out_meshfile": "simple_quad",
                 "size": [
                     5.0,
                     5.0,

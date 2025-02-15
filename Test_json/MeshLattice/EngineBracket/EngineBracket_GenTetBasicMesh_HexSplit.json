@@ -9,8 +9,8 @@
  "WorkFlow":{
           "1": {"Gen_TetBasicMesh_HexSplit":{
                 "Geomfile": ".//sample-obj/EngineBracket.stl", 
-		"size": [5.5, 5.5, 5.5],
-		"Meshfile": ".//Test_json//MeshLattice//EngineBracket//EngineBracket.med",
+		      "size": [5.5, 5.5, 5.5],
+		      "Meshfile": "EngineBracket",
                 "ConvertTet2Beam": false,
                 "MultiSize":{}
                     }

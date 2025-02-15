@@ -37,7 +37,7 @@
         "1": {
             "Gen_HexMesh": {
                 "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
-                "Meshfile": ".//Test_json//Test//Bdd.med",
+                "Meshfile": "Bdd",
                 "layerDepth": [
                     15.0,
                     15.0,

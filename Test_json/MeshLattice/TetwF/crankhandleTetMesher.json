@@ -36,7 +36,7 @@
     "WorkFlow": {
         "1": {
             "Gen_TetBasicMesh_wFeature": {
-                "Meshfile": ".//Test_json//MeshLattice//TetwF//crank_handle.inp",
+                "Meshfile": "crank_handle",
                 "Geomfile": ".//sample-obj//crank_handle.stl",
                 "init_seed_size": [
                     2.0,

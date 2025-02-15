@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Conformal Lattice 02 &#8212; Artisan 0.2.10 documentation</title>
+    <title>Conformal Lattice 02 &#8212; Artisan 0.2.11 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=13578329"></script>
+    <script src="_static/documentation_options.js?v=e4929d9c"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.10 documentation</p>
+    <p class="title logo__title">Artisan 0.2.11 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -347,20 +347,20 @@ document.write(`
 </div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Like any other algorithm, the algorithm/keyword pipeline presented here has its limitations. While it is designed to effectively transform and map meshes for specific use cases, it may not perform optimally for all types of geometries or scenarios. The current implementation is particularly suited for the geometries with small number of lattices infill and fewer intricate features, where a higher degree of mesh freedom is necessary to achieve accurate approximations. Users are encouraged to assess its applicability to their specific needs and consider integrating it with other tools or techniques to achieve the best possible results.</p>
+<p>Like any other algorithm, the algorithm/keyword pipeline presented here has its limitations. While it is designed to effectively transform and map meshes for specific use cases, it may not perform optimally for all types of geometries or scenarios. The current implementation is particularly suited for the geometries with smaller lattice unit infill and fewer intricate features, where a higher degree of mesh freedom is necessary to achieve accurate approximations. Users are encouraged to assess its applicability to their specific needs and consider integrating it with other tools or techniques to achieve the best possible results.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This is an experimental feature. User shall carefully check up the output of every single step, and make sure the results satisfy the requirements. Future development will focus on the improvement of computational efficiency and higher quality of mesh layout.</p>
+<p>This feature requires users to carefully check up the output of every single step, and make sure the results satisfy the requirements.</p>
 </div>
 <section id="polycube-generation">
 <h2>PolyCube Generation<a class="headerlink" href="#polycube-generation" title="Link to this heading">#</a></h2>
 <p>This is the first step in the process. Polycube generation transforms the given tetrahedral mesh into a near-polycube shape. At a later stage, users can utilize other meshing tools available in Artisan, such as Cartesian meshers, to create a more fitted mesh for this transformed shape. Here uses the crank handle model as example to create the polycube shape. The example file is <code class="code docutils literal notranslate"><span class="pre">HexConformal_Step01_Polycube.json</span></code>.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">   </span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">               </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.stl&quot;</span><span class="p">,</span>
 <span class="w">               </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
 <span class="w">               </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">],</span>
-<span class="w">                     </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
 <span class="w">               </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 <span class="w">               </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16106127360</span>
 <span class="w">               </span><span class="p">},</span>
@@ -372,7 +372,7 @@ document.write(`
 <span class="w">                   </span><span class="nt">&quot;smoothness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
 <span class="w">                   </span><span class="nt">&quot;distortion_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
 <span class="w">                   </span><span class="nt">&quot;distortion_volume&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                   </span><span class="nt">&quot;max_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span>
+<span class="w">                   </span><span class="nt">&quot;max_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span>
 <span class="w">                   </span><span class="p">}</span>
 <span class="w">              </span><span class="p">},</span>
 <span class="w">          </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -427,7 +427,7 @@ document.write(`
 </tbody>
 </table>
 </div>
-<p>Below shows comparsion between the original crank handle model, and the generated polycube shape of the given mesh. The exterior triangle mesh will be then used for creating Cartesian mesh.</p>
+<p>Below shows comparison between the original crank handle model, and the generated polycube shape of the given mesh. The exterior triangle mesh will be then used for creating Cartesian mesh.</p>
 <img alt="_images/crank_handle.png" src="_images/crank_handle.png" />
 <img alt="_images/PolyCube.png" src="_images/PolyCube.png" />
 </section>
@@ -447,7 +447,7 @@ document.write(`
 <span class="w">  </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;Gen_BasicCartesianHexMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;num_elem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">25</span><span class="p">],</span>
 <span class="w">        </span><span class="nt">&quot;x_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">24.0</span><span class="p">],</span>
 <span class="w">        </span><span class="nt">&quot;y_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">78.0</span><span class="p">],</span>
 <span class="w">        </span><span class="nt">&quot;z_range&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span>

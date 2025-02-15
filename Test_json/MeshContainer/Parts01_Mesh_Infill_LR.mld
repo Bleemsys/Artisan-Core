@@ -1,0 +1,8 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": "TestMesh",
+        "la_name": "",
+        "k": 0.0
+    }
+}

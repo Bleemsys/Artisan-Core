@@ -1,0 +1,22 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Parts01//Parts01.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+                "Padding": 2,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+ "WorkFlow":{
+          "1": {"ReadMesh":{"MeshID":"TestMesh", "meshfile":".//sample-obj//Parts01//Parts01.med", "elem_type":"Tet"}},
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshContainer//Parts01_Mesh_Infill_LR.mld", "size": [4.0,4.0,4.0], "thk":0.3, "Rot":[0.75,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+}

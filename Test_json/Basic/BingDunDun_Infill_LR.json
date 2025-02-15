@@ -25,13 +25,13 @@
             0.0
         ],
         "res": [
-            0.75,
-            0.75,
-            0.75
+            0.25,
+            0.25,
+            0.25
         ],
         "Padding": 1,
         "onGPU": false,
-        "memorylimit": 161061273
+        "memorylimit": 161061273000
     },
     "WorkFlow": {
         "1": {

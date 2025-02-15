@@ -42,7 +42,7 @@
                     1.0
                 ],
                 "z_angle": 0.0,
-                "Mesh_file": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh.med",
+                "Mesh_file": "Base_Mesh",
                 "y_range": [
                     0.0,
                     140.0
@@ -70,9 +70,9 @@
         "2": {
             "Gen_ExtHexMesh_Geomfield": {
                 "Geomfile": "",
-                "out_meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh_Field.med",
+                "out_meshfile": "Base_Mesh_Field",
                 "isPreAttraction": false,
-                "inp_meshfile": ".//Test_json//MeshLattice//ExtMesh//Base_Mesh.med",
+                "inp_meshfile": "Base_Mesh",
                 "numCoverNodes": 4,
                 "AttractionRatio": 0.1
             }

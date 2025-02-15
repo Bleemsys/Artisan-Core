@@ -10,7 +10,7 @@
           "1": {"Gen_VoronoiPolyMesh_HexSplit":{
                 "Geomfile": ".//sample-obj//EngineBracket.stl", 
 		"size": [5.5, 5.5, 5.5],
-		"Meshfile": ".//Test_json//MeshLattice//EngineBracket//EngineBracket.med",
+		"Meshfile": "EngineBracket",
                 "remove_tol": 1.0
                 }
                },

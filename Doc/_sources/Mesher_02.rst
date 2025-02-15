@@ -210,3 +210,119 @@ Above example produces a tetrahedron mesh based infill.
 
 Note that, the keyword :code:`Gen_TetBasicMesh_wFeature` does not support the varying size of the elements in the current version, but it shall be supported in future development.
    
+==============
+Mesh Container
+==============
+
+The mesh can be stored in container variables for further processing. Exporting the mesh to a file is not necessary; it only needs to be kept in memory and associated with an ID. Users can find various examples at :code:`.\\Test_json\\MeshLattice\\MeshContainer\\`. Below is a simple example, :code:`ExtractMeshSurf.json`, demonstrating the use of the mesh container.
+
+.. code-block:: json 
+
+   {
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [[-10.0, 10.0], [-10.0, 10.0], [-10.0, 10.0]],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [0.0, 0.0, 0.0],
+        "res": [0.1, 0.1, 0.1],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CylindricalMesh": {
+                "num_elem": [3, 10, 3],
+                "r_range": [2.0, 8.0],
+                "phi_range": [0.0, 1.0],
+                "ori": [0.0, 0.0, -2.0],
+                "Height": 10.0,
+                "Normal": [0.0, 0.0, 1.0],
+                "Mesh_file": "CylindricalMesh"
+            }
+        },
+        "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "Elem_Type": "Hex",
+                "inp_meshfile": "CylindricalMesh",
+                "out_meshfile": "CylindricalMeshExterior",
+                "isSplitTris": true
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshContainer//GenCylindricalSurfMesh.mld",
+                "size": [3.0, 3.0, 3.0],
+                "thk": 0.25,
+                "Rot": [0.0, 0.0, 0.0],
+                "Trans": [0.0, 0.0, 0.0],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "4": {
+            "ExportMeshID": {
+                "MeshID": "CylindricalMeshExterior",
+                "out_meshfile": ".//Test_results/CylindricalMeshExterior.stl",
+                "elem_type": "Triangle"
+            }
+        },
+        "9999": {
+            "Export": {
+                "outfile": ".//Test_results/CylindricalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+  }
+
+And the mesh lattice definition file :code:`.//Test_json//MeshContainer//GenCylindricalSurfMesh.mld` is shown below.
+
+.. code-block:: json 
+  
+  {
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": "CylindricalMeshExterior"
+    }
+  }
+
+The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are used to generate the mesh and extract the surface mesh respectively. The keyword :code:`ExportMeshID` is used to export the mesh data stored in the container. In the example above, the mesh data stored in the container with the mesh ID :code:`CylindricalMeshExterior` is exported to the file :code:`CylindricalMeshExterior.stl`, and the container also was used to provide the mesh data for the mesh lattice generation. User may also use the keyword :code:`ReadMesh` to read the mesh file and store the data associated with the mesh ID in the container, as shown by the example :code:`Parts01_Mesh_Infill_LR.json` below.
+
+.. code-block:: json 
+
+  {"Setup":{    "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Parts01//Parts01.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+                "Padding": 2,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+   "WorkFlow":{
+          "1": {"ReadMesh":{"MeshID":"TestMesh", "meshfile":".//sample-obj//Parts01//Parts01.med", "elem_type":"Tet"}},
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshContainer//Parts01_Mesh_Infill_LR.mld", "size": [4.0,4.0,4.0], "thk":0.3, "Rot":[0.75,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
+           },
+   "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+  }
+
+
+
+

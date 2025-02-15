@@ -11,7 +11,7 @@
     "WorkFlow": {
       "1": {
         "Gen_BasicCartesianHexMesh": {
-          "num_elem": [15, 25, 25],
+          "num_elem": [15, 30, 25],
           "x_range": [0.0, 24.0],
           "y_range": [0.0, 78.0],
           "z_range": [0.0, 80.0],

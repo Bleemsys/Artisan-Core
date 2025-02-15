@@ -1,8 +1,0 @@
-{
-    "type": "ConformalLattice",
-    "definition": {
-        "meshfile": ".//Test_json//FEAMesh//MeshTrim_TPMS//BaseMesh.med",
-        "la_name": "SchwarzPrimitive",
-        "ExportFEAMeshFile": ""
-    }
-}

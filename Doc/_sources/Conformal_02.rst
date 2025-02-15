@@ -12,10 +12,10 @@ For the theoretical background of the polycube based hex meshing algorithm, user
     3. Gregson, J., Sheffer, A. and Zhang, E. (2011), All-Hex Mesh Generation via Volumetric PolyCube Deformation. Computer Graphics Forum, 30: 1407-1416. https://doi.org/10.1111/j.1467-8659.2011.02015.x
 
 .. note::
-    Like any other algorithm, the algorithm/keyword pipeline presented here has its limitations. While it is designed to effectively transform and map meshes for specific use cases, it may not perform optimally for all types of geometries or scenarios. The current implementation is particularly suited for the geometries with small number of lattices infill and fewer intricate features, where a higher degree of mesh freedom is necessary to achieve accurate approximations. Users are encouraged to assess its applicability to their specific needs and consider integrating it with other tools or techniques to achieve the best possible results.
+    Like any other algorithm, the algorithm/keyword pipeline presented here has its limitations. While it is designed to effectively transform and map meshes for specific use cases, it may not perform optimally for all types of geometries or scenarios. The current implementation is particularly suited for the geometries with smaller lattice unit infill and fewer intricate features, where a higher degree of mesh freedom is necessary to achieve accurate approximations. Users are encouraged to assess its applicability to their specific needs and consider integrating it with other tools or techniques to achieve the best possible results.
 
 .. warning::
-    This is an experimental feature. User shall carefully check up the output of every single step, and make sure the results satisfy the requirements. Future development will focus on the improvement of computational efficiency and higher quality of mesh layout. 
+    This feature requires users to carefully check up the output of every single step, and make sure the results satisfy the requirements. 
 
 ===================
 PolyCube Generation 
@@ -25,11 +25,11 @@ This is the first step in the process. Polycube generation transforms the given 
 
 .. code-block:: json
 
-    {"Setup":{      "Type" : "Geometry",
+    {"Setup":{  "Type" : "Geometry",
                 "Geomfile": ".//sample-obj//crank_handle.stl",
                 "Rot" : [0.0,0.0,0.0],
                 "res":[1.0,1.0,1.0],
-		      "Padding": 5,
+		             "Padding": 5,
                 "onGPU": false,
                 "memorylimit": 16106127360
                 },
@@ -41,7 +41,7 @@ This is the first step in the process. Polycube generation transforms the given 
                     "smoothness": 1.0, 
                     "distortion_angle": 1.0, 
                     "distortion_volume": 1.0, 
-                    "max_iteration": 30
+                    "max_iteration": 200
                     }
                },
            "2": {
@@ -82,7 +82,7 @@ The JSON configuration above performs two tasks: first, it generates a polycube 
    * - :code:`max_iteration`
      - The maximum number of iteration.
 
-Below shows comparsion between the original crank handle model, and the generated polycube shape of the given mesh. The exterior triangle mesh will be then used for creating Cartesian mesh. 
+Below shows comparison between the original crank handle model, and the generated polycube shape of the given mesh. The exterior triangle mesh will be then used for creating Cartesian mesh. 
 
 
 .. image:: ./pictures/crank_handle.png
@@ -111,7 +111,7 @@ The example file :code:`HexConformal_Step02_CartesianMesh.json` demonstrates the
     "WorkFlow": {
       "1": {
         "Gen_BasicCartesianHexMesh": {
-          "num_elem": [15, 25, 25],
+          "num_elem": [15, 30, 25],
           "x_range": [0.0, 24.0],
           "y_range": [0.0, 78.0],
           "z_range": [0.0, 80.0],

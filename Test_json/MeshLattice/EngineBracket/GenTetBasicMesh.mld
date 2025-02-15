@@ -1,6 +1,6 @@
 {
 "type": "MeshLattice",
 "definition": {
- "meshfile": ".//Test_json//MeshLattice//EngineBracket//EngineBracket.med"
+ "meshfile": "EngineBracket"
  }
 }
