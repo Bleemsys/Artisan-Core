@@ -1,0 +1,65 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "Padding": 2,
+        "onGPU": false,
+        "memorylimit": 161061273000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_FrameField": {
+                "inp_meshfile": ".//sample-obj//shell_1_of_bdd_.stl", 
+                "num_layers": 1, 
+                "out_fieldfile": "LocalFrameField",
+                "out_fieldfile_02": ".//Test_results/BingDunDun_FrameField.csv"
+            }
+        },
+        "2":{
+            "Add_Lattice":{
+                "la_name_BAK": "Cubic", 
+                "la_name": ".//Test_json//FieldOpt//FrameField//FieldLattice.mld", 
+                "size": [14.0, 14.0, 14.0], "thk":1.5, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                "Inv": false, "Fill": true, "Cube_Request": {}
+                }
+        },
+        "3": {
+            "Export": {
+                "outfile": ".//Test_results/BingDunDun_Infill.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

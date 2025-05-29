@@ -62,7 +62,8 @@
                 ],
                 "r_bottom": 4.0,
                 "Mesh_file": ".//Test_json//PrimitiveDesign//CylindricalMesh.med",
-                "UB_heightRatio": 0.3
+                "UB_heightRatio": 0.3,
+		        "Preserve_thickness": false
             }
         },
         "2": {

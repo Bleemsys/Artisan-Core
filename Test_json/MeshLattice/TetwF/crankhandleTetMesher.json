@@ -25,9 +25,9 @@
             0.0
         ],
         "res": [
-            0.1,
-            0.1,
-            0.1
+            0.15,
+            0.15,
+            0.15
         ],
         "Padding": 4,
         "onGPU": false,
@@ -52,9 +52,9 @@
             "Add_Lattice": {
                 "la_name": ".//Test_json//MeshLattice//TetwF//TetConformal.mld",
                 "size": [
-                    2.0,
-                    2.0,
-                    2.0
+                    5.0,
+                    5.0,
+                    5.0
                 ],
                 "thk": 0.2,
                 "Rot": [

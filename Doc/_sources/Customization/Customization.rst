@@ -174,3 +174,77 @@ By change the custom lattice definition, we should have the following results. P
 
 
 .. image:: ../pictures/custom_geom_infill_Plate_02.png
+
+=================
+Lattice Container
+=================
+
+The customized lattice may be defined within the main workflow, rather than in the external files. The example file :code:`.//Test_json//LatticeContainer//LatticeContainer_CustomizedStrut.json` demonstrate how to define a customerized lattice defintion in the workflow. 
+
+.. code-block:: json
+
+    {"Setup":{  "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.5,0.5,0.5],
+                            "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+     "WorkFlow":{
+          "1": {
+            "Define_Lattice":{
+                "la_name": "CustomStrut",
+                "definition":{
+                    "type": "strut",
+                    "definition": {
+                       "pts":
+                              [[1.0, 1.0, 0.0],
+                               [1.0, 1.0, 1.0],
+                               [0.0, 1.0, 1.0],
+                               [0.0, 1.0, 0.0],
+                               [0.0, 0.0, 0.0],
+                               [0.0, 0.0, 1.0],
+                               [1.0, 0.0, 1.0],
+                               [1.0, 0.0, 0.0]],
+                       "cnnt":[[0, 1],[0, 3],
+                               [3, 2],[2, 1],
+                               [1, 6],[0, 7],
+                               [3, 4],[2, 5],
+                               [7, 4],[7, 6],
+                               [6, 5],[4, 5],
+                               [0, 5],[1, 4],
+                               [2, 7],[3, 6]],
+                       "ladomain" : "Hex"
+                     }
+                }
+             }
+          },
+          "2": {"Add_Lattice":{
+                    "la_name": "CustomStrut", "size": [8.0,8.0,8.0], "thk":1.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                    "Inv": false, "Fill": true, "Cube_Request": {}
+                    }
+               },
+          "999":{"Export": {"outfile": ".//Test_results/BingDunDun_Infill_CustomStrut.stl"}}
+           },
+     "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true,
+                "ExportLazPts": false}
+    }
+
+
+The keyword :code:`Define_Lattice` accommodates the lattice definition. The following keyword :code:`Add_Lattice` just simply referred to the naming id - the value of parameter :code:`la_name`. Table below shows the explanation of the parameters. 
+
+.. list-table:: 
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`la_name`
+     - A string based naming id for referencing the lattice definition. 
+   * - :code:`definition` 
+     - The entire block of the custom lattice definition. This can be the mesh lattice or conformal lattice definition as well. 
+
+Once lattice defined, the naming id can be referred any keyword that requires the lattice name or definition. No extenral file definition is required.  

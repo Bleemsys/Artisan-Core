@@ -18,7 +18,7 @@
             ],
             "Shape": "Box"
         },
-        "Geomfile": "C:/Users/wangy/Documents/Project-Artisan/Artisan/Artisan/Src/sample-obj/crank_handle.stl",
+        "Geomfile": ".//sample-obj//crank_handle.stl",
         "Rot": [
             0.0,
             0.0,
@@ -71,7 +71,8 @@
             "Gen_ConformalLatticeMesh": {
                 "definition_file": ".//Test_json//FEAMesh//MeshTrim//ConformalLattice.mld",
                 "out_meshfile": ".//Test_json//FEAMesh//MeshTrim//BaseMeshConformal.med",
-                "size": [1.0, 1.0, 1.0]
+                "size": [1.0, 1.0, 1.0], 
+                "Rot":[0.0, 0.0, 0.0]
             }
         },
         "3": {

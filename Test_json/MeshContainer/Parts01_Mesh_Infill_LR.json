@@ -13,7 +13,8 @@
                     "Cube_Request": {}
                     }
                },
-          "3":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
+          "3": {"RemoveMesh":{"MeshID":"TestMesh"}},
+          "999":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
            },
  "PostProcess":{"CombineMeshes": true,
                 "RemovePartitionMeshFile": false,

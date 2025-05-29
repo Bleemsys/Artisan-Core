@@ -93,8 +93,10 @@ Creating a capped cone mesh follows a similar process to generating a cylindrica
      - the parameter defines the radius of the bottom side of the cone, normally the end with smaller radius.
    * - :code:`UB_heightRatio` 
      - this fraction helps to control position where to start the contraction of the radius. If 1.0, it shall generate a cylinder mesh with the radius of :code:`r_bottom`, if 0.2, for example, the contraction starts from the position 0.2 of the distance from top to bottom.
+   * - :code:`Preserve_thickness`
+     - A boolean flag. This parameter controls whether the through-radius thickness is kept constant.
 
-In the example, :code:`UB_heightRatio = 0.3`, we have the following.
+In the example, :code:`UB_heightRatio = 0.3` and :code:`Preserve_thickness` is :code:`False`, we have the following.
 
 .. image:: ./pictures/ConeMesh_01.png
 

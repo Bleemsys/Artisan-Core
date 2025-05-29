@@ -296,7 +296,7 @@ And the mesh lattice definition file :code:`.//Test_json//MeshContainer//GenCyli
     }
   }
 
-The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are used to generate the mesh and extract the surface mesh respectively. The keyword :code:`ExportMeshID` is used to export the mesh data stored in the container. In the example above, the mesh data stored in the container with the mesh ID :code:`CylindricalMeshExterior` is exported to the file :code:`CylindricalMeshExterior.stl`, and the container also was used to provide the mesh data for the mesh lattice generation. User may also use the keyword :code:`ReadMesh` to read the mesh file and store the data associated with the mesh ID in the container, as shown by the example :code:`Parts01_Mesh_Infill_LR.json` below.
+The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are used to generate the mesh and extract the surface mesh respectively. The keyword :code:`ExportMeshID` is used to export the mesh data stored in the container. In the example above, the mesh data stored in the container with the mesh ID :code:`CylindricalMeshExterior` is exported to the file :code:`CylindricalMeshExterior.stl`, and the container also was used to provide the mesh data for the mesh lattice generation. User may also use the keyword :code:`ReadMesh` to read the mesh file and store the data associated with the mesh ID in the container, as shown by the example :code:`Parts01_Mesh_Infill_LR.json` below. At the end of the workflow, the keyword :code:`RemoveMesh` delete the mesh from container for releasing memory. 
 
 .. code-block:: json 
 
@@ -315,7 +315,8 @@ The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are u
                     "Cube_Request": {}
                     }
                },
-          "3":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
+          "3":{"RemoveMesh":{"MeshID":"TestMesh"}},
+          "999":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
            },
    "PostProcess":{"CombineMeshes": true,
                 "RemovePartitionMeshFile": false,

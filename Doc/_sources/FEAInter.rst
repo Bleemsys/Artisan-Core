@@ -125,7 +125,8 @@ Alternatively, users can use the keyword :code:`Gen_ConformalLatticeMesh` to gen
                 "Gen_ConformalLatticeMesh": {
                     "definition_file": ".//Test_json//FEAMesh//MeshTrim_TPMS//ConformalLattice.mld",
                     "out_meshfile": ".//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med",
-                    "size": [1.0, 1.0, 1.0]
+                    "size": [1.0, 1.0, 1.0],
+                    "Rot": [0.0, 0.0, 0.0]
                 }
             },
             "3": {
@@ -162,6 +163,8 @@ Alternatively, users can use the keyword :code:`Gen_ConformalLatticeMesh` to gen
      - file path to export the conformed mesh.
    * - :code:`size` 
      - this parameter with the global resolutions is used to calculate the triangle mesh fineness. The smaller division of resolutions over size leads to a finer mesh. 
+   * - :code:`Rot`
+     - Rotation applied on the unit lattice. This setup intends to change the orientation of the unit lattice. 
 
 The parameters for the :code:`Proc_Mesh_Trim` are listed below.
 

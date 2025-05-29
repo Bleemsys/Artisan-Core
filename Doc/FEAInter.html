@@ -6,9 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Interface to FEA &#8212; Artisan 0.2.11 documentation</title>
+    <title>Interface to FEA &#8212; Artisan 0.2.12 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=e4929d9c"></script>
+    <script src="_static/documentation_options.js?v=27acb802"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.11 documentation</p>
+    <p class="title logo__title">Artisan 0.2.12 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -441,7 +441,8 @@ document.write(`
 <span class="w">            </span><span class="nt">&quot;Gen_ConformalLatticeMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;definition_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//ConformalLattice.mld&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FEAMesh//MeshTrim_TPMS//BaseMeshConformal.med&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]</span>
+<span class="w">                </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -468,8 +469,8 @@ document.write(`
 <p><code class="code docutils literal notranslate"><span class="pre">Gen_ConformalLatticeMesh</span></code> generates the conformal mesh, and <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Trim</span></code> trims the conformal mesh in the box domain to the given geometry boundary. The parameters for the <code class="code docutils literal notranslate"><span class="pre">Gen_ConformalLatticeMesh</span></code> are listed below.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -486,14 +487,17 @@ document.write(`
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">size</span></code></p></td>
 <td><p>this parameter with the global resolutions is used to calculate the triangle mesh fineness. The smaller division of resolutions over size leads to a finer mesh.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Rot</span></code></p></td>
+<td><p>Rotation applied on the unit lattice. This setup intends to change the orientation of the unit lattice.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <p>The parameters for the <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Trim</span></code> are listed below.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -680,7 +684,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2024, Bleemsys Ltd.
+      © Copyright 2025, Bleemsys Ltd.
       <br/>
     
   </p>

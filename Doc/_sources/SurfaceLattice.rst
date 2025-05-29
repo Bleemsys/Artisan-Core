@@ -132,7 +132,7 @@ and the lattice definition is in the file :code:`CustomSurfaceLattice_Geom.txt`.
 .. code-block:: json
 
     {
-        "type": "Geom",
+        "type": "Geom-Plate",
         "definition": {
             "file": ".//sample-obj//SurfacePatch.STL",
             "ladomain": "Quad"

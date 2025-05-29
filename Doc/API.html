@@ -6,9 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API Interface &#8212; Artisan 0.2.11 documentation</title>
+    <title>API Interface &#8212; Artisan 0.2.12 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=e4929d9c"></script>
+    <script src="_static/documentation_options.js?v=27acb802"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.11 documentation</p>
+    <p class="title logo__title">Artisan 0.2.12 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -426,6 +426,89 @@ document.write(`
 <span class="n">verts</span><span class="p">,</span> <span class="n">faces</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">ExtractSurf</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>User may pass down the mesh (i.e. the vertices and elements) to Artisan for design computation. The example below demonstrates how to load the mesh into Artisan and conduct the computing work, and how to remove the mesh for saving the memory. User may find this example at <code class="code docutils literal notranslate"><span class="pre">.\Interface\Python\Artisan_Example_04.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add the ArtisanMain.py path into your system path</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">meshio</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;..//..//&quot;</span><span class="p">)</span>
+<span class="c1"># Simply import ArtisanModel. It is a function returns the API class</span>
+<span class="kn">from</span> <span class="nn">ArtisanMain</span> <span class="kn">import</span> <span class="n">ArtisanModel</span>
+
+<span class="c1"># Call ArtisanModel to buildup the API class</span>
+<span class="n">Model</span> <span class="o">=</span> <span class="n">ArtisanModel</span><span class="p">()</span>
+
+<span class="c1"># Setup section in dict structure</span>
+<span class="n">cmd_setup</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;Type&quot;</span> <span class="p">:</span> <span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Geomfile&quot;</span><span class="p">:</span> <span class="s2">&quot;..//..//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Rot&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+                <span class="s2">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span>
+                    <span class="s2">&quot;Padding&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;onGPU&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;memorylimit&quot;</span><span class="p">:</span> <span class="mi">16106127360</span>
+            <span class="p">}</span>
+<span class="c1"># Push to the Setup method, and it setup the model building required infrastructure,</span>
+<span class="c1"># it also calculates all fields for geometry.</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">Setup</span><span class="p">(</span><span class="n">cmd_setup</span><span class="p">)</span>
+
+<span class="c1"># Read STL mesh</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;..//..//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extract triangles and vertices</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">points</span>
+<span class="n">elems</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cells_dict</span><span class="p">[</span><span class="s2">&quot;triangle&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded mesh with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2"> vertices and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">elems</span><span class="p">)</span><span class="si">}</span><span class="s2"> triangles.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create input data for SetMesh</span>
+<span class="n">cmd_setmesh</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;mesh_id&quot;</span><span class="p">:</span> <span class="s2">&quot;demo_mesh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="n">nodes</span><span class="p">,</span>
+    <span class="s2">&quot;elems&quot;</span><span class="p">:</span> <span class="n">elems</span><span class="p">,</span>
+    <span class="s2">&quot;elem_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Triangle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;filetype&quot;</span><span class="p">:</span> <span class="s2">&quot;.stl&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># Call SetMesh function (must be part of your model already)</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">SetMesh</span><span class="p">(</span><span class="n">cmd_setmesh</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mesh successfully set in Artisan model. Now you may reference to this mesh.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define mesh lattice, we refer to the loaded mesh.</span>
+<span class="n">cmd_workitem</span> <span class="o">=</span><span class="p">{</span> <span class="s2">&quot;Define_Lattice&quot;</span><span class="p">:{</span>
+                <span class="s2">&quot;la_name&quot;</span><span class="p">:</span><span class="s2">&quot;demo_lattice&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;definition&quot;</span><span class="p">:{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;definition&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                         <span class="s2">&quot;meshfile&quot;</span><span class="p">:</span> <span class="s2">&quot;demo_mesh&quot;</span><span class="p">,</span>
+                                         <span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
+                                        <span class="p">}</span>
+                         <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">WorkItem</span><span class="p">(</span><span class="n">cmd_workitem</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adding Lattice......&quot;</span><span class="p">)</span>
+<span class="c1"># Add lattice into the infill</span>
+<span class="n">cmd_workitem</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+                    <span class="s2">&quot;la_name&quot;</span><span class="p">:</span> <span class="s2">&quot;demo_lattice&quot;</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">],</span> <span class="s2">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.75</span><span class="p">,</span> <span class="s2">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s2">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                    <span class="s2">&quot;Inv&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Fill&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Cube_Request&quot;</span><span class="p">:</span> <span class="p">{}</span>
+                    <span class="p">}</span>
+               <span class="p">}</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">WorkItem</span><span class="p">(</span><span class="n">cmd_workitem</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Delete the loaded mesh, and save the results.&quot;</span><span class="p">)</span>
+<span class="c1"># Remove the loaded mesh from Artisan</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">RemoveMesh</span><span class="p">({</span><span class="s2">&quot;MeshID&quot;</span><span class="p">:</span><span class="s2">&quot;demo_mesh&quot;</span><span class="p">})</span>
+
+<span class="c1"># A repeat call of workitem to save the geometry in a stl file.</span>
+<span class="n">cmd_workitem</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Export&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;outfile&quot;</span><span class="p">:</span> <span class="s2">&quot;..//..//Test_results/BingDunDun_Infill.stl&quot;</span><span class="p">}}</span>
+<span class="n">Model</span><span class="o">.</span><span class="n">WorkItem</span><span class="p">(</span><span class="n">cmd_workitem</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In above example, loading mesh and defining a lattice were through the stream, not relied on the external file exchanges. This may provide a more flexibility for user to integrate Artisan into their native system.</p>
 </section>
 <section id="c-api">
 <h2>C++ API<a class="headerlink" href="#c-api" title="Link to this heading">#</a></h2>
@@ -867,7 +950,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2024, Bleemsys Ltd.
+      © Copyright 2025, Bleemsys Ltd.
       <br/>
     
   </p>

@@ -25,9 +25,9 @@
             0.0
         ],
         "res": [
-            0.25,
-            0.25,
-            0.25
+            1.8,
+            1.8,
+            1.8
         ],
         "Padding": 1,
         "onGPU": false,
@@ -36,11 +36,11 @@
     "WorkFlow": {
         "1": {
             "Add_Lattice": {
-                "la_name": "Cubic",
+                "la_name": "SchwarzDiamond",
                 "size": [
-                    8.0,
                     12.0,
-                    4.0
+                    12.0,
+                    12.0
                 ],
                 "thk": 1.2,
                 "Rot": [

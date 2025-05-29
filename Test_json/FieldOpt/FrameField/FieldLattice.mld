@@ -1,0 +1,9 @@
+{
+    "type": "FieldLattice",
+    "definition": {
+        "Point_Cloud_FieldFile_BAK": ".//Test_json//FieldOpt//FrameField//frame_field_data.csv",
+        "Point_Cloud_FieldFile_BAK02": "LocalFrameField",
+        "Point_Cloud_FieldFile": ".//Test_json//FieldOpt//FrameField//volume_filled_frame_field.csv",
+        "la_name": "Cubic"
+    }
+}

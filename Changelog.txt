@@ -134,6 +134,13 @@ This is simple change log recording the major and minor updates
 - Add meshID function
 - Doc updates  
 
+0.2.12
+- Add Define_Lattice,
+- Add JsonWorkDir in Setup
+- Add a few other parameters for various keywords
+- Bug fix.
+- Doc updates
+
 
 
 

@@ -6,9 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Primitive Design &#8212; Artisan 0.2.11 documentation</title>
+    <title>Primitive Design &#8212; Artisan 0.2.12 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=e4929d9c"></script>
+    <script src="_static/documentation_options.js?v=27acb802"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -133,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.11 documentation</p>
+    <p class="title logo__title">Artisan 0.2.12 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -382,8 +382,8 @@ document.write(`
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code> contains the parameters as defined in the table below.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -422,8 +422,8 @@ document.write(`
 <p>Creating a capped cone mesh follows a similar process to generating a cylindrical mesh. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_CappedConeMesh</span></code>, built upon <code class="code docutils literal notranslate"><span class="pre">Gen_CylindricalMesh</span></code>, includes additional parameters for generating the cone-shaped mesh. User may find the example at <code class="code docutils literal notranslate"><span class="pre">\Test_json\PrimitiveDesign\GenCappedConeConformalMesh.json</span></code>. The additional parameters are as following:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -437,10 +437,13 @@ document.write(`
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span></code></p></td>
 <td><p>this fraction helps to control position where to start the contraction of the radius. If 1.0, it shall generate a cylinder mesh with the radius of <code class="code docutils literal notranslate"><span class="pre">r_bottom</span></code>, if 0.2, for example, the contraction starts from the position 0.2 of the distance from top to bottom.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Preserve_thickness</span></code></p></td>
+<td><p>A boolean flag. This parameter controls whether the through-radius thickness is kept constant.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
-<p>In the example, <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.3</span></code>, we have the following.</p>
+<p>In the example, <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.3</span></code> and <code class="code docutils literal notranslate"><span class="pre">Preserve_thickness</span></code> is <code class="code docutils literal notranslate"><span class="pre">False</span></code>, we have the following.</p>
 <img alt="_images/ConeMesh_01.png" src="_images/ConeMesh_01.png" />
 <p>If <code class="code docutils literal notranslate"><span class="pre">UB_heightRatio</span> <span class="pre">=</span> <span class="pre">0.0</span></code>, we shall have a perfect cone mesh.</p>
 <img alt="_images/ConeMesh_02.png" src="_images/ConeMesh_02.png" />
@@ -488,8 +491,8 @@ document.write(`
 <p>The parameters in <code class="code docutils literal notranslate"><span class="pre">Gen_SphericalMesh</span></code> are explained in the table below.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -575,8 +578,8 @@ document.write(`
 <p>Here is the explanation of parameters.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -678,8 +681,8 @@ document.write(`
 <p>The keywords <code class="code docutils literal notranslate"><span class="pre">Add_Geometry</span></code> and <code class="code docutils literal notranslate"><span class="pre">Subtract_Geometry</span></code> manipulate the geometry handling, such as adding and subtracting. Along with the keywords <code class="code docutils literal notranslate"><span class="pre">Intersect_Geometry</span></code>, three keywords shared same parameters.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -705,8 +708,8 @@ document.write(`
 <p>The <code class="code docutils literal notranslate"><span class="pre">Box</span></code> shape has following parameters:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -729,8 +732,8 @@ document.write(`
 <p>The <code class="code docutils literal notranslate"><span class="pre">Sphere</span></code> shape has following parameters:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -750,8 +753,8 @@ document.write(`
 <p>The <code class="code docutils literal notranslate"><span class="pre">Cylinder</span></code> shape has following parameters:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -815,8 +818,8 @@ document.write(`
 <p>In this case, parameter <code class="code docutils literal notranslate"><span class="pre">Paras</span></code> has the following operation parameters, i.e. <code class="code docutils literal notranslate"><span class="pre">Scale</span></code>, <code class="code docutils literal notranslate"><span class="pre">Trans</span></code> and <code class="code docutils literal notranslate"><span class="pre">Rot</span></code>. The operation sequences is scale, translation, then rotation.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -914,7 +917,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2024, Bleemsys Ltd.
+      © Copyright 2025, Bleemsys Ltd.
       <br/>
     
   </p>
