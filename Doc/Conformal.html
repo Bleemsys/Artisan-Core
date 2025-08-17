@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Conformal Lattice 01 &#8212; Artisan 0.2.12 documentation</title>
+    <title>Conformal Lattice 01 &#8212; Artisan 0.2.13 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=27acb802"></script>
+    <script src="_static/documentation_options.js?v=d069a6b7"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.12 documentation</p>
+    <p class="title logo__title">Artisan 0.2.13 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -165,6 +165,7 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
@@ -335,7 +336,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section id="conformal-lattice-01">
-<h1>Conformal Lattice 01<a class="headerlink" href="#conformal-lattice-01" title="Link to this heading">#</a></h1>
+<span id="conformallattice"></span><h1>Conformal Lattice 01<a class="headerlink" href="#conformal-lattice-01" title="Link to this heading">#</a></h1>
 <p>Conformal lattice in Artisan is considered the mini morphing of the lattice to the given lattice domain. The domain can be a hexahedron or tetrahedron shape. The lattice in definition is therefore considered as the reference status, and the morphed lattice structure is in a deformed status. The mesh used in FEA/CFD computation are utilized for domain discretization, then the task of lattice generation becomes the morphing of the unit lattice into the lattice domain defined by individual element.</p>
 <section id="lattice-in-hexahedron-domain">
 <h2>Lattice in hexahedron domain<a class="headerlink" href="#lattice-in-hexahedron-domain" title="Link to this heading">#</a></h2>

@@ -1,0 +1,30 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,10.0],[0.0,10.0],[0.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1,0.1,0.1],
+                "Padding": 2,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {
+                "OP_Fit_GridField":{
+                     "inp_ptFieldFile": ".//Test_json//FieldTPMS//cube_points_linear_jittered.csv",
+                     "out_gridFieldFile": "FrequencyField"
+               }
+		   },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//FieldTPMS//CustomLattice_FieldTPMS.txt", 
+                    "size": [2.0, 2.0, 2.0], "thk":0.1, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
+                    "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }
+               },
+          "999":{"Export": {"outfile": ".//Test_results//FieldTPMS.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+}

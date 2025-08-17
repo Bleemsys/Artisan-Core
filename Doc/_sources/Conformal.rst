@@ -1,3 +1,4 @@
+.. _ConformalLattice:
 Conformal Lattice 01
 ********************
 

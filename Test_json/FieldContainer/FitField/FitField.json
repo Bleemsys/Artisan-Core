@@ -1,0 +1,40 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,10.0],[0.0,10.0],[0.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1,0.1,0.1],
+                "Padding": 2,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {
+                "OP_Fit_GridField":{
+                     "inp_ptFieldFile": ".//Test_json//FieldContainer//FitField//cube_points_sdf.csv",
+                     "out_gridFieldFile": "SphereSDF"
+               }
+		   },
+          "2":{
+            "OP_ExprOperation_GridField":{
+                "expression":"SphereSDF + 10",
+                "out_gridFieldFile": ".//Test_results//OPdGridField.csv"
+            }
+           },
+           "3":{
+            "ReadGridField":{
+              "inp_GridFieldFile": ".//Test_results//OPdGridField.csv",
+              "Gridfield_ID": "GridField"
+            }
+           },
+           "4":{
+            "OP_ExprOperation_GridField":{
+                "expression":"GridField + 1",
+                "out_gridFieldFile": ".//Test_results//OPdGridField_02.csv"
+            }
+           }
+        },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": true}
+}

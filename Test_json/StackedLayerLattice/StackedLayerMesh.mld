@@ -1,0 +1,7 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": "stacked_layer_mesh",
+        "k": 0.0
+    }
+}

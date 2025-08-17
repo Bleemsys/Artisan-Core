@@ -1,7 +1,7 @@
 Meshing 01
 **********
 
-One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the :ref:`Conformal Lattice` generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder :code:`Test_json\MeshLattice`, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter :ref:`Primitive Design`.
+One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the :ref:`ConformalLattice` generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder :code:`Test_json\MeshLattice`, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter :ref:`Primitive Design`.
 
 ================
 Cartesian Mesher 
@@ -85,7 +85,7 @@ Above example produce the following results. The tripod geometry is overlapped w
 
 .. image:: ./pictures/Tripod_HexInfill_v03.png
 
-The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function :code:`Gen_BasicCartesianHexMesh_MultiSize` allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file :code:`Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json`. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The :code:`SchwarzPrimitive` lattice is then conformed to the generated mesh. For conformal lattice, user may refer to :ref:`Conformal Lattice`.
+The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function :code:`Gen_BasicCartesianHexMesh_MultiSize` allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file :code:`Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json`. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The :code:`SchwarzPrimitive` lattice is then conformed to the generated mesh. For conformal lattice, user may refer to :ref:`ConformalLattice`.
 
 .. code-block:: json
 
@@ -448,3 +448,132 @@ The keyword :code:`Gen_SurfaceReMesh` has the following parameters definitions.
 .. image:: ./pictures/EngineBracket_SurfaceRemsh.png
 
 Please note, this is not the universal remesher, but a simple remeshing function for a mesh with averaging size. 
+
+====================
+Stacked Layer Mesher
+====================
+
+The stacked-layer mesher offers a simple way to generate a conformal mesh around a geometry’s exterior surface by adding successive layers of hexahedral elements in the normal direction. The example :code:`.\\Test_json\\StackedLayerLattice\\GenStackedLayerLattice.json`` demonstrates a simple workflow that combines the quad surface mesher with the stacked-layer mesher to generate a hexahedral mesh on the exterior surface.
+
+.. code-block:: json 
+
+  {
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ],
+                [
+                    0.0,
+                    1.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.5,
+            0.5,
+            0.5
+        ],
+        "Padding": 10,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_SimpleQuadMesh": {
+                "inp_meshfile": ".//sample-obj//shell_1_of_bdd_.stl",
+                "out_meshfile": "simple_quad",
+                "size": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            }
+        },
+        "2":{
+            "Gen_StackedLayerMesh":{
+                "inp_meshfile":"simple_quad", 
+                "inp_geommeshfile": ".//sample-obj//shell_1_of_bdd_.stl", 
+                "out_meshfile": "stacked_layer_mesh",
+                "num_layers":1, 
+                "layer_thk": 6.0, 
+                "projection_direction": 1
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//StackedLayerLattice//StackedLayerMesh.mld",
+                "size": [
+                    7.0,
+                    7.0,
+                    7.0
+                ],
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {},
+                "thk": 1.0
+            }
+        },
+        "10000": {
+            "Export": {
+                "outfile": ".//Test_results//SimpleStackedLayerMesh.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+  }
+
+In above workflow, the keyword :code:`Gen_StackedLayerMesh` generates a single layer of hex mesh using the surface quad mesh generated by :code:`Gen_SimpleQuadMesh`. This layer of hex mesh naturally conforms the shape of the given geometry. The parameters of :code:`Gen_StackedLayerMesh` are explained below.
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`inp_meshfile`
+     - input surface quad mesh file, or mesh id. 
+   * - :code:`inp_geommeshfile`
+     - the geometry file or mesh id for generating conformal stacked layer mesh.
+   * - :code:`out_meshfile`
+     - the resultant mesh id, or a string file path. 
+   * - :code:`num_layers`
+     - the number of stacked layers.
+   * - :code:`projection_direction`
+     - A negative value indicates projection inward, and a positive value indicates projection outward.
+
+The resultant mesh lattice are presented below. Same as other mesh, uSer may use this mesh to fill with other type of lattice as well. 
+
+.. image:: ./pictures/StackedLayerMesh_01.png
+
+.. image:: ./pictures/StackedLayerMesh_02.png
+

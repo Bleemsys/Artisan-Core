@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Customization &#8212; Artisan 0.2.12 documentation</title>
+    <title>Customization &#8212; Artisan 0.2.13 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=27acb802"></script>
+    <script src="../_static/documentation_options.js?v=d069a6b7"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -133,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.12 documentation</p>
+    <p class="title logo__title">Artisan 0.2.13 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -166,6 +166,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
@@ -321,7 +322,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strut-lattice">Strut Lattice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-lattice">Surface Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tpms-lattice">TPMS Lattice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-lattice">Geometry Lattice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-container">Lattice Container</a></li>
 </ul>
@@ -425,9 +426,9 @@ document.write(`
 <p>Above example shall produce the filled results like below. Yes, it is filled by the BCCubic lattice. User may try different nodes locations and/or conductivities.</p>
 <img alt="../_images/custom_strut.png" src="../_images/custom_strut.png" />
 </section>
-<section id="surface-lattice">
-<h2>Surface Lattice<a class="headerlink" href="#surface-lattice" title="Link to this heading">#</a></h2>
-<p>User may define a surface through its implicit equation, and apply the thickness to the surface as a lattice unit. We can use a different user defined surface lattice.</p>
+<section id="tpms-lattice">
+<h2>TPMS Lattice<a class="headerlink" href="#tpms-lattice" title="Link to this heading">#</a></h2>
+<p>Users can define a TPMS surface through its implicit equation and apply a thickness to generate a lattice unit. The example below shows a typical definition of a customized TPMS lattice:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TPMS&quot;</span><span class="p">,</span>
 <span class="w"> </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -442,11 +443,62 @@ document.write(`
 <p>In this definition, we defined an implicit equation</p>
 <div class="math notranslate nohighlight">
 \[\cos(x) + \cos(y) + \cos(z) = 0\]</div>
-<p>We also need to tells Artisan the single unit length of the given euqation, here it is <code class="code docutils literal notranslate"><span class="pre">2*pi</span></code> meaning <span class="math notranslate nohighlight">\(2\pi\)</span> . Artisan uses numexpr package to interpret the mathematical equations and inputs. User may refer to the documentation for referencing the acceptable math symbols and equations.</p>
+<p>The user must specify the unit length for the equation in each direction. In this example, it is set to <code class="code docutils literal notranslate"><span class="pre">2*pi</span></code>, corresponding to <span class="math notranslate nohighlight">\(2\pi\)</span>. Artisan uses the numexpr package to evaluate mathematical equations and expressions. Please refer to the official documentation for a complete list of supported mathematical symbols and functions:</p>
 <p>Github: <a class="github reference external" href="https://github.com/pydata/numexpr">pydata/numexpr</a></p>
 <p>Documentation: <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/user_guide.html">https://numexpr.readthedocs.io/en/latest/user_guide.html</a></p>
-<p>We can then have a TPMS style infill. Please note that, the <code class="code docutils literal notranslate"><span class="pre">size</span></code> and <code class="code docutils literal notranslate"><span class="pre">thk</span></code> in the keywords <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> will automatically define the unit lattice size and thicks the surface with correct thickness.</p>
+<p>Once defined, Artisan can generate a TPMS-style infill. Note that the <code class="code docutils literal notranslate"><span class="pre">size</span></code> and <code class="code docutils literal notranslate"><span class="pre">thk</span></code> parameters in the <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> keyword automatically determine the lattice unit size and thickness.</p>
 <img alt="../_images/custom_TPMS.png" src="../_images/custom_TPMS.png" />
+<p>User may define grid field driven TPMS surface lattice. For the grid field, user may refer to chapter <a class="reference internal" href="../FieldContainer.html#gridfieldcontainer"><span class="std std-ref">Grid Field Container</span></a>. The example of using grid field can be find at <code class="code docutils literal notranslate"><span class="pre">.\Test_json\FieldTPMS\Cube_FieldTPMS.json</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
+<span class="w">              </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
+<span class="w">              </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;OP_Fit_GridField&quot;</span><span class="p">:{</span>
+<span class="w">                   </span><span class="nt">&quot;inp_ptFieldFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FieldTPMS//cube_points_linear_jittered.csv&quot;</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;out_gridFieldFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FrequencyField&quot;</span>
+<span class="w">               </span><span class="p">}</span>
+<span class="w">                         </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                  </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//FieldTPMS//CustomLattice_FieldTPMS.txt&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                  </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">             </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;999&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//FieldTPMS.stl&quot;</span><span class="p">}}</span>
+<span class="w">         </span><span class="p">},</span>
+<span class="w"> </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:{</span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>and the customized lattice definition <code class="code docutils literal notranslate"><span class="pre">CustomLattice_FieldTPMS.txt</span></code> is below.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TPMS-Field&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;unit_x_len&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2*pi&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;unit_y_len&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2*pi&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;unit_z_len&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2*pi&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cos(FrequencyField*x)+cos(FrequencyField*y)+cos(FrequencyField*z)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ladomain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Hex&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The keyword <code class="code docutils literal notranslate"><span class="pre">OP_Fit_GridField</span></code> fits the external data points into the grid field container, and the mathematical expression of the TPMS therefore refers the variable <code class="code docutils literal notranslate"><span class="pre">FrequencyField</span></code> in the definition.  Belows shows the original data points which forms a scaler field that controls the size of the local lattice.</p>
+<img alt="../_images/FieldTPMS_DP_01.png" src="../_images/FieldTPMS_DP_01.png" />
+<img alt="../_images/FieldTPMS_DP_02.png" src="../_images/FieldTPMS_DP_02.png" />
+<p>Below shows TPMS lattice with spatially varying lattice size overlays the data points.</p>
+<img alt="../_images/FieldTPMS_01.png" src="../_images/FieldTPMS_01.png" />
+<img alt="../_images/FieldTPMS_02.png" src="../_images/FieldTPMS_02.png" />
 </section>
 <section id="geometry-lattice">
 <h2>Geometry Lattice<a class="headerlink" href="#geometry-lattice" title="Link to this heading">#</a></h2>
@@ -607,7 +659,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strut-lattice">Strut Lattice</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-lattice">Surface Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tpms-lattice">TPMS Lattice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-lattice">Geometry Lattice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-container">Lattice Container</a></li>
 </ul>

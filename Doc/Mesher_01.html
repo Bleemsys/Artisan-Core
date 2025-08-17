@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Meshing 01 &#8212; Artisan 0.2.12 documentation</title>
+    <title>Meshing 01 &#8212; Artisan 0.2.13 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=27acb802"></script>
+    <script src="_static/documentation_options.js?v=d069a6b7"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.12 documentation</p>
+    <p class="title logo__title">Artisan 0.2.13 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -165,6 +165,7 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
@@ -323,6 +324,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-mesher-for-quad-elements">Surface Mesher for Quad Elements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voronoi-polygon">Voronoi Polygon</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-remesh">Surface Remesh</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacked-layer-mesher">Stacked Layer Mesher</a></li>
 </ul>
             </nav>
         </div>
@@ -336,7 +338,7 @@ document.write(`
                   
   <section id="meshing-01">
 <h1>Meshing 01<a class="headerlink" href="#meshing-01" title="Link to this heading">#</a></h1>
-<p>One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the <span class="xref std std-ref">Conformal Lattice</span> generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder <code class="code docutils literal notranslate"><span class="pre">Test_jsonMeshLattice</span></code>, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter <a class="reference internal" href="Primitive.html#primitive-design"><span class="std std-ref">Primitive Design</span></a>.</p>
+<p>One way of creating lattice infill is mapping the given lattice unit, such strut, TPMS or geometry, into the infill domain as defined by mesh. User may refers to the <a class="reference internal" href="Conformal.html#conformallattice"><span class="std std-ref">Conformal Lattice 01</span></a> generation section for details. This section summarized the basic integrated mesher functions. All examples here you should be able to find under the folder <code class="code docutils literal notranslate"><span class="pre">Test_jsonMeshLattice</span></code>, or otherwise specified locations. For the primitive shape mesh, such as sphere, user shall refer to the chapter <a class="reference internal" href="Primitive.html#primitive-design"><span class="std std-ref">Primitive Design</span></a>.</p>
 <section id="cartesian-mesher">
 <h2>Cartesian Mesher<a class="headerlink" href="#cartesian-mesher" title="Link to this heading">#</a></h2>
 <p>Artisan has an integrated Cartesian mesher, which can be used to generate an approximated conformal hex mesh. It’s important to note that this mesher employs a projection method to align the boundary mesh nodes with the surface of the given geometry. As a result, the output in some cases may not be a true conformal hex mesh. Even if the boundary mesh is significantly distorted, users can still utilize the resulting mesh to create a lattice that adheres to the given boundary shape. For an example of generating hex-dominant elements on a geometry, users can refer to the file <code class="code docutils literal notranslate"><span class="pre">CartesianHexMesh\GenCartesianHexMesh.json</span></code>.</p>
@@ -417,7 +419,7 @@ document.write(`
 <img alt="_images/Tripod_HexInfill.png" src="_images/Tripod_HexInfill.png" />
 <img alt="_images/Tripod_HexInfill_v02.png" src="_images/Tripod_HexInfill_v02.png" />
 <img alt="_images/Tripod_HexInfill_v03.png" src="_images/Tripod_HexInfill_v03.png" />
-<p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <span class="xref std std-ref">Conformal Lattice</span>.</p>
+<p>The mesh can be generated with varying mesh sizes while maintaining the same topological connections. The function <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> allows for the inclusion of spatial attractors to facilitate local mesh deformation. An illustrative example can be found in the file <code class="code docutils literal notranslate"><span class="pre">Box_Conformal_MultiSize/GenCartesianHexMesh_MultiSize.json</span></code>. In this example, a box-shaped region contains three local attractors, each generating a ball-shaped potential field that influences the local mesh size and deformation. The <code class="code docutils literal notranslate"><span class="pre">SchwarzPrimitive</span></code> lattice is then conformed to the generated mesh. For conformal lattice, user may refer to <a class="reference internal" href="Conformal.html#conformallattice"><span class="std std-ref">Conformal Lattice 01</span></a>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">],[</span><span class="mf">-10.0</span><span class="p">,</span><span class="mf">1010.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
@@ -758,6 +760,139 @@ document.write(`
 <img alt="_images/EngineBracket_SurfaceRemsh.png" src="_images/EngineBracket_SurfaceRemsh.png" />
 <p>Please note, this is not the universal remesher, but a simple remeshing function for a mesh with averaging size.</p>
 </section>
+<section id="stacked-layer-mesher">
+<h2>Stacked Layer Mesher<a class="headerlink" href="#stacked-layer-mesher" title="Link to this heading">#</a></h2>
+<p>The stacked-layer mesher offers a simple way to generate a conformal mesh around a geometry’s exterior surface by adding successive layers of hexahedral elements in the normal direction. The example <code class="code docutils literal notranslate"><span class="pre">.\Test_json\StackedLayerLattice\GenStackedLayerLattice.json`</span></code> demonstrates a simple workflow that combines the quad surface mesher with the stacked-layer mesher to generate a hexahedral mesh on the exterior surface.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">1.0</span>
+<span class="w">              </span><span class="p">],</span>
+<span class="w">              </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">1.0</span>
+<span class="w">              </span><span class="p">],</span>
+<span class="w">              </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">1.0</span>
+<span class="w">              </span><span class="p">]</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.0</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.5</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Gen_SimpleQuadMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple_quad&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">5.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">5.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">5.0</span>
+<span class="w">              </span><span class="p">]</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span>
+<span class="w">          </span><span class="nt">&quot;Gen_StackedLayerMesh&quot;</span><span class="p">:{</span>
+<span class="w">              </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="s2">&quot;simple_quad&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;inp_geommeshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stacked_layer_mesh&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;num_layers&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;layer_thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;projection_direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//StackedLayerLattice//StackedLayerMesh.mld&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">7.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">7.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">7.0</span>
+<span class="w">              </span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">0.0</span>
+<span class="w">              </span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="mf">0.0</span>
+<span class="w">              </span><span class="p">],</span>
+<span class="w">              </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">              </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;10000&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//SimpleStackedLayerMesh.stl&quot;</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In above workflow, the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_StackedLayerMesh</span></code> generates a single layer of hex mesh using the surface quad mesh generated by <code class="code docutils literal notranslate"><span class="pre">Gen_SimpleQuadMesh</span></code>. This layer of hex mesh naturally conforms the shape of the given geometry. The parameters of <code class="code docutils literal notranslate"><span class="pre">Gen_StackedLayerMesh</span></code> are explained below.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>input surface quad mesh file, or mesh id.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_geommeshfile</span></code></p></td>
+<td><p>the geometry file or mesh id for generating conformal stacked layer mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>the resultant mesh id, or a string file path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">num_layers</span></code></p></td>
+<td><p>the number of stacked layers.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">projection_direction</span></code></p></td>
+<td><p>A negative value indicates projection inward, and a positive value indicates projection outward.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The resultant mesh lattice are presented below. Same as other mesh, uSer may use this mesh to fill with other type of lattice as well.</p>
+<img alt="_images/StackedLayerMesh_01.png" src="_images/StackedLayerMesh_01.png" />
+<img alt="_images/StackedLayerMesh_02.png" src="_images/StackedLayerMesh_02.png" />
+</section>
 </section>
 
 
@@ -809,6 +944,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-mesher-for-quad-elements">Surface Mesher for Quad Elements</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voronoi-polygon">Voronoi Polygon</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-remesh">Surface Remesh</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacked-layer-mesher">Stacked Layer Mesher</a></li>
 </ul>
   </nav></div>
 

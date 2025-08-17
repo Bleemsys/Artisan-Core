@@ -91,10 +91,10 @@ Above example shall produce the filled results like below. Yes, it is filled by 
 .. image:: ../pictures/custom_strut.png
 
 ===============
-Surface Lattice
+TPMS Lattice
 ===============
 
-User may define a surface through its implicit equation, and apply the thickness to the surface as a lattice unit. We can use a different user defined surface lattice. 
+Users can define a TPMS surface through its implicit equation and apply a thickness to generate a lattice unit. The example below shows a typical definition of a customized TPMS lattice:
 
 .. code-block:: json
 
@@ -114,15 +114,76 @@ In this definition, we defined an implicit equation
 
     \cos(x) + \cos(y) + \cos(z) = 0 
 
-We also need to tells Artisan the single unit length of the given euqation, here it is :code:`2*pi` meaning :math:`2\pi` . Artisan uses numexpr package to interpret the mathematical equations and inputs. User may refer to the documentation for referencing the acceptable math symbols and equations.
+The user must specify the unit length for the equation in each direction. In this example, it is set to :code:`2*pi`, corresponding to :math:`2\pi`. Artisan uses the numexpr package to evaluate mathematical equations and expressions. Please refer to the official documentation for a complete list of supported mathematical symbols and functions:
 
 Github: https://github.com/pydata/numexpr
 
 Documentation: https://numexpr.readthedocs.io/en/latest/user_guide.html
 
-We can then have a TPMS style infill. Please note that, the :code:`size` and :code:`thk` in the keywords :code:`Add_Lattice` will automatically define the unit lattice size and thicks the surface with correct thickness.
+Once defined, Artisan can generate a TPMS-style infill. Note that the :code:`size` and :code:`thk` parameters in the :code:`Add_Lattice` keyword automatically determine the lattice unit size and thickness.
 
 .. image:: ../pictures/custom_TPMS.png
+
+User may define grid field driven TPMS surface lattice. For the grid field, user may refer to chapter :ref:`gridfieldcontainer`. The example of using grid field can be find at :code:`.\\Test_json\\FieldTPMS\\Cube_FieldTPMS.json`.
+
+.. code-block:: json
+
+  {"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[0.0,10.0],[0.0,10.0],[0.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1,0.1,0.1],
+                "Padding": 2,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+   "WorkFlow":{
+          "1": {
+                "OP_Fit_GridField":{
+                     "inp_ptFieldFile": ".//Test_json//FieldTPMS//cube_points_linear_jittered.csv",
+                     "out_gridFieldFile": "FrequencyField"
+                 }
+		           },
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//FieldTPMS//CustomLattice_FieldTPMS.txt", 
+                    "size": [2.0, 2.0, 2.0], "thk":0.1, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0], 
+                    "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }
+               },
+          "999":{"Export": {"outfile": ".//Test_results//FieldTPMS.stl"}}
+           },
+   "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": true, 
+                "ExportLazPts": false}
+  }
+
+and the customized lattice definition :code:`CustomLattice_FieldTPMS.txt` is below. 
+
+.. code-block:: json 
+
+  {
+    "type": "TPMS-Field",
+    "definition": {
+      "unit_x_len": "2*pi",
+      "unit_y_len": "2*pi",
+      "unit_z_len": "2*pi",
+      "expr": "cos(FrequencyField*x)+cos(FrequencyField*y)+cos(FrequencyField*z)",
+      "ladomain": "Hex"
+  }
+
+The keyword :code:`OP_Fit_GridField` fits the external data points into the grid field container, and the mathematical expression of the TPMS therefore refers the variable :code:`FrequencyField` in the definition.  Belows shows the original data points which forms a scaler field that controls the size of the local lattice.  
+
+.. image:: ../pictures/FieldTPMS_DP_01.png
+
+.. image:: ../pictures/FieldTPMS_DP_02.png
+
+Below shows TPMS lattice with spatially varying lattice size overlays the data points. 
+
+.. image:: ../pictures/FieldTPMS_01.png
+
+.. image:: ../pictures/FieldTPMS_02.png
 
 ================
 Geometry Lattice

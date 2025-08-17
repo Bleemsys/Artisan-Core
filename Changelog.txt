@@ -141,6 +141,15 @@ This is simple change log recording the major and minor updates
 - Bug fix.
 - Doc updates
 
+0.2.13
+- Add Grid Field Container
+- Add Staked layer mesher 
+- Add Field Driven TPMS
+- Bug fix
+- Doc updates
+
+
+
 
 
 

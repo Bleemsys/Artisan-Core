@@ -1,0 +1,10 @@
+{
+"type": "TPMS-Field",
+"definition": {
+    "unit_x_len": "2*pi",
+    "unit_y_len": "2*pi",
+    "unit_z_len": "2*pi",
+    "expr": "cos(FrequencyField*x)+cos(FrequencyField*y)+cos(FrequencyField*z)",
+    "ladomain": "Hex"
+}
+}
