@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": "BoxMesh",
+  "la_name" : ".//CustomLattice_GeomPlate.txt",
+  "la_domain": "Hex"
+ }
+}

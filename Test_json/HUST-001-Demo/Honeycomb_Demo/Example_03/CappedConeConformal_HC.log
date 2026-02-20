@@ -1,0 +1,29 @@
+2025-06-08 14:09:59,517 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2025-06-08 14:09:59,517 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2025-06-08 14:09:59,517 [INFO] Version: 0.2.12
+2025-06-08 14:09:59,517 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\HUST-001-Demo\Honeycomb_Demo\Example_03
+2025-06-08 14:09:59,517 [INFO] reading Json file: Test_json\HUST-001-Demo\Honeycomb_Demo\Example_03\CappedConeConformal_HC.json
+2025-06-08 14:09:59,517 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-610.0, 610.0], [-610.0, 610.0], [-10.0, 620.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [2.5, 2.5, 2.5], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Gen_CappedConeMesh': {'num_elem': [3, 20, 3], 'r_range': [200.0, 600.0], 'phi_range': [0.0, 1.0], 'ori': [0.0, 0.0, 0.0], 'Height': 600.0, 'Normal': [0.0, 0.0, 1.0], 'r_bottom': 400.0, 'Mesh_file': 'CylindricalMesh', 'UB_heightRatio': 0.3, 'Preserve_thickness': False}}, '2': {'Proc_Mesh_ExtractSurf': {'Elem_Type': 'Hex', 'inp_meshfile': 'CylindricalMesh', 'out_meshfile': 'SurfaceGeometry', 'isSplitTris': True}}, '3': {'Proc_Mesh_ExtractSurf': {'Elem_Type': 'Hex', 'inp_meshfile': 'CylindricalMesh', 'out_meshfile': 'CylindricalSurfMesh', 'isSplitTris': False}}, '4': {'Add_Geometry': {'Name': 'SurfaceGeometry', 'k_factor': 0.0, 'push2GeomField': True, 'Paras': {'Scale': [1.0, 1.0, 1.0], 'Trans': [0.0, 0.0, 5.0], 'Rot': [0, 0, 0]}}}, '5': {'Add_Lattice': {'la_name': './/Test_json//HUST-001-Demo//Honeycomb_Demo//Example_03//GenCylindricalConformalMesh.mld', 'size': [50.0, 50.0, 50.0], 'thk': 15.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': True, 'Cube_Request': {}}}, '6': {'Add_Surf_Plate': {'Surffile': 'SurfaceGeometry', 'thk': 6.0, 'GeomTrim': True}}, '7': {'Define_Lattice': {'la_name': 'SurfaceCrossPatch', 'definition': {'type': 'Geom-Plate', 'definition': {'file': './/Test_json//HUST-001-Demo//Honeycomb_Demo//CrossPatch.stl', 'ladomain': 'Quad'}}}}, '8': {'Add_Lattice': {'la_name': './/Test_json//HUST-001-Demo//Honeycomb_Demo//Example_03//GenSurfaceMesh.mld', 'size': [50.0, 50.0, 50.0], 'thk': 10.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '999': {'Export': {'outfile': './/Test_results/ConeMesh_ConformalLattice.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': True}}
+2025-06-08 14:09:59,517 [INFO] Setup basic fill domain......
+2025-06-08 14:09:59,523 [INFO] Number of Domain Partition: 1
+2025-06-08 14:09:59,523 [INFO] Calculating Sub-Domain:1
+2025-06-08 14:09:59,523 [INFO] Building Up Sample Domain
+2025-06-08 14:10:02,677 [INFO] Geometry & Field Domain Infomation: 
+2025-06-08 14:10:02,677 [INFO] Domain: 
+2025-06-08 14:10:02,677 [INFO] Lower Bound: [-615. -615.  -15.]
+2025-06-08 14:10:02,677 [INFO] Upper Bound: [615. 615. 625.]
+2025-06-08 14:10:02,677 [INFO] Resolution: [2.5 2.5 2.5]
+2025-06-08 14:10:02,677 [INFO] Workflow Calculation: 
+2025-06-08 14:10:02,677 [INFO] Calculating Gen_CappedConeMesh
+2025-06-08 14:10:02,683 [INFO] Calculating Proc_Mesh_ExtractSurf
+2025-06-08 14:10:02,683 [INFO] Calculating Proc_Mesh_ExtractSurf
+2025-06-08 14:10:02,683 [INFO] Calculating Add_Geometry
+2025-06-08 14:10:06,858 [INFO] Calculating Add_Lattice
+2025-06-08 14:10:12,301 [INFO] Calculating Add_Surf_Plate
+2025-06-08 14:10:15,547 [INFO] Calculating Define_Lattice
+2025-06-08 14:10:15,547 [INFO] Calculating Add_Lattice
+2025-06-08 14:10:22,327 [INFO] Calculating Export
+2025-06-08 14:10:45,851 [INFO] PostProcessing Meshes......
+2025-06-08 14:10:45,851 [INFO] Only one partition file, merging meshes will not be conducted.
+2025-06-08 14:10:46,411 [INFO] Process finished, check the result file.
+2025-06-08 14:10:46,411 [INFO] Peak Memory Usage: 3309.6071157455444 MB

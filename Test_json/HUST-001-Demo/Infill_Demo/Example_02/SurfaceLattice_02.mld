@@ -1,0 +1,6 @@
+{
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl"
+    }
+}

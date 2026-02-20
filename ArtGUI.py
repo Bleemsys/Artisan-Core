@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     import ctypes
 
-    myappid = 'bleemsys.ArtGUI.0.0.1' # app info for system
+    myappid = 'bleemsys.ArtGUI.0.0.3' # app info for system
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
     app = ArtisanWizard()

@@ -1,0 +1,23 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[2.5, 2.5, 2.5],
+                "Padding": 6,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1":{"Add_Lattice":{
+                    "la_name": "VertexOcta", 
+                    "size": [80.0,80.0,60.0], 
+                    "thk":6.0, 
+                    "Rot":[0.0, 0.0, 0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }},
+          "2":{"Export": {"outfile": ".//Test_results/Sample_Cylinder_Lattice_Infill.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

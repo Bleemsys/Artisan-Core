@@ -1,0 +1,22 @@
+2026-02-20 14:22:24,129 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2026-02-20 14:22:24,129 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2026-02-20 14:22:24,129 [INFO] Version: 0.2.14
+2026-02-20 14:22:24,129 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\ContourLines
+2026-02-20 14:22:24,129 [INFO] reading Json file: Test_json\ContourLines\Test_BingDunDun.json
+2026-02-20 14:22:24,129 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Sample': {'Domain': [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]], 'Shape': 'Box'}, 'Geomfile': '..//..//sample-obj//shell_1_of_bdd_.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [1.0, 1.0, 1.0], 'Padding': 1, 'onGPU': False, 'JsonWorkDir': True, 'memorylimit': 161061273000}, 'WorkFlow': {'1': {'Add_Geometry': {'Name': '..//..//sample-obj//shell_1_of_bdd_.stl', 'k_factor': 0.0, 'push2GeomField': False, 'Paras': {'Scale': [1.0, 1.0, 1.0], 'Trans': [0.0, 0.0, 0.0], 'Rot': [0, 0, 0]}}}, '2': {'Gen_Z_ContourLines': {'res': [1.2, 1.2, 1.2], 'PlaneHeights': [0, 20, 50, 100, 165, 178], 'out_meshfile': './/contourlines_BingDunDun.vtk'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': False}}
+2026-02-20 14:22:24,129 [INFO] Setup basic fill domain......
+2026-02-20 14:22:24,174 [INFO] Number of Domain Partition: 1
+2026-02-20 14:22:24,174 [INFO] Calculating Sub-Domain:1
+2026-02-20 14:22:24,174 [INFO] Building Up GeomDomain......
+2026-02-20 14:22:25,596 [INFO] Geometry & Field Domain Infomation: 
+2026-02-20 14:22:25,597 [INFO] Domain: 
+2026-02-20 14:22:25,598 [INFO] Lower Bound: [-182.0522  -69.7389   -2.412 ]
+2026-02-20 14:22:25,598 [INFO] Upper Bound: [ 14.3858  67.8603 196.9827]
+2026-02-20 14:22:25,599 [INFO] Resolution: [1. 1. 1.]
+2026-02-20 14:22:25,600 [INFO] Workflow Calculation: 
+2026-02-20 14:22:25,600 [INFO] Calculating Add_Geometry
+2026-02-20 14:22:26,859 [INFO] Calculating Gen_Z_ContourLines
+2026-02-20 14:22:26,895 [INFO] PostProcessing Meshes......
+2026-02-20 14:22:26,896 [INFO] No geometric file exported.
+2026-02-20 14:22:26,896 [INFO] Process finished, check the result file.
+2026-02-20 14:22:26,896 [INFO] Peak Memory Usage: 207.49310684204102 MB

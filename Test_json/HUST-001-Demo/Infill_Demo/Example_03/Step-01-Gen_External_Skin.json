@@ -1,0 +1,70 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[2.5, 2.5, 2.5],
+                "Padding": 6,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {
+            "Gen_CylindricalMesh": {
+                "num_elem": [10, 30, 1],
+                "r_range": [2.0, 602.5],
+                "phi_range": [0.0, 1.0],
+                "ori": [0.0, 0.0, 0.0],
+                "Height": 60.0,
+                "Normal": [0.0, 0.0, 1.0],
+                "Mesh_file": "CylindricalMesh"
+            }
+        },
+        "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "Elem_Type": "Hex",
+                "inp_meshfile": "CylindricalMesh",
+                "out_meshfile": ".//Test_results//CylindricalMeshSurf.med",
+                "isSplitTris": true
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//HUST-001-Demo//Infill_Demo//Example_03//GenSurfMesh.mld",
+                "size": [
+                    30.0,
+                    30.0,
+                    30.0
+                ],
+                "thk": 5.0,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "4": {"Subtract_Geometry":{
+                    "Name": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl",
+                    "k_factor": 0.0,
+                    "push2GeomField": false,
+                    "Paras": {
+                        "Scale": [1.0, 1.0, 1.0],
+                        "Trans": [0.0, 0.0, 0.0],
+                        "Rot": [0, 0, 0]
+                       }
+                   }
+              },
+        "999":{"Export": {"outfile": ".//Test_results/Sample_Cylinder_ExternalReinforcement.stl"}}
+    },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

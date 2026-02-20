@@ -1,0 +1,25 @@
+2025-12-30 13:43:17,870 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2025-12-30 13:43:17,870 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2025-12-30 13:43:17,879 [INFO] Version: 0.2.14
+2025-12-30 13:43:17,879 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\ConformalLattice
+2025-12-30 13:43:17,879 [INFO] reading Json file: Test_json\ConformalLattice\Shoe_TetConformal_Infill_LR_02.json
+2025-12-30 13:43:17,879 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Sample': {'Domain': [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]], 'Shape': 'Box'}, 'Geomfile': './/sample-obj//Shore//Shoes.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [0.4, 0.4, 0.4], 'Padding': 5, 'onGPU': False, 'memorylimit': 16106127360}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': './/Test_json//ConformalLattice//Shoe_TetConformal_Infill_LR.mld', 'size': [18.0, 18.0, 18.0], 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}, 'thk': 0.8}}, '2': {'Substract_Surf_Plate': {'Surffile': './/sample-obj//Shore//Shoes_Top.stl', 'thk': 3.5, 'GeomTrim': False}}, '3': {'Add_Surf_Plate': {'Surffile': './/sample-obj//Shore//Shoes_Top.stl', 'thk': 3.51, 'GeomTrim': True}}, '4': {'Add_Surf_Plate': {'Surffile': './/sample-obj//Shore//Shoes_Btm.stl', 'thk': 2.0, 'GeomTrim': True}}, '6': {'Export': {'outfile': './/Test_results/Shoe_TetConformal_Infill_LR.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': False}}
+2025-12-30 13:43:17,879 [INFO] Setup basic fill domain......
+2025-12-30 13:43:17,922 [INFO] Number of Domain Partition: 1
+2025-12-30 13:43:17,924 [INFO] Calculating Sub-Domain:1
+2025-12-30 13:43:17,924 [INFO] Building Up GeomDomain......
+2025-12-30 13:43:20,974 [INFO] Geometry & Field Domain Infomation: 
+2025-12-30 13:43:20,990 [INFO] Domain: 
+2025-12-30 13:43:20,990 [INFO] Lower Bound: [-199.8493  -191.71071  -67.94174]
+2025-12-30 13:43:20,990 [INFO] Upper Bound: [-77.75129   90.03219  -28.344109]
+2025-12-30 13:43:20,990 [INFO] Resolution: [0.4 0.4 0.4]
+2025-12-30 13:43:20,990 [INFO] Workflow Calculation: 
+2025-12-30 13:43:20,990 [INFO] Calculating Add_Lattice
+2025-12-30 13:43:25,079 [INFO] Calculating Substract_Surf_Plate
+2025-12-30 13:43:27,968 [INFO] Calculating Add_Surf_Plate
+2025-12-30 13:43:30,884 [INFO] Calculating Add_Surf_Plate
+2025-12-30 13:43:31,947 [INFO] Calculating Export
+2025-12-30 13:43:36,370 [INFO] PostProcessing Meshes......
+2025-12-30 13:43:36,370 [INFO] Only one partition file, merging meshes will not be conducted.
+2025-12-30 13:43:36,560 [INFO] Process finished, check the result file.
+2025-12-30 13:43:36,560 [INFO] Peak Memory Usage: 1142.297158241272 MB

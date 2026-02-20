@@ -1,0 +1,7 @@
+{
+ "type": "ConformalLattice",
+ "definition": {
+    "meshfile": "CylindricalSurfMesh",
+    "la_name" : "SurfaceCrossPatch"
+    }
+}

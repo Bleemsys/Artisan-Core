@@ -1,0 +1,64 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            1.8,
+            1.8,
+            1.8
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 161061273000
+    },
+    "WorkFlow": {
+        "1": {
+            "Add_Geometry":{
+                   "Name": ".//sample-obj//shell_1_of_bdd_.stl",
+                   "k_factor": 0.0,
+                   "push2GeomField": false,
+                   "Paras": {
+                       "Scale": [1.0, 1.0, 1.0],
+                       "Trans": [0.0, 0.0, 0.0],
+                       "Rot": [0, 0, 0]
+                      }
+                  }
+        },
+        "2": {
+            "Gen_Z_ContourLines":{
+                "res": [1.8, 1.8, 1.8],
+                "PlaneHeights": [100.0, 50.0, 120.0],
+                "out_meshfile": ".//Test_results//contoulines.inp"
+            }
+            
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "type": "ConformalLattice",
+    "definition": {
+        "meshfile": "Surface_Quad",
+        "la_name": ".//Test_json//HUST-001-Demo//Infill_Demo//CustomSurfaceLattice_Strut.txt"
+    }
+}

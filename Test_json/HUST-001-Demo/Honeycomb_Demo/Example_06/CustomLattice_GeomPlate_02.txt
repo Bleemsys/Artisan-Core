@@ -1,0 +1,7 @@
+{
+"type": "Geom-Plate",
+ "definition": {
+                 "file": ".//teapot.obj",
+                 "ladomain" : "Hex"
+                }
+}

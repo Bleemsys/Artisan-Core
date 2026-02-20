@@ -190,7 +190,7 @@ The keyword :code:`Proc_Mesh_Octree` processes the given input mesh and generate
    * - :code:`Fieldfile`
      - In :code:`"Geom"` type, this string has to be a path to :code:`stl`, :code:`ply` or :code:`obj` file. In future, it shall support the field data file. 
    * - :code:`numCoverNodes`
-     - can be range from -1 to 8. If not :code:`0`, the function will eliminate the after refinement mesh elements, any element with the number of inside nodes less then this value shall be removed. if it is :code:`-1`, the function will check whether the mid-point of a element is inside of the geometry. 
+     - can be range from -1 to 8. If not :code:`0`, the function will eliminate the after refinement mesh elements, any element with the number of inside nodes less then this value shall be removed. if it is :code:`-1`, the function will check whether the mid-point of a element is inside of the geometry. If the value is above 8, the algorithm will not remove the mesh outside of geometry, and it will only performs the element sub-divisions. 
    * - :code:`refine_stepsize`
      - The function will gradually expand its checking range by using this step size value. 
    * - :code:`num_refinements`

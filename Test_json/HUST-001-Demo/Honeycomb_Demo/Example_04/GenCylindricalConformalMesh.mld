@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": "CylindricalMesh",
+  "la_name" : ".//Test_json//HUST-001-Demo//Honeycomb_Demo//Example_04//CustomLattice_GeomPlate.txt",
+  "la_domain": "Hex"
+ }
+}

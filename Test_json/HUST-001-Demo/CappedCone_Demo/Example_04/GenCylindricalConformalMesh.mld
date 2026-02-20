@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": "CylindricalMesh",
+  "la_name" : "Gyroid",
+  "la_domain": "Hex"
+ }
+}

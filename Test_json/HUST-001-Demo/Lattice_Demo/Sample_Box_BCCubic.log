@@ -1,0 +1,22 @@
+2025-06-22 19:30:42,564 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2025-06-22 19:30:42,564 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2025-06-22 19:30:42,564 [INFO] Version: 0.2.12
+2025-06-22 19:30:42,564 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\HUST-001-Demo\Lattice_Demo
+2025-06-22 19:30:42,564 [INFO] reading Json file: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\HUST-001-Demo\Lattice_Demo\Sample_Box_BCCubic.json
+2025-06-22 19:30:42,564 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Sample': {'Domain': [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]], 'Shape': 'Box'}, 'Geomfile': './/Test_json//HUST-001-Demo//Lattice_Demo//cube_100mm.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [0.5, 0.5, 0.5], 'Padding': 6, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Add_Lattice': {'la_name': 'BCCubic', 'thk': 2.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': True, 'Cube_Request': {}, 'size': [10.0, 10.0, 20.0]}}, '2': {'Export': {'outfile': './/Test_results/Sample_Box_Lattice_Infill.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': False}}
+2025-06-22 19:30:42,564 [INFO] Setup basic fill domain......
+2025-06-22 19:30:42,564 [INFO] Number of Domain Partition: 1
+2025-06-22 19:30:42,571 [INFO] Calculating Sub-Domain:1
+2025-06-22 19:30:42,571 [INFO] Building Up GeomDomain......
+2025-06-22 19:30:43,384 [INFO] Geometry & Field Domain Infomation: 
+2025-06-22 19:30:43,384 [INFO] Domain: 
+2025-06-22 19:30:43,384 [INFO] Lower Bound: [-6. -6. -6.]
+2025-06-22 19:30:43,384 [INFO] Upper Bound: [106. 106. 106.]
+2025-06-22 19:30:43,384 [INFO] Resolution: [0.5 0.5 0.5]
+2025-06-22 19:30:43,384 [INFO] Workflow Calculation: 
+2025-06-22 19:30:43,384 [INFO] Calculating Add_Lattice
+2025-06-22 19:30:43,970 [INFO] Calculating Export
+2025-06-22 19:30:47,922 [INFO] PostProcessing Meshes......
+2025-06-22 19:30:47,922 [INFO] Only one partition file, merging meshes will not be conducted.
+2025-06-22 19:30:48,191 [INFO] Process finished, check the result file.
+2025-06-22 19:30:48,191 [INFO] Peak Memory Usage: 654.610595703125 MB

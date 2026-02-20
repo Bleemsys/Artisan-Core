@@ -449,6 +449,21 @@ The keyword :code:`Gen_SurfaceReMesh` has the following parameters definitions.
 
 Please note, this is not the universal remesher, but a simple remeshing function for a mesh with averaging size. 
 
+The input mesh geometry may contain sharp or non-smooth features. To improve surface quality, the mesh can be smoothed and remeshed using the keyword :code:`Proc_Mesh_Smoothing`. This process is controlled by the following parameters: 
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`inp_meshfile`
+     - The input watertight triangular surface mesh. 
+   * - :code:`out_meshfile`
+     - The output triangular surface mesh after smoothing.
+   * - :code:`feature_size`
+     - The characteristic size of geometric features to be smoothed. Smaller features below this size will be removed during smoothing. 
+
 ====================
 Stacked Layer Mesher
 ====================
@@ -576,4 +591,82 @@ The resultant mesh lattice are presented below. Same as other mesh, uSer may use
 .. image:: ./pictures/StackedLayerMesh_01.png
 
 .. image:: ./pictures/StackedLayerMesh_02.png
+
+=============
+Contour Lines
+=============
+
+Artisan can generate contour lines for any given geometry. These lines can be exported as a line mesh, allowing users to generate reinforcement patterns on a model's exterior or develop custom slicing algorithms for 3D printing. An example of this process can be found in :code:`.//Test_json//ContourLines//Test_BingDunDun.json`
+
+.. code-block:: json 
+
+    {
+      "Setup": {
+          "Type": "Geometry",
+          "Sample": {
+              "Domain": [
+                  [0.0, 0.0],
+                  [0.0, 0.0],
+                  [0.0, 0.0]
+              ],
+              "Shape": "Box"
+          },
+          "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+          "Rot": [0.0, 0.0, 0.0],
+          "res": [1.0, 1.0, 1.0],
+          "Padding": 1,
+          "onGPU": false,
+          "JsonWorkDir": false,
+          "memorylimit": 161061273000
+      },
+      "WorkFlow": {
+          "1": {
+              "Add_Geometry":{
+                     "Name": ".//sample-obj//shell_1_of_bdd_.stl",
+                     "k_factor": 0.0,
+                     "push2GeomField": false,
+                     "Paras": {
+                         "Scale": [1.0, 1.0, 1.0],
+                         "Trans": [0.0, 0.0, 0.0],
+                         "Rot": [0, 0, 0]
+                        }
+                    }
+          },
+          "2": {
+              "Gen_Z_ContourLines":{
+                  "res": [1.2, 1.2, 1.2],
+                  "PlaneHeights": [0, 20, 50, 100, 165, 178],
+                  "out_meshfile": ".//Test_results//contourlines_BingDunDun.contour"
+              }
+
+          }
+      },
+      "PostProcess": {
+          "CombineMeshes": true,
+          "RemovePartitionMeshFile": false,
+          "RemoveIsolatedParts": true,
+          "ExportLazPts": false
+      }
+   } 
+
+This JSON file generates contour lines at heights of 0, 20, 50, 100, 165, and 178. The system first reads the geometry into the lattice field, then utilizes the :code:`Gen_Z_ContourLines` keyword to produce the lines at the specified elevations. :code:`Gen_Z_ContourLines` generates the contour lines along Z direction. The parameters for the Gen_Z_ContourLines keyword are defined below:
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Details
+   * - :code:`res`
+     - a list of three float numbers represnets the mesh resolution in X, Y and Z direction. 
+   * - :code:`PlaneHeights`
+     - a list of float numbers defines the slicing height for generating the contours. 
+   * - :code:`out_meshfile`
+     - the resultant mesh file. It has two exported formats, the mesh format, e.g. :code:`vtk` or `.inp` files, and the contour lines format with :code:`.contour` file. The contour file is a JSON file containing all sliceing polygons at the defined heights. Each polygon will have a list of vertices and two neighbouring vertices reprsenets the a connecting line. 
+
+Below shows the comparsion between the original model and contour lines. 
+
+.. image:: ./pictures/ContourLines.png
+
+.. image:: ./pictures/ContourLines_01.png
 

@@ -1,0 +1,7 @@
+{
+"type": "Geom-Plate",
+ "definition": {
+                 "file": ".//Cos_WithShell_ZOY.stl",
+                 "ladomain" : "Hex"
+                }
+}

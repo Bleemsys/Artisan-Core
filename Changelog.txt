@@ -148,6 +148,12 @@ This is simple change log recording the major and minor updates
 - Bug fix
 - Doc updates
 
+0.2.14
+- Bug fix
+- Add mesh smoothing function
+- Add contour lines function
+- Doc updates
+
 
 
 

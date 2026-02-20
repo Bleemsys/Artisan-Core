@@ -1,0 +1,7 @@
+{
+"type": "MeshLattice",
+"definition": {
+  "meshfile": "CylindricalSurfMesh",
+  "k": 0.0
+ }
+}

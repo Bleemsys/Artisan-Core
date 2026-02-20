@@ -1,0 +1,105 @@
+{
+    "Setup": {
+        "JsonWorkDir": true,
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -10.0,
+                    620.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            2.5,
+            2.5,
+            2.5
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {"Gen_BoxMesh":{
+                 "num_elem": [8,8,1],
+                 "x_range": [0.0, 1200.0],
+                 "y_range": [0.0, 1200.0],
+                 "z_range": [0.0, 100.0],
+                 "ori":[-600.0, -600.0, 0.0],
+                 "Normal": [0.0,0.0,1.0],
+                 "z_angle": 0.0,
+                 "Mesh_file": "BoxMesh"
+                }
+           },
+        "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "Elem_Type": "Hex",
+                "inp_meshfile": "BoxMesh",
+                "out_meshfile": "SurfaceGeometry",
+                "isSplitTris": true
+            }
+        },
+        "4": {"Add_Geometry":{
+                   "Name": "SurfaceGeometry",
+                   "k_factor": 0.0,
+                   "push2GeomField": true,
+                   "Paras": {
+                       "Scale": [1.0, 1.0, 1.0],
+                       "Trans": [0.0, 0.0, 5.0],
+                       "Rot": [0, 0, 0]
+                      }
+                  }
+             },
+        "10": {
+            "Add_Lattice": {
+                "la_name": ".//GenConformalMesh.mld",
+                "size": [
+                    50.0,
+                    50.0,
+                    50.0
+                ],
+                "thk": 8.00,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": true,
+                "Cube_Request": {}
+            }
+        },
+        
+        "999": {
+            "Export": {
+                "outfile": ".//BoxMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

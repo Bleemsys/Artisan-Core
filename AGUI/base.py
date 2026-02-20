@@ -12,7 +12,7 @@ from tkinter import filedialog, messagebox
 def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, domain_y_lb, domain_y_ub,
                        domain_z_lb, domain_z_ub, geomfile_entry, rot_x_entry, rot_y_entry,
                        rot_z_entry, res_x_entry, res_y_entry, res_z_entry, padding_entry,
-                       ongpu_var, memory_limit_entry, workflow_text_widget, combine_meshes_var,
+                       ongpu_var, jsonworkdir_var, memory_limit_entry, workflow_text_widget, combine_meshes_var,
                        remove_partition_var, remove_isolated_parts_var, export_laz_pts_var):
     
     def get_float(entry_widget, default=0.0):
@@ -42,6 +42,7 @@ def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, do
         "res": [get_float(res_x_entry), get_float(res_y_entry), get_float(res_z_entry)],
         "Padding": get_int(padding_entry),
         "onGPU": ongpu_var.get(),
+        "JsonWorkDir": jsonworkdir_var.get(),
         "memorylimit": get_int(memory_limit_entry)
     }
 
@@ -99,13 +100,23 @@ def save_configuration(sessionfile:str, type_entry, domain_x_lb, domain_x_ub, do
 def load_configuration(type_entry, domain_x_lb, domain_x_ub, domain_y_lb, domain_y_ub,
                        domain_z_lb, domain_z_ub, geomfile_entry, rot_x_entry, rot_y_entry,
                        rot_z_entry, res_x_entry, res_y_entry, res_z_entry, padding_entry,
-                       ongpu_var, memory_limit_entry, workflow_text_widget, combine_meshes_var,
-                       remove_partition_var, remove_isolated_parts_var, export_laz_pts_var):
+                       ongpu_var, jsonworkdir_var, memory_limit_entry, workflow_text_widget, combine_meshes_var,
+                       remove_partition_var, remove_isolated_parts_var, export_laz_pts_var,
+                       filepath = None):
     # Ask the user to select a JSON file
-    filepath = filedialog.askopenfilename(title="Open Configuration File", filetypes=[("JSON Files", "*.json"),
-                                                                                      ("All files", "*.*")])
-    if not filepath:
-        return  # User cancelled the dialog
+    # filepath = filedialog.askopenfilename(title="Open Configuration File", filetypes=[("JSON Files", "*.json"),
+    #                                                                                  ("All files", "*.*")])
+    # if not filepath:
+    #     return  # User cancelled the dialog
+    
+    # If no filepath given, ask the user to select a JSON file
+    if filepath is None:
+        filepath = filedialog.askopenfilename(
+            title="Open Configuration File",
+            filetypes=[("JSON Files", "*.json"), ("All files", "*.*")]
+        )
+        if not filepath:
+            return  # User cancelled the dialog
     
     try:
         # Read and parse the JSON file
@@ -175,6 +186,9 @@ def load_configuration(type_entry, domain_x_lb, domain_x_ub, domain_y_lb, domain
         padding_entry.insert(0, setup_data.get("Padding", ""))
 
         ongpu_var.set(setup_data.get("onGPU", False))
+
+        jsonworkdir_var.set(setup_data.get("Working Dir", False))
+        
         memory_limit_entry.delete(0, tk.END)
         memory_limit_entry.insert(0, setup_data.get("memorylimit", ""))
         

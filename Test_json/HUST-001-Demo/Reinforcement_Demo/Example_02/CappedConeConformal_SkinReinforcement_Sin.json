@@ -1,0 +1,172 @@
+{
+    "Setup": {
+        "JsonWorkDir": true,
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -10.0,
+                    1200.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CappedConeMesh": {
+                "num_elem": [
+                    1,
+                    32,
+                    15
+                ],
+                "r_range": [
+                    360.0,
+                    370.0
+                ],
+                "phi_range": [
+                    0.0,
+                    1.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Height": 1000.0,
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "r_bottom": 310.0,
+                "Mesh_file": ".//CylindricalMesh.inp",
+                "UB_heightRatio": 0.0,
+                "Preserve_thickness": true
+            }
+        },
+        "2":{
+            "Define_Lattice":{
+                "la_name":"Shell",
+                "definition":{
+                        "type": "Geom-Plate",
+                         "definition": {
+                                         "file": ".//Sin_ZOY_Shell.stl",
+                                         "ladomain" : "Hex"
+                                        }
+                        
+                         }
+                }
+            },
+        "3":{
+            "Define_Lattice":{
+                "la_name":"Rib",
+                "definition":{
+                        "type": "Geom-Plate",
+                         "definition": {
+                                         "file": ".//Sin_ZOY_Rib.stl",
+                                         "ladomain" : "Hex"
+                                        }
+                        
+                         }
+                }
+            },
+        "4":{
+            "Define_Lattice":{
+                "la_name":"ConformalMesh_Shell",
+                "definition":{
+                        "type": "ConformalLattice",
+                        "definition": {
+                          "meshfile": ".//CylindricalMesh.inp",
+                          "la_name" : "Shell",
+                          "la_domain": "Hex"
+                         }
+                }
+            }
+        },
+        "5":{
+            "Define_Lattice":{
+                "la_name":"ConformalMesh_Rib",
+                "definition":{
+                        "type": "ConformalLattice",
+                        "definition": {
+                          "meshfile": ".//CylindricalMesh.inp",
+                          "la_name" : "Rib",
+                          "la_domain": "Hex"
+                         }
+                }
+            }
+        },
+        "6": {
+            "Gen_ConformalLatticeMesh": {
+                "definition_file": "ConformalMesh_Shell",
+                "out_meshfile": ".//BaseMeshConformal_Shell_Sin.inp",
+                "size": [50.0, 50.0, 50.0]
+            }
+        },
+        "7": {
+            "Gen_ConformalLatticeMesh": {
+                "definition_file": "ConformalMesh_Rib",
+                "out_meshfile": ".//BaseMeshConformal_Rib_Sin.inp",
+                "size": [50.0, 50.0, 50.0]
+            }
+        },
+        "99": {
+            "Add_Lattice": {
+                "la_name": "ConformalMesh_Rib",
+                "size": [
+                    50.0,
+                    50.0,
+                    50.0
+                ],
+                "thk": 15.00,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "999": {
+            "Export": {
+                "outfile": ".//ConeMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

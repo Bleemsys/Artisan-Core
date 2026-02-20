@@ -11,6 +11,7 @@ from AGUI.RibbonTools import ButtonCreator
 from AGUI.util import ToolTip
 from AGUI.DFEditor import DFEditor
 from AGUI.about import show_credit_window
+from AGUI.CappedConeWindow import CappedConeConformal, CappedConePeriodic, UniversalConformalInfill
 
 class ArtisanWizard(tk.Tk):
     def __init__(self):
@@ -82,6 +83,7 @@ class ArtisanWizard(tk.Tk):
         FieldAdv_tab = ttk.Frame(self.ribbon)
         Export_tab = ttk.Frame(self.ribbon)
         Tools_tab = ttk.Frame(self.ribbon)
+        Addon_tab = ttk.Frame(self.ribbon)
         Help_tab = ttk.Frame(self.ribbon)
 
         # Adding tabs to the notebook
@@ -95,6 +97,7 @@ class ArtisanWizard(tk.Tk):
         self.ribbon.add(FieldAdv_tab, text='Field Adv.')
         self.ribbon.add(Export_tab, text='Export')
         self.ribbon.add(Tools_tab, text='Tools')
+        self.ribbon.add(Addon_tab, text='Addon')
         self.ribbon.add(Help_tab, text='Help')
 
         # Load an image
@@ -263,6 +266,41 @@ class ArtisanWizard(tk.Tk):
         # Call create_buttons method to create buttons
         self.Export_button_creator.create_buttons()
 
+        # Addon Tab
+         # --- Sample Tab: Capped Cone Sample JSON -----------------
+        # Addon_button = ttk.Button(
+        #     Addon_tab,
+        #     text="Capped Cone Sample",
+        #     command=lambda: self.show_df_editor(
+        #     ".//AGUI//templates//ConformalInfill_Base.json",  # path to the template you created
+        #     ".json"    )
+        #     )
+        # Addon_button.grid(row=0, column=0, padx=5, pady=5)
+        # self.create_tooltip(Addon_button, "Open Capped Cone sample JSON editor")
+
+        Addon_btn = ttk.Button(
+            Addon_tab,
+            text="Capped Cone Generator - Conformal Infill",
+            command=self.open_capped_cone_window
+            )
+        Addon_btn.grid(row=0, column=0, padx=10, pady=10)
+
+        Addon_btn = ttk.Button(
+            Addon_tab,
+            text="Capped Cone Generator - Periodic Infill",
+            command=self.open_capped_cone_periodic_window
+            )
+        Addon_btn.grid(row=0, column=10, padx=10, pady=10)
+
+        Addon_btn = ttk.Button(
+            Addon_tab,
+            text="Univeral Mesh Infill",
+            command=self.open_UniveralConformalInfill
+            )
+        Addon_btn.grid(row=0, column=20, padx=10, pady=10)
+
+
+
     def create_tool_button(self, tab, text, icon_path, json_template, file_ext, col_num, tooltip):
         #icon = tk.PhotoImage(file=icon_path)
         #button = ttk.Button(tab, text=text, image=icon,
@@ -285,20 +323,62 @@ class ArtisanWizard(tk.Tk):
             self.workflow_text_widget.insert_json("", json_data)
         return 
 
-    def update_viewer(self, filename = None):
-        wf_dict = self.workflow_text_widget.get_last_entry()
+    # def update_viewer(self, filename = None):
+    #     wf_dict = self.workflow_text_widget.get_last_entry()
+    #     try:
+    #         if filename == None:
+    #             model_path = wf_dict[list(wf_dict.keys())[-1]]["Export"]["outfile"]  
+    #         else:
+    #             model_path = filename
+
+    #         if os.path.isfile(model_path):
+    #                 self.modelviewer.update_model(model_path)
+    #         else:
+    #             messagebox.showinfo("Update Model", "Did not find the results or the model file. Please generate it first.")
+    #     except:
+    #         messagebox.showinfo("Update Model", "The workflow last command does not contain export file information. The last keywords must be Export having its parameter outfile.")
+    #     return None 
+
+    def update_viewer(self, filename=None):
+        # Get model_path either from argument or from last workflow entry
         try:
-            if filename == None:
-                model_path = wf_dict[list(wf_dict.keys())[-1]]["Export"]["outfile"]  
+            if filename is None:
+                wf_dict = self.workflow_text_widget.get_last_entry()
+                # last key in the workflow dict
+                last_key = list(wf_dict.keys())[-1]
+                model_path = wf_dict[last_key]["Export"]["outfile"]
             else:
                 model_path = filename
-            if os.path.isfile(model_path):
-                self.modelviewer.update_model(model_path)
-            else:
-                messagebox.showinfo("Update Model", "Did not find the results or the model file. Please generate it first.")
-        except:
-            messagebox.showinfo("Update Model", "The workflow last command does not contain export file information. The last keywords must be Export having its parameter outfile.")
-        return None 
+        except Exception:
+            messagebox.showinfo(
+                "Update Model",
+                "The workflow last command does not contain export file information. "
+                "The last keywords must be Export having its parameter outfile."
+            )
+            return None
+
+        # If JsonWorkDir is enabled, and session_file is known, and model_path is relative,
+        # resolve model_path relative to the directory of the JSON session file
+        if getattr(self, "jsonworkdir_var", None) is not None and self.jsonworkdir_var.get():
+            if self.session_file and not os.path.isabs(model_path):
+                base_dir = os.path.dirname(self.session_file)
+                model_path = os.path.join(base_dir, model_path)
+
+        # Normalize the path (handles .., . and different separators)
+        model_path = os.path.normpath(model_path)
+
+        # Try to load the model
+        if os.path.isfile(model_path):
+            self.modelviewer.update_model(model_path)
+        else:
+            messagebox.showinfo(
+                "Update Model",
+                "Did not find the results or the model file:\n"
+                f"{model_path}\n\nPlease generate it first."
+            )
+
+        return None
+
 
     def browse_file(self, entry):
         filename = filedialog.askopenfilename(filetypes=(("STL files", "*.stl"), ("All files", "*.*")))
@@ -314,7 +394,7 @@ class ArtisanWizard(tk.Tk):
             self.domain_y_lb, self.domain_y_ub, self.domain_z_lb, self.domain_z_ub,
             self.geomfile_entry, self.rot_x_entry, self.rot_y_entry, self.rot_z_entry,
             self.res_x_entry, self.res_y_entry, self.res_z_entry,
-            self.padding_entry, self.ongpu_var, self.memory_limit_entry,
+            self.padding_entry, self.ongpu_var, self.jsonworkdir_var, self.memory_limit_entry,
             self.workflow_text_widget, self.combine_meshes_var,
             self.remove_partition_var, self.remove_isolated_parts_var, self.export_laz_pts_var
         )
@@ -327,7 +407,7 @@ class ArtisanWizard(tk.Tk):
             self.domain_y_lb, self.domain_y_ub, self.domain_z_lb, self.domain_z_ub,
             self.geomfile_entry, self.rot_x_entry, self.rot_y_entry, self.rot_z_entry,
             self.res_x_entry, self.res_y_entry, self.res_z_entry,
-            self.padding_entry, self.ongpu_var, self.memory_limit_entry,
+            self.padding_entry, self.ongpu_var, self.jsonworkdir_var, self.memory_limit_entry,
             self.workflow_text_widget, self.combine_meshes_var,
             self.remove_partition_var, self.remove_isolated_parts_var, self.export_laz_pts_var
         )
@@ -340,12 +420,39 @@ class ArtisanWizard(tk.Tk):
             self.domain_y_lb, self.domain_y_ub, self.domain_z_lb, self.domain_z_ub,
             self.geomfile_entry, self.rot_x_entry, self.rot_y_entry, self.rot_z_entry,
             self.res_x_entry, self.res_y_entry, self.res_z_entry,
-            self.padding_entry, self.ongpu_var, self.memory_limit_entry,
+            self.padding_entry, self.ongpu_var, self.jsonworkdir_var, self.memory_limit_entry,
             self.workflow_text_widget, self.combine_meshes_var,
             self.remove_partition_var, self.remove_isolated_parts_var, self.export_laz_pts_var
         )
         if self.session_file != None:
             self.title("ArtGUI - Artisan Wizard " + self.session_file)
+
+    def load_config_from_path(self, path: str):
+        """
+        Reload the GUI configuration from a given JSON file path,
+        reusing the logic of load_configuration.
+        """
+        if not path or not os.path.isfile(path):
+            messagebox.showerror("Error", f"Configuration file not found:\n{path}")
+            return
+
+        session = load_configuration(
+            self.type_entry, self.domain_x_lb, self.domain_x_ub,
+            self.domain_y_lb, self.domain_y_ub, self.domain_z_lb, self.domain_z_ub,
+            self.geomfile_entry, self.rot_x_entry, self.rot_y_entry, self.rot_z_entry,
+            self.res_x_entry, self.res_y_entry, self.res_z_entry,
+            self.padding_entry, self.jsonworkdir_var,self.ongpu_var, self.memory_limit_entry,
+            self.workflow_text_widget, self.combine_meshes_var,
+            self.remove_partition_var, self.remove_isolated_parts_var,
+            self.export_laz_pts_var,
+            filepath=path      
+        )
+
+        if session:
+            self.session_file = session
+            self.title("ArtGUI - Artisan Wizard " + self.session_file)
+
+
 
     def on_generate(self):
         if self.session_file is None:
@@ -431,10 +538,16 @@ class ArtisanWizard(tk.Tk):
         ongpu_check = ttk.Checkbutton(frame, text="Use GPU", variable=self.ongpu_var)
         ongpu_check.grid(row=7, column=1, sticky="ew")
 
+        # JsonWorkDir
+        ttk.Label(frame, text="Working Directory:").grid(row=8, column=0, sticky="ew")
+        self.jsonworkdir_var = tk.BooleanVar(value=True)  # default True (or False if you prefer)
+        jsonworkdir_check = ttk.Checkbutton(frame, text="Use JSON Working Directory", variable=self.jsonworkdir_var)
+        jsonworkdir_check.grid(row=8, column=1, sticky="ew")
+
         # Memory Limit
-        ttk.Label(frame, text="Memory Limit:").grid(row=8, column=0, sticky="ew")
+        ttk.Label(frame, text="Memory Limit:").grid(row=10, column=0, sticky="ew")
         self.memory_limit_entry = ttk.Entry(frame)
-        self.memory_limit_entry.grid(row=8, column=1, sticky="ew")
+        self.memory_limit_entry.grid(row=10, column=1, sticky="ew")
         self.memory_limit_entry.insert(0, "1073741824000")  # Default memory limit in bytes
 
         return frame
@@ -492,3 +605,12 @@ class ArtisanWizard(tk.Tk):
 
     def show_about_window(self):
         show_credit_window(self)
+
+    def open_capped_cone_window(self):
+        CappedConeConformal(self)
+    
+    def open_capped_cone_periodic_window(self):
+        CappedConePeriodic(self)
+
+    def open_UniveralConformalInfill(self):
+        UniversalConformalInfill(self)

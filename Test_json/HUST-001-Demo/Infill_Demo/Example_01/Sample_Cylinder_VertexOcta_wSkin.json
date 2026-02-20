@@ -1,0 +1,38 @@
+{"Setup":{      "Type" : "Geometry",
+                "Geomfile": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[2.5, 2.5, 2.5],
+                "Padding": 6,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1":{"Add_Lattice":{
+                    "la_name": "VertexOcta", 
+                    "size": [80.0,80.0,60.0], 
+                    "thk":6.0, 
+                    "Rot":[0.0, 0.0, 0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": true, 
+                    "Cube_Request": {}
+                    }},
+          "2":{"Add_Surf_Plate":{
+                        "Surffile": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl","thk":4.0,
+                        "GeomTrim": true}},
+          "3":{"Gen_SimpleQuadMesh": {
+                 "inp_meshfile": ".//Test_json//HUST-001-Demo//Infill_Demo//Cylinder_R600H60.stl",
+                 "out_meshfile": "Surface_Quad",
+                 "size": [30.0, 30.0, 30.0]
+             }},
+          "4":{"Add_Lattice":{
+                    "la_name": ".//Test_json//HUST-001-Demo//Infill_Demo//Example_01//SurfaceLattice.mld", 
+                    "size": [30.0,30.0,30.0], 
+                    "thk":2.5, 
+                    "Rot":[0.0, 0.0, 0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }},
+          "999":{"Export": {"outfile": ".//Test_results/Sample_Cylinder_Lattice_Infill.stl"}}
+           },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false,
+                "ExportLazPts": false}
+}

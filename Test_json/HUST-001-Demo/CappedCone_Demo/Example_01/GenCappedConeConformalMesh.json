@@ -1,0 +1,156 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -10.0,
+                    620.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CappedConeMesh": {
+                "num_elem": [
+                    3,
+                    20,
+                    3
+                ],
+                "r_range": [
+                    400.0,
+                    600.0
+                ],
+                "phi_range": [
+                    0.0,
+                    1.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Height": 600.0,
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "r_bottom": 400.0,
+                "Mesh_file": "CylindricalMesh",
+                "UB_heightRatio": 0.4,
+                "Preserve_thickness": false
+            }
+        },
+        "2":{
+            "Define_Lattice":{
+                "la_name":"CustomLattice_Strut",
+                "definition":{
+                        "type": "strut",
+                        "definition": {
+                        "pts": 
+                        [[1.0, 1.0, 0.0],
+                         [1.0, 1.0, 1.0],
+                         [0.0, 1.0, 1.0],
+                         [0.0, 1.0, 0.0],
+                         [0.0, 0.0, 0.0],
+                         [0.0, 0.0, 1.0],
+                         [1.0, 0.0, 1.0],
+                         [1.0, 0.0, 0.0]],
+                        "cnnt":[[0, 1],
+                               [0, 3],
+                               [3, 2],
+                               [2, 1],
+                               [1, 6],
+                               [0, 7],
+                        
+                               [3, 4],
+                               [2, 5],
+                               [7, 4],
+                               [7, 6],
+                               [6, 5],
+                        
+                               [4, 5],
+                               [0, 5],
+                               [1, 4],
+                               [2, 7],
+                               [3, 6]],
+                        "ladomain" : "Hex"
+                         }
+                }
+            }
+        },
+        "3":{
+            "Define_Lattice":{
+                "la_name":"GenCylindricalConformalMesh",
+                "definition":{
+                        "type": "ConformalLattice",
+                        "definition": {
+                          "meshfile": "CylindricalMesh",
+                          "la_name" : "CustomLattice_Strut",
+                          "la_domain": "Hex"
+                         }
+                }
+            }
+        },
+        "4": {
+            "Add_Lattice": {
+                "la_name": "GenCylindricalConformalMesh",
+                "size": [
+                    50.0,
+                    50.0,
+                    50.0
+                ],
+                "thk": 15.00,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "999": {
+            "Export": {
+                "outfile": ".//Test_results/ConeMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

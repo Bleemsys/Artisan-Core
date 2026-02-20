@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": "CylindricalMesh",
+  "la_name" : ".//CustomLattice_GeomPlate.txt",
+  "la_domain": "Hex"
+ }
+}

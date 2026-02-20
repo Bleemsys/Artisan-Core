@@ -1,0 +1,24 @@
+2025-09-20 09:42:57,688 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2025-09-20 09:42:57,689 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2025-09-20 09:42:57,689 [INFO] Version: 0.2.14
+2025-09-20 09:42:57,689 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\MeshLattice\FieldDrivenMesh
+2025-09-20 09:42:57,690 [INFO] reading Json file: Test_json\MeshLattice\FieldDrivenMesh\FieldDrivenMesh_Attractor.json
+2025-09-20 09:42:57,690 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[-10.0, 1010.0], [-10.0, 1010.0], [-10.0, 1010.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [5.0, 5.0, 5.0], 'Padding': 1, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Gen_BoxMesh': {'num_elem': [10, 10, 10], 'x_range': [0.0, 1000.0], 'y_range': [0.0, 1000.0], 'z_range': [0.0, 1000.0], 'ori': [0.0, 0.0, 0.0], 'Normal': [0.0, 0.0, 1.0], 'z_angle': 0.0, 'Mesh_file': './/Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh.med'}}, '2': {'Proc_Mesh_FieldDrivenMesh': {'inp_meshfile': './/Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh.med', 'out_meshfile': './/Test_json//MeshLattice//FieldDrivenMesh//BoxHexMesh_DM.med', 'MultiSize': {'Type': 'Attractor', 'Data': [[0, 0, 0, 500, 0.5], [1000, 1000, 1000, 1000, 0.5], [0, 1000, 1000, 350, 0.8]], 'FieldFile': ''}}}, '10': {'Add_Lattice': {'la_name': './/Test_json//MeshLattice//FieldDrivenMesh//GenHexMesh.mld', 'size': [110.0, 110.0, 110.0], 'thk': 10.0, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}}}, '10000': {'Export': {'outfile': './/Test_results/BoxHexMesh_MultiSize.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': False, 'ExportLazPts': True}}
+2025-09-20 09:42:57,690 [INFO] Setup basic fill domain......
+2025-09-20 09:42:57,692 [INFO] Number of Domain Partition: 1
+2025-09-20 09:42:57,692 [INFO] Calculating Sub-Domain:1
+2025-09-20 09:42:57,693 [INFO] Building Up Sample Domain
+2025-09-20 09:42:58,286 [INFO] Geometry & Field Domain Infomation: 
+2025-09-20 09:42:58,287 [INFO] Domain: 
+2025-09-20 09:42:58,288 [INFO] Lower Bound: [-20. -20. -20.]
+2025-09-20 09:42:58,288 [INFO] Upper Bound: [1020. 1020. 1020.]
+2025-09-20 09:42:58,289 [INFO] Resolution: [5. 5. 5.]
+2025-09-20 09:42:58,289 [INFO] Workflow Calculation: 
+2025-09-20 09:42:58,290 [INFO] Calculating Gen_BoxMesh
+2025-09-20 09:42:58,923 [INFO] Calculating Proc_Mesh_FieldDrivenMesh
+2025-09-20 09:42:58,945 [INFO] Calculating Add_Lattice
+2025-09-20 09:43:03,022 [INFO] Calculating Export
+2025-09-20 09:43:07,028 [INFO] PostProcessing Meshes......
+2025-09-20 09:43:07,029 [INFO] Only one partition file, merging meshes will not be conducted.
+2025-09-20 09:43:07,379 [INFO] Process finished, check the result file.
+2025-09-20 09:43:07,379 [INFO] Peak Memory Usage: 773.8934926986694 MB

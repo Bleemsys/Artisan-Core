@@ -1,0 +1,69 @@
+{
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [[-650.0, 650.0], [-650.0, 650.0], [-200.0, 620.0]],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [0.0, 0.0, 0.0],
+        "res": [5.0, 5.0, 5.0],
+        "Padding": 1,
+        "onGPU": false,
+        "JsonWorkDir":true,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CappedConeMesh": {
+                "num_elem": [3, 20, 3],
+                "r_range": [400.0, 600.0],
+                "phi_range": [0.0, 1.0],
+                "ori": [0.0, 0.0, 0.0],
+                "Height": 600.0,
+                "Normal": [0.0, 0.0, 1.0],
+                "r_bottom": 400.0,
+                "Mesh_file": "CappedConeMesh",
+                "UB_heightRatio": 0.4,
+                "Preserve_thickness": false
+            }
+        },
+        "2": {
+            "Define_Lattice": {
+                "la_name": "GenCappedConeConformalMesh",
+                "definition": {
+                    "type": "ConformalLattice",
+                    "definition": {
+                        "meshfile": "CappedConeMesh",
+                        "la_name": "BCCubic",
+                        "la_domain": "Hex",
+                        "k": 15.0
+                    }
+                }
+            }
+        },
+        "5": {
+            "Add_Lattice": {
+                "la_name": "GenCappedConeConformalMesh",
+                "size": [60.0, 60.0, 60.0],
+                "thk": 15.0,
+                "Rot": [0.0, 0.0, 0.0],
+                "Trans": [0.0, 0.0, 0.0],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "999": {
+            "Export": {
+                "outfile": ".//ConeMesh_ConformalLattice_Base.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

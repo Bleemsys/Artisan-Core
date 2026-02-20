@@ -1,0 +1,140 @@
+{
+    "Setup": {
+        "JsonWorkDir": true,
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -610.0,
+                    610.0
+                ],
+                [
+                    -10.0,
+                    1200.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            5.0,
+            5.0,
+            5.0
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CappedConeMesh": {
+                "num_elem": [
+                    1,
+                    32,
+                    15
+                ],
+                "r_range": [
+                    360.0,
+                    370.0
+                ],
+                "phi_range": [
+                    0.0,
+                    1.0
+                ],
+                "ori": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Height": 1000.0,
+                "Normal": [
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "r_bottom": 310.0,
+                "Mesh_file": ".//CylindricalMesh.inp",
+                "UB_heightRatio": 0.0,
+                "Preserve_thickness": true
+            }
+        },
+        "2":{
+            "Define_Lattice":{
+                "la_name":"CustomLattice_GeomPlate",
+                "definition":{
+                        "type": "Geom-Plate",
+                         "definition": {
+                                         "file": ".//Cos_WithShell_ZOY.stl",
+                                         "ladomain" : "Hex"
+                                        }
+                        
+                         }
+                }
+            },
+        "3":{
+            "Define_Lattice":{
+                "la_name":"GenCylindricalConformalMesh",
+                "definition":{
+                        "type": "ConformalLattice",
+                        "definition": {
+                          "meshfile": ".//CylindricalMesh.inp",
+                          "la_name" : "CustomLattice_GeomPlate",
+                          "la_domain": "Hex"
+                         }
+                }
+            }
+        },
+        "4": {
+            "Gen_ConformalLatticeMesh": {
+                "definition_file": "GenCylindricalConformalMesh",
+                "out_meshfile": ".//BaseMeshConformal_withShell.inp",
+                "size": [50.0, 50.0, 50.0], 
+                "Rot":[0.0, 0.0, 0.0]
+            }
+        },
+        "5": {
+            "Add_Lattice": {
+                "la_name": "GenCylindricalConformalMesh",
+                "size": [
+                    50.0,
+                    50.0,
+                    50.0
+                ],
+                "thk": 15.00,
+                "Rot": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Trans": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "999": {
+            "Export": {
+                "outfile": ".//ConeMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+}

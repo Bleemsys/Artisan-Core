@@ -1,0 +1,8 @@
+{
+"type": "ConformalLattice",
+"definition": {
+  "meshfile": "CylindricalMesh",
+  "la_name" : ".//Test_json//HUST-001-Demo//CappedCone_Demo//Example_02//CustomLattice_Strut.txt",
+  "la_domain": "Hex"
+ }
+}

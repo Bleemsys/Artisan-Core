@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Meshing 01 &#8212; Artisan 0.2.13 documentation</title>
+    <title>Meshing 01 &#8212; Artisan 0.2.14 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=d069a6b7"></script>
+    <script src="_static/documentation_options.js?v=7aa1f57f"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.13 documentation</p>
+    <p class="title logo__title">Artisan 0.2.14 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -325,6 +325,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voronoi-polygon">Voronoi Polygon</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-remesh">Surface Remesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacked-layer-mesher">Stacked Layer Mesher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contour-lines">Contour Lines</a></li>
 </ul>
             </nav>
         </div>
@@ -759,6 +760,30 @@ document.write(`
 </div>
 <img alt="_images/EngineBracket_SurfaceRemsh.png" src="_images/EngineBracket_SurfaceRemsh.png" />
 <p>Please note, this is not the universal remesher, but a simple remeshing function for a mesh with averaging size.</p>
+<p>The input mesh geometry may contain sharp or non-smooth features. To improve surface quality, the mesh can be smoothed and remeshed using the keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Smoothing</span></code>. This process is controlled by the following parameters:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>The input watertight triangular surface mesh.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>The output triangular surface mesh after smoothing.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">feature_size</span></code></p></td>
+<td><p>The characteristic size of geometric features to be smoothed. Smaller features below this size will be removed during smoothing.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="stacked-layer-mesher">
 <h2>Stacked Layer Mesher<a class="headerlink" href="#stacked-layer-mesher" title="Link to this heading">#</a></h2>
@@ -893,6 +918,87 @@ document.write(`
 <img alt="_images/StackedLayerMesh_01.png" src="_images/StackedLayerMesh_01.png" />
 <img alt="_images/StackedLayerMesh_02.png" src="_images/StackedLayerMesh_02.png" />
 </section>
+<section id="contour-lines">
+<h2>Contour Lines<a class="headerlink" href="#contour-lines" title="Link to this heading">#</a></h2>
+<p>Artisan can generate contour lines for any given geometry. These lines can be exported as a line mesh, allowing users to generate reinforcement patterns on a model’s exterior or develop custom slicing algorithms for 3D printing. An example of this process can be found in <code class="code docutils literal notranslate"><span class="pre">.//Test_json//ContourLines//Test_BingDunDun.json</span></code></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">           </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">               </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">               </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">               </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
+<span class="w">           </span><span class="p">],</span>
+<span class="w">           </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">       </span><span class="p">},</span>
+<span class="w">       </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">       </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">       </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;JsonWorkDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">161061273000</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">           </span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:{</span>
+<span class="w">                  </span><span class="nt">&quot;Name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                  </span><span class="nt">&quot;Paras&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                      </span><span class="nt">&quot;Scale&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">                      </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                      </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span>
+<span class="w">                     </span><span class="p">}</span>
+<span class="w">                 </span><span class="p">}</span>
+<span class="w">       </span><span class="p">},</span>
+<span class="w">       </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">           </span><span class="nt">&quot;Gen_Z_ContourLines&quot;</span><span class="p">:{</span>
+<span class="w">               </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="mf">1.2</span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;PlaneHeights&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">165</span><span class="p">,</span><span class="w"> </span><span class="mi">178</span><span class="p">],</span>
+<span class="w">               </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//contourlines_BingDunDun.contour&quot;</span>
+<span class="w">           </span><span class="p">}</span>
+
+<span class="w">       </span><span class="p">}</span>
+<span class="w">   </span><span class="p">},</span>
+<span class="w">   </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This JSON file generates contour lines at heights of 0, 20, 50, 100, 165, and 178. The system first reads the geometry into the lattice field, then utilizes the <code class="code docutils literal notranslate"><span class="pre">Gen_Z_ContourLines</span></code> keyword to produce the lines at the specified elevations. <code class="code docutils literal notranslate"><span class="pre">Gen_Z_ContourLines</span></code> generates the contour lines along Z direction. The parameters for the Gen_Z_ContourLines keyword are defined below:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">res</span></code></p></td>
+<td><p>a list of three float numbers represnets the mesh resolution in X, Y and Z direction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">PlaneHeights</span></code></p></td>
+<td><p>a list of float numbers defines the slicing height for generating the contours.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>the resultant mesh file. It has two exported formats, the mesh format, e.g. <code class="code docutils literal notranslate"><span class="pre">vtk</span></code> or <cite>.inp</cite> files, and the contour lines format with <code class="code docutils literal notranslate"><span class="pre">.contour</span></code> file. The contour file is a JSON file containing all sliceing polygons at the defined heights. Each polygon will have a list of vertices and two neighbouring vertices reprsenets the a connecting line.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Below shows the comparsion between the original model and contour lines.</p>
+<img alt="_images/ContourLines.png" src="_images/ContourLines.png" />
+<img alt="_images/ContourLines_01.png" src="_images/ContourLines_01.png" />
+</section>
 </section>
 
 
@@ -945,6 +1051,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voronoi-polygon">Voronoi Polygon</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-remesh">Surface Remesh</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacked-layer-mesher">Stacked Layer Mesher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contour-lines">Contour Lines</a></li>
 </ul>
   </nav></div>
 
