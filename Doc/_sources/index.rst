@@ -34,6 +34,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Primitive Design <Primitive.rst>
    Field Operation <OPField.rst>
    Grid Field Container <FieldContainer.rst>
+   Line Structure <LineStructure.rst>
    Lattice Transition <TransLattice.rst>
    Compression <Compression.rst>
    FEA Interface <FEAInter.rst>

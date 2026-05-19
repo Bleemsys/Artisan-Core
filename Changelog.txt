@@ -154,6 +154,13 @@ This is simple change log recording the major and minor updates
 - Add contour lines function
 - Doc updates
 
+0.2.15
+- Bug fix
+- Improved field container
+- Add Laplace field generator, and stream line calculation, MST, line structure
+- Doc updates
+
+
 
 
 

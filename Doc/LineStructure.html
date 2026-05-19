@@ -1,0 +1,771 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Line Structure &#8212; Artisan 0.2.14 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=7aa1f57f"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'LineStructure';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lattice Transition" href="TransLattice.html" />
+    <link rel="prev" title="Grid Field Container" href="FieldContainer.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.14 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Line Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/LineStructure.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Line Structure</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-spanning-tree">Minimum Spanning Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlines-over-field">Streamlines over Field</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="line-structure">
+<span id="linestructure"></span><h1>Line Structure<a class="headerlink" href="#line-structure" title="Link to this heading">#</a></h1>
+<p>Line structures that conform to complex shapes can be generated without explicitly defining lattice units or meshes. Artisan currently supports two primary approaches for constructing line structures: point-based algorithms and field-based generation. The point-based approach uses specialized algorithms to connect predefined material points, while the field-based approach allows users to leverage external fields, internal fields, and Artisan’s grid field container to build a target field and generate line structures directly from it. Future development will focus on expanding and integrating more advanced line structure generation capabilities within Artisan.</p>
+<section id="minimum-spanning-tree">
+<h2>Minimum Spanning Tree<a class="headerlink" href="#minimum-spanning-tree" title="Link to this heading">#</a></h2>
+<p>A Minimum Spanning Tree (MST) is a graph-based optimization method used to connect a set of points with the minimum total connection cost. In a connected, weighted, undirected graph, an MST links all vertices together without forming cycles while minimizing the sum of edge weights. This makes it an efficient solution for designing lightweight networks, such as transportation systems, communication networks, and structural frameworks. In computational design, MST algorithms can be used to generate optimized line structures by efficiently connecting material points while reducing redundancy.</p>
+<p>Example <code class="code docutils literal notranslate"><span class="pre">.//Test_json//MaterialPoints//BingDunDun_Infill_LR.json</span></code> gives a basic workflow of generating MST line structure.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">161061273000</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Gen_MaterialPoints_SurfaceLayers&quot;</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="s2">&quot;.//sample-obj//shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;depth&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;res&quot;</span><span class="p">:[</span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.8</span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;sampling&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Poisson&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;out_matpoints_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//BingDunDun_MatPts_Grid.csv&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Gen_MSTMesh_Basic&quot;</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">&quot;inp_matpoints_file&quot;</span><span class="p">:</span><span class="s2">&quot;.//Test_results//BingDunDun_MatPts_Grid.csv&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="s2">&quot;.//Test_results//BingDunDun_MST_Mesh.inp&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;3&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;Define_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MSTMesh&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;definition&quot;</span><span class="p">:{</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//BingDunDun_MST_Mesh.inp&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;4&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">                    </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MSTMesh&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">,</span><span class="mf">5.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">               </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;5&quot;</span><span class="p">:{</span>
+<span class="w">              </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//BingDunDun_MST_Lattice.stl&quot;</span><span class="p">}</span>
+<span class="w">              </span><span class="p">}</span>
+
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Above workflow does the following operations.</p>
+<ul class="simple">
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">1</span></code> with <code class="code docutils literal notranslate"><span class="pre">Gen_MaterialPoints_SurfaceLayers</span></code> generates sampling points on the surface of geometry with  <code class="code docutils literal notranslate"><span class="pre">0</span></code> and <code class="code docutils literal notranslate"><span class="pre">10</span></code> depth.</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">2</span></code> with <code class="code docutils literal notranslate"><span class="pre">Gen_MSTMesh_Basic</span></code> computes the MST line structure with previous generated material points and export the results as beam elements.</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">3</span></code> with <code class="code docutils literal notranslate"><span class="pre">Define_Lattice</span></code> defines the mesh lattice which read the mesh exported from item <code class="code docutils literal notranslate"><span class="pre">2</span></code> .</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">4</span></code> with <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> generate the lattice.</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">5</span></code> with <code class="code docutils literal notranslate"><span class="pre">Export</span></code> extracts the mesh and export the mesh into a file.</p></li>
+</ul>
+<p>The parameters of the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_MaterialPoints_SurfaceLayers</span></code> are defined as below.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>A file path string of the input geometry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">depth</span></code></p></td>
+<td><p>A list of numerical values that defines the sampling surfaces. In this example, the material is sampled on the geometry surface itself (SDF depth <code class="code docutils literal notranslate"><span class="pre">0.0</span></code>) as well as on an inward offset surface at an SDF depth of <code class="code docutils literal notranslate"><span class="pre">10.0</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">res</span></code></p></td>
+<td><p>approximated material points spacing distance in X, Y and Z direction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">sampling</span></code></p></td>
+<td><p>Sampling strategy, it supports <code class="code docutils literal notranslate"><span class="pre">Poisson</span></code> sampling algorithm in the current version.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_matpoints_file</span></code></p></td>
+<td><p>the export file path of the generated material points.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The parameters of the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_MSTMesh_Basic</span></code> are defined as below.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_matpoints_file</span></code></p></td>
+<td><p>A file path string of the input material points file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>an exported results mesh file, or mesh id in mesh container.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Two layers of tree structures were generated based on defined depth.</p>
+<img alt="_images/MST_01.png" src="_images/MST_01.png" />
+<img alt="_images/MST_02.png" src="_images/MST_02.png" />
+</section>
+<section id="streamlines-over-field">
+<h2>Streamlines over Field<a class="headerlink" href="#streamlines-over-field" title="Link to this heading">#</a></h2>
+<p>Artisan is now focusing on the development of field based line structure without defining mesh and lattice unit.
+Unlike the mesh based conformal lattice, the field based line structure lattice do not rely on the pre-defined mesh, or lattice unit, user only need to produce a field that conformal to the geometry shape, and use the streamline algorithm to generate the structure.</p>
+<p>Example <code class="code docutils literal notranslate"><span class="pre">Test_jsonLaplaceFieldLaplaceField_LineStructure.json</span></code> shows a procedure of field based conformal line structure lattice generation using laplace field.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">            </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;..//..//sample-obj//LaplaceFieldGeometry.stl&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">161061273000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;JsonWorkDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">},</span>
+<span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Gen_Field_Laplace&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="s2">&quot;..//..//sample-obj//LaplaceFieldGeometry.stl&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;sources&quot;</span><span class="p">:[</span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">170.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;source_strengths&quot;</span><span class="p">:[</span><span class="mf">1000.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;sinks&quot;</span><span class="p">:[</span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-35.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;sink_strengths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">-1000.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;influence_factors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;kernel&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tophat&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;solver_factors&quot;</span><span class="p">:{</span>
+<span class="w">                </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bicgstab&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;tol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;maxiter&quot;</span><span class="p">:</span><span class="mi">300</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;out_fieldfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LaplaceField&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;is_create_on_lattice_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;2&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;Gen_Mesh_Streamlines&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;inp_fieldfile&quot;</span><span class="p">:</span><span class="s2">&quot;LaplaceField&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="s2">&quot;..//..//Test_results//LaplaceField_Mesh.inp&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">170.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;sink&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">75.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-35.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;step&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.5</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;num_integration_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">350</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;num_streamlines_seeds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;source_plane_dir&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;source_plane_radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;min_streamlines_spacing&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Define_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LaplaceStreamLines&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MeshLattice&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;..//..//Test_results//LaplaceField_Mesh.inp&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;k&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="w">                            </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;4&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LaplaceStreamLines&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">,</span><span class="mf">10.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Rot&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;Trans&quot;</span><span class="p">:[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">       </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;999&quot;</span><span class="p">:{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;..//..//Test_results//LaplaceField_LineMeshLattice.stl&quot;</span><span class="p">}}</span>
+<span class="p">},</span>
+<span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Above workflow does the following operations.</p>
+<ul class="simple">
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">1</span></code> with <code class="code docutils literal notranslate"><span class="pre">Gen_Field_Laplace</span></code> solves the laplace equation with defined source and sink points.</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">2</span></code> with <code class="code docutils literal notranslate"><span class="pre">Gen_Mesh_Streamlines</span></code> reads the field, and generates the streamlines of the field.</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">3</span></code> with <code class="code docutils literal notranslate"><span class="pre">Define_Lattice</span></code> defines the mesh lattice which read the mesh exported from item <code class="code docutils literal notranslate"><span class="pre">2</span></code> .</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">4</span></code> with <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> generate the lattice.</p></li>
+<li><p>Work item <code class="code docutils literal notranslate"><span class="pre">5</span></code> with <code class="code docutils literal notranslate"><span class="pre">Export</span></code> extracts the mesh and export the mesh into a file.</p></li>
+</ul>
+<p>The <code class="code docutils literal notranslate"><span class="pre">Gen_Field_Laplace</span></code> keyword solves a well-defined Laplace equation over the specified domain. In this formulation, the given geometry is treated as the boundary, with a zero normal flux boundary condition applied, for example, effectively modeling the boundary as a perfectly insulated layer, analogous to a heat transfer conduction problem with no flux across the surface.</p>
+<p>The parameters of the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_Field_Laplace</span></code> are defined as below.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>A mesh ID or file path of defined geometry as boundary of the field problem.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">res</span></code></p></td>
+<td><p>A list of numerical values that defines the sampling surfaces. In this example, the material is sampled on the geometry surface itself (SDF depth <code class="code docutils literal notranslate"><span class="pre">0.0</span></code>) as well as on an inward offset surface at an SDF depth of <code class="code docutils literal notranslate"><span class="pre">10.0</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">sources</span></code></p></td>
+<td><p>A list of 3 float numbers defining the coordinate of source.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">source_strengths</span></code></p></td>
+<td><p>Strength of the source, usually this is a positive number.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">sinks</span></code></p></td>
+<td><p>A list of 3 float numbers defining the coordinate of sink.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">sink_strengths</span></code></p></td>
+<td><p>Strength of the sink, usually this is a negative number.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">influence_factors</span></code></p></td>
+<td><p>This defines the source and sink influence volumes, it contains two parameters, <code class="code docutils literal notranslate"><span class="pre">kernel</span></code> defines influence pattern, <code class="code docutils literal notranslate"><span class="pre">tophat</span></code> means the strength maintaining constant value within this given <code class="code docutils literal notranslate"><span class="pre">radius</span></code> volume.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">solver_factors</span></code></p></td>
+<td><dl class="simple">
+<dt>This defines the solver related parameters: <code class="code docutils literal notranslate"><span class="pre">method</span></code> supports the solver <code class="code docutils literal notranslate"><span class="pre">cg</span></code>, <code class="code docutils literal notranslate"><span class="pre">gmres</span></code>, <code class="code docutils literal notranslate"><span class="pre">bicgstab</span></code>,</dt><dd><p><code class="code docutils literal notranslate"><span class="pre">spsolve</span></code> and <code class="code docutils literal notranslate"><span class="pre">splu</span></code>; <code class="code docutils literal notranslate"><span class="pre">tol</span></code> defines tolerance of the numerical convergence; <code class="code docutils literal notranslate"><span class="pre">maxiter</span></code> defines the maximum number of iteration.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_fieldfile</span></code></p></td>
+<td><p>the export ID or file path for the field results.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">is_create_on_lattice_field</span></code></p></td>
+<td><p>if <code class="code docutils literal notranslate"><span class="pre">true</span></code>, the grids over the domain for numerical solution will created on the lattice field.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_Mesh_Streamlines</span></code> generates the stream lines from field as beam element based mesh. User may use this mesh as tool mesh, for example, to generate the pipe lines for fluids driven heat transferring application.</p>
+<p>The parameters of the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_Mesh_Streamlines</span></code> are defined as below.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_fieldfile</span></code></p></td>
+<td><p>A field ID or a field file path as input field.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>A mesh ID or mesh file path for exporting results.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">source</span></code></p></td>
+<td><p>A coordinate of the source point.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">sink</span></code></p></td>
+<td><p>A coordinate of the sink point, e.g. stop point.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">num_integration_steps</span></code></p></td>
+<td><p>The number of numerical integration steps.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">source_plane_dir</span></code></p></td>
+<td><p>The keyword will define a circle area for generating a number of seed points to start computing the stream lines, <code class="code docutils literal notranslate"><span class="pre">source_plane_dir</span></code> defines the direction of plane at the <code class="code docutils literal notranslate"><span class="pre">source</span></code> point.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">source_plane_radius</span></code></p></td>
+<td><p>The radius of the circle around the <code class="code docutils literal notranslate"><span class="pre">source</span></code> point to generate the seed points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">num_streamlines_seeds</span></code></p></td>
+<td><p>The total number of candidate seed points of the starting points of stream lines. Please note, the some candidates will be removed from results if neighboring two lines are smaller than the <code class="code docutils literal notranslate"><span class="pre">min_streamlines_spacing</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">min_streamlines_spacing</span></code></p></td>
+<td><p>minimum spacing between two neighboring stream lines, if less than, one stream line will be removed from result.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Below, the streamline lattice is overlaid within the specified geometric domain. The generated lattice, highlighted in green, conforms perfectly to the given geometry. Users can further generate multiple layers to fill the remaining available space.</p>
+<img alt="_images/LaplaceField_01.png" src="_images/LaplaceField_01.png" />
+<img alt="_images/LaplaceField_02.png" src="_images/LaplaceField_02.png" />
+<img alt="_images/LaplaceField_03.png" src="_images/LaplaceField_03.png" />
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="FieldContainer.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Grid Field Container</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="TransLattice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lattice Transition</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-spanning-tree">Minimum Spanning Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlines-over-field">Streamlines over Field</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

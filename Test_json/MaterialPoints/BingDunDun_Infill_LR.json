@@ -1,0 +1,80 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": ".//sample-obj//shell_1_of_bdd_.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            0.8,
+            0.8,
+            0.8
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 161061273000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_MaterialPoints_SurfaceLayers":{
+                "inp_meshfile":".//sample-obj//shell_1_of_bdd_.stl", 
+                "depth": [0, 10], 
+                "res":[5.0, 5.0, 1.8], 
+                "sampling": "Poisson", 
+                "out_matpoints_file": ".//Test_results//BingDunDun_MatPts_Grid.csv"
+            }
+        },
+        "2": {
+            "Gen_MSTMesh_Basic":{
+                "inp_matpoints_file":".//Test_results//BingDunDun_MatPts_Grid.csv", 
+                "out_meshfile":".//Test_results//BingDunDun_MST_Mesh.inp"
+            }
+        },
+        "3":{
+            "Define_Lattice":{
+                "la_name": "MSTMesh",
+                "definition":{
+                    "type": "MeshLattice",
+                    "definition": {
+                        "meshfile": ".//Test_results//BingDunDun_MST_Mesh.inp"
+                    }
+                }
+            }
+        },
+        "4": {"Add_Lattice":{
+                    "la_name": "MSTMesh", 
+                    "size": [5.0,5.0,5.0], "thk":1.2, "Rot":[0.0,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+        "5":{
+              "Export": {"outfile": ".//Test_results//BingDunDun_MST_Lattice.stl"}
+              }
+
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}

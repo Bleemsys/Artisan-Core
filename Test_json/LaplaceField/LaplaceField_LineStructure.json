@@ -1,0 +1,97 @@
+{
+    "Setup": {
+        "Type": "Geometry",
+        "Sample": {
+            "Domain": [
+                [
+                    0.0, 0.0
+                ],
+                [
+                    0.0, 0.0
+                ],
+                [
+                    0.0, 0.0
+                ]
+            ],
+            "Shape": "Box"
+        },
+        "Geomfile": "..//..//sample-obj//LaplaceFieldGeometry.stl",
+        "Rot": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "res": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "Padding": 5,
+        "onGPU": false,
+        "memorylimit": 161061273000,
+        "JsonWorkDir": true
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_Field_Laplace": {
+                "inp_meshfile":"..//..//sample-obj//LaplaceFieldGeometry.stl", 
+                "res": [2.5, 2.5, 2.5], 
+                "sources":[75.0, 75.0, 170.0], 
+                "source_strengths":[1000.0],
+                "sinks":[75.0, 75.0, -35.0],
+                "sink_strengths": [-1000.0],
+                "influence_factors": {
+                    "radius": 50,                     
+                    "kernel": "tophat"
+                }, 
+                "solver_factors":{
+                    "method": "bicgstab",
+                    "tol": 1e-3,
+                    "maxiter":300
+                },
+                "out_fieldfile": "LaplaceField", 
+                "is_create_on_lattice_field": false       
+            }
+        },
+        "2":{
+            "Gen_Mesh_Streamlines": {
+                "inp_fieldfile":"LaplaceField", 
+                "out_meshfile":"..//..//Test_results//LaplaceField_Mesh.inp",               
+                "source": [75.0, 75.0, 170.0], 
+                "sink": [75.0, 75.0, -35.0],
+                "step": 1.5, 
+                "num_integration_steps": 350,
+                "num_streamlines_seeds": 100,               
+                "source_plane_dir": [0.0, 0.0, -1.0],
+                "source_plane_radius": 20.0,
+                "min_streamlines_spacing": 2.0
+            }
+        },
+        "3": {
+        "Define_Lattice":{
+            "la_name": "LaplaceStreamLines",
+            "definition": {
+                    "type": "MeshLattice",
+                    "definition": {
+                            "meshfile": "..//..//Test_results//LaplaceField_Mesh.inp",
+                            "k" : 0.0
+                                }
+                        }
+                    }
+            },
+    "4": {"Add_Lattice":{
+                "la_name": "LaplaceStreamLines", 
+                "size": [10.0,10.0,10.0], 
+                "thk":1.2, "Rot":[0.0, 0.0, 0.0], "Trans":[0.0, 0.0, 0.0],
+                "Inv": false, "Fill": true, "Cube_Request": {}
+                }
+           },
+    "999":{"Export": {"outfile": "..//..//Test_results//LaplaceField_LineMeshLattice.stl"}}    
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": false
+    }
+}
