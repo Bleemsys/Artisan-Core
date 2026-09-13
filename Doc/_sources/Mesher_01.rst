@@ -526,7 +526,8 @@ The stacked-layer mesher offers a simple way to generate a conformal mesh around
                 "out_meshfile": "stacked_layer_mesh",
                 "num_layers":1, 
                 "layer_thk": 6.0, 
-                "projection_direction": 1
+                "projection_direction": 1,
+                "projection_diff_calc_step": [0.0, 0.0, 0.0]
             }
         },
         "3": {
@@ -585,6 +586,8 @@ In above workflow, the keyword :code:`Gen_StackedLayerMesh` generates a single l
      - the number of stacked layers.
    * - :code:`projection_direction`
      - A negative value indicates projection inward, and a positive value indicates projection outward.
+   * - :code:`projection_diff_calc_step`
+     - a list of 3 elements. Algorithm uses this array to calculate the projection gradient. If the list contains a zero, the global resolution array is used to calculate the projection gradient.
 
 The resultant mesh lattice are presented below. Same as other mesh, uSer may use this mesh to fill with other type of lattice as well. 
 

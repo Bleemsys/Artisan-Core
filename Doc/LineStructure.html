@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Line Structure &#8212; Artisan 0.2.15 documentation</title>
+    <title>Line Structure 01 &#8212; Artisan 0.2.16 documentation</title>
   
   
   
@@ -36,14 +36,15 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=8d64ebca"></script>
+    <script src="_static/documentation_options.js?v=4e5ace54"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'LineStructure';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Lattice Transition" href="TransLattice.html" />
+    <link rel="next" title="Line Structure 02 - Vector Field" href="LineStructure_02.html" />
     <link rel="prev" title="Grid Field Container" href="FieldContainer.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -132,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.15 documentation</p>
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -166,7 +167,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Line Structure</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
@@ -311,7 +313,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Line Structure</h1>
+    <h1>Line Structure 01</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -323,6 +325,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-spanning-tree">Minimum Spanning Tree</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlines-over-field">Streamlines over Field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-curve">Parametric Curve</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">Notes</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -334,8 +340,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="line-structure">
-<span id="linestructure"></span><h1>Line Structure<a class="headerlink" href="#line-structure" title="Link to this heading">#</a></h1>
+  <section id="line-structure-01">
+<span id="linestructure"></span><h1>Line Structure 01<a class="headerlink" href="#line-structure-01" title="Link to this heading">#</a></h1>
 <p>Line structures that conform to complex shapes can be generated without explicitly defining lattice units or meshes. Artisan currently supports two primary approaches for constructing line structures: point-based algorithms and field-based generation. The point-based approach uses specialized algorithms to connect predefined material points, while the field-based approach allows users to leverage external fields, internal fields, and Artisan’s grid field container to build a target field and generate line structures directly from it. Future development will focus on expanding and integrating more advanced line structure generation capabilities within Artisan.</p>
 <section id="minimum-spanning-tree">
 <h2>Minimum Spanning Tree<a class="headerlink" href="#minimum-spanning-tree" title="Link to this heading">#</a></h2>
@@ -665,6 +671,182 @@ Unlike the mesh based conformal lattice, the field based line structure lattice 
 <img alt="_images/LaplaceField_02.png" src="_images/LaplaceField_02.png" />
 <img alt="_images/LaplaceField_03.png" src="_images/LaplaceField_03.png" />
 </section>
+<section id="parametric-curve">
+<h2>Parametric Curve<a class="headerlink" href="#parametric-curve" title="Link to this heading">#</a></h2>
+<p>Artisan provides the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_ParametricLineMesh</span></code> to generate a line mesh from a user-defined parametric curve. The curve is defined by three mathematical expressions:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>x = f(t)
+y = g(t)
+z = h(t)
+</pre></div>
+</div>
+<p>where <code class="code docutils literal notranslate"><span class="pre">t</span></code> is the curve parameter.</p>
+<p>Artisan evaluates the three expressions over the specified parameter range and connects consecutive points to form line elements. This feature can be used to generate arbitrary curves, including straight lines, circular curves, helices, and other mathematical curves. A simple parametric curve can be generated using:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Gen_ParametricLineMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*cos(t)&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*sin(t)&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;t_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;t_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.283185307</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;periodic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ParametricLine.inp&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The above example generates a circular curve in the XY plane. The <code class="code docutils literal notranslate"><span class="pre">x_expr</span></code>, <code class="code docutils literal notranslate"><span class="pre">y_expr</span></code>, and <code class="code docutils literal notranslate"><span class="pre">z_expr</span></code> parameters define the coordinates of the curve. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*cos(t)&quot;</span><span class="p">,</span>
+<span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*sin(t)&quot;</span><span class="p">,</span>
+<span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+</pre></div>
+</div>
+<p>defines the curve:</p>
+<div class="math notranslate nohighlight">
+\[x(t) = 100\cos(t)\]</div>
+<div class="math notranslate nohighlight">
+\[y(t) = 100\sin(t)\]</div>
+<div class="math notranslate nohighlight">
+\[z(t) = 0\]</div>
+<p>The parameter <code class="code docutils literal notranslate"><span class="pre">t</span></code> is used as the curve parameter. Artisan supports common mathematical functions such as <code class="code docutils literal notranslate"><span class="pre">sin</span></code> <code class="code docutils literal notranslate"><span class="pre">cos</span></code>, <code class="code docutils literal notranslate"><span class="pre">tan</span></code>, <code class="code docutils literal notranslate"><span class="pre">sqrt</span></code>, <code class="code docutils literal notranslate"><span class="pre">exp</span></code>, <code class="code docutils literal notranslate"><span class="pre">log</span></code>, and <code class="code docutils literal notranslate"><span class="pre">abs</span></code>, as well as the constants <code class="code docutils literal notranslate"><span class="pre">pi</span></code> and <code class="code docutils literal notranslate"><span class="pre">e</span></code>. The <code class="code docutils literal notranslate"><span class="pre">t_min</span></code> and <code class="code docutils literal notranslate"><span class="pre">t_max</span></code> parameters define the parameter range
+used to generate the curve. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;t_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="nt">&quot;t_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.283185307</span>
+</pre></div>
+</div>
+<p>generates the curve over the specified parameter range. The value of <code class="code docutils literal notranslate"><span class="pre">t_max</span></code> must be greater than <code class="code docutils literal notranslate"><span class="pre">t_min</span></code>. The <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> parameter specifies the number of points generated along the curve. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>generates 100 points between <code class="code docutils literal notranslate"><span class="pre">t_min</span></code> and <code class="code docutils literal notranslate"><span class="pre">t_max</span></code>.</p>
+<p>Consecutive points are connected to form line segments. Therefore, for a non-periodic curve with <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> points, the generated mesh contains <span class="math notranslate nohighlight">\(n\_points - 1\)</span> line segments. Instead of specifying <code class="code docutils literal notranslate"><span class="pre">n_points</span></code>, the curve can be generated using <code class="code docutils literal notranslate"><span class="pre">step_size</span></code>. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;step_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span>
+</pre></div>
+</div>
+<p>Artisan automatically determines the number of points from the parameter range and the specified step size. Only one of <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> or <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> is required. If <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> is provided, it is used to determine the number of
+points. Otherwise, <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> is used. The <code class="code docutils literal notranslate"><span class="pre">periodic</span></code> parameter determines whether the generated curve is
+closed. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;periodic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+</div>
+<p>adds the starting point again at the end of the generated point sequence, closing the curve with a final line segment. This is useful for closed curves such as circles. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*cos(t)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*sin(t)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.283185307</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;periodic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Circle.inp&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When <code class="code docutils literal notranslate"><span class="pre">periodic</span></code> is <code class="code docutils literal notranslate"><span class="pre">false</span></code>, Artisan generates an open curve without adding the closing segment. Here are a few examples. A straight line along the X direction can be defined as:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;periodic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;StraightLine.inp&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A circle in the XY plane can be defined as:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*cos(t)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*sin(t)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.283185307</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;periodic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Circle.inp&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A three-dimensional helix can be defined as:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*cos(t)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100*sin(t)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10*t&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_min&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;t_max&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">12.566370614</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;periodic&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Helix.inp&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">x_expr</span></code></p></td>
+<td><p>Mathematical expression defining the X coordinate of the curve as
+a function of <code class="code docutils literal notranslate"><span class="pre">t</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">y_expr</span></code></p></td>
+<td><p>Mathematical expression defining the Y coordinate of the curve as
+a function of <code class="code docutils literal notranslate"><span class="pre">t</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">z_expr</span></code></p></td>
+<td><p>Mathematical expression defining the Z coordinate of the curve as
+a function of <code class="code docutils literal notranslate"><span class="pre">t</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">t_min</span></code></p></td>
+<td><p>Minimum value of the curve parameter <code class="code docutils literal notranslate"><span class="pre">t</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">t_max</span></code></p></td>
+<td><p>Maximum value of the curve parameter <code class="code docutils literal notranslate"><span class="pre">t</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">n_points</span></code></p></td>
+<td><p>Number of points generated along the curve. Must be at least 2.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">step_size</span></code></p></td>
+<td><p>Step size used to determine the number of points. Use either
+<code class="code docutils literal notranslate"><span class="pre">n_points</span></code> or <code class="code docutils literal notranslate"><span class="pre">step_size</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">periodic</span></code></p></td>
+<td><p>If <code class="code docutils literal notranslate"><span class="pre">true</span></code>, the curve is closed by connecting the final point
+to the starting point.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>Output file for the generated line mesh.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example <code class="code docutils literal notranslate"><span class="pre">Test_jsonParametricGeometryParametricLines.json</span></code> and <code class="code docutils literal notranslate"><span class="pre">Test_jsonParametricGeometryParametricLines_Sphere.json</span></code> shows a complete workflow for a parametric curve filling a cubic volume and spherical volume.</p>
+<img alt="_images/ParametricLine_01.png" src="_images/ParametricLine_01.png" />
+<img alt="_images/ParametricLine_02.png" src="_images/ParametricLine_02.png" />
+<img alt="_images/ParametricLine_03.png" src="_images/ParametricLine_03.png" />
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">t_max</span></code> must be greater than <code class="code docutils literal notranslate"><span class="pre">t_min</span></code>.</p></li>
+<li><p>At least one of <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> and <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> must be provided.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">n_points</span></code> must be at least 2.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">step_size</span></code> must be greater than zero.</p></li>
+<li><p>The expressions must produce finite coordinate values over the entire
+parameter range.</p></li>
+<li><p>The three expressions must define a curve rather than a single fixed
+point.</p></li>
+<li><p>The generated mesh consists of line elements connecting consecutive
+curve points.</p></li>
+</ul>
+</section>
+</section>
 </section>
 
 
@@ -688,11 +870,11 @@ Unlike the mesh based conformal lattice, the field based line structure lattice 
       </div>
     </a>
     <a class="right-next"
-       href="TransLattice.html"
+       href="LineStructure_02.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lattice Transition</p>
+        <p class="prev-next-title">Line Structure 02 - Vector Field</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -714,6 +896,10 @@ Unlike the mesh based conformal lattice, the field based line structure lattice 
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-spanning-tree">Minimum Spanning Tree</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streamlines-over-field">Streamlines over Field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-curve">Parametric Curve</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">Notes</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -738,7 +924,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2025, Bleemsys Ltd.
+      © Copyright 2026, Bleemsys Ltd.
       <br/>
     
   </p>

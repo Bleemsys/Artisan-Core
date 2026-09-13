@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Basics 01 &#8212; Artisan 0.2.15 documentation</title>
+    <title>Getting Started &#8212; Artisan 0.2.16 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=8d64ebca"></script>
+    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -133,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.15 documentation</p>
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -167,7 +167,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
@@ -312,7 +313,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Basics 01</h1>
+    <h1>Getting Started</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -322,10 +323,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-a-box">Fill a box</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-lattices">Two Lattices</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attractor">Attractor</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-and-translation">Rotation and Translation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artisan-command-line">Artisan Command Line</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-information">Geometry Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start-examples">Quick Start Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-a-box">Fill a box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-lattices">Two Lattices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attractor">Attractor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-and-translation">Rotation and Translation</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -337,11 +343,91 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="basics-01">
-<h1>Basics 01<a class="headerlink" href="#basics-01" title="Link to this heading">#</a></h1>
-<p>Nothing is better than a few good examples for quick start. A few super quick examples will show you how to kick start.</p>
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>Nothing is better than a few good examples for a quick start. The examples
+below provide a simple introduction to Artisan and show how to start an
+Artisan workflow from the command line.</p>
+<section id="artisan-command-line">
+<h2>Artisan Command Line<a class="headerlink" href="#artisan-command-line" title="Link to this heading">#</a></h2>
+<p>Artisan can be started from the command line using <code class="code docutils literal notranslate"><span class="pre">ArtisanMain.py</span></code>
+during development, or <code class="code docutils literal notranslate"><span class="pre">ArtisanMain.exe</span></code> when using the packaged
+distribution.</p>
+<p>The general command-line format is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ArtisanMain</span><span class="o">.</span><span class="n">exe</span> <span class="o">&lt;</span><span class="n">option</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">input</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The main command-line options are:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-v,</span> <span class="pre">--version</span></code></dt><dd><p>Display the installed Artisan version number.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-f,</span> <span class="pre">--filename</span> <span class="pre">&lt;file&gt;</span></code></dt><dd><p>Execute an Artisan workflow using the specified JSON input file.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-hp,</span> <span class="pre">--HighPriority</span> <span class="pre">&lt;file&gt;</span></code></dt><dd><p>Execute an Artisan workflow using the specified JSON input file with a
+higher process priority.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-g,</span> <span class="pre">--geometry</span> <span class="pre">&lt;file&gt;</span></code></dt><dd><p>Read and inspect the specified STL geometry and print its geometry
+information to the screen.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-l,</span> <span class="pre">--log</span></code></dt><dd><p>Save the geometry information to a log file. This option is used together
+with <code class="code docutils literal notranslate"><span class="pre">-g</span></code> and has no effect on the normal workflow options.</p>
+</dd>
+</dl>
+</section>
+<section id="geometry-information">
+<h2>Geometry Information<a class="headerlink" href="#geometry-information" title="Link to this heading">#</a></h2>
+<p>The <code class="code docutils literal notranslate"><span class="pre">-g</span></code> option provides a convenient way to inspect an STL geometry
+before using it in an Artisan workflow.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ArtisanMain</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">g</span> <span class="o">.//</span><span class="n">sample</span><span class="o">-</span><span class="n">obj</span><span class="o">//</span><span class="n">box_2</span><span class="o">.</span><span class="n">stl</span>
+</pre></div>
+</div>
+<p>The geometry information is printed directly to the screen.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Geometry Information</span>
+<span class="go">--------------------</span>
+
+<span class="go">File:</span>
+<span class="go">  sample-obj\box_2.stl</span>
+
+<span class="go">Mesh:</span>
+<span class="go">  Vertices:  1454</span>
+<span class="go">  Triangles: 984</span>
+
+<span class="go">Bounding Box:</span>
+<span class="go">  Min: [-10.000000, -10.000000, -10.000000]</span>
+<span class="go">  Max: [10.000000, 10.000000, 10.000000]</span>
+<span class="go">  Size: [20.000000, 20.000000, 20.000000]</span>
+<span class="go">  Center: [0.000000, 0.000000, 0.000000]</span>
+
+<span class="go">Surface:</span>
+<span class="go">  Area: 4595.142676</span>
+<span class="go">  Volume: Not available (mesh is not watertight)</span>
+
+<span class="go">Mesh Quality:</span>
+<span class="go">  Watertight:        False</span>
+<span class="go">  Edge manifold:     True</span>
+<span class="go">  Vertex manifold:   True</span>
+<span class="go">  Self intersecting: True</span>
+</pre></div>
+</div>
+<p>To also save the geometry information to a log file, use the <code class="code docutils literal notranslate"><span class="pre">-l</span></code>
+option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ArtisanMain</span><span class="o">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">g</span> <span class="o">.//</span><span class="n">sample</span><span class="o">-</span><span class="n">obj</span><span class="o">//</span><span class="n">box_2</span><span class="o">.</span><span class="n">stl</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+</div>
+<p>When <code class="code docutils literal notranslate"><span class="pre">-l</span></code> is specified, Artisan writes the geometry information to a
+log file associated with the STL file. The information is both displayed on
+the screen and written to the log file.</p>
+<p>The geometry inspection reports information such as the mesh size, bounding
+box, surface area, volume (when the mesh is watertight), and mesh quality
+information.</p>
+</section>
+<section id="quick-start-examples">
+<h2>Quick Start Examples<a class="headerlink" href="#quick-start-examples" title="Link to this heading">#</a></h2>
+<p>The following examples demonstrate complete Artisan workflows and provide
+practical starting points for learning how to configure and run Artisan.</p>
 <section id="fill-a-box">
-<h2>Fill a box<a class="headerlink" href="#fill-a-box" title="Link to this heading">#</a></h2>
+<h3>Fill a box<a class="headerlink" href="#fill-a-box" title="Link to this heading">#</a></h3>
 <p>Assuming we would like to fill a box geometry with Cubic lattice, the input JSON shall be like this:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -437,7 +523,7 @@ document.write(`
 </div></blockquote>
 </section>
 <section id="two-lattices">
-<h2>Two Lattices<a class="headerlink" href="#two-lattices" title="Link to this heading">#</a></h2>
+<h3>Two Lattices<a class="headerlink" href="#two-lattices" title="Link to this heading">#</a></h3>
 <p>We certainly can add two lattice together. Artisan provides two simple connections, the hard connection - no transition between two lattice, the linear connection - a linearly changing behavior applied on two lattices.</p>
 <p>The JSON setup below builds a cube filled with two distinct lattices, BCCubic and</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
@@ -542,7 +628,7 @@ document.write(`
 <img alt="../_images/Fill_box_2Lattices_Lin_VarSize.png" src="../_images/Fill_box_2Lattices_Lin_VarSize.png" />
 </section>
 <section id="attractor">
-<h2>Attractor<a class="headerlink" href="#attractor" title="Link to this heading">#</a></h2>
+<h3>Attractor<a class="headerlink" href="#attractor" title="Link to this heading">#</a></h3>
 <p>The regional thickness variation can be introduced by adding attractor operation. Attractor creates a spherical shape linearly varying field, and naturally merges this field with surrounding lattice structure. Here is an example JSON.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Domain&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">],[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">},</span>
@@ -581,7 +667,7 @@ document.write(`
 <img alt="../_images/Fill_box_2Lattices_Attractor.png" src="../_images/Fill_box_2Lattices_Attractor.png" />
 </section>
 <section id="rotation-and-translation">
-<h2>Rotation and Translation<a class="headerlink" href="#rotation-and-translation" title="Link to this heading">#</a></h2>
+<h3>Rotation and Translation<a class="headerlink" href="#rotation-and-translation" title="Link to this heading">#</a></h3>
 <p>To fit a design purpose, users can apply rotation and translation on the lattice unit orientation. It is important to note that only periodic lattices can be rotated and translated with respect to the global origin and axes. Currently, the following keywords support these two operations: <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code>, <code class="code docutils literal notranslate"><span class="pre">Subtract_Lattice</span></code>, <code class="code docutils literal notranslate"><span class="pre">HS_Interpolate</span></code>, <code class="code docutils literal notranslate"><span class="pre">Lin_Interpolate</span></code>, <code class="code docutils literal notranslate"><span class="pre">Add_Attractor</span></code>, and <code class="code docutils literal notranslate"><span class="pre">OP_FieldMerge</span></code>.</p>
 <p>In the example JSON below, the lattice is rotated with respect to the x-axis by <span class="math notranslate nohighlight">\(\frac{\pi}{4}\)</span> radians.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w">      </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
@@ -612,6 +698,7 @@ document.write(`
 <img alt="../_images/Rotation_Cubic.png" src="../_images/Rotation_Cubic.png" />
 <p>User may define the parameter <code class="code docutils literal notranslate"><span class="pre">Trans</span></code> to get after rotation translation, for instance, move the structure by <code class="code docutils literal notranslate"><span class="pre">0.5</span></code> in x direction <code class="code docutils literal notranslate"><span class="pre">&quot;Trans&quot;:[0.5,</span> <span class="pre">0.0,</span> <span class="pre">0.0]</span></code>.</p>
 <img alt="../_images/Translation_Cubic.png" src="../_images/Translation_Cubic.png" />
+</section>
 </section>
 </section>
 
@@ -660,10 +747,15 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-a-box">Fill a box</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-lattices">Two Lattices</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attractor">Attractor</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-and-translation">Rotation and Translation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artisan-command-line">Artisan Command Line</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-information">Geometry Information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start-examples">Quick Start Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-a-box">Fill a box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-lattices">Two Lattices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attractor">Attractor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation-and-translation">Rotation and Translation</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -688,7 +780,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2025, Bleemsys Ltd.
+      © Copyright 2026, Bleemsys Ltd.
       <br/>
     
   </p>

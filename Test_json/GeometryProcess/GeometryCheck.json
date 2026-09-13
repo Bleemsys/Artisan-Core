@@ -1,0 +1,20 @@
+{"Setup":{      "Type" : "Sample",
+                "Sample": {"Domain" : [[-10.0,10.0],[-10.0,10.0],[-10.0,10.0]], "Shape": "Box"},
+                "Geomfile": "",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.1,0.1,0.1],
+                "Padding": 1,
+                "onGPU": false,
+                "memorylimit": 1073741824000
+                },
+ "WorkFlow":{
+          "1": {"Check_Geometry":{
+                     "Inp_meshfile": ".//sample-obj//crank_handle.stl"
+                    }
+               }
+		   },
+ "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": true}
+}

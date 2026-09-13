@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Artisan’s documentation &#8212; Artisan 0.2.15 documentation</title>
+    <title>Artisan’s documentation &#8212; Artisan 0.2.16 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=8d64ebca"></script>
+    <script src="_static/documentation_options.js?v=4e5ace54"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -134,7 +134,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.15 documentation</p>
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -168,7 +168,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
@@ -348,10 +349,9 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#fill-a-box">Fill a box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#two-lattices">Two Lattices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#attractor">Attractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#rotation-and-translation">Rotation and Translation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#artisan-command-line">Artisan Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#geometry-information">Geometry Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QStart/QStart.html#quick-start-examples">Quick Start Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a><ul>
@@ -430,9 +430,22 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="LineStructure.html#minimum-spanning-tree">Minimum Spanning Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="LineStructure.html#streamlines-over-field">Streamlines over Field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure.html#parametric-curve">Parametric Curve</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#vector-field-definition">Vector Field Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#starting-points">Starting Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#streamline-length-and-resolution">Streamline Length and Resolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#geometry-interaction">Geometry Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#parameter-list">Parameter List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#output-mesh">Output Mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#generating-a-line-based-lattice">Generating a Line-Based Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="LineStructure_02.html#practical-recommendations">Practical Recommendations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a><ul>
@@ -512,7 +525,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2025, Bleemsys Ltd.
+      © Copyright 2026, Bleemsys Ltd.
       <br/>
     
   </p>

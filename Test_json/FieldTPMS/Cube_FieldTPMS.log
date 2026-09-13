@@ -1,0 +1,23 @@
+2026-07-04 19:20:23,112 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2026-07-04 19:20:23,112 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2026-07-04 19:20:23,114 [INFO] Version: 0.2.15
+2026-07-04 19:20:23,126 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\FieldTPMS
+2026-07-04 19:20:23,130 [INFO] reading Json file: Test_json\FieldTPMS\Cube_FieldTPMS.json
+2026-07-04 19:20:23,130 [INFO] cmd: {'Setup': {'Type': 'Sample', 'Sample': {'Domain': [[0.0, 10.0], [0.0, 10.0], [0.0, 10.0]], 'Shape': 'Box'}, 'Geomfile': '', 'Rot': [0.0, 0.0, 0.0], 'res': [0.1, 0.1, 0.1], 'Padding': 2, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'OP_Fit_GridField': {'inp_ptFieldFile': './/Test_json//FieldTPMS//cube_points_linear_jittered.csv', 'out_gridFieldFile': 'FrequencyField'}}, '2': {'Add_Lattice': {'la_name': './/Test_json//FieldTPMS//CustomLattice_FieldTPMS.txt', 'size': [2.0, 2.0, 2.0], 'thk': 0.1, 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': True, 'Cube_Request': {}}}, '999': {'Export': {'outfile': './/Test_results//FieldTPMS.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': False}}
+2026-07-04 19:20:23,131 [INFO] Setup basic fill domain......
+2026-07-04 19:20:23,133 [INFO] Number of Domain Partition: 1
+2026-07-04 19:20:23,134 [INFO] Calculating Sub-Domain:1
+2026-07-04 19:20:23,136 [INFO] Building Up Sample Domain
+2026-07-04 19:20:23,189 [INFO] Geometry & Field Domain Infomation: 
+2026-07-04 19:20:23,189 [INFO] Domain: 
+2026-07-04 19:20:23,189 [INFO] Lower Bound: [-0.3 -0.3 -0.3]
+2026-07-04 19:20:23,189 [INFO] Upper Bound: [10.3 10.3 10.3]
+2026-07-04 19:20:23,189 [INFO] Resolution: [0.10095238 0.10095238 0.10095238]
+2026-07-04 19:20:23,189 [INFO] Workflow Calculation: 
+2026-07-04 19:20:23,189 [INFO] Calculating OP_Fit_GridField
+2026-07-04 19:20:24,908 [INFO] Calculating Add_Lattice
+2026-07-04 19:20:26,536 [INFO] Calculating Export
+2026-07-04 19:20:26,885 [INFO] PostProcessing Meshes......
+2026-07-04 19:20:26,887 [INFO] Only one partition file, merging meshes will not be conducted.
+2026-07-04 19:20:26,911 [INFO] Process finished, check the result file.
+2026-07-04 19:20:26,911 [INFO] Peak Memory Usage: 90.08572196960449 MB

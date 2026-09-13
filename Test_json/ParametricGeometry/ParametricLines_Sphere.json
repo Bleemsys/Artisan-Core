@@ -1,0 +1,53 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [[0.0, 20.0], [0.0, 20.0], [0.0, 30.0]],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [0.0, 0.0, 0.0],
+    "res": [0.2, 0.2, 0.2],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 1073741824000,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Gen_ParametricLineMesh": {
+        "x_expr": "10 + 9.5*sin(1.414*t)*cos(1.732*t)" ,
+        "y_expr": "10 + 9.5*sin(1.414*t)*sin(1.732*t)" ,
+        "z_expr": "10 + 9.5*cos(1.414*t)" ,
+        "t_min": 0.0,
+        "t_max": 94.2477796077,
+        "step_size": 0.1,
+        "closedcurve": false,
+        "out_meshfile": "..//..//Test_results//parametriccurve_mesh.inp"
+      }
+    },
+    "2": {
+      "Add_Lattice": {
+        "la_name": ".//ParametricLines.mld",
+        "size": [2.5, 2.5, 2.5],
+        "thk": 0.3,
+        "Rot": [0.0, 0.0, 0.0],
+        "Trans": [0.0, 0.0, 0.0],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "3": {
+      "Export": {
+        "outfile": "..//..//Test_results//parametriccurves_lattice.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

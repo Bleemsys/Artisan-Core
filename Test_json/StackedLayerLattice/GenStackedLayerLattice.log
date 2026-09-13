@@ -1,0 +1,24 @@
+2026-09-08 20:51:47,580 [INFO] This is testing package of Artisan distributed under CC BY-NC-ND 3.0 license.If you have been granted a trial business license,the terms of that license may supersede the above CC BY-NC-ND 3.0 license.Please refer to your specific business license agreement for more details.
+2026-09-08 20:51:47,581 [INFO] Disclaimer: This software is provided "as is," and the author or provider makes no representations or warranties, express or implied,including but not limited to warranties of merchantability orfitness for a particular purpose or that the use of the software will not infringe any patent,copyright, trademark, or other proprietary rights.
+2026-09-08 20:51:47,581 [INFO] Version: 0.2.15
+2026-09-08 20:51:47,581 [INFO] Working Directory: C:\Users\wangy\Documents\Project-Artisan\Artisan\Artisan\Src\Test_json\StackedLayerLattice
+2026-09-08 20:51:47,581 [INFO] reading Json file: Test_json\StackedLayerLattice\GenStackedLayerLattice.json
+2026-09-08 20:51:47,581 [INFO] cmd: {'Setup': {'Type': 'Geometry', 'Sample': {'Domain': [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0]], 'Shape': 'Box'}, 'Geomfile': './/sample-obj//shell_1_of_bdd_.stl', 'Rot': [0.0, 0.0, 0.0], 'res': [0.5, 0.5, 0.5], 'Padding': 10, 'onGPU': False, 'memorylimit': 1073741824000}, 'WorkFlow': {'1': {'Gen_SimpleQuadMesh': {'inp_meshfile': './/sample-obj//shell_1_of_bdd_.stl', 'out_meshfile': 'simple_quad', 'size': [5.0, 5.0, 5.0]}}, '2': {'Gen_StackedLayerMesh': {'inp_meshfile': 'simple_quad', 'inp_geommeshfile': './/sample-obj//shell_1_of_bdd_.stl', 'out_meshfile': 'stacked_layer_mesh', 'num_layers': 1, 'layer_thk': 6.0, 'projection_direction': 1, 'projection_diff_calc_step': [0.0, 0.0, 0.0]}}, '3': {'Add_Lattice': {'la_name': './/Test_json//StackedLayerLattice//StackedLayerMesh.mld', 'size': [7.0, 7.0, 7.0], 'Rot': [0.0, 0.0, 0.0], 'Trans': [0.0, 0.0, 0.0], 'Inv': False, 'Fill': False, 'Cube_Request': {}, 'thk': 1.0}}, '10000': {'Export': {'outfile': './/Test_results//SimpleStackedLayerMesh.stl'}}}, 'PostProcess': {'CombineMeshes': True, 'RemovePartitionMeshFile': False, 'RemoveIsolatedParts': True, 'ExportLazPts': False}}
+2026-09-08 20:51:47,581 [INFO] Setup basic fill domain......
+2026-09-08 20:51:47,607 [INFO] Number of Domain Partition: 1
+2026-09-08 20:51:47,607 [INFO] Calculating Sub-Domain:1
+2026-09-08 20:51:47,607 [INFO] Building Up GeomDomain......
+2026-09-08 20:52:01,815 [INFO] Geometry & Field Domain Infomation: 
+2026-09-08 20:52:01,815 [INFO] Domain: 
+2026-09-08 20:52:01,815 [INFO] Lower Bound: [-190.0522    -77.7389    -10.412001]
+2026-09-08 20:52:01,815 [INFO] Upper Bound: [ 22.3858  75.8603 204.9827]
+2026-09-08 20:52:01,815 [INFO] Resolution: [0.50103303 0.50032312 0.5009179 ]
+2026-09-08 20:52:01,815 [INFO] Workflow Calculation: 
+2026-09-08 20:52:01,815 [INFO] Calculating Gen_SimpleQuadMesh
+2026-09-08 20:52:03,984 [INFO] Calculating Gen_StackedLayerMesh
+2026-09-08 20:52:30,460 [INFO] Calculating Add_Lattice
+2026-09-08 20:52:38,762 [INFO] Calculating Export
+2026-09-08 20:52:50,583 [INFO] PostProcessing Meshes......
+2026-09-08 20:52:50,583 [INFO] Only one partition file, merging meshes will not be conducted.
+2026-09-08 20:52:50,851 [INFO] Process finished, check the result file.
+2026-09-08 20:52:50,851 [INFO] Peak Memory Usage: 3013.7071104049683 MB

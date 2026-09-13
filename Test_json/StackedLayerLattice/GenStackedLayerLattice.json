@@ -52,7 +52,8 @@
                 "out_meshfile": "stacked_layer_mesh",
                 "num_layers":1, 
                 "layer_thk": 6.0, 
-                "projection_direction": 1
+                "projection_direction": 1, 
+                "projection_diff_calc_step": [0.0, 0.0, 0.0]
             }
         },
         "3": {

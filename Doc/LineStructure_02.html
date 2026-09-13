@@ -1,0 +1,798 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Line Structure 02 - Vector Field &#8212; Artisan 0.2.16 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'LineStructure_02';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lattice Transition" href="TransLattice.html" />
+    <link rel="prev" title="Line Structure 01" href="LineStructure.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/LineStructure_02.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Line Structure 02 - Vector Field</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-example">Basic Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-field-definition">Vector Field Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#starting-points">Starting Points</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streamline-length-and-resolution">Streamline Length and Resolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-interaction">Geometry Interaction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-projection">Surface Projection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attraction-and-repulsion">Attraction and Repulsion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-width">Influence Width</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-list">Parameter List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-mesh">Output Mesh</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-a-line-based-lattice">Generating a Line-Based Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical Recommendations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="line-structure-02-vector-field">
+<h1>Line Structure 02 - Vector Field<a class="headerlink" href="#line-structure-02-vector-field" title="Link to this heading">#</a></h1>
+<p>Artisan provides the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SDFVectorFieldLineMesh</span></code> to generate a 3D line mesh by tracing streamlines of a user-defined vector field while taking the input geometry into account. The vector field is defined using mathematical expressions in <code class="code docutils literal notranslate"><span class="pre">x</span></code>, <code class="code docutils literal notranslate"><span class="pre">y</span></code>, and <code class="code docutils literal notranslate"><span class="pre">z</span></code>. Artisan generates a signed distance field (SDF) from the input geometry and uses the SDF to modify the vector field close to the geometry surface.</p>
+<p>This feature can be used to generate geometry-aware line structures, such as directional lattice structures, reinforcement paths, and line-based infill patterns.</p>
+<section id="basic-example">
+<h2>Basic Example<a class="headerlink" href="#basic-example" title="Link to this heading">#</a></h2>
+<p>The following example demonstrates the basic use of <code class="code docutils literal notranslate"><span class="pre">Gen_SDFVectorFieldLineMesh</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">[</span><span class="mf">-650.0</span><span class="p">,</span><span class="w"> </span><span class="mf">650.0</span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span><span class="mf">-650.0</span><span class="p">,</span><span class="w"> </span><span class="mf">650.0</span><span class="p">],</span>
+<span class="w">                </span><span class="p">[</span><span class="mf">-650.0</span><span class="p">,</span><span class="w"> </span><span class="mf">650.0</span><span class="p">]</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ball_Mesh.STL&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1073741824000</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;JsonWorkDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;Gen_SDFVectorFieldLineMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ball_Mesh.STL&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sin(x/50)&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;start_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">],</span>
+<span class="w">                    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-426.6667</span><span class="p">],</span>
+<span class="w">                    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-213.3333</span><span class="p">],</span>
+<span class="w">                    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;step_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;attraction_strength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-10.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;projection_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;influence_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VectorLine_mesh.inp&quot;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="vector-field-definition">
+<h2>Vector Field Definition<a class="headerlink" href="#vector-field-definition" title="Link to this heading">#</a></h2>
+<p>The vector field is defined using three mathematical expressions:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sin(x/50)&quot;</span><span class="p">,</span>
+<span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span>
+</pre></div>
+</div>
+<p>These expressions define the three components of the vector field:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{V}(x,y,z)
+=
+\left[
+V_x(x,y,z),
+V_y(x,y,z),
+V_z(x,y,z)
+\right]\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">x_expr</span></code> defines the X component;</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">y_expr</span></code> defines the Y component;</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">z_expr</span></code> defines the Z component.</p></li>
+</ul>
+<p>The expressions may use the spatial coordinates <code class="code docutils literal notranslate"><span class="pre">x</span></code>, <code class="code docutils literal notranslate"><span class="pre">y</span></code>, and
+<code class="code docutils literal notranslate"><span class="pre">z</span></code>.</p>
+<p>For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;y + 0.3*z&quot;</span><span class="p">,</span>
+<span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x - 0.3*z&quot;</span><span class="p">,</span>
+<span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-0.3*x + 0.2*y&quot;</span>
+</pre></div>
+</div>
+<p>defines a spatially varying three-dimensional vector field.</p>
+<p>The vector field is evaluated at the current streamline position during
+the tracing process.</p>
+</section>
+<section id="starting-points">
+<h2>Starting Points<a class="headerlink" href="#starting-points" title="Link to this heading">#</a></h2>
+<p>The <code class="code docutils literal notranslate"><span class="pre">start_points</span></code> parameter defines the starting locations of the
+streamlines.</p>
+<p>Each starting point consists of three coordinates:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;start_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">[</span><span class="err">x</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">y</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">z</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="err">x</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="err">y</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="err">z</span><span class="mi">2</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="err">x</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="err">y</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="err">z</span><span class="mi">3</span><span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;start_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-426.6667</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-213.3333</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-640.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>One streamline is generated from each starting point.</p>
+<p>The distribution of <code class="code docutils literal notranslate"><span class="pre">start_points</span></code> therefore has a significant
+influence on the resulting line structure.</p>
+</section>
+<section id="streamline-length-and-resolution">
+<h2>Streamline Length and Resolution<a class="headerlink" href="#streamline-length-and-resolution" title="Link to this heading">#</a></h2>
+<p>Two parameters control the streamline tracing:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;n_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span><span class="p">,</span>
+<span class="nt">&quot;step_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span>
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> controls the approximate distance between consecutive
+points along a streamline.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> parameter defines the maximum number of points
+generated for each streamline.</p>
+<p>The approximate maximum tracing distance can therefore be estimated as:</p>
+<div class="math notranslate nohighlight">
+\[L \approx n\_points \times step\_size\]</div>
+<p>For example:</p>
+<div class="math notranslate nohighlight">
+\[L \approx 900 \times 2.5 = 2250\]</div>
+<p>The actual streamline may be shorter depending on the vector field.</p>
+<p>A smaller <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> produces more closely spaced points and can
+better capture changes in the vector field, but increases the computational
+cost.</p>
+<p>A larger <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> reduces the computational cost but may produce
+less accurate paths around rapidly changing vector fields or geometry
+features.</p>
+</section>
+<section id="geometry-interaction">
+<h2>Geometry Interaction<a class="headerlink" href="#geometry-interaction" title="Link to this heading">#</a></h2>
+<p>The input geometry is used to generate a signed distance field. The SDF
+provides information about the position relative to the geometry surface
+and is used to modify the vector field.</p>
+<p>Two geometry-aware effects can be controlled:</p>
+<ul class="simple">
+<li><p>projection of the vector field toward the geometry surface tangent;</p></li>
+<li><p>attraction or repulsion relative to the geometry.</p></li>
+</ul>
+<section id="surface-projection">
+<h3>Surface Projection<a class="headerlink" href="#surface-projection" title="Link to this heading">#</a></h3>
+<p>The <code class="code docutils literal notranslate"><span class="pre">projection_width</span></code> parameter controls the region in which the
+vector field is gradually projected onto the tangent plane of the geometry
+surface. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;projection_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span>
+</pre></div>
+</div>
+<p>Close to the geometry surface, the normal component of the vector field is reduced and the tangential component is retained. This allows streamlines to follow the surface instead of passing directly through it. A larger <code class="code docutils literal notranslate"><span class="pre">projection_width</span></code> causes this surface-following behaviour to influence the vector field farther away from the geometry. A smaller value confines the effect to a narrower region around the surface.</p>
+</section>
+<section id="attraction-and-repulsion">
+<h3>Attraction and Repulsion<a class="headerlink" href="#attraction-and-repulsion" title="Link to this heading">#</a></h3>
+<p>The <code class="code docutils literal notranslate"><span class="pre">attraction_strength</span></code> parameter controls the interaction between the streamlines and the geometry. A positive value produces attraction toward the geometry:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;attraction_strength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span>
+</pre></div>
+</div>
+<p>A negative value produces repulsion from the geometry:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;attraction_strength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-10.0</span>
+</pre></div>
+</div>
+<p>A value of zero disables the attraction/repulsion contribution:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;attraction_strength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+</pre></div>
+</div>
+</section>
+<section id="influence-width">
+<h3>Influence Width<a class="headerlink" href="#influence-width" title="Link to this heading">#</a></h3>
+<p>The <code class="code docutils literal notranslate"><span class="pre">influence_width</span></code> parameter controls the spatial range of the
+attraction or repulsion effect. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;influence_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span>
+</pre></div>
+</div>
+<p>A smaller value produces a more localized interaction with the geometry, while a larger value allows the geometry to influence the vector field over a larger distance. The <code class="code docutils literal notranslate"><span class="pre">projection_width</span></code> and <code class="code docutils literal notranslate"><span class="pre">influence_width</span></code> have different
+purposes:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">projection_width</span></code></p></td>
+<td><p>Surface tangential projection region</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">influence_width</span></code></p></td>
+<td><p>Attraction/repulsion influence range</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="parameter-list">
+<h2>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading">#</a></h2>
+<p>The parameters for <code class="code docutils literal notranslate"><span class="pre">Gen_SDFVectorFieldLineMesh</span></code> are listed below.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
+<td><p>File path of the triangular surface geometry used to generate the
+SDF and define the geometry interaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">x_expr</span></code></p></td>
+<td><p>Mathematical expression defining the X component of the vector
+field. The expression can use <code class="code docutils literal notranslate"><span class="pre">x</span></code>, <code class="code docutils literal notranslate"><span class="pre">y</span></code>, and <code class="code docutils literal notranslate"><span class="pre">z</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">y_expr</span></code></p></td>
+<td><p>Mathematical expression defining the Y component of the vector
+field. The expression can use <code class="code docutils literal notranslate"><span class="pre">x</span></code>, <code class="code docutils literal notranslate"><span class="pre">y</span></code>, and <code class="code docutils literal notranslate"><span class="pre">z</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">z_expr</span></code></p></td>
+<td><p>Mathematical expression defining the Z component of the vector
+field. The expression can use <code class="code docutils literal notranslate"><span class="pre">x</span></code>, <code class="code docutils literal notranslate"><span class="pre">y</span></code>, and <code class="code docutils literal notranslate"><span class="pre">z</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">start_points</span></code></p></td>
+<td><p>List of three-dimensional coordinates defining the starting points
+of the streamlines. One streamline is generated from each starting
+point.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">n_points</span></code></p></td>
+<td><p>Maximum number of points generated for each streamline.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">step_size</span></code></p></td>
+<td><p>Approximate distance between consecutive points along a streamline.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">attraction_strength</span></code></p></td>
+<td><p>Controls the interaction with the geometry. Positive values attract
+the streamlines toward the geometry, while negative values produce
+repulsion.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">projection_width</span></code></p></td>
+<td><p>Width of the region around the geometry surface where the vector
+field is projected toward the surface tangent direction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">influence_width</span></code></p></td>
+<td><p>Controls the spatial range of the attraction or repulsion effect.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>File path for the generated line mesh.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="output-mesh">
+<h2>Output Mesh<a class="headerlink" href="#output-mesh" title="Link to this heading">#</a></h2>
+<p>The output of <code class="code docutils literal notranslate"><span class="pre">Gen_SDFVectorFieldLineMesh</span></code> is a line mesh. Each streamline consists of a sequence of points, and consecutive points are connected by line elements. For example, if a streamline contains:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>P0, P1, P2, P3, P4
+</pre></div>
+</div>
+<p>the generated mesh contains:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>P0-P1
+P1-P2
+P2-P3
+P3-P4
+</pre></div>
+</div>
+<p>The output mesh is written using the specified <code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code>.</p>
+</section>
+<section id="generating-a-line-based-lattice">
+<h2>Generating a Line-Based Lattice<a class="headerlink" href="#generating-a-line-based-lattice" title="Link to this heading">#</a></h2>
+<p>The generated vector-field line mesh can be used as the basis for subsequent Artisan operations. The examples <code class="code docutils literal notranslate"><span class="pre">Test_jsonParametricGeometryVectorField_LineStructure.json</span></code>
+and <code class="code docutils literal notranslate"><span class="pre">Test_jsonParametricGeometryVectorField_LineStructure_02.json</span></code>
+demonstrate complete workflows for generating line structures using a user-defined vector field. In these examples, the vector field is evaluated around a ball geometry, and streamlines are generated from specified starting points. The resulting
+line meshes illustrate how different vector-field definitions produce different line-structure patterns.</p>
+<p>The first example Sinusoidal Vector Field uses the following vector field:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sin(x/50)&quot;</span><span class="p">,</span>
+<span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0&quot;</span>
+</pre></div>
+</div>
+<p>The field has a constant X component, while the Y component varies
+sinusoidally with X. The resulting streamlines therefore follow a
+predominantly X-directed flow with a sinusoidal variation in the Y
+direction.</p>
+<img alt="_images/LineStructrue_02_Vector_01.png" src="_images/LineStructrue_02_Vector_01.png" />
+<img alt="_images/LineStructrue_02_Vector_02.png" src="_images/LineStructrue_02_Vector_02.png" />
+<p>The second example Rotational 3D Vector Field uses a fully three-dimensional vector field:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;x_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;y + 0.3*z&quot;</span><span class="p">,</span>
+<span class="nt">&quot;y_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x - 0.3*z&quot;</span><span class="p">,</span>
+<span class="nt">&quot;z_expr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-0.3*x + 0.2*y&quot;</span>
+</pre></div>
+</div>
+<p>The interaction between the three vector components produces a more complex
+three-dimensional streamline pattern around the ball.</p>
+<img alt="_images/LineStructrue_02_Vector_03.png" src="_images/LineStructrue_02_Vector_03.png" />
+<img alt="_images/LineStructrue_02_Vector_04.png" src="_images/LineStructrue_02_Vector_04.png" />
+</section>
+<section id="practical-recommendations">
+<h2>Practical Recommendations<a class="headerlink" href="#practical-recommendations" title="Link to this heading">#</a></h2>
+<p><strong>Starting point distribution</strong></p>
+<p>The starting points determine where the line structure begins. A regular
+distribution generally produces a more regular line pattern, while a
+customized distribution can be used to control the local density of the
+generated lines.</p>
+<p><strong>Step size</strong></p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">step_size</span></code> should be selected according to the geometric and
+vector-field scales. Smaller values are recommended when the vector field
+changes rapidly or when the geometry contains small features.</p>
+<p><strong>Number of points</strong></p>
+<p>Increase <code class="code docutils literal notranslate"><span class="pre">n_points</span></code> when longer streamlines are required. The
+approximate maximum tracing distance is proportional to:</p>
+<div class="math notranslate nohighlight">
+\[n\_points \times step\_size\]</div>
+<p><strong>Projection width</strong></p>
+<p>Increase <code class="code docutils literal notranslate"><span class="pre">projection_width</span></code> when the generated lines need to follow
+the geometry from a greater distance.</p>
+<p><strong>Influence width</strong></p>
+<p>Increase <code class="code docutils literal notranslate"><span class="pre">influence_width</span></code> when the geometry needs to influence
+streamlines farther away from the surface.</p>
+<p><strong>Attraction strength</strong></p>
+<p>Use positive values when lines should be drawn toward the geometry and
+negative values when lines should be pushed away from it.</p>
+<p>The combination of these parameters provides control over both the global
+direction of the generated lines and their interaction with the geometry.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="LineStructure.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Line Structure 01</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="TransLattice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lattice Transition</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-example">Basic Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-field-definition">Vector Field Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#starting-points">Starting Points</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streamline-length-and-resolution">Streamline Length and Resolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-interaction">Geometry Interaction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#surface-projection">Surface Projection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attraction-and-repulsion">Attraction and Repulsion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-width">Influence Width</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-list">Parameter List</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-mesh">Output Mesh</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-a-line-based-lattice">Generating a Line-Based Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical Recommendations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

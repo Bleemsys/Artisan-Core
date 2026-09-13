@@ -1,6 +1,6 @@
 .. _LineStructure:
-Line Structure
-**************
+Line Structure 01
+*****************
 
 Line structures that conform to complex shapes can be generated without explicitly defining lattice units or meshes. Artisan currently supports two primary approaches for constructing line structures: point-based algorithms and field-based generation. The point-based approach uses specialized algorithms to connect predefined material points, while the field-based approach allows users to leverage external fields, internal fields, and Artisan’s grid field container to build a target field and generate line structures directly from it. Future development will focus on expanding and integrating more advanced line structure generation capabilities within Artisan.
 
@@ -295,3 +295,211 @@ Below, the streamline lattice is overlaid within the specified geometric domain.
 .. image:: ./pictures/LaplaceField_02.png
 
 .. image:: ./pictures/LaplaceField_03.png
+
+====================
+Parametric Curve
+====================
+
+Artisan provides the keyword :code:`Gen_ParametricLineMesh` to generate a line mesh from a user-defined parametric curve. The curve is defined by three mathematical expressions:
+
+.. code-block:: text
+
+    x = f(t)
+    y = g(t)
+    z = h(t)
+
+where :code:`t` is the curve parameter.
+
+Artisan evaluates the three expressions over the specified parameter range and connects consecutive points to form line elements. This feature can be used to generate arbitrary curves, including straight lines, circular curves, helices, and other mathematical curves. A simple parametric curve can be generated using:
+
+.. code-block:: json
+
+    {
+        "Gen_ParametricLineMesh": {
+            "x_expr": "100*cos(t)",
+            "y_expr": "100*sin(t)",
+            "z_expr": "0",
+            "t_min": 0.0,
+            "t_max": 6.283185307,
+            "n_points": 100,
+            "periodic": true,
+            "out_meshfile": "ParametricLine.inp"
+        }
+    }
+
+The above example generates a circular curve in the XY plane. The :code:`x_expr`, :code:`y_expr`, and :code:`z_expr` parameters define the coordinates of the curve. For example:
+
+.. code-block:: json
+
+    "x_expr": "100*cos(t)",
+    "y_expr": "100*sin(t)",
+    "z_expr": "0"
+
+defines the curve:
+
+.. math::
+
+    x(t) = 100\cos(t)
+
+.. math::
+
+    y(t) = 100\sin(t)
+
+.. math::
+
+    z(t) = 0
+
+The parameter :code:`t` is used as the curve parameter. Artisan supports common mathematical functions such as :code:`sin` :code:`cos`, :code:`tan`, :code:`sqrt`, :code:`exp`, :code:`log`, and :code:`abs`, as well as the constants :code:`pi` and :code:`e`. The :code:`t_min` and :code:`t_max` parameters define the parameter range
+used to generate the curve. For example:
+
+.. code-block:: json
+
+    "t_min": 0.0,
+    "t_max": 6.283185307
+
+generates the curve over the specified parameter range. The value of :code:`t_max` must be greater than :code:`t_min`. The :code:`n_points` parameter specifies the number of points generated along the curve. For example:
+
+.. code-block:: json
+
+    "n_points": 100
+
+generates 100 points between :code:`t_min` and :code:`t_max`.
+
+Consecutive points are connected to form line segments. Therefore, for a non-periodic curve with :code:`n_points` points, the generated mesh contains :math:`n\_points - 1` line segments. Instead of specifying :code:`n_points`, the curve can be generated using :code:`step_size`. For example:
+
+.. code-block:: json
+
+    "step_size": 5.0
+
+Artisan automatically determines the number of points from the parameter range and the specified step size. Only one of :code:`n_points` or :code:`step_size` is required. If :code:`n_points` is provided, it is used to determine the number of
+points. Otherwise, :code:`step_size` is used. The :code:`periodic` parameter determines whether the generated curve is
+closed. For example:
+
+.. code-block:: json
+
+    "periodic": true
+
+adds the starting point again at the end of the generated point sequence, closing the curve with a final line segment. This is useful for closed curves such as circles. For example:
+
+.. code-block:: json
+
+    {
+        "x_expr": "100*cos(t)",
+        "y_expr": "100*sin(t)",
+        "z_expr": "0",
+        "t_min": 0.0,
+        "t_max": 6.283185307,
+        "n_points": 100,
+        "periodic": true,
+        "out_meshfile": "Circle.inp"
+    }
+
+When :code:`periodic` is :code:`false`, Artisan generates an open curve without adding the closing segment. Here are a few examples. A straight line along the X direction can be defined as:
+
+.. code-block:: json
+
+    {
+        "x_expr": "t",
+        "y_expr": "0",
+        "z_expr": "0",
+        "t_min": 0.0,
+        "t_max": 100.0,
+        "n_points": 21,
+        "periodic": false,
+        "out_meshfile": "StraightLine.inp"
+    }
+
+A circle in the XY plane can be defined as:
+
+.. code-block:: json
+
+    {
+        "x_expr": "100*cos(t)",
+        "y_expr": "100*sin(t)",
+        "z_expr": "0",
+        "t_min": 0.0,
+        "t_max": 6.283185307,
+        "n_points": 100,
+        "periodic": true,
+        "out_meshfile": "Circle.inp"
+    }
+
+A three-dimensional helix can be defined as:
+
+.. code-block:: json
+
+    {
+        "x_expr": "100*cos(t)",
+        "y_expr": "100*sin(t)",
+        "z_expr": "10*t",
+        "t_min": 0.0,
+        "t_max": 12.566370614,
+        "n_points": 200,
+        "periodic": false,
+        "out_meshfile": "Helix.inp"
+    }
+
+
+
+.. list-table::
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Parameter
+     - Description
+
+   * - :code:`x_expr`
+     - Mathematical expression defining the X coordinate of the curve as
+       a function of :code:`t`.
+
+   * - :code:`y_expr`
+     - Mathematical expression defining the Y coordinate of the curve as
+       a function of :code:`t`.
+
+   * - :code:`z_expr`
+     - Mathematical expression defining the Z coordinate of the curve as
+       a function of :code:`t`.
+
+   * - :code:`t_min`
+     - Minimum value of the curve parameter :code:`t`.
+
+   * - :code:`t_max`
+     - Maximum value of the curve parameter :code:`t`.
+
+   * - :code:`n_points`
+     - Number of points generated along the curve. Must be at least 2.
+
+   * - :code:`step_size`
+     - Step size used to determine the number of points. Use either
+       :code:`n_points` or :code:`step_size`.
+
+   * - :code:`periodic`
+     - If :code:`true`, the curve is closed by connecting the final point
+       to the starting point.
+
+   * - :code:`out_meshfile`
+     - Output file for the generated line mesh.
+
+Example :code:`\Test_json\ParametricGeometry\ParametricLines.json` and :code:`\Test_json\ParametricGeometry\ParametricLines_Sphere.json` shows a complete workflow for a parametric curve filling a cubic volume and spherical volume.
+
+.. image:: ./pictures/ParametricLine_01.png
+
+
+.. image:: ./pictures/ParametricLine_02.png
+
+
+.. image:: ./pictures/ParametricLine_03.png
+
+Notes
+=====
+
+* :code:`t_max` must be greater than :code:`t_min`.
+* At least one of :code:`n_points` and :code:`step_size` must be provided.
+* :code:`n_points` must be at least 2.
+* :code:`step_size` must be greater than zero.
+* The expressions must produce finite coordinate values over the entire
+  parameter range.
+* The three expressions must define a curve rather than a single fixed
+  point.
+* The generated mesh consists of line elements connecting consecutive
+  curve points.

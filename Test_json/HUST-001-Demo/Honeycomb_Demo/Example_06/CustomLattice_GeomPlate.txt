@@ -1,7 +1,0 @@
-{
-"type": "Geom-Plate",
- "definition": {
-                 "file": "..//honeycomb.stl",
-                 "ladomain" : "Hex"
-                }
-}

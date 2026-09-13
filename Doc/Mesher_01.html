@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Meshing 01 &#8212; Artisan 0.2.15 documentation</title>
+    <title>Meshing 01 &#8212; Artisan 0.2.16 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=8d64ebca"></script>
+    <script src="_static/documentation_options.js?v=4e5ace54"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.15 documentation</p>
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -166,7 +166,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
-<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
@@ -843,7 +844,8 @@ document.write(`
 <span class="w">              </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stacked_layer_mesh&quot;</span><span class="p">,</span>
 <span class="w">              </span><span class="nt">&quot;num_layers&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
 <span class="w">              </span><span class="nt">&quot;layer_thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span>
-<span class="w">              </span><span class="nt">&quot;projection_direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">              </span><span class="nt">&quot;projection_direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">              </span><span class="nt">&quot;projection_diff_calc_step&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span>
 <span class="w">          </span><span class="p">}</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -911,6 +913,9 @@ document.write(`
 </tr>
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">projection_direction</span></code></p></td>
 <td><p>A negative value indicates projection inward, and a positive value indicates projection outward.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">projection_diff_calc_step</span></code></p></td>
+<td><p>a list of 3 elements. Algorithm uses this array to calculate the projection gradient. If the list contains a zero, the global resolution array is used to calculate the projection gradient.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1077,7 +1082,7 @@ By Bleemsys
 
   <p class="copyright">
     
-      © Copyright 2025, Bleemsys Ltd.
+      © Copyright 2026, Bleemsys Ltd.
       <br/>
     
   </p>
