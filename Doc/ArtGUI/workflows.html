@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Build and edit workflows &#8212; Artisan 0.2.16 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI/workflows';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Define and reuse lattices" href="lattices.html" />
+    <link rel="prev" title="Projects, geometry and file paths" href="projects.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ArtGUI/workflows.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Build and edit workflows</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-operation">Add an operation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-parameters-and-presets">Edit parameters and presets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reorder-or-remove-steps">Reorder or remove steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-json-editor">Use the JSON editor</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="build-and-edit-workflows">
+<h1>Build and edit workflows<a class="headerlink" href="#build-and-edit-workflows" title="Link to this heading">#</a></h1>
+<p>A workflow is an ordered list of operations. Each step works with the model,
+fields, meshes or definitions available at that point. Changing the order can
+change the result or make a required input unavailable.</p>
+<section id="add-an-operation">
+<h2>Add an operation<a class="headerlink" href="#add-an-operation" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Choose <strong>+ Add step</strong> beneath the 3D Workspace.</p></li>
+<li><p>Search by a friendly name, command keyword or purpose. For example, search
+for <code class="docutils literal notranslate"><span class="pre">lattice</span></code>, <code class="docutils literal notranslate"><span class="pre">Lin_Interpolate</span></code> or <code class="docutils literal notranslate"><span class="pre">export</span></code>.</p></li>
+<li><p>Select the operation and check the <strong>Insert</strong> position at the bottom of the
+dialog. You can insert at the start, after an existing step or at the end.</p></li>
+<li><p>Choose <strong>Add step</strong>. The new card is selected and its parameters appear in
+Properties.</p></li>
+<li><p>Replace example values and file references with values appropriate to your
+design. Save the project.</p></li>
+</ol>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/operation-picker.png"><img alt="Add step dialog with searchable operations, Common, Recent, Favorites and All operations tabs, and an insertion-position selector." src="../_images/operation-picker.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Choose an operation and its insertion point together. Adding an Export
+step at the end is a common final action in a modelling workflow.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><strong>Common</strong> contains frequently used operations. <strong>Recent</strong> lists operations
+you have added, while <strong>Favorites</strong> contains those marked with a star.
+<strong>All operations</strong> provides the full catalogue and a category filter. Search
+looks across the catalogue rather than only the current tab.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Operation categories</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Typical purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Geometry &amp; shells</p></td>
+<td><p>Define shapes, shells and boundary features.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lattices &amp; transitions</p></td>
+<td><p>Add lattice fields and vary or combine lattice regions.</p></td>
+</tr>
+<tr class="row-even"><td><p>Volume meshing</p></td>
+<td><p>Create volume meshes for later operations.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Surface meshing</p></td>
+<td><p>Create surface meshes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Mesh processing</p></td>
+<td><p>Trim or modify existing meshes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lines &amp; paths</p></td>
+<td><p>Create or manipulate line-based structures.</p></td>
+</tr>
+<tr class="row-even"><td><p>Fields</p></td>
+<td><p>Build and combine spatial fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Analysis &amp; FEA</p></td>
+<td><p>Prepare meshes for analysis workflows.</p></td>
+</tr>
+<tr class="row-even"><td><p>Import, export &amp; storage</p></td>
+<td><p>Read, write, compress or recover workflow data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="edit-parameters-and-presets">
+<h2>Edit parameters and presets<a class="headerlink" href="#edit-parameters-and-presets" title="Link to this heading">#</a></h2>
+<p>Select a card to edit its properties. Scalars use individual fields; vectors
+provide separate components; nested data may appear as JSON. Keep coordinate
+systems and units consistent with the source geometry.</p>
+<p>The <strong>Example preset</strong> selector replaces that operation’s parameters with
+another bundled example. A preset is a starting configuration, not a guarantee
+that it is suitable for the current geometry. Selecting a preset replaces
+your current values for that operation, including paths. Review the full
+parameter list afterwards.</p>
+<p>For lattice operations, choose an integrated lattice, a project definition,
+or <strong>Other name / file…</strong> as appropriate. The name must match the intended
+definition. See <a class="reference internal" href="lattices.html"><span class="doc">Define and reuse lattices</span></a> for creating project definitions.</p>
+<p>ArtGUI preserves integer and floating-point values: <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">5.0</span></code> retain
+their types through JSON editing, saving and reordering. Integer fields reject
+fractional values. If a parameter genuinely needs a different numeric type,
+change it explicitly in <strong>JSON</strong> and check the operation’s requirements.</p>
+</section>
+<section id="reorder-or-remove-steps">
+<h2>Reorder or remove steps<a class="headerlink" href="#reorder-or-remove-steps" title="Link to this heading">#</a></h2>
+<p>Select a card and choose <strong>Up</strong> or <strong>Down</strong> to move it. <strong>Remove step</strong> removes
+the selection; <strong>Clear workflow</strong> removes all operations after confirmation.
+Keep a saved copy before making substantial changes.</p>
+<p>Adding, moving and removing steps can renumber the JSON keys. Use the displayed
+order to check dependencies, not gaps in the original numbering. For example,
+the engine-bracket Export operation originally has key <code class="docutils literal notranslate"><span class="pre">99</span></code> but is the sixth
+card.</p>
+<p>Keep these dependencies in order:</p>
+<ul class="simple">
+<li><p>Create or import a mesh before an operation refers to its variable name.</p></li>
+<li><p>Create grid fields before field-driven expressions use them.</p></li>
+<li><p>Define a custom unit cell before a conformal lattice refers to it.</p></li>
+<li><p>Define a lattice before an operation consumes its name.</p></li>
+<li><p>Export after the modelling operations whose result you want to write.</p></li>
+</ul>
+<p>ArtGUI checks named lattice-definition ordering before generation. It does
+not prove that every possible mesh, field, file or parameter dependency is
+valid; the engine may report additional issues when the workflow runs.</p>
+</section>
+<section id="use-the-json-editor">
+<h2>Use the JSON editor<a class="headerlink" href="#use-the-json-editor" title="Link to this heading">#</a></h2>
+<p>Choose <strong>JSON</strong> to inspect or edit the whole project. Use double quotes for
+JSON names and strings, lowercase <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>, and no trailing
+commas. Choose <strong>Apply JSON</strong> to validate and apply the text, or <strong>Cancel</strong>
+to close without applying the text edits.</p>
+<p>Applying JSON replaces the in-memory workflow and clears the current viewer
+layers. Reload the geometry for visual inspection, then choose <strong>Save</strong> to
+write the project. Invalid JSON stays unapplied and a message explains the
+problem.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Applying valid JSON only confirms that the editor can read its structure.
+It does not confirm that the files exist or that Artisan can execute every
+operation. Inspect the run log after generation.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="projects.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Projects, geometry and file paths</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lattices.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Define and reuse lattices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-operation">Add an operation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-parameters-and-presets">Edit parameters and presets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reorder-or-remove-steps">Reorder or remove steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-json-editor">Use the JSON editor</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

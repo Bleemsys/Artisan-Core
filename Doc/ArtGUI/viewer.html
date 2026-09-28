@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Inspect models in the 3D Workspace &#8212; Artisan 0.2.16 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI/viewer';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Troubleshooting and common questions" href="troubleshooting.html" />
+    <link rel="prev" title="Generate models and read the log" href="generation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ArtGUI/viewer.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Inspect models in the 3D Workspace</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#move-around-the-model">Move around the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-source-and-result">Compare source and result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-preview-and-full-detail">Quick Preview and Full Detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-inside-with-a-section-plane">Look inside with a section plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-a-distance-or-angle">Measure a distance or angle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-view-or-an-image">Save a view or an image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-meshes">Supported meshes</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="inspect-models-in-the-3d-workspace">
+<h1>Inspect models in the 3D Workspace<a class="headerlink" href="#inspect-models-in-the-3d-workspace" title="Link to this heading">#</a></h1>
+<p>The viewer loads mesh files for inspection. Camera, display, section and
+measurement controls do not change the workflow geometry or the mesh on disk.
+After changing workflow parameters, generate and reload a result to see the
+new design.</p>
+<section id="move-around-the-model">
+<h2>Move around the model<a class="headerlink" href="#move-around-the-model" title="Link to this heading">#</a></h2>
+<p>Use <strong>Orbit</strong>, <strong>Pan</strong> or <strong>Zoom</strong> in the navigation selector to assign that
+action to the left mouse button. The middle button zooms. <strong>More → Mouse controls</strong>
+contains right-button preferences, sensitivity and reverse-scroll zoom. Touch
+navigation uses one finger to orbit and two to pan/zoom.</p>
+<p>Choose <strong>Fit view</strong> to frame the visible layers or <strong>Reset</strong> for an isometric
+camera. The <strong>View</strong> selector provides front, back, left, right, top, bottom
+and isometric views. You can also click a face, edge or corner of the
+orientation cube. Z is the vertical axis.</p>
+<p>Switch between <strong>Perspective</strong> and <strong>Orthographic</strong> projection as needed.
+The display selector offers <strong>Solid</strong>, <strong>Wireframe</strong> and <strong>Solid + edges</strong>.
+Dense triangle edges may obscure small features; return to Solid for a clear
+surface view.</p>
+</section>
+<section id="compare-source-and-result">
+<h2>Compare source and result<a class="headerlink" href="#compare-source-and-result" title="Link to this heading">#</a></h2>
+<p><strong>Load source</strong> updates the workflow source; <strong>Load result</strong> adds a result
+layer. Use <strong>Geometry → + Add</strong> for other reference meshes. All layers retain
+their original coordinate positions so aligned inputs and outputs can be
+compared.</p>
+<p>Open <strong>Visibility</strong> to show or hide layers and change their colour and opacity.
+Use <strong>Make active</strong> to choose the layer affected by the preview-detail switch.
+For a lattice infill, hide the solid source first; otherwise it may cover
+the structure you are trying to inspect.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/visibility.png"><img alt="Visibility controls with Source geometry hidden and Generated result visible in full detail." src="../_images/visibility.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Hide the source to inspect an infill result. Each layer has independent
+visibility, opacity and colour controls.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Transparency is useful for an overlay, but complex intersecting surfaces can
+show sorting artefacts. Inspect each layer separately if an overlap is unclear.</p>
+</section>
+<section id="quick-preview-and-full-detail">
+<h2>Quick Preview and Full Detail<a class="headerlink" href="#quick-preview-and-full-detail" title="Link to this heading">#</a></h2>
+<p>Large STL files open using a sampled <strong>Quick Preview</strong> of up to 120,000
+triangles. This reduces loading and display cost. Sampling can make surfaces
+look incomplete because many triangles are intentionally omitted.</p>
+<p>Select the layer in Visibility and choose <strong>Load full detail</strong> to load its
+complete mesh. The control may show <strong>Show quick preview</strong> afterwards, or
+<strong>Full detail shown</strong> for a mesh that does not need sampling. Read the footer
+below the viewport to confirm the active layer and displayed detail.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Quick Preview is a display aid. It does not simplify the original file or
+reduce the geometry used by Artisan. Measurements are disabled on sampled
+previews. Use Full Detail before assessing holes or missing surfaces.</p>
+</div>
+<p>Full-detail STL loading warns for files larger than 256 MB and has a
+10-million-triangle limit in this version. Large text meshes can take longer
+to parse. Use <strong>Cancel</strong> beside the loading progress indicator to stop loading.</p>
+</section>
+<section id="look-inside-with-a-section-plane">
+<h2>Look inside with a section plane<a class="headerlink" href="#look-inside-with-a-section-plane" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Open <strong>Section</strong> and enable the section display.</p></li>
+<li><p>Choose X, Y or Z, or enter a custom plane normal.</p></li>
+<li><p>Move the position slider through the model.</p></li>
+<li><p>Reverse the visible side if needed. Disable the section to restore the
+complete view.</p></li>
+</ol>
+<p>This clips the display only. It does not create a capped cross-section,
+modify the STL, or export a cut model. On solid INP meshes, it clips the
+visible outer boundary; it does not reveal every internal element face.</p>
+</section>
+<section id="measure-a-distance-or-angle">
+<h2>Measure a distance or angle<a class="headerlink" href="#measure-a-distance-or-angle" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Load Full Detail for the model you want to measure and make it visible.</p></li>
+<li><p>Open <strong>Measure</strong>, choose that model, and select <strong>Distance — 2 points</strong>
+or <strong>Angle — 3 points</strong>.</p></li>
+<li><p>Click two points for a distance. For an angle, click three points with
+the vertex as the <strong>second</strong> point.</p></li>
+<li><p>Enable <strong>Snap to triangle vertices</strong> when you want measurements based on
+nearby mesh vertices. INP beam measurements can snap to endpoints.</p></li>
+<li><p>Return the measurement tool to Off when finished.</p></li>
+</ol>
+<p>Measurements describe the loaded mesh and its floating-point precision.
+They do not measure the underlying implicit field or an exact CAD surface.
+Picking may be slower on very large meshes. Annotations are session-only
+and are cleared when their model is replaced.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Mesh coordinates do not carry a guaranteed unit system. <strong>More → Unit
+label</strong> changes the displayed label, not the model scale. If the file was
+created in millimetres, use mm; selecting inches does not convert it.</p>
+</div>
+</section>
+<section id="save-a-view-or-an-image">
+<h2>Save a view or an image<a class="headerlink" href="#save-a-view-or-an-image" title="Link to this heading">#</a></h2>
+<p><strong>More</strong> contains grid, axes, bounding box/dimensions, background colour,
+unit labels, named camera views and image export.</p>
+<p>Named camera views retain position, target, projection and zoom. Camera
+views and viewer preferences are remembered locally, separately from the
+workflow JSON. They are not transferred just by sharing the project file.</p>
+<p>To save an illustration, frame the model, choose whether to include dimensions
+and measurements, and choose <strong>More → Save PNG…</strong>. You can request an opaque
+or transparent background. The image uses the current viewport resolution;
+enlarge the window before saving when you need more pixels.</p>
+</section>
+<section id="supported-meshes">
+<h2>Supported meshes<a class="headerlink" href="#supported-meshes" title="Link to this heading">#</a></h2>
+<p>The viewer supports binary and ASCII STL, OBJ, ASCII PLY and the supported
+INP subset described below. A file accepted by the viewer is not necessarily
+a valid input to every Artisan operation.</p>
+<p>For INP, use a flat Abaqus/meshio-style file containing explicit <code class="docutils literal notranslate"><span class="pre">*NODE</span></code>
+and <code class="docutils literal notranslate"><span class="pre">*ELEMENT</span></code> records in Cartesian coordinates. Common linear beam/truss,
+triangle, quadrilateral, tetrahedral, wedge and hexahedral elements are
+supported. Beams appear as centre lines without physical section thickness;
+shells appear as surfaces; solid meshes display the outer boundary with
+shared interior faces removed.</p>
+<p>Wireframe and Solid + edges show INP element boundaries rather than the
+extra diagonals used to draw quadrilaterals. Axisymmetric elements are
+displayed in their supplied coordinates, without revolving them into a
+three-dimensional body.</p>
+<p>The INP reader does not support higher-order elements, part/assembly instances,
+include files, generated node/element definitions or unsupported coordinate
+systems. Export a flat, supported mesh before viewing those models.</p>
+<p>INP limits are 128 MB per file, 500,000 nodes, 500,000 elements and
+2 million processed faces. Loading is cancellable; there is no sampled
+INP Quick Preview. The viewer does not provide mesh editing, a solver or
+analysis-result plotting.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="generation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Generate models and read the log</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="troubleshooting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Troubleshooting and common questions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#move-around-the-model">Move around the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-source-and-result">Compare source and result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-preview-and-full-detail">Quick Preview and Full Detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-inside-with-a-section-plane">Look inside with a section plane</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-a-distance-or-angle">Measure a distance or angle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-view-or-an-image">Save a view or an image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-meshes">Supported meshes</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

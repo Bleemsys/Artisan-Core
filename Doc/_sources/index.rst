@@ -40,7 +40,7 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Compression <Compression.rst>
    FEA Interface <FEAInter.rst>
    API Interface <API.rst>
-   GUI for Artisan <ArtGUI.rst>
+   ArtGUI user guide <ArtGUI.rst>
    Supports <Supports.rst>
    
 

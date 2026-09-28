@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Your first model: engine bracket &#8212; Artisan 0.2.16 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI/quickstart';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Find your way around" href="workspace.html" />
+    <link rel="prev" title="ArtGUI user guide" href="../ArtGUI.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ArtGUI/quickstart.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Your first model: engine bracket</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#have-these-files-ready">Have these files ready</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-artgui-and-the-workflow">1. Open ArtGUI and the workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-source-and-calculation-settings">2. Check the source and calculation settings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-six-step-design">3. Read the six-step design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-supplied-result-first">4. Inspect the supplied result first</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-your-own-result">5. Generate your own result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-one-controlled-change">6. Make one controlled change</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="your-first-model-engine-bracket">
+<h1>Your first model: engine bracket<a class="headerlink" href="#your-first-model-engine-bracket" title="Link to this heading">#</a></h1>
+<p>This walkthrough uses a supplied workflow to fill an engine bracket with a
+spatially varying lattice. You will open the project, check its inputs, inspect
+the operation sequence, and view the supplied result. You can then run your
+own variation.</p>
+<section id="have-these-files-ready">
+<h2>Have these files ready<a class="headerlink" href="#have-these-files-ready" title="Link to this heading">#</a></h2>
+<p>The example uses the following layout inside the Artisan distribution folder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Artisan_Dist/
+├── ArtisanMain.exe
+├── Test_json/
+│   └── EngineBracket_HS_Infill_Lin_LR.json
+├── sample-obj/
+│   └── EngineBracket.STL
+└── Test_results/
+    └── EngineBracket_HS_Lin_TPMS_Infill_LR.stl
+</pre></div>
+</div>
+<p>The JSON describes the design, the first STL is the original bracket, and the
+second STL is an already generated result. The result filename is deliberately
+different from the JSON filename.</p>
+<p>An unchanged copy of the workflow is available here:
+<a class="reference download internal" download="" href="../_downloads/de19cedddf59cbc8c4418068a8b8179f/EngineBracket_HS_Infill_Lin_LR.json"><code class="xref download docutils literal notranslate"><span class="pre">Engine-bracket</span> <span class="pre">workflow</span></code></a>.
+It still requires the geometry and directory layout shown above; downloading
+the JSON alone does not copy those files.</p>
+</section>
+<section id="open-artgui-and-the-workflow">
+<h2>1. Open ArtGUI and the workflow<a class="headerlink" href="#open-artgui-and-the-workflow" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Launch the <strong>ArtGUI / Artisan Workbench</strong> desktop application supplied with
+your installation.</p></li>
+<li><p>Before experimenting, copy the example JSON to a new filename, such as
+<code class="docutils literal notranslate"><span class="pre">EngineBracket_trial.json</span></code>, using your file manager. Keep it in
+<code class="docutils literal notranslate"><span class="pre">Test_json</span></code> for this walkthrough.</p></li>
+<li><p>Choose <strong>Open</strong> in ArtGUI and select the copied JSON.</p></li>
+<li><p>Check that the Project panel lists <code class="docutils literal notranslate"><span class="pre">EngineBracket.STL</span></code> and that the
+Workflow contains six cards. The source preview loads automatically when
+its path can be found.</p></li>
+<li><p>Choose <strong>Fit view</strong> if the bracket is outside the visible area.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Save</strong> writes to the file you opened. This version has no separate
+<strong>Save As</strong> command. Working on a copy keeps the original example available.</p>
+</div>
+</section>
+<section id="check-the-source-and-calculation-settings">
+<h2>2. Check the source and calculation settings<a class="headerlink" href="#check-the-source-and-calculation-settings" title="Link to this heading">#</a></h2>
+<p>Select <strong>Project settings</strong> in the left panel. For the unchanged example,
+check these values; scroll the Properties panel to see the lower sections.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Engine-bracket settings</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Setting</p></th>
+<th class="head"><p>Example value</p></th>
+<th class="head"><p>What to check</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Geometry</span></code></p></td>
+<td><p>The bracket file determines the domain.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Geomfile</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.//sample-obj//EngineBracket.STL</span></code></p></td>
+<td><p>The path must point to the original bracket.</p></td>
+</tr>
+<tr class="row-even"><td><p>Resolution</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0.4,</span> <span class="pre">0.4,</span> <span class="pre">0.4]</span></code></p></td>
+<td><p>Keep this for the first run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rotation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0]</span></code></p></td>
+<td><p>No setup rotation is requested.</p></td>
+</tr>
+<tr class="row-even"><td><p>Padding</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>Retain the example’s domain padding.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Use GPU</p></td>
+<td><p>Disabled</p></td>
+<td><p>The example requests CPU calculation.</p></td>
+</tr>
+<tr class="row-even"><td><p>JSON working directory</p></td>
+<td><p>Disabled (<code class="docutils literal notranslate"><span class="pre">false</span></code>)</p></td>
+<td><p>Relative paths are based on the backend working directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Memory limit (bytes)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1073741824</span></code></p></td>
+<td><p>The supplied memory setting is 1 GiB.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>With <strong>Type = Geometry</strong>, the greyed-out Sample bounds do not need to be filled
+in. They are inactive because the engine reads the geometry’s bounding box.</p>
+<p>Choose <strong>Backend…</strong> and select <code class="docutils literal notranslate"><span class="pre">ArtisanMain.exe</span></code> in the <code class="docutils literal notranslate"><span class="pre">Artisan_Dist</span></code>
+folder shown above if it is not already selected. Keep the complete backend
+package together with its runtime files.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This example has <code class="docutils literal notranslate"><span class="pre">JsonWorkDir:</span> <span class="pre">false</span></code>. Its paths start at the backend
+working directory, <strong>not</strong> at <code class="docutils literal notranslate"><span class="pre">Test_json</span></code>. Enabling <strong>JSON working
+directory</strong> without changing the paths would make the engine look for
+<code class="docutils literal notranslate"><span class="pre">Test_json/sample-obj/EngineBracket.STL</span></code>. See <a class="reference internal" href="projects.html"><span class="doc">Projects, geometry and file paths</span></a> when moving
+a project or using a different backend location.</p>
+</div>
+</section>
+<section id="read-the-six-step-design">
+<h2>3. Read the six-step design<a class="headerlink" href="#read-the-six-step-design" title="Link to this heading">#</a></h2>
+<p>Select each workflow card to see its parameters. Scroll the workflow strip
+horizontally if the last cards are hidden.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">The supplied operation sequence</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 8.0%" />
+<col style="width: 27.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Card</p></th>
+<th class="head"><p>Operation</p></th>
+<th class="head"><p>Role in this example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>01</p></td>
+<td><p>Add lattice (<code class="docutils literal notranslate"><span class="pre">Add_Lattice</span></code>)</p></td>
+<td><p>Start with <code class="docutils literal notranslate"><span class="pre">SchwarzDiamond</span></code>, size <code class="docutils literal notranslate"><span class="pre">[8.0,</span> <span class="pre">8.0,</span> <span class="pre">8.0]</span></code> and
+thickness parameter <code class="docutils literal notranslate"><span class="pre">0.2</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>02</p></td>
+<td><p>Linear lattice blend (<code class="docutils literal notranslate"><span class="pre">Lin_Interpolate</span></code>)</p></td>
+<td><p>Blend towards another SchwarzDiamond field with thickness parameter
+<code class="docutils literal notranslate"><span class="pre">1.4</span></code>, using planes at X = 90 and X = 45.</p></td>
+</tr>
+<tr class="row-even"><td><p>03</p></td>
+<td><p>Linear lattice blend (<code class="docutils literal notranslate"><span class="pre">Lin_Interpolate</span></code>)</p></td>
+<td><p>Add a second linear variation with thickness parameter <code class="docutils literal notranslate"><span class="pre">0.35</span></code>,
+using planes at Z = 50 and Z = 20.</p></td>
+</tr>
+<tr class="row-odd"><td><p>04</p></td>
+<td><p>Sharp lattice transition (<code class="docutils literal notranslate"><span class="pre">HS_Interpolate</span></code>)</p></td>
+<td><p>Introduce <code class="docutils literal notranslate"><span class="pre">Cubic</span></code> with size <code class="docutils literal notranslate"><span class="pre">[5.0,</span> <span class="pre">5.0,</span> <span class="pre">5.0]</span></code> and thickness
+parameter <code class="docutils literal notranslate"><span class="pre">0.5</span></code>. The transition plane uses point
+<code class="docutils literal notranslate"><span class="pre">[90.0,</span> <span class="pre">30.0,</span> <span class="pre">50.0]</span></code> and normal <code class="docutils literal notranslate"><span class="pre">[-1.0,</span> <span class="pre">-1.0,</span> <span class="pre">0.0]</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>05</p></td>
+<td><p>Attractor lattice blend (<code class="docutils literal notranslate"><span class="pre">Add_Attractor</span></code>)</p></td>
+<td><p>Introduce a local Cubic variation at <code class="docutils literal notranslate"><span class="pre">[120.0,</span> <span class="pre">20.0,</span> <span class="pre">50.0]</span></code>, with
+radius <code class="docutils literal notranslate"><span class="pre">45.0</span></code> and thickness parameter <code class="docutils literal notranslate"><span class="pre">1.8</span></code>. This step enables Fill.</p></td>
+</tr>
+<tr class="row-odd"><td><p>06</p></td>
+<td><p>Export model (<code class="docutils literal notranslate"><span class="pre">Export</span></code>)</p></td>
+<td><p>Write the final STL to the path in <code class="docutils literal notranslate"><span class="pre">outfile</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The original JSON uses the keys <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">99</span></code>.
+ArtGUI displays their ordered positions as six cards. A card number is not
+necessarily the original JSON key.</p>
+<p>Keep the supplied plane normals, transformations, Fill settings and step order
+for your first run. A thickness parameter does not necessarily equal a
+measured wall thickness for every lattice type.</p>
+</section>
+<section id="inspect-the-supplied-result-first">
+<h2>4. Inspect the supplied result first<a class="headerlink" href="#inspect-the-supplied-result-first" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Choose <strong>Load result</strong> and open
+<code class="docutils literal notranslate"><span class="pre">Test_results/EngineBracket_HS_Lin_TPMS_Infill_LR.stl</span></code>.</p></li>
+<li><p>Open <strong>Visibility</strong>. Hide the source so that its solid surface does not
+cover the lattice result.</p></li>
+<li><p>Select the result with <strong>Make active</strong>. If it is sampled, choose
+<strong>Load full detail</strong> before judging the final surface or measuring it.</p></li>
+<li><p>Use <strong>Fit view</strong>, then orbit and zoom to inspect the bracket.</p></li>
+</ol>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/result.png"><img alt="Supplied engine-bracket lattice result displayed in ArtGUI with the source hidden." src="../_images/result.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The supplied STL opened as a result layer. This is an existing output file,
+not a live preview recalculated from the current parameter values.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>You can stop here if you only want to explore the interface. Loading this
+result does not require a new Artisan calculation.</p>
+</section>
+<section id="generate-your-own-result">
+<h2>5. Generate your own result<a class="headerlink" href="#generate-your-own-result" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Select the <strong>Export model</strong> card. Change <code class="docutils literal notranslate"><span class="pre">outfile</span></code> to a new name such as
+<code class="docutils literal notranslate"><span class="pre">.//Test_results/EngineBracket_trial.stl</span></code>. Check that the output folder
+exists and is writable.</p></li>
+<li><p>Choose <strong>Save</strong>. Check the project name at the top of the window.</p></li>
+<li><p>Choose <strong>Generate model</strong>. ArtGUI saves the current project before starting
+Artisan; if saving is cancelled or fails, generation does not start.</p></li>
+<li><p>Watch the status row below Workflow. Use <strong>Show log</strong> for calculation
+messages. Wait for a successful completion status.</p></li>
+<li><p>Choose <strong>Load result</strong> and select <code class="docutils literal notranslate"><span class="pre">EngineBracket_trial.stl</span></code>. Generation
+does not automatically replace the result already in the viewer.</p></li>
+</ol>
+<p>Post-processing in this example combines meshes and removes isolated parts.
+It retains partition mesh files and does not request LAZ point export. These
+options are under <strong>Project settings → Post process</strong>.</p>
+</section>
+<section id="make-one-controlled-change">
+<h2>6. Make one controlled change<a class="headerlink" href="#make-one-controlled-change" title="Link to this heading">#</a></h2>
+<p>For a simple comparison, select card 01 and change its thickness parameter
+from <code class="docutils literal notranslate"><span class="pre">0.2</span></code> to <code class="docutils literal notranslate"><span class="pre">0.3</span></code>. Give the export a second filename, generate, and load
+that result. Keep all other settings unchanged so that the comparison is
+meaningful. Return to <code class="docutils literal notranslate"><span class="pre">0.2</span></code> to restore the supplied setting.</p>
+<p>The later blending steps also affect the shape, so this is not a uniform
+thickness change throughout the bracket. Use full-detail viewing and, where
+appropriate, the measurement tools to inspect the actual generated mesh.</p>
+<p>For the next steps, see <a class="reference internal" href="workflows.html"><span class="doc">Build and edit workflows</span></a> and <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../ArtGUI.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ArtGUI user guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="workspace.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Find your way around</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#have-these-files-ready">Have these files ready</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-artgui-and-the-workflow">1. Open ArtGUI and the workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-source-and-calculation-settings">2. Check the source and calculation settings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-six-step-design">3. Read the six-step design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-supplied-result-first">4. Inspect the supplied result first</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-your-own-result">5. Generate your own result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#make-one-controlled-change">6. Make one controlled change</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

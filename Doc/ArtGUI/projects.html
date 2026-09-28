@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Projects, geometry and file paths &#8212; Artisan 0.2.16 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI/projects';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Build and edit workflows" href="workflows.html" />
+    <link rel="prev" title="Find your way around" href="workspace.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Find your way around</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ArtGUI/projects.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Projects, geometry and file paths</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-and-save-a-project">Open and save a project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-the-right-way-to-add-a-file">Choose the right way to add a file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understand-the-working-directory">Understand the working directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-new-design">Set up a new design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-post-processing">Resolution and post-processing</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="projects-geometry-and-file-paths">
+<h1>Projects, geometry and file paths<a class="headerlink" href="#projects-geometry-and-file-paths" title="Link to this heading">#</a></h1>
+<section id="open-and-save-a-project">
+<h2>Open and save a project<a class="headerlink" href="#open-and-save-a-project" title="Link to this heading">#</a></h2>
+<p>Choose <strong>Open</strong> to load a workflow JSON file. ArtGUI reads <code class="docutils literal notranslate"><span class="pre">Setup</span></code>, numbered
+<code class="docutils literal notranslate"><span class="pre">WorkFlow</span></code> steps and <code class="docutils literal notranslate"><span class="pre">PostProcess</span></code> into the interface. <strong>New</strong> starts an
+empty workflow. New and Open ask before discarding unsaved changes.</p>
+<p><strong>Save</strong> writes the current project. A new project opens a file dialog so you
+can choose its name and folder. An opened project saves back to its existing
+path. To create a variation of an existing design, make a copy in your file
+manager and open that copy before editing.</p>
+<p>Project attachments are saved as file references in an additional <code class="docutils literal notranslate"><span class="pre">ArtGUI</span></code>
+section. ArtGUI excludes that section from the workflow sent to the backend.
+Geometry and supporting files are not embedded in the JSON; keep them with the
+project when sharing or moving it.</p>
+</section>
+<section id="choose-the-right-way-to-add-a-file">
+<h2>Choose the right way to add a file<a class="headerlink" href="#choose-the-right-way-to-add-a-file" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">File actions</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Action</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Load source</strong></p></td>
+<td><p>Selects the workflow geometry, sets Type to Geometry and updates
+<code class="docutils literal notranslate"><span class="pre">Setup.Geomfile</span></code>. Use this when changing the shape used for generation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Geometry → + Add</strong></p></td>
+<td><p>Adds reference geometry without replacing the workflow source.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Load result</strong></p></td>
+<td><p>Loads an output as a result layer and records it in Geometry.
+It does not change <code class="docutils literal notranslate"><span class="pre">Setup.Geomfile</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Supporting files → + Add</strong></p></td>
+<td><p>Attaches field data, point clouds, cell files or other inputs for
+organisation. Set the consuming operation’s file parameter separately.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Preview mesh</strong></p></td>
+<td><p>Loads or reloads the selected supported mesh in the viewer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Remove from project</strong></p></td>
+<td><p>Removes an attachment and its preview. The file remains on disk.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Click a geometry entry to inspect it. Properties show its path and, after
+loading, mesh counts and original-coordinate bounds. A loaded mesh also has
+a visibility checkbox. Supported meshes attached as supporting files can be
+previewed too.</p>
+<p>On reopening a project, the source loads automatically when available. Select
+other attached geometries to load them as needed. A reference mesh does not
+participate in generation simply because it is visible in the scene.</p>
+</section>
+<section id="understand-the-working-directory">
+<h2>Understand the working directory<a class="headerlink" href="#understand-the-working-directory" title="Link to this heading">#</a></h2>
+<p>An <strong>absolute path</strong>, such as <code class="docutils literal notranslate"><span class="pre">C:/Models/bracket.stl</span></code>, identifies a file
+directly. A <strong>relative path</strong>, such as <code class="docutils literal notranslate"><span class="pre">sample-obj/EngineBracket.STL</span></code>, is
+interpreted from a starting folder. Choose that starting folder deliberately.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">JSON working directory (<code class="docutils literal notranslate"><span class="pre">Setup.JsonWorkDir</span></code>)</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 43.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Starting folder for Artisan relative paths</p></th>
+<th class="head"><p>Use when</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">false</span></code> / Disabled</p></td>
+<td><p>The selected backend’s working directory.</p></td>
+<td><p>Using a package example arranged around <code class="docutils literal notranslate"><span class="pre">ArtisanMain.exe</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">true</span></code> / Enabled</p></td>
+<td><p>The folder containing the saved project JSON.</p></td>
+<td><p>Keeping each project and its inputs in a self-contained folder.</p></td>
+</tr>
+<tr class="row-even"><td><p>Directory string</p></td>
+<td><p>A custom working directory interpreted by Artisan.</p></td>
+<td><p>Maintaining an advanced workflow that already specifies a directory.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For example, keep the supplied engine-bracket JSON in <code class="docutils literal notranslate"><span class="pre">Test_json</span></code> with
+<code class="docutils literal notranslate"><span class="pre">false</span></code> and select the backend in the parent <code class="docutils literal notranslate"><span class="pre">Artisan_Dist</span></code> folder. To
+switch that same JSON to <code class="docutils literal notranslate"><span class="pre">true</span></code>, update its relative paths accordingly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Geomfile</span><span class="p">:</span> <span class="o">../</span><span class="n">sample</span><span class="o">-</span><span class="n">obj</span><span class="o">/</span><span class="n">EngineBracket</span><span class="o">.</span><span class="n">STL</span>
+<span class="n">outfile</span><span class="p">:</span>  <span class="o">../</span><span class="n">Test_results</span><span class="o">/</span><span class="n">EngineBracket_trial</span><span class="o">.</span><span class="n">stl</span>
+</pre></div>
+</div>
+<p>These two lines illustrate path values; they are not a complete JSON object.
+Alternatively, browse to absolute input and output paths. Absolute paths are
+easy to check locally but usually need updating on another computer.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>A successful viewer preview is not proof that every engine path is correct.
+Check the working-directory setting and all inputs, including files inside
+imported definitions and operation presets. The viewer can locate files
+using additional search locations.</p>
+</div>
+</section>
+<section id="set-up-a-new-design">
+<h2>Set up a new design<a class="headerlink" href="#set-up-a-new-design" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Choose <strong>New</strong>, then <strong>Load source</strong> to select your geometry.</p></li>
+<li><p>Select <strong>Project settings</strong> and set the resolution and compute options.</p></li>
+<li><p>Save the project in its intended folder and decide whether relative paths
+should start there.</p></li>
+<li><p>Add your operations, keeping inputs and definitions before their uses.</p></li>
+<li><p>Add an <strong>Export model</strong> operation with a distinct output filename.</p></li>
+<li><p>Save, generate and load the output to inspect it.</p></li>
+</ol>
+<p>For a design defined by a box domain rather than an input file, choose
+<strong>Type = Sample</strong>. Set lower and upper X, Y and Z bounds; every upper value
+must be greater than its corresponding lower value. Sample mode uses the
+workflow’s <code class="docutils literal notranslate"><span class="pre">Sample</span></code> settings. Additional settings not shown by the form can
+be edited through <strong>JSON</strong>.</p>
+</section>
+<section id="resolution-and-post-processing">
+<h2>Resolution and post-processing<a class="headerlink" href="#resolution-and-post-processing" title="Link to this heading">#</a></h2>
+<p>Resolution controls the spacing used to sample the implicit model, not the
+lattice unit-cell size. Smaller spacing can resolve finer details but increases
+calculation and memory demands. Keep an established example’s settings until
+you have a successful baseline.</p>
+<p><strong>Use GPU</strong> requests engine GPU use; it does not install or configure GPU
+support. <strong>Memory limit (bytes)</strong> is passed to Artisan as its computation
+setting, not a cap on the whole ArtGUI application’s memory.</p>
+<p>The <strong>Post process</strong> section exposes the workflow’s post-processing options.
+In the engine-bracket example, <strong>Combine Meshes</strong> and <strong>Remove Isolated Parts</strong>
+are enabled. Removing isolated parts can remove disconnected components, so
+review the result if the design intentionally contains separate pieces.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="workspace.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Find your way around</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="workflows.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Build and edit workflows</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-and-save-a-project">Open and save a project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-the-right-way-to-add-a-file">Choose the right way to add a file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understand-the-working-directory">Understand the working directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-new-design">Set up a new design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-post-processing">Resolution and post-processing</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

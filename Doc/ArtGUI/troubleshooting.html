@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Troubleshooting and common questions &#8212; Artisan 0.2.16 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ArtGUI/troubleshooting';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Supports" href="../Supports.html" />
+    <link rel="prev" title="Inspect models in the 3D Workspace" href="viewer.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ArtGUI/troubleshooting.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Troubleshooting and common questions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-source-geometry-does-not-appear">The source geometry does not appear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-does-not-start">Generate does not start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-run-reports-a-missing-file">The run reports a missing file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-succeeded-but-the-viewer-is-unchanged">Generation succeeded but the viewer is unchanged</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#only-the-original-solid-bracket-is-visible">Only the original solid bracket is visible</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-looks-patchy-or-has-apparent-holes">The model looks patchy or has apparent holes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurements-are-unavailable-or-have-the-wrong-units">Measurements are unavailable or have the wrong units</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-definition-cannot-be-removed-or-generation-rejects-its-order">A definition cannot be removed or generation rejects its order</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#progress-pauses-for-a-long-time">Progress pauses for a long time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-large-file-will-not-load">A large file will not load</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-are-save-as-undo-and-the-old-update-view-button">Where are Save As, Undo and the old Update view button?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-should-i-include-when-reporting-a-problem">What should I include when reporting a problem?</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="troubleshooting-and-common-questions">
+<h1>Troubleshooting and common questions<a class="headerlink" href="#troubleshooting-and-common-questions" title="Link to this heading">#</a></h1>
+<section id="the-source-geometry-does-not-appear">
+<h2>The source geometry does not appear<a class="headerlink" href="#the-source-geometry-does-not-appear" title="Link to this heading">#</a></h2>
+<p>Check the path in <strong>Project settings → Geomfile</strong>, then use <strong>Load source</strong>
+to browse to the intended file. Use <strong>Fit view</strong> and check Visibility. If a
+load is still in progress, wait for it to finish or choose Cancel before
+trying another file.</p>
+<p>For a relative path, check <a class="reference internal" href="projects.html"><span class="doc">Projects, geometry and file paths</span></a>. In the supplied engine-bracket
+example, select the backend in <code class="docutils literal notranslate"><span class="pre">Artisan_Dist</span></code> and keep JSON working
+directory disabled. A preview-load error and an engine input error may
+have different path causes; check the actual message.</p>
+</section>
+<section id="generate-does-not-start">
+<h2>Generate does not start<a class="headerlink" href="#generate-does-not-start" title="Link to this heading">#</a></h2>
+<p>Check the engine indicator and choose <strong>Backend…</strong> if it is not connected.
+Add at least one workflow operation. Correct any invalid Sample bounds or
+lattice-definition errors shown by the interface. Make sure the project
+can be saved; cancelling the initial save also cancels generation.</p>
+<p>For a Python backend, select the interpreter from the environment where
+Artisan works. A missing module or failed executable launch is reported
+in the run messages; selecting a script alone does not install its dependencies.</p>
+</section>
+<section id="the-run-reports-a-missing-file">
+<h2>The run reports a missing file<a class="headerlink" href="#the-run-reports-a-missing-file" title="Link to this heading">#</a></h2>
+<p>Read the first relevant error in <strong>Show log</strong> or <strong>Open log</strong>. Check the
+working directory, source path, definition files and supporting inputs.
+Example presets may refer to files from their original examples. Merely
+attaching a file under Supporting files does not update the operation that
+should read it.</p>
+</section>
+<section id="generation-succeeded-but-the-viewer-is-unchanged">
+<h2>Generation succeeded but the viewer is unchanged<a class="headerlink" href="#generation-succeeded-but-the-viewer-is-unchanged" title="Link to this heading">#</a></h2>
+<p>Choose <strong>Load result</strong> and open the file named by the Export operation.
+An already loaded result is not automatically replaced after a run, even
+when the output filename is unchanged. Check the export path and modification
+time if several similarly named files exist.</p>
+</section>
+<section id="only-the-original-solid-bracket-is-visible">
+<h2>Only the original solid bracket is visible<a class="headerlink" href="#only-the-original-solid-bracket-is-visible" title="Link to this heading">#</a></h2>
+<p>Open <strong>Visibility</strong> and hide the source. A solid source surface can cover
+an internal lattice result. Confirm that the result layer is loaded and
+visible, then choose <strong>Fit view</strong>.</p>
+</section>
+<section id="the-model-looks-patchy-or-has-apparent-holes">
+<h2>The model looks patchy or has apparent holes<a class="headerlink" href="#the-model-looks-patchy-or-has-apparent-holes" title="Link to this heading">#</a></h2>
+<p>Read the viewport footer. If it says <strong>Quick Preview</strong>, select that layer
+with <strong>Make active</strong> and choose <strong>Load full detail</strong>. Sampled triangles do
+not form a complete surface. Also disable Section and inspect layers
+separately. If gaps remain in full detail, investigate the input mesh,
+workflow and resolution rather than assuming they are a viewer effect.</p>
+</section>
+<section id="measurements-are-unavailable-or-have-the-wrong-units">
+<h2>Measurements are unavailable or have the wrong units<a class="headerlink" href="#measurements-are-unavailable-or-have-the-wrong-units" title="Link to this heading">#</a></h2>
+<p>The selected mesh must be visible and loaded in Full Detail. Choose the
+intended model in Measure, then select the distance or angle tool. Check
+<strong>More → Unit label</strong> against the units used to create the file. Unit labels
+do not rescale coordinates.</p>
+</section>
+<section id="a-definition-cannot-be-removed-or-generation-rejects-its-order">
+<h2>A definition cannot be removed or generation rejects its order<a class="headerlink" href="#a-definition-cannot-be-removed-or-generation-rejects-its-order" title="Link to this heading">#</a></h2>
+<p>Change or remove operations that still refer to the definition before
+removing it. Move a definition earlier than every step that uses its name.
+Any mesh variable, grid field or custom unit cell needed by the definition
+must also be available first. Apply the current definition form before
+switching to a different item.</p>
+</section>
+<section id="progress-pauses-for-a-long-time">
+<h2>Progress pauses for a long time<a class="headerlink" href="#progress-pauses-for-a-long-time" title="Link to this heading">#</a></h2>
+<p>The percentage is operation-based, so a long operation can leave it unchanged.
+Check elapsed time and the log for continued work or an error. If you choose
+<strong>Stop</strong>, partial output files remain. Do not treat a cancelled run’s files
+as confirmed final output.</p>
+</section>
+<section id="a-large-file-will-not-load">
+<h2>A large file will not load<a class="headerlink" href="#a-large-file-will-not-load" title="Link to this heading">#</a></h2>
+<p>Try Quick Preview for a large STL and close unneeded viewer layers. The
+full-detail STL and INP readers have different limits; see <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a>.
+An unsupported INP structure requires a compatible flat mesh export, not
+just a larger memory setting. ArtGUI’s engine memory setting does not
+override viewer limits.</p>
+</section>
+<section id="where-are-save-as-undo-and-the-old-update-view-button">
+<h2>Where are Save As, Undo and the old Update view button?<a class="headerlink" href="#where-are-save-as-undo-and-the-old-update-view-button" title="Link to this heading">#</a></h2>
+<p>This workbench version uses <strong>Save</strong> for the opened path and does not expose
+a general Undo/Redo command. Make project copies before substantial changes.
+Use <strong>Load result</strong> or <strong>Preview mesh</strong> to reload a file; the legacy ArtGUI
+instructions for Update view do not apply to this interface.</p>
+</section>
+<section id="what-should-i-include-when-reporting-a-problem">
+<h2>What should I include when reporting a problem?<a class="headerlink" href="#what-should-i-include-when-reporting-a-problem" title="Link to this heading">#</a></h2>
+<p>Record the ArtGUI version from <strong>Help</strong>, the selected backend, the steps that
+triggered the problem, and the relevant run-log messages. Include a minimal
+workflow and the necessary input files when you can share them. Mention the
+working-directory setting, and distinguish a preview problem from an engine
+failure. A screenshot of the affected panel is useful for interface issues.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="viewer.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Inspect models in the 3D Workspace</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Supports.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Supports</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-source-geometry-does-not-appear">The source geometry does not appear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-does-not-start">Generate does not start</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-run-reports-a-missing-file">The run reports a missing file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generation-succeeded-but-the-viewer-is-unchanged">Generation succeeded but the viewer is unchanged</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#only-the-original-solid-bracket-is-visible">Only the original solid bracket is visible</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-looks-patchy-or-has-apparent-holes">The model looks patchy or has apparent holes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurements-are-unavailable-or-have-the-wrong-units">Measurements are unavailable or have the wrong units</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-definition-cannot-be-removed-or-generation-rejects-its-order">A definition cannot be removed or generation rejects its order</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#progress-pauses-for-a-long-time">Progress pauses for a long time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-large-file-will-not-load">A large file will not load</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-are-save-as-undo-and-the-old-update-view-button">Where are Save As, Undo and the old Update view button?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-should-i-include-when-reporting-a-problem">What should I include when reporting a problem?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
