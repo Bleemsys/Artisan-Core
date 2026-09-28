@@ -1,82 +1,128 @@
 # Artisan
-Artisan is a tool for lattice generation. It is based on implicit modelling technique. The code is based on Python and C++ in order to combining the development speed and computational efficiency. Artisan computes the most of heavy math through C++ code, and conducts the routine calculations via Python. 
 
-![image info](./ArtisanIllustration_05.jpg)
+Artisan generates lattice structures using implicit modelling. It combines Python workflow control with C++ computation for geometry processing, lattice generation, meshing, and finite element analysis (FEA) export.
 
+This repository includes the Artisan engine, example workflows, documentation, and the source code for **ArtGUI**, the desktop workflow editor and 3D viewer.
 
-Lattice structure recently draws lots of attention on its potential applications in mechanical performance and heat transferring capabilities. Integrating the lattice structure into the parts can transform the existing design into a lightweight component with functionally enhanced features, such as shocking absorption. The conventional manufacturing methods, such as casting, cannot make such sophisticated design. Additive manufacturing, i.e. 3D printing, is only way of manufacturing these design at this stage. You may find more information regarding to the design and concepts at:
-
- - Understanding 3D printed lattices: Properties, performance, and design considerations: https://www.fastradius.com/resources/understanding-3d-printed-lattices-performance-and-design-considerations/
-
- - 3D lattice structures: Design elements and mechanical responses: https://www.fastradius.com/resources/3d-lattice-design-elements/
+![Examples of lattice structures generated with Artisan](ArtisanIllustration_05.jpg)
 
 ## Features
-Artisan can generate the following lattice fill:
 
- - Periodical lattices 
- - Tet mesh lattice
- - Mesh based Conformal Lattice
+- Periodic lattices, mesh-based lattices, and conformal lattice structures.
+- Strut, triply periodic minimal surface (TPMS), and geometry-based unit cells.
+- Custom lattice definitions using points and connections, implicit expressions, or geometry files.
+- Geometry operations, scalar and vector fields, surface and volume meshing, and mesh processing.
+- FEA workflows with beam, shell, and tetrahedral meshes, plus field evaluation at specified points.
+- Adaptive domain partitioning to reduce memory requirements for large models.
+- OpenMP acceleration and experimental GPU support for selected operations.
 
-with compatibility of the following types of lattice:
+## ArtGUI desktop application
 
- - Strut lattices, e.g. beam-structure liking lattice,
- - Triply periodic minimal surface (TPMS),
- - Geometric shape lattice.
+The new ArtGUI replaces the legacy Python/Tk GUI. It is built with Tauri, Rust, JavaScript, and Three.js.
 
-Users may define their lattice design through:
+- Organize source geometry, reference geometry, supporting files, and lattice definitions in the Project panel.
+- Build ordered workflows with 65 operation types and 371 example presets. Find operations through search, Common, Recent, and Favorites.
+- Define custom unit cells with Hex, Tet, Quad, or Triangle reference domains.
+- Preview STL, OBJ, PLY, and supported INP meshes. Inspect bounding-box coordinates and X/Y/Z lengths, change visibility, create sections, and take measurements.
+- Navigate using Orbit, Pan, and Zoom tools.
+- Follow generation through compact progress information and logs, with cancellation support.
+- Run either an `ArtisanMain.py` or `ArtisanMain.exe` backend.
 
- - Strut topological definition, e.g. defining points and their connections;
- - Surface equation, e.g. the math equation defines a surface;
- - Geometric shape, e.g. shell shape geometry that defines a unit of lattice.
+### Start ArtGUI from source on Windows
 
-Artisan provides an interface to FEA analysis, including 1D beam, 2D shell and 3D tet mesh generation; Solver can call Artisan to evaluate the material thickness at specific geometric location as well. 
+Install the following prerequisites if they are not already available:
 
-Artisan considers the utilization of hardware, and the resources spending on the computational tasks:
+- **Node.js with npm:** download the **LTS Windows installer** from the [official Node.js download page](https://nodejs.org/en/download). The installer includes npm.
+- **Microsoft C++ Build Tools and Windows SDK:** install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and select **Desktop development with C++**, including the MSVC compiler tools and a Windows SDK. These development tools are **not included with Windows by default**. If Visual Studio already has this workload and SDK installed, no separate Build Tools installation is needed.
+- **Rust and Cargo:** use the installer from the [official Rust installation page](https://rust-lang.org/tools/install/). Cargo is included. Choose the default **MSVC** toolchain for Windows (the host name ends in `-pc-windows-msvc`).
+- **Microsoft Edge WebView2 Runtime:** included with Windows 11 and already installed on most Windows 10 computers. No additional installation is needed when the runtime is present. If it is missing, install the **Evergreen Bootstrapper** from the [official WebView2 download page](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section). See Microsoft's [WebView2 availability guidance](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution#the-evergreen-runtime-distribution-mode).
 
- - It supports adaptive division on the given filling shape (called domain) and calculate all sub-divided domains and combines them together at the end of computing. This consumes less memory, therefore the large model generation becomes possible.   
- - Artisan supports GPU computing. This could help release some burden of computing from CPU. This is an experimental feature that we aim increase its efficiency in future developments.
+Node.js, Rust/Cargo, and the C++ build tools are required to build ArtGUI from source; users running a prebuilt ArtGUI application only need the WebView2 Runtime and their chosen Artisan engine's dependencies.
 
-## Testing Package
+After installing the prerequisites, reopen your terminal. From the repository root:
 
-The package is a stand alone package aiming to provide chance for user to verify the basic functionalities and resources costs of the software. We are developing the user guide/manual, you may try the package examples and have some quick understanding of the general capability of Artisan.
+```powershell
+cd ArtGUI
+npm ci
+npm run dev
+```
 
-## Installation
-Artisan does not require any installation. It requires installation of the dependency packages and pre-requisites softwares. 
+The repository contains GUI source, required assets, dependency manifests, and lockfiles. Installed libraries, caches, build outputs, and bundled engine runtimes are excluded. `npm ci` restores JavaScript dependencies and the local Three.js viewer files; Cargo restores Rust dependencies during the first build. Internet access is needed to download dependencies.
 
-Basic requirements:
+### Select an engine
 
- - Python 3.11 ; 
+In ArtGUI, click **Backend…**:
 
-The base code of Artisan uses OpenMP to accelerate the computation. GPU computation is the other optional feature. A few basic keywords supports GPU acceleration,
+1. Select `ArtisanMain.py` from this repository, or select a separately packaged `ArtisanMain.exe`.
+2. For a Python backend, select `python.exe` from the environment containing Artisan's dependencies. Leave the interpreter field empty to use `python` from PATH.
+3. Open or create a workflow, check its geometry and output paths, save it, and choose **Generate model**.
 
-- CUDA Toolkit: v10.2 / v11.0 / v11.1 / v11.2 / v11.3 / v11.4 / v11.5
-- CUDA Toolkit: https://developer.nvidia.com/cuda-toolkit
+The backend choice is remembered locally. Installing GUI build dependencies does not install the engine's Python dependencies; follow the engine setup below when using `ArtisanMain.py`.
 
-Users have to make sure their computers support CUDA GPU computing, 
+See the [ArtGUI guide](ArtGUI/README.md) for installer builds, optional engine bundling, development checks, and detailed setup. The default GUI installer uses an external engine selected through **Backend…**.
 
- - NVIDIA CUDA GPU with the Compute Capability 3.0 or later;
+## Artisan engine setup
 
-A few python dependency packages are required to be installed before running Artisan.  To install the required python package, you may find the requirement.txt file, and in the command window, type
+The Python package requires **Python 3.11** and the dependencies listed in [requirements.txt](requirements.txt). From the repository root, using the Python environment intended for Artisan:
 
-    pip install -r requirements.txt
+```powershell
+python -m pip install -r requirements.txt
+```
 
+Keep `ArtisanMain.py`, the `Artisan/` directory, and `pyarmor_runtime_004785/` together in their supplied layout.
 
-## Usage
-The application can be launched by
+GPU acceleration is optional and experimental. The distributed engine's requirements list CUDA Toolkit versions 10.2, 11.0, 11.1, 11.2, 11.3, 11.4, and 11.5, with an NVIDIA GPU supporting compute capability 3.0 or later. Use the CUDA runtime compatible with your engine build; these requirements are separate from ArtGUI's WebGL viewer.
 
-    python ArtisanMain.py -f <insert-your-json-file—here>
+## Command-line usage
 
-ArtiasnMain.py will read the json file and interpret the keys and then perform the calculations. There are a few example JSON files under the folder "Test_json", and the sample geometry files are at the folder "sample-obj". For example, 
+Run a JSON workflow from the repository root:
 
-    python ArtisanMain.py -f .//Test_json//EngineBracket_HS_Infill_Lin_LR.json
+```powershell
+python ArtisanMain.py -f "path/to/workflow.json"
+```
 
-Above commands will perform the complex lattice filling in EngineBracket model. The results are stored at "Test_results", or user may modify the json file to save the results at the desired location. 
+For example:
 
-For the desktop GUI, see [ArtGUI setup and build instructions](ArtGUI/README.md). The new ArtGUI replaces the legacy Python/Tk GUI and supports both `ArtisanMain.py` and `ArtisanMain.exe` backends. GUI source and required assets are included; installed libraries, build outputs, and bundled engine runtimes are excluded.
+```powershell
+python ArtisanMain.py -f "Test_json/EngineBracket_HS_Infill_Lin_LR.json"
+```
+
+For a separately packaged executable, run from its package directory:
+
+```powershell
+.\ArtisanMain.exe -f "path/to/workflow.json"
+```
+
+Workflows use `Setup`, numbered `WorkFlow` steps, and `PostProcess` sections. Examples are in [Test_json](Test_json), and sample geometry is in [sample-obj](sample-obj). Check input and output paths before running an example. Many examples write to `Test_results`; the workflow determines the actual output location.
+
+## Repository contents
+
+| Path | Purpose |
+| --- | --- |
+| `ArtGUI/` | Desktop GUI source, assets, and build instructions |
+| `ArtisanMain.py` | Python command-line entry point |
+| `Artisan/` | Encrypted Artisan engine code |
+| `pyarmor_runtime_004785/` | Supplied runtime for encrypted Python code |
+| `requirements.txt` | Engine Python dependencies |
+| `Test_json/` | Example JSON workflows |
+| `sample-obj/` | Sample geometry |
+| `Doc/` | Artisan documentation |
+| `Interfaces/` | Integration examples and interfaces |
 
 ## Documentation
 
-The online version of the documentation is available at http://bleemsys.com/Artisan/docs/index.html. Or you may find the same docs under the Doc folder. The documents are regularly updated to reflect the latest features, applications and the tips of the tool.
+- [Artisan online manual](http://bleemsys.com/Artisan/docs/index.html)
+- [Local documentation](Doc)
+- [ArtGUI setup and builds](ArtGUI/README.md)
+- [Project files and INP viewing](ArtGUI/docs/project-files-and-inp.md)
+- [Mesh, conformal, and custom lattice definitions](ArtGUI/docs/LATTICE_DEFINITIONS.md)
+- [Operation picker and icon information](ArtGUI/OPERATION_PICKER.md)
+- [Generation progress and logs](ArtGUI/docs/RUN_PROGRESS.md)
+
+## Testing package
+
+This package is provided for evaluating Artisan's functionality and computational resource requirements. Start with the included examples and consult the manual when adapting workflows to your own geometry.
+
 
 ## License
 This testing package is the copyrighted & closed source freeware. This testing package is licensed under Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0). You may obtain a copy of the License at https://creativecommons.org/licenses/by-nc-nd/3.0/
@@ -85,9 +131,9 @@ This library is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You may copy and redistribute this testing package material in any medium or format under the condition for non-commercial purpose. For commercial applications, please contact us at info@bleemsys.com. We are also happy to offer the customized development and consulting services.
 
-## Supports
-Website: http://bleemsys.com/Artisan.html
-Facebook: https://www.facebook.com/Bleemsys
-Discord channel: https://discord.gg/nzXfYXb3Fd
+## Support
 
-
+- [Artisan website](http://bleemsys.com/Artisan.html)
+- [Facebook](https://www.facebook.com/Bleemsys)
+- [Discord](https://discord.gg/nzXfYXb3Fd)
+- Commercial enquiries and custom development: info@bleemsys.com
