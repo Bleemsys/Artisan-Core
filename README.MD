@@ -72,13 +72,7 @@ ArtiasnMain.py will read the json file and interpret the keys and then perform t
 
 Above commands will perform the complex lattice filling in EngineBracket model. The results are stored at "Test_results", or user may modify the json file to save the results at the desired location. 
 
-If GUI is preferred, user may launch the ArtGUI app through
-
-    python ArtGUI.py
-
-In the all-in-one package, user may start it by. 
-
-    ArtGUI.exe
+For the desktop GUI, see [ArtGUI setup and build instructions](ArtGUI/README.md). The new ArtGUI replaces the legacy Python/Tk GUI and supports both `ArtisanMain.py` and `ArtisanMain.exe` backends. GUI source and required assets are included; installed libraries, build outputs, and bundled engine runtimes are excluded.
 
 ## Documentation
 

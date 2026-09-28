@@ -1,6 +1,0 @@
-{
-"type": "Geom",
-"definition": {
-"file": "your_path//your_model_file_name.STL",
-"ladomain": "Quad"}
-}

@@ -1,0 +1,20 @@
+{
+  "name": "artisan-workbench-tauri",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Independent web-based ArtGUI desktop application",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "postinstall": "node scripts/prepare-ui.mjs",
+    "predev": "node scripts/prepare-ui.mjs",
+    "prebuild": "node scripts/prepare-ui.mjs",
+    "test": "node tests/inp-parser.test.mjs"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.8.0"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  }
+}

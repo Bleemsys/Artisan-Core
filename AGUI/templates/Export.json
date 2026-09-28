@@ -1,5 +1,0 @@
-{
-    "10000":{
-              "Export": {"outfile": ".//your_path/your_export_model_file.stl"}
-              }
-}

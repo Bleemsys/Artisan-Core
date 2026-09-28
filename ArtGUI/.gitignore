@@ -1,0 +1,11 @@
+/node_modules/
+/.pnpm-store/
+/ui/vendor/
+/src-tauri/target/
+/src-tauri/gen/
+/src-tauri/resources/artisan/
+/dist/
+__pycache__/
+*.pyc
+/operations-report.json
+/design-qa.md

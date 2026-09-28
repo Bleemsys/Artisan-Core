@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#f4f6f8">
+
+  <title>ArtGUI — Artisan Workbench</title>
+
+  <link rel="stylesheet" href="./styles.css">
+
+  <link rel="stylesheet" href="./details.css">
+
+  <link rel="stylesheet" href="./viewer.css">
+
+  <link rel="stylesheet" href="./operation-picker.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand"><span>ARTISAN</span><small>WORKBENCH</small></div>
+
+    <div class="file-actions">
+
+      <button class="button" id="new-project">New</button>
+
+      <button class="button" id="open-project">Open</button>
+
+      <button class="button primary" id="save-project">Save</button>
+
+      <span class="divider"></span>
+
+      <button class="button" id="json-button">JSON</button>
+      <button class="button" id="choose-backend">Backend…</button>
+
+    </div>
+
+    <div class="project-state"><strong id="project-name">Untitled workflow</strong><span id="dirty-state">All changes saved</span></div>
+
+    <div class="top-actions"><button class="button" id="help-button" title="About ArtGUI" aria-haspopup="dialog">Help</button></div>
+
+  </header>
+
+  <main class="workspace">
+
+    <aside class="panel project-panel">
+
+      <div class="panel-heading"><div><h2>Project</h2><p>Geometry and project files</p></div></div>
+
+      <div class="tree" id="project-tree"></div>
+
+      <div class="side-note"><span class="status-dot"></span><span>Artisan engine</span><span class="note-value" id="backend-indicator">Not connected</span></div>
+
+    </aside>
+
+
+
+    <section class="center-column">
+
+      <section class="panel viewport-panel">
+
+        <div class="viewport-head"><div><h2>3D Workspace</h2><p id="geometry-label">Load a model to preview your design</p></div><div class="view-actions"><button class="button subtle" id="load-geometry">Load source</button><button class="button subtle" id="load-result">Load result</button><button class="button subtle" id="fit-view">Fit view</button><button class="button subtle" id="preview-mode" disabled title="Switch between quick preview and full detail">Full detail</button><button class="button subtle" id="view-cube" title="Reset camera to isometric view">Reset</button></div></div>
+
+        <div id="viewer-toolbar" class="viewer-toolbar" aria-label="3D view controls"></div>
+
+        <div class="viewport" id="viewport"><canvas id="model-canvas"></canvas><div class="viewport-empty" id="viewport-empty"><div class="cube-icon">◇</div><strong>Start with a geometry</strong><span>Open an STL, OBJ, PLY, or INP file to preview the model here.</span><button class="button light" id="empty-load">Open geometry</button></div><div class="view-corner" id="projection-label">PERSPECTIVE · mm</div><canvas id="orientation-cube" aria-label="Orientation cube: click a face, edge or corner"></canvas><div id="viewer-dimensions" class="viewer-dimensions"></div><div class="axis-legend">X <i></i> Y <b></b> Z <em></em></div></div>
+
+        <div class="viewport-progress hidden" id="preview-progress"><progress id="preview-progress-bar" max="1" value="0"></progress><span id="preview-progress-text">Preparing geometry…</span><button class="text-button" id="cancel-preview">Cancel</button></div><div class="viewport-foot"><span id="mesh-info">No model loaded</span><span>Orbit / pan / zoom <b>·</b> More: mouse settings</span></div>
+
+      </section>
+
+      <section class="panel workflow-panel">
+
+        <div class="workflow-head"><div><h2>Workflow</h2><span class="count-pill" id="operation-count">0 steps</span></div><div class="workflow-controls"><button class="text-button" id="clear-workflow">Clear workflow</button><button class="button subtle" id="add-operation-bottom">＋ Add step</button><button class="button subtle" id="remove-step">Remove step</button><button class="button subtle" id="move-up" title="Move selected step earlier" aria-label="Move step up">↑ Up</button><button class="button subtle" id="move-down" title="Move selected step later" aria-label="Move step down">↓ Down</button></div></div>
+
+        <div class="timeline" id="timeline"></div>
+
+      </section>
+
+      <section class="run-panel" aria-label="Artisan generation">
+        <div class="runbar"><div class="runbar-status"><span class="status-dot" id="run-dot"></span><span id="status-text" role="status">Ready to build</span></div>
+          <div id="run-live" class="run-live" hidden><progress id="run-progress-bar" max="100" aria-label="Generation progress" title="Engine-reported progress; updates between operations"></progress><span id="run-percent">—</span><time id="run-elapsed" title="Elapsed time">00:00</time></div>
+          <button class="text-button" id="toggle-run-log" aria-expanded="false" aria-controls="run-log" hidden>Show log</button><button class="button stop-button" id="stop-generation" hidden>Stop</button><button class="button primary generate" id="generate">Generate model <span>→</span></button>
+        </div>
+        <div id="run-log" class="run-log" hidden><div class="run-log-head"><strong>Run log</strong><span id="run-detail"></span><label><input type="checkbox" id="run-autoscroll" checked> Auto-scroll</label><button class="text-button" id="copy-run-log">Copy</button><button class="text-button" id="open-run-log" disabled>Open log</button></div><div id="run-log-scroll" class="run-log-scroll"><pre id="run-log-text" tabindex="0" aria-label="Run messages"></pre></div><div id="run-log-path" class="run-log-path"></div></div>
+      </section>
+
+    </section>
+
+
+
+    <aside class="panel properties-panel">
+
+      <div class="panel-heading"><div><h2 id="properties-title">Properties</h2><p id="properties-subtitle">Project configuration</p></div><button class="icon-button" id="reset-properties" title="Project settings">⚙</button></div>
+
+      <div class="properties-content" id="properties-content"></div>
+
+      <div class="properties-footer"><span class="autosave-mark">●</span> Changes update the workflow JSON</div>
+
+    </aside>
+
+  </main>
+
+
+
+  <div class="modal-backdrop hidden" id="modal-backdrop"><section class="modal" id="modal"></section></div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="./operations.js"></script>
+
+  <script type="module" src="./app.js"></script>
+
+</body>
+
+</html>
+

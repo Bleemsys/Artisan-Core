@@ -1,0 +1,59 @@
+{
+  "policy": "One primary category per operation, chosen by what it does. Manual chapters guide the grouping; example workflows support operations without a dedicated manual entry.",
+  "categories": [
+    {
+      "name": "Geometry & shells",
+      "description": "Combine or subtract geometry, add shells and surface plates, and reinforce the outer boundary.",
+      "references": ["Doc/GeomOPT/GeomOPT.rst", "Doc/Primitive.rst", "Doc/SurfaceLattice.rst"],
+      "keywords": ["Add_Geometry", "Subtract_Geometry", "Intersect_Geometry", "Add_Shell", "Add_Surf_Plate", "Substract_Surf_Plate", "Boundary_Inflation"]
+    },
+    {
+      "name": "Lattices & transitions",
+      "description": "Define lattice units, add or subtract lattice infill, and blend lattice designs using planes or attractors.",
+      "references": ["Doc/QStart/QStart.rst", "Doc/Customization/Customization.rst", "Doc/Mesh.rst", "Doc/Conformal.rst", "Doc/TransLattice.rst"],
+      "keywords": ["Define_Lattice", "Add_Lattice", "Subtract_Lattice", "Lin_Interpolate", "HS_Interpolate", "Add_Attractor"]
+    },
+    {
+      "name": "Volume meshing",
+      "description": "Create volume meshes for primitive shapes or input geometry using Cartesian, tetrahedral, Voronoi or layered methods.",
+      "references": ["Doc/Primitive.rst", "Doc/Mesher_01.rst", "Doc/Mesher_02.rst", "Doc/Mesher_99.rst"],
+      "keywords": ["Gen_BoxMesh", "Gen_CylindricalMesh", "Gen_CappedConeMesh", "Gen_SphericalMesh", "Gen_BasicCartesianHexMesh", "Gen_BasicCartesianHexMesh_MultiSize", "Gen_HexMesh", "Gen_TetBasicMesh", "Gen_TetBasicMesh_HexSplit", "Gen_TetBasicMesh_wFeature", "Gen_VoronoiPolyMesh", "Gen_VoronoiPolyMesh_HexSplit", "Gen_StackedLayerMesh"]
+    },
+    {
+      "name": "Surface meshing",
+      "description": "Generate quadrilateral surface meshes or remesh a triangular surface.",
+      "references": ["Doc/Mesher_01.rst", "Doc/SurfaceLattice.rst"],
+      "keywords": ["Gen_BasicQuadMesh", "Gen_SimpleQuadMesh", "Gen_SurfaceReMesh"]
+    },
+    {
+      "name": "Mesh processing",
+      "description": "Trim, refine, deform, map or extract surfaces from an existing mesh, including adjustments driven by a field.",
+      "references": ["Doc/ProcMesh.rst", "Doc/Conformal_02.rst", "Doc/Mesher_99.rst"],
+      "keywords": ["Proc_Mesh_Trim", "Proc_Mesh_ExtractSurf", "Proc_Mesh_GenSkin", "Proc_Mesh_Octree", "Proc_Mesh_PolyCube", "Proc_Mesh_MappingHexElem", "Proc_Mesh_SurfMeshMap", "Proc_Mesh_FieldDrivenMesh", "Gen_ExtHexMesh_Geomfield"]
+    },
+    {
+      "name": "Lines & paths",
+      "description": "Generate curves, streamlines, contour lines and branching structures, including their material seed points.",
+      "references": ["Doc/LineStructure.rst", "Doc/LineStructure_02.rst", "Doc/Mesher_01.rst"],
+      "keywords": ["Gen_MaterialPoints_SurfaceLayers", "Gen_MSTMesh_Basic", "Gen_Mesh_Streamlines", "Gen_ParametricLineMesh", "Gen_SDFVectorFieldLineMesh", "Gen_Z_ContourLines"]
+    },
+    {
+      "name": "Fields",
+      "description": "Create or modify scalar, vector and grid fields; control boundaries, offsets, thickness and local features.",
+      "references": ["Doc/OPField.rst", "Doc/FieldContainer.rst", "Doc/LineStructure.rst", "Doc/TransLattice.rst", "Src/Test_json/FieldOpt/FrameField/BingDunDun_Infill_LR.json"],
+      "keywords": ["Field_Boundary", "Gen_Field_Laplace", "Gen_FrameField", "OP_Fit_GridField", "OP_ExprOperation_GridField", "OP_FieldMerge", "OP_OffsetField", "OP_Expr_OffsetField", "OP_FieldOffset_GeomField", "OP_EdgeEnhance", "OP_CornerEnhance"]
+    },
+    {
+      "name": "Analysis & FEA",
+      "description": "Check geometry, evaluate field values at points, and generate a lattice mesh for finite element analysis.",
+      "references": ["Doc/FEAInter.rst", "Src/Test_json/GeometryProcess/GeometryCheck.json"],
+      "keywords": ["Check_Geometry", "Evaluate_Points", "Gen_ConformalLatticeMesh"]
+    },
+    {
+      "name": "Import, export & storage",
+      "description": "Read or export models and meshes, manage stored mesh data, and save or restore compressed lattice field data.",
+      "references": ["Doc/Mesher_02.rst", "Doc/FieldContainer.rst", "Doc/Compression.rst", "Doc/QStart/QStart_00.rst"],
+      "keywords": ["ReadMesh", "RemoveMesh", "ReadGridField", "Export", "ExportMeshID", "OP_Compress", "OP_Decompress"]
+    }
+  ]
+}

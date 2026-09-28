@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Artisan Workbench",
+  "version": "0.1.0",
+  "identifier": "org.artisan.workbench",
+  "build": {
+    "frontendDist": "../ui"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "ArtGUI \u2014 Artisan Workbench",
+        "width": 1480,
+        "height": 940,
+        "minWidth": 1120,
+        "minHeight": 720,
+        "backgroundColor": "#f4f6f8"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' asset: data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src ipc: http://ipc.localhost asset: http://asset.localhost",
+      "assetProtocol": {
+        "enable": true,
+        "scope": []
+      },
+      "capabilities": [
+        {
+          "identifier": "live-progress",
+          "description": "Allow the local main window to receive run and geometry progress events.",
+          "windows": [
+            "main"
+          ],
+          "permissions": [
+            "core:event:allow-listen",
+            "core:event:allow-unlisten"
+          ]
+        }
+      ]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "category": "Science",
+    "shortDescription": "Build and run Artisan workflows",
+    "icon": [
+      "icons/icon.ico"
+    ]
+  }
+}

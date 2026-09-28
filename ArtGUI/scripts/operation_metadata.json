@@ -1,0 +1,535 @@
+{
+  "Add_Geometry": {
+    "icon": "box",
+    "description": "Combine a geometry with the current model.",
+    "searchTerms": [
+      "union",
+      "solid"
+    ]
+  },
+  "Add_Shell": {
+    "icon": "layers",
+    "description": "Add a shell around the geometry.",
+    "searchTerms": [
+      "wall",
+      "skin",
+      "thickness"
+    ]
+  },
+  "Add_Surf_Plate": {
+    "icon": "layers",
+    "description": "Add a plate along a surface.",
+    "searchTerms": [
+      "sheet",
+      "wall"
+    ]
+  },
+  "Boundary_Inflation": {
+    "icon": "layers",
+    "description": "Thicken the boundary of the model.",
+    "searchTerms": [
+      "shell",
+      "reinforce",
+      "skin"
+    ]
+  },
+  "Intersect_Geometry": {
+    "icon": "blend",
+    "description": "Keep the region shared with another geometry.",
+    "searchTerms": [
+      "boolean",
+      "intersection"
+    ]
+  },
+  "Substract_Surf_Plate": {
+    "icon": "scissors",
+    "description": "Remove a plate-shaped region along a surface.",
+    "searchTerms": [
+      "subtract",
+      "cut",
+      "sheet"
+    ]
+  },
+  "Subtract_Geometry": {
+    "icon": "scissors",
+    "description": "Cut a geometry out of the current model.",
+    "searchTerms": [
+      "boolean",
+      "difference"
+    ]
+  },
+  "Add_Attractor": {
+    "icon": "target",
+    "description": "Blend lattice thickness around an attractor.",
+    "searchTerms": [
+      "sphere",
+      "transition"
+    ]
+  },
+  "Add_Lattice": {
+    "icon": "boxes",
+    "description": "Fill the model with a lattice structure.",
+    "searchTerms": [
+      "infill",
+      "unit",
+      "cell"
+    ]
+  },
+  "Define_Lattice": {
+    "icon": "boxes",
+    "description": "Define a custom unit cell, mesh or conformal lattice.",
+    "searchTerms": [
+      "custom",
+      "definition"
+    ]
+  },
+  "HS_Interpolate": {
+    "icon": "blend",
+    "description": "Create a sharp transition between lattices.",
+    "searchTerms": [
+      "heaviside",
+      "plane"
+    ]
+  },
+  "Lin_Interpolate": {
+    "icon": "blend",
+    "description": "Blend between lattices across a transition region.",
+    "searchTerms": [
+      "linear",
+      "plane"
+    ]
+  },
+  "Subtract_Lattice": {
+    "icon": "scissors",
+    "description": "Cut a lattice pattern out of the model.",
+    "searchTerms": [
+      "infill",
+      "subtract"
+    ]
+  },
+  "Gen_BasicCartesianHexMesh": {
+    "icon": "grid-3x3",
+    "description": "Create a regular Cartesian hexahedral mesh.",
+    "searchTerms": [
+      "hex",
+      "grid",
+      "volume"
+    ]
+  },
+  "Gen_BasicCartesianHexMesh_MultiSize": {
+    "icon": "grid-3x3",
+    "description": "Create a Cartesian mesh with varying cell sizes.",
+    "searchTerms": [
+      "graded",
+      "hex",
+      "grid"
+    ]
+  },
+  "Gen_BoxMesh": {
+    "icon": "box",
+    "description": "Create a hexahedral mesh inside a box.",
+    "searchTerms": [
+      "primitive",
+      "cuboid"
+    ]
+  },
+  "Gen_CappedConeMesh": {
+    "icon": "cone",
+    "description": "Create a mesh for a capped cone.",
+    "searchTerms": [
+      "primitive",
+      "taper"
+    ]
+  },
+  "Gen_CylindricalMesh": {
+    "icon": "cylinder",
+    "description": "Create a mesh for a cylinder.",
+    "searchTerms": [
+      "primitive",
+      "tube"
+    ]
+  },
+  "Gen_HexMesh": {
+    "icon": "layers",
+    "description": "Create a layered hexahedral mesh.",
+    "searchTerms": [
+      "hex",
+      "layer"
+    ]
+  },
+  "Gen_SphericalMesh": {
+    "icon": "globe",
+    "description": "Create a mesh for a sphere.",
+    "searchTerms": [
+      "primitive",
+      "ball"
+    ]
+  },
+  "Gen_StackedLayerMesh": {
+    "icon": "layers",
+    "description": "Build a mesh from stacked layers.",
+    "searchTerms": [
+      "layer",
+      "volume"
+    ]
+  },
+  "Gen_TetBasicMesh": {
+    "icon": "triangle",
+    "description": "Generate a tetrahedral volume mesh.",
+    "searchTerms": [
+      "tet",
+      "volume"
+    ]
+  },
+  "Gen_TetBasicMesh_HexSplit": {
+    "icon": "triangle",
+    "description": "Generate tetrahedra using Cartesian grid points.",
+    "searchTerms": [
+      "tet",
+      "volume"
+    ]
+  },
+  "Gen_TetBasicMesh_wFeature": {
+    "icon": "triangle",
+    "description": "Create a tetrahedral mesh with implicit features.",
+    "searchTerms": [
+      "tet",
+      "feature",
+      "volume"
+    ]
+  },
+  "Gen_VoronoiPolyMesh": {
+    "icon": "network",
+    "description": "Generate a Voronoi polyhedral mesh.",
+    "searchTerms": [
+      "cell",
+      "volume"
+    ]
+  },
+  "Gen_VoronoiPolyMesh_HexSplit": {
+    "icon": "network",
+    "description": "Generate Voronoi cells using Cartesian grid points.",
+    "searchTerms": [
+      "cell",
+      "volume"
+    ]
+  },
+  "Gen_BasicQuadMesh": {
+    "icon": "grid-3x3",
+    "description": "Project a quadrilateral mesh onto a surface.",
+    "searchTerms": [
+      "quad",
+      "surface"
+    ]
+  },
+  "Gen_SimpleQuadMesh": {
+    "icon": "grid-3x3",
+    "description": "Create a quadrilateral mesh guided by a cross field.",
+    "searchTerms": [
+      "quad",
+      "surface",
+      "aligned"
+    ]
+  },
+  "Gen_SurfaceReMesh": {
+    "icon": "rotate-cw",
+    "description": "Regenerate the triangles of a surface mesh.",
+    "searchTerms": [
+      "remesh",
+      "repair"
+    ]
+  },
+  "Gen_ExtHexMesh_Geomfield": {
+    "icon": "move-3d",
+    "description": "Fit an external hex mesh to the geometry.",
+    "searchTerms": [
+      "deform",
+      "field"
+    ]
+  },
+  "Proc_Mesh_ExtractSurf": {
+    "icon": "layers",
+    "description": "Extract the outer surface of a volume mesh.",
+    "searchTerms": [
+      "boundary",
+      "skin"
+    ]
+  },
+  "Proc_Mesh_FieldDrivenMesh": {
+    "icon": "move-3d",
+    "description": "Deform a mesh using a field.",
+    "searchTerms": [
+      "move",
+      "warp"
+    ]
+  },
+  "Proc_Mesh_GenSkin": {
+    "icon": "layers",
+    "description": "Rebuild a skin mesh around lattice infill.",
+    "searchTerms": [
+      "boundary",
+      "surface"
+    ]
+  },
+  "Proc_Mesh_MappingHexElem": {
+    "icon": "move-3d",
+    "description": "Map a hex mesh using a polycube deformation.",
+    "searchTerms": [
+      "hexahedral",
+      "warp"
+    ]
+  },
+  "Proc_Mesh_Octree": {
+    "icon": "grid-3x3",
+    "description": "Refine a mesh by subdividing cells.",
+    "searchTerms": [
+      "octree",
+      "resolution"
+    ]
+  },
+  "Proc_Mesh_PolyCube": {
+    "icon": "box",
+    "description": "Create a polycube representation of a mesh.",
+    "searchTerms": [
+      "mapping",
+      "cube"
+    ]
+  },
+  "Proc_Mesh_SurfMeshMap": {
+    "icon": "move-3d",
+    "description": "Map a surface mesh onto a target surface.",
+    "searchTerms": [
+      "deform",
+      "warp"
+    ]
+  },
+  "Proc_Mesh_Trim": {
+    "icon": "scissors",
+    "description": "Trim a mesh to the model boundary.",
+    "searchTerms": [
+      "cut",
+      "clip"
+    ]
+  },
+  "Gen_MaterialPoints_SurfaceLayers": {
+    "icon": "layers",
+    "description": "Sample material points on surface layers.",
+    "searchTerms": [
+      "seeds",
+      "paths"
+    ]
+  },
+  "Gen_Mesh_Streamlines": {
+    "icon": "route",
+    "description": "Trace streamlines through a mesh.",
+    "searchTerms": [
+      "flow",
+      "paths"
+    ]
+  },
+  "Gen_MSTMesh_Basic": {
+    "icon": "network",
+    "description": "Create a branching minimum-spanning-tree mesh.",
+    "searchTerms": [
+      "tree",
+      "branches"
+    ]
+  },
+  "Gen_ParametricLineMesh": {
+    "icon": "route",
+    "description": "Create curves from parametric expressions.",
+    "searchTerms": [
+      "equation",
+      "lines"
+    ]
+  },
+  "Gen_SDFVectorFieldLineMesh": {
+    "icon": "route",
+    "description": "Trace paths through a vector field.",
+    "searchTerms": [
+      "streamlines",
+      "flow"
+    ]
+  },
+  "Gen_Z_ContourLines": {
+    "icon": "layers",
+    "description": "Create contour paths at successive heights.",
+    "searchTerms": [
+      "slice",
+      "layers",
+      "lines"
+    ]
+  },
+  "Field_Boundary": {
+    "icon": "scan",
+    "description": "Set boundary conditions for a field.",
+    "searchTerms": [
+      "constraint"
+    ]
+  },
+  "Gen_Field_Laplace": {
+    "icon": "waves-horizontal",
+    "description": "Generate a field by solving Laplace's equation.",
+    "searchTerms": [
+      "scalar",
+      "harmonic"
+    ]
+  },
+  "Gen_FrameField": {
+    "icon": "move-3d",
+    "description": "Generate a frame field to control orientation.",
+    "searchTerms": [
+      "direction",
+      "vector"
+    ]
+  },
+  "OP_CornerEnhance": {
+    "icon": "waves-horizontal",
+    "description": "Reinforce corner regions of the model.",
+    "searchTerms": [
+      "thickness",
+      "feature"
+    ]
+  },
+  "OP_EdgeEnhance": {
+    "icon": "waves-horizontal",
+    "description": "Reinforce edge regions of the model.",
+    "searchTerms": [
+      "thickness",
+      "feature"
+    ]
+  },
+  "OP_Expr_OffsetField": {
+    "icon": "waves-horizontal",
+    "description": "Offset a field using a mathematical expression.",
+    "searchTerms": [
+      "equation",
+      "thickness"
+    ]
+  },
+  "OP_ExprOperation_GridField": {
+    "icon": "waves-horizontal",
+    "description": "Calculate a grid field from an expression.",
+    "searchTerms": [
+      "equation",
+      "scalar"
+    ]
+  },
+  "OP_FieldMerge": {
+    "icon": "blend",
+    "description": "Combine lattice fields into a blended field.",
+    "searchTerms": [
+      "merge",
+      "transition"
+    ]
+  },
+  "OP_FieldOffset_GeomField": {
+    "icon": "waves-horizontal",
+    "description": "Offset a field using a geometry field.",
+    "searchTerms": [
+      "distance",
+      "thickness"
+    ]
+  },
+  "OP_Fit_GridField": {
+    "icon": "waves-horizontal",
+    "description": "Fit a grid field to supplied data.",
+    "searchTerms": [
+      "interpolate",
+      "scalar"
+    ]
+  },
+  "OP_OffsetField": {
+    "icon": "waves-horizontal",
+    "description": "Offset a field using supplied data.",
+    "searchTerms": [
+      "thickness",
+      "scalar"
+    ]
+  },
+  "Check_Geometry": {
+    "icon": "scan",
+    "description": "Check the input geometry.",
+    "searchTerms": [
+      "inspect",
+      "validation"
+    ]
+  },
+  "Evaluate_Points": {
+    "icon": "target",
+    "description": "Evaluate a field at specified points.",
+    "searchTerms": [
+      "sample",
+      "probe"
+    ]
+  },
+  "Gen_ConformalLatticeMesh": {
+    "icon": "network",
+    "description": "Create a conformal lattice mesh for FEA.",
+    "searchTerms": [
+      "finite",
+      "element",
+      "analysis"
+    ]
+  },
+  "Export": {
+    "icon": "file-output",
+    "description": "Export the generated model.",
+    "searchTerms": [
+      "save",
+      "output",
+      "stl"
+    ]
+  },
+  "ExportMeshID": {
+    "icon": "file-output",
+    "description": "Export a mesh from the mesh store.",
+    "searchTerms": [
+      "save",
+      "output",
+      "id"
+    ]
+  },
+  "OP_Compress": {
+    "icon": "archive",
+    "description": "Save a field in compressed form.",
+    "searchTerms": [
+      "storage",
+      "cache"
+    ]
+  },
+  "OP_Decompress": {
+    "icon": "archive-restore",
+    "description": "Load a previously compressed field.",
+    "searchTerms": [
+      "storage",
+      "cache"
+    ]
+  },
+  "ReadGridField": {
+    "icon": "file-input",
+    "description": "Import a grid field from a file.",
+    "searchTerms": [
+      "read",
+      "load"
+    ]
+  },
+  "ReadMesh": {
+    "icon": "file-input",
+    "description": "Import a mesh into the mesh store.",
+    "searchTerms": [
+      "read",
+      "load",
+      "inp"
+    ]
+  },
+  "RemoveMesh": {
+    "icon": "trash",
+    "description": "Remove a mesh from the mesh store.",
+    "searchTerms": [
+      "clear",
+      "memory",
+      "id"
+    ]
+  }
+}

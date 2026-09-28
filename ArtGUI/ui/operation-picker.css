@@ -1,0 +1,60 @@
+.operation-picker{width:min(840px,calc(100vw - 48px));max-height:calc(100vh - 48px);display:flex;flex-direction:column;overflow:hidden;border-radius:14px;box-shadow:0 24px 80px #172b4d38;color:#243247}
+.operation-picker .modal-head{padding:24px 28px 20px;border:0;flex-shrink:0}
+.operation-picker .modal-head h2{font-size:23px;line-height:1.3;font-weight:650;letter-spacing:-.35px;margin:0 0 8px}
+.operation-picker .modal-head p{font-size:14px;color:#65758b;margin:0}
+.operation-picker svg{display:block;width:22px;height:22px;flex-shrink:0}
+.operation-picker .picker-close{color:#6c7a8e}
+.picker-search{display:flex;align-items:center;gap:12px;margin:0 28px 18px;padding:0 14px;min-height:46px;border:1px solid #ccd5e2;border-radius:7px;background:#fff;flex-shrink:0;color:#78869a}
+.picker-search:focus-within{border-color:#5688d9;box-shadow:0 0 0 3px #2867d812}
+.picker-search input{border:0;box-shadow:none;background:transparent;min-width:0;width:100%;padding:11px 0;font:inherit;font-size:15px;color:#26364c;outline:none}
+.picker-search input:focus{box-shadow:none;outline:none}
+.picker-tabs{display:flex;gap:8px;margin:0 28px;border-bottom:1px solid #dfe5ed;flex-shrink:0}
+.picker-tabs button{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-bottom:3px solid transparent;background:transparent;padding:10px 14px 13px;font:inherit;font-size:14px;font-weight:600;color:#64748a;cursor:pointer;margin-bottom:-1px}
+.picker-tabs button svg{width:17px;height:17px}
+.picker-tabs button[aria-pressed=true]{border-bottom-color:#2867d8;color:#2867d8;background:#eaf2ff;border-radius:6px 6px 0 0}
+.picker-tabs button:hover{background:#f4f7fc}
+.picker-status{font-size:11px;color:#63738a;margin:10px 28px 8px;flex-shrink:0}
+.picker-filter{display:flex;align-items:center;gap:12px;padding:12px 28px 0;font-size:12px;flex-shrink:0}
+.picker-filter[hidden]{display:none}
+.picker-filter select{min-width:0;max-width:100%;padding:7px 10px;border:1px solid #d3dce8;border-radius:5px;background:#fff;color:inherit;font:inherit}
+.picker-list{overflow-y:auto;overscroll-behavior:contain;min-height:0;flex:1 1 auto;margin:0 18px 12px;padding:12px 10px 0;scrollbar-width:thin}
+.picker-row{display:flex;align-items:center;border:1px solid #dce4ef;min-height:72px;border-radius:6px;margin-bottom:8px}
+.picker-row:last-child{margin-bottom:0}
+.picker-row:hover{background:#f7f9fc}
+.picker-row.selected{min-height:94px;background:#edf4ff;border-color:#8eb5f2}
+.picker-choice{display:flex;gap:18px;align-items:center;flex:1;min-width:0;text-align:left;border:0;background:transparent;padding:15px 14px;font:inherit;color:inherit;cursor:pointer;border-radius:5px;align-self:stretch}
+.picker-operation-icon{display:flex;align-items:center;justify-content:center;width:30px;flex-shrink:0;color:#476383}
+.picker-operation-icon svg{width:30px;height:30px;stroke-width:1.7px}
+.selected .picker-operation-icon{color:#2867d8}
+.picker-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.picker-operation-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:16px;font-weight:600;line-height:1.3}
+.picker-copy code{display:none;font-size:11px;line-height:1.5;font-weight:400;color:#5a76a0;background:#e3ecfb;padding:1px 5px;border:1px solid #cdddf4;border-radius:4px;overflow-wrap:anywhere}
+.selected .picker-copy code{display:block;align-self:flex-start}
+.picker-description{font-size:13px;line-height:1.4;color:#64748a}
+.picker-favorite{border:0;background:transparent;flex-shrink:0;padding:13px;margin:0 6px;color:#8491a3;cursor:pointer;border-radius:5px}
+.picker-favorite svg{width:22px;height:22px;stroke-width:1.7px}
+.picker-favorite.is-favorite{color:#be850d}
+.picker-favorite.is-favorite svg{fill:#f5bb4c;stroke:#b98520}
+.picker-favorite:hover{background:#e5ecf7}
+.operation-picker button:focus-visible,.operation-picker select:focus-visible{outline:2px solid #2867d8;outline-offset:2px}
+.picker-empty{padding:45px 20px;text-align:center;color:#64748a;font-size:14px;line-height:1.6}
+.picker-footer{border-top:1px solid #e2e7ef;background:#fbfcfe;padding:16px 28px 20px;flex-shrink:0}
+.picker-insertion{display:flex;gap:12px;align-items:center;font-size:13px;color:#52647c;margin-bottom:18px}
+.picker-insertion select{width:100%;min-width:0;max-width:510px;padding:9px 12px;background:#fff;border:1px solid #d3dce8;border-radius:6px;font:inherit;color:#34465f;text-overflow:ellipsis}
+.picker-actions,.picker-actions>div{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.picker-actions .button{min-height:38px;padding:8px 16px;font-size:13px}
+.picker-actions .primary{display:flex;align-items:center;gap:7px}
+.picker-actions .primary svg{width:17px;height:17px}
+.picker-keyboard{display:flex;gap:12px;margin:0;flex-wrap:wrap;color:#78869b;font-size:11px}
+.picker-keyboard>span{display:flex;align-items:center;gap:4px}
+.picker-keyboard kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:20px;padding:0 4px;border:1px solid #dce2ea;border-radius:4px;background:#fff;color:#6d7b90;font:inherit;font-size:10px}
+.picker-keyboard kbd svg{width:11px;height:11px}
+.step-operation-icon{display:flex;color:#607c9e}
+.step-operation-icon svg{width:16px;height:16px;flex-shrink:0}
+.about-icon-credits{padding:12px 14px;border:1px solid #dde5ef;border-radius:6px;background:#f8faff;margin:12px 0}
+.about-icon-credits p:last-of-type{margin-bottom:8px}
+.about-icon-credits a{color:#2867d8;text-underline-offset:3px}
+.about-licenses summary{cursor:pointer;color:#365579;font-size:12px}
+.about-licenses pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:160px;overflow-y:auto;font-size:10px;line-height:1.6;padding:12px;border:1px solid #dce4ef;background:white}
+@media(max-height:780px){.operation-picker .modal-head{padding-top:18px;padding-bottom:14px}.picker-search{margin-bottom:10px}.picker-row{min-height:64px}.picker-choice{padding-top:10px;padding-bottom:10px}.picker-footer{padding-top:12px;padding-bottom:14px}.picker-insertion{margin-bottom:12px}}
+@media(max-width:700px){.picker-tabs{gap:0}.picker-tabs button{font-size:12px;padding-left:9px;padding-right:9px}.picker-keyboard{display:none}.picker-actions{justify-content:flex-end}.picker-operation-title{font-size:14px}.picker-choice{gap:10px}.picker-copy code{font-size:9px}.picker-tabs button svg{display:none}}
