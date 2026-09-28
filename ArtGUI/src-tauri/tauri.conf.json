@@ -44,7 +44,7 @@
     "targets": [
       "nsis"
     ],
-    "category": "Science",
+    "category": "GraphicsAndDesign",
     "shortDescription": "Build and run Artisan workflows",
     "icon": [
       "icons/icon.ico"
