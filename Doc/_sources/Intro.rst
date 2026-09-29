@@ -109,9 +109,9 @@ User shall can activate the ArtGUI through:
 
 .. code-block::
 
-    python ArtGUI.py
+    ArtGUI.exe
 
-or just simply double click :code:`ArtGUI.exe` in the stand-alone package.
+Please refer to ArtGUI source code for details of compilation. 
 
 =======
 License
