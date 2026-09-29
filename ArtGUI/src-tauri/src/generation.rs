@@ -186,6 +186,47 @@ fn pipe(reader: impl Read + Send + 'static, tx: mpsc::SyncSender<String>) {
     });
 }
 
+// Keep user-facing artifacts beside the saved project without changing engine cwd.
+struct RunFiles {
+    log: PathBuf,
+    progress: PathBuf,
+    log_stamp: Option<(u64, std::time::SystemTime)>,
+    progress_stamp: Option<(u64, std::time::SystemTime)>,
+}
+impl RunFiles {
+    fn new(project: &Path) -> Result<Self, String> {
+        let result = Self {
+            log: project.with_extension("log"),
+            progress: project.with_extension("prg"),
+            log_stamp: None,
+            progress_stamp: None,
+        };
+        for path in [&result.log, &result.progress] {
+            File::create(path).map_err(|e| format!("Could not create {}: {e}", path.display()))?;
+        }
+        Ok(result)
+    }
+    fn sync(&mut self, log: &Path, progress: &Path, force: bool) -> Result<(), String> {
+        Self::copy_changed(log, &self.log, &mut self.log_stamp, force)?;
+        Self::copy_changed(progress, &self.progress, &mut self.progress_stamp, force)
+    }
+    fn copy_changed(source: &Path, destination: &Path,
+        stamp: &mut Option<(u64, std::time::SystemTime)>, force: bool) -> Result<(), String> {
+        let metadata = match fs::metadata(source) {
+            Ok(metadata) => metadata,
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+            Err(e) => return Err(format!("Could not read {}: {e}", source.display())),
+        };
+        let current = (metadata.len(), metadata.modified().unwrap_or(std::time::UNIX_EPOCH));
+        if force || stamp.as_ref() != Some(&current) {
+            fs::copy(source, destination)
+                .map_err(|e| format!("Could not save {}: {e}", destination.display()))?;
+            *stamp = Some(current);
+        }
+        Ok(())
+    }
+}
+
 fn monitor(
     mut child: Child,
     cancel: Arc<AtomicBool>,
@@ -193,6 +234,7 @@ fn monitor(
     log: &Path,
     progress: &Path,
     transcript: &Path,
+    mut run_files: Option<&mut RunFiles>,
     mut emit: impl FnMut(RunUpdate),
 ) -> Result<(bool, bool, Option<i32>), String> {
     let (tx, rx) = mpsc::sync_channel(256);
@@ -236,6 +278,15 @@ fn monitor(
             }
         }
         let finish = status.is_some();
+        if let Some(files) = run_files.as_deref_mut() {
+            if let Err(error) = files.sync(log, progress, finish) {
+                // Never leave a hidden engine running after an artifact write error.
+                stop_process(child.id());
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(error);
+            }
+        }
         let mut update = RunUpdate {
             run_id: run_id.into(),
             ..Default::default()
@@ -392,6 +443,7 @@ pub async fn generate_workflow(
         };
         let log = engine_dir.join(format!("artisan_run_{run_id}.log"));
         let progress = log.with_extension("prg");
+        let mut run_files = RunFiles::new(&project)?;
         let transcript = runs.join(format!("{run_id}.log"));
         File::create(&transcript).map_err(|e| e.to_string())?;
         {
@@ -425,16 +477,20 @@ pub async fn generate_workflow(
                 &log,
                 &progress,
                 &transcript,
+                Some(&mut run_files),
                 |update| {
                     let _ = app.emit("artisan-run", update);
                 },
             )?;
+            // The monitor has saved the final bytes, including failed/cancelled runs.
+            let _ = fs::remove_file(&log);
+            let _ = fs::remove_file(&progress);
             Ok(RunResult {
                 success,
                 cancelled,
                 exit_code,
                 log_path: transcript.to_string_lossy().into_owned(),
-                progress_path: progress.to_string_lossy().into_owned(),
+                progress_path: run_files.progress.to_string_lossy().into_owned(),
             })
         })();
         let _ = fs::remove_file(temp);
@@ -519,12 +575,14 @@ mod tests {
             thread::sleep(Duration::from_secs(30));
         }
         fs::write(p.join("run.prg"), "0%\n42%\n100%\n").unwrap();
+        if std::env::var_os("ARTGUI_TEST_FAIL").is_some() { std::process::exit(2); }
     }
-    fn fixture(cancel_run: bool) {
+    fn fixture(cancel_run: bool, fail_run: bool) {
         let dir = std::env::temp_dir().join(format!(
-            "artgui-monitor-test-{}-{}",
+            "artgui-monitor-test-{}-{}-{}",
             std::process::id(),
-            cancel_run
+            cancel_run,
+            fail_run
         ));
         fs::create_dir_all(&dir).unwrap();
         let mut command = Command::new(std::env::current_exe().unwrap());
@@ -541,6 +599,7 @@ mod tests {
         if cancel_run {
             command.env("ARTGUI_TEST_CANCEL", "1");
         }
+        if fail_run { command.env("ARTGUI_TEST_FAIL", "1"); }
         let child = hidden(&mut command).spawn().unwrap();
         let cancel = Arc::new(AtomicBool::new(false));
         if cancel_run {
@@ -550,6 +609,9 @@ mod tests {
                 c.store(true, Ordering::Relaxed);
             });
         }
+        let project_dir = dir.join("project folder");
+        fs::create_dir_all(&project_dir).unwrap();
+        let mut files = RunFiles::new(&project_dir.join("my project.json")).unwrap();
         let mut updates = vec![];
         let result = monitor(
             child,
@@ -558,10 +620,13 @@ mod tests {
             &dir.join("run.log"),
             &dir.join("run.prg"),
             &dir.join("console.log"),
+            Some(&mut files),
             |u| updates.push(u),
         )
         .unwrap();
-        assert_eq!(result.0, !cancel_run);
+        assert_eq!(fs::read(&files.log).unwrap(), fs::read(dir.join("run.log")).unwrap());
+        assert_eq!(fs::read(&files.progress).unwrap(), fs::read(dir.join("run.prg")).unwrap());
+        assert_eq!(result.0, !cancel_run && !fail_run);
         assert_eq!(result.1, cancel_run);
         if !cancel_run {
             assert!(updates.iter().any(|u| u.progress == Some(100.0)));
@@ -577,11 +642,42 @@ mod tests {
         let _ = fs::remove_dir_all(dir);
     }
     #[test]
+    fn project_artifacts_reset_and_follow_rewritten_progress() {
+        let dir = std::env::temp_dir().join(format!("artgui-artifacts-{}", std::process::id()));
+        fs::create_dir_all(&dir).unwrap();
+        let project = dir.join("project.json");
+        fs::write(&project, "original JSON").unwrap();
+        let log = dir.join("engine.log");
+        let progress = dir.join("engine.prg");
+        let mut files = RunFiles::new(&project).unwrap();
+        files.sync(&log, &progress, false).unwrap(); // Engine has not created its files yet.
+        fs::write(&log, b"raw log\r\npartial").unwrap();
+        fs::write(&progress, b"0%\n42%\n").unwrap();
+        files.sync(&log, &progress, false).unwrap();
+        assert_eq!(fs::read(&files.log).unwrap(), b"raw log\r\npartial");
+        fs::write(&progress, b"7%").unwrap(); // Engine truncates and rewrites progress.
+        files.sync(&log, &progress, false).unwrap();
+        assert_eq!(fs::read(&files.progress).unwrap(), b"7%");
+        fs::write(&progress, b"8%").unwrap(); // Final snapshot also catches same-size rewrites.
+        files.sync(&log, &progress, true).unwrap();
+        assert_eq!(fs::read(&files.progress).unwrap(), b"8%");
+        assert_eq!(fs::read_to_string(&project).unwrap(), "original JSON");
+        let next = RunFiles::new(&project).unwrap();
+        assert!(fs::read(next.log).unwrap().is_empty());
+        assert!(fs::read(next.progress).unwrap().is_empty());
+        fs::remove_dir_all(dir).unwrap();
+    }
+
+    #[test]
     fn streams_and_tails() {
-        fixture(false);
+        fixture(false, false);
+    }
+    #[test]
+    fn retains_failed_run_artifacts() {
+        fixture(false, true);
     }
     #[test]
     fn cancels_child() {
-        fixture(true);
+        fixture(true, false);
     }
 }
