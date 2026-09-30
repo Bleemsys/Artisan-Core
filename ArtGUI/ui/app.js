@@ -401,7 +401,6 @@ let viewerReady = Promise.resolve();
       }else if(ext==='stl'){
         const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});
         if(request!==previewRequest)return;
-        if(file.triangleCount>10000000)throw Error('This STL exceeds the 10-million-triangle full-detail limit. Use Quick Preview instead.');
         if(file.size>256*1024*1024&&!confirm(`This STL is ${formatBytes(file.size)}. Full detail may use several times that amount of working memory. Continue?`)){setPreviewProgress(false);$('mesh-info').textContent=(layerId==='source'?'Source · ':layerId==='result'?'Result · ':nameForPath(path)+' · ')+(loadedPreviewMode==='quick'?'Quick preview remains loaded · '+nameForPath(loadedGeometryPath):'Full-detail loading cancelled');return;}
         const url=window.__TAURI__.core.convertFileSrc(file.path);
         const result=await loadStlWorker(url,'full',file.size,request);

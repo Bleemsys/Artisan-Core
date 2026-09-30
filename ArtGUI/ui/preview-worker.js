@@ -24,8 +24,14 @@ function targetFaceCount(total, mode) {
 }
 
 function allocPositions(faceCount) {
-  if (faceCount > 10_000_000) throw new Error('This mesh is too large for the available preview memory. Use Quick Preview.');
-  return new Float32Array(faceCount * 9);
+  try {
+    return new Float32Array(faceCount * 9);
+  } catch (error) {
+    if (error instanceof RangeError) {
+      throw new Error('Could not allocate memory for full-detail geometry. Use Quick Preview or a smaller mesh.');
+    }
+    throw error;
+  }
 }
 
 async function loadStl(url, mode, expectedSize) {
