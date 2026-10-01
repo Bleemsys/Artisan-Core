@@ -121,7 +121,7 @@ Workflows use `Setup`, numbered `WorkFlow` steps, and `PostProcess` sections. Ex
 
 ## Testing package
 
-This package is provided for evaluating Artisan's functionality and computational resource requirements. Start with the included examples and consult the manual when adapting workflows to your own geometry.
+This package is provided for evaluating Artisan's functionality and computational resource requirements. Start with the included examples and consult the manual when adapting workflows to your own geometry. For compiled standalone package, refer to the Github release page.
 
 
 ## License
