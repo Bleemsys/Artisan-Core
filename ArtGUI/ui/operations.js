@@ -4,7 +4,7 @@ window.ARTISAN_CATALOG_INFO = {
   "exampleFiles": 121,
   "manualFiles": 29,
   "manualJsonBlocks": 116,
-  "presetCount": 371,
+  "presetCount": 370,
   "numericPolicy": "Decimal/exponent JSON tokens are floats; integer tokens stay integers. Presets retain their own types.",
   "categories": [
     {
@@ -17547,16 +17547,25 @@ window.ARTISAN_OPERATIONS = [
             2.0,
             2.0,
             2.0
+          ],
+          "Rot": [
+            0.0,
+            0.0,
+            0.0
           ]
         },
-        "paramsJson": "{\"definition_file\": \".//Test_json//MeshLattice//GenSkin//ConformalLattice.mld\", \"out_meshfile\": \".//Test_json//MeshLattice//GenSkin//BaseMeshConformal.med\", \"size\": [2.0, 2.0, 2.0]}",
+        "paramsJson": "{\"definition_file\": \".//Test_json//MeshLattice//GenSkin//ConformalLattice.mld\", \"out_meshfile\": \".//Test_json//MeshLattice//GenSkin//BaseMeshConformal.med\", \"size\": [2.0, 2.0, 2.0], \"Rot\": [0.0, 0.0, 0.0]}",
         "numberTypes": {
           "/size/0": "float",
           "/size/1": "float",
-          "/size/2": "float"
+          "/size/2": "float",
+          "/Rot/0": "float",
+          "/Rot/1": "float",
+          "/Rot/2": "float"
         },
         "sources": [
-          "Doc/ProcMesh.rst:214 · step 2"
+          "Doc/ProcMesh.rst:214 · step 2",
+          "Src/Test_json/MeshLattice/GenSkin/Crankhandle_MeshTrim_TPMS.json · step 2"
         ]
       },
       {
@@ -17626,13 +17635,21 @@ window.ARTISAN_OPERATIONS = [
             5.0,
             5.0,
             5.0
+          ],
+          "Rot": [
+            0.0,
+            0.0,
+            0.0
           ]
         },
-        "paramsJson": "{\"definition_file\": \".//Test_json//FEAMesh//MeshTrim_SurfMap//ConformalLattice.mld\", \"out_meshfile\": \"ConformalLattice\", \"size\": [5.0, 5.0, 5.0]}",
+        "paramsJson": "{\"definition_file\": \".//Test_json//FEAMesh//MeshTrim_SurfMap//ConformalLattice.mld\", \"out_meshfile\": \"ConformalLattice\", \"size\": [5.0, 5.0, 5.0], \"Rot\": [0.0, 0.0, 0.0]}",
         "numberTypes": {
           "/size/0": "float",
           "/size/1": "float",
-          "/size/2": "float"
+          "/size/2": "float",
+          "/Rot/0": "float",
+          "/Rot/1": "float",
+          "/Rot/2": "float"
         },
         "sources": [
           "Src/Test_json/FEAMesh/MeshTrim_SurfMap/Crankhandle_MeshTrim_SurfMap_02.json · step 2"
@@ -17694,35 +17711,6 @@ window.ARTISAN_OPERATIONS = [
         },
         "sources": [
           "Src/Test_json/MeshLattice/GenSkin/Crankhandle_MeshTrim_Beam.json · step 2"
-        ]
-      },
-      {
-        "label": "Src/Test_json/MeshLattice/GenSkin/Crankhandle_MeshTrim_TPMS.json · step 2",
-        "params": {
-          "definition_file": ".//Test_json//MeshLattice//GenSkin//ConformalLattice.mld",
-          "out_meshfile": ".//Test_json//MeshLattice//GenSkin//BaseMeshConformal.med",
-          "size": [
-            2.0,
-            2.0,
-            2.0
-          ],
-          "Rot": [
-            0.0,
-            0.0,
-            0.0
-          ]
-        },
-        "paramsJson": "{\"definition_file\": \".//Test_json//MeshLattice//GenSkin//ConformalLattice.mld\", \"out_meshfile\": \".//Test_json//MeshLattice//GenSkin//BaseMeshConformal.med\", \"size\": [2.0, 2.0, 2.0], \"Rot\": [0.0, 0.0, 0.0]}",
-        "numberTypes": {
-          "/size/0": "float",
-          "/size/1": "float",
-          "/size/2": "float",
-          "/Rot/0": "float",
-          "/Rot/1": "float",
-          "/Rot/2": "float"
-        },
-        "sources": [
-          "Src/Test_json/MeshLattice/GenSkin/Crankhandle_MeshTrim_TPMS.json · step 2"
         ]
       }
     ]

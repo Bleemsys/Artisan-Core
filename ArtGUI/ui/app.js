@@ -50,6 +50,10 @@ let viewerReady = Promise.resolve();
     // Missing on import means disabled, regardless of the new-project defaults.
     if(!Object.hasOwn(value.Setup||{},'JsonWorkDir'))result.Setup.JsonWorkDir=false;
     result.WorkFlow=value.WorkFlow||{};
+    for(const step of Object.values(result.WorkFlow)){
+      const params=step.Gen_ConformalLatticeMesh;
+      if(params&&!Object.hasOwn(params,'Rot'))params.Rot=parseNumericJson('[0.0,0.0,0.0]');
+    }
     result.PostProcess=assignNumericJson(clone(defaultPost),value.PostProcess||{});
     if(value.ArtGUI!==undefined){
       const state=value.ArtGUI;

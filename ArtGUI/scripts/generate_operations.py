@@ -108,6 +108,9 @@ def generate(root, output):
 
     def add(obj, source, kind, mode='complete'):
         for keyword, params, step in operations_in(obj, candidates):
+            # Older examples omit the new unit-cell rotation parameter.
+            if keyword == 'Gen_ConformalLatticeMesh' and 'Rot' not in params:
+                params = {**params, 'Rot': [0.0, 0.0, 0.0]}
             candidates[keyword].append({'params': params, 'source': source, 'kind': kind, 'step': step, 'extraction': mode})
 
     for path in sorted((root / ('Src/Test_json' if (root / 'Src/Test_json').is_dir() else 'Test_json')).rglob('*.json')):
