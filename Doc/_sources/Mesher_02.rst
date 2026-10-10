@@ -120,6 +120,158 @@ For comparison, below shows the mesh without the local attractors, the example f
 .. image:: ./pictures/EngineBracket_NoMS_02.png
 
 
+==========================
+Adaptive Tetrahedron Mesher
+==========================
+
+Artisan provides an adaptive level-set mesher to generate a tetrahedron mesh from a closed, consistently oriented triangle surface. The adaptive algorithm starts with a coarse box enclosing the geometry and splits each grid cell consistently into six tetrahedra. A size field requests smaller elements near the surface, with additional refinement near sharp source edges. The mesher adapts the background mesh, and the signed distance is evaluated again from the original STL at every new background vertex. Refinement is repeated until potentially intersecting cells meet the resolution check and interior samples are available. The mesher then discretizes the zero level-set and improves the mesh. Only the solid region, where the signed distance is negative, is exported. The example below is stored at :code:`.\Test_json\MeshLattice\AdaptiveTet\EngineBracket_AdaptiveTet.json`.
+
+.. code-block:: json
+
+    {
+      "Setup": {
+        "Type": "Sample",
+        "Sample": {
+          "Domain": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "res": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 16106127360
+      },
+      "WorkFlow": {
+        "1": {
+          "Gen_TetMesh_Adaptive": {
+            "mesh_file": ".//sample-obj//EngineBracket.stl",
+            "export_mesh": ".//Test_json//MeshLattice//AdaptiveTet//EngineBracket_Adaptive.inp",
+            "sampling_size": [
+              6.0,
+              6.0,
+              6.0
+            ],
+            "padding": 12.0,
+            "hsiz": 3.0,
+            "hmin": 0.0,
+            "hmax": 0.0,
+            "hausd": 0.1,
+            "hgrad": 1.3,
+            "angle": 45.0,
+            "detect_sharp_edges": false,
+            "allow_swaps": true,
+            "max_points": 750000,
+            "adaptive": true,
+            "surface_size": 1.5,
+            "feature_size": 0.75,
+            "adapt_band": 1.5,
+            "adapt_iterations": 8
+          }
+        }
+      },
+      "PostProcess": {
+        "CombineMeshes": false,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": false,
+        "ExportLazPts": false
+      }
+    }
+
+The keyword :code:`Gen_TetMesh_Adaptive` activates this algorithm. The input and output meshes are managed by the existing mesh interface, which supports mesh files and mesh container IDs. This operation does not use the field resolution in :code:`Setup`; its background resolution is defined by :code:`sampling_size`.
+
+.. list-table:: Parameters for adaptive tetrahedron mesher
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Parameter
+     - Description
+
+   * - :code:`mesh_file`
+     - Triangle surface file or mesh container ID. An empty string uses the geometry file defined in Setup.
+
+   * - :code:`export_mesh`
+     - Output volume mesh file or mesh container ID. Use a tetrahedron format such as inp, vtk, vtu or med; STL stores surface triangles only.
+
+   * - :code:`sampling_size`
+     - Required positive scalar or three positive lengths defining the initial box grid spacing. In adaptive mode this is the coarse starting resolution. With adaptive false, the welded STL vertices are added to the grid before Delaunay triangulation. This is independent of the final element size.
+
+   * - :code:`adaptive`
+     - Boolean option enabling geometry-aware background refinement before level-set extraction. The default is false, retaining the grid and STL vertex sampling method. The example enables adaptive mode, which does not insert STL vertices into the initial grid.
+
+   * - :code:`surface_size`
+     - Positive target background edge size near the STL in adaptive mode. If omitted, half the smallest sampling_size is used. It must not exceed the smallest sampling_size. Smaller values improve geometric sampling at increased memory and runtime cost.
+
+   * - :code:`feature_size`
+     - Positive target background edge size near sharp source edges. If omitted, half surface_size is used. It must not exceed surface_size. This refines the distance field; it does not constrain the final mesh to the original STL edges.
+
+   * - :code:`adapt_band`
+     - Positive width of the fine sampling band near the surface, in mesh units. If omitted, twice surface_size is used. Background sizes grow away from this band towards the coarse grid size.
+
+   * - :code:`adapt_iterations`
+     - Maximum number of background adaptation passes, from 1 to 20. The default is 8. Distances are recomputed from the original STL after each pass. If the background does not reach the resolution check, execution stops before mesh export.
+
+   * - :code:`padding`
+     - Positive minimum distance from the geometry bounding box to the background box, in mesh units. If omitted, one sampling interval is added along each axis. The grid origin is offset by 0.37 sampling intervals, and the upper limit is expanded to retain the requested spacing.
+
+   * - :code:`weld_tolerance`
+     - Optional non-negative surface vertex welding distance, in mesh units. If omitted, 64 times double-precision machine epsilon times the coordinate scale is used to merge numerical seams. Zero enables only exact duplicate welding. Larger values can remove small features.
+
+   * - :code:`hsiz`
+     - Constant target element size for the mesher. Zero leaves it unspecified. Geometry and size gradation can produce smaller elements.
+
+   * - :code:`hmin / hmax`
+     - Lower and upper target edge-size bounds. Zero leaves the corresponding bound automatic. A positive hmin must not exceed a positive hmax.
+
+   * - :code:`hausd`
+     - Positive tolerance for boundary approximation, in mesh units. This controls the final mesh boundary approximation. Background sampling uses surface_size and feature_size independently. It does not guarantee the maximum distance to the original STL.
+
+   * - :code:`hgrad`
+     - Element-size gradation factor for background adaptation and final meshing, greater than 1. The default is 1.3; -1 disables gradation. Values very close to 1 can spread fine sizes over a large region.
+
+   * - :code:`angle`
+     - Angle threshold in degrees for sharp-edge detection, between 0 and 180. Adaptive mode uses this to find source edges for finer background sampling. The final mesher uses it for ridge detection when detect_sharp_edges is true.
+
+   * - :code:`detect_sharp_edges`
+     - Boolean option for automatic ridge detection. The default is false for level-set meshing. This does not guarantee preservation of sharp STL edges.
+
+   * - :code:`allow_swaps`
+     - Boolean option enabling edge swaps. The default is true. Set it to false if the mesher reports a swapping failure; disabling swaps can limit attainable mesh quality.
+
+   * - :code:`max_points`
+     - Maximum background point count. The initial grid is checked before allocation, and every adapted background is checked after the mesher returns. With adaptive false, the combined grid and STL count is checked before tetrahedralization. The default is 250000. Exceeding the limit stops export. This does not cap internal mesher memory, transient allocations, final solid vertex count or element count.
+
+The mesher output level is fixed at -1 (quiet mode) and is not a JSON parameter. Errors may still be printed.
+
+All lengths use the input mesh coordinate units. The surface must be watertight, free of self-intersections, and oriented with outward normals, including appropriate inward orientation on cavity walls. Exact duplicate vertices and seams differing only at floating-point precision are welded before sampling. The output nodes are compacted and tetrahedron indices are zero-based in the Python interface.
+
+The output is an approximation of the sampled level-set surface. Adaptive mode checks all tetrahedra whose enclosing sphere can touch the STL, including cells with no initial sign change. Potentially intersecting cells must have no edge longer than 2.5 times their local target size, and both interior and exterior samples must be present before extraction. Refinement is progressive, and completed refinements are retained on later passes. This is a simple background size check. No strict center-distance error tolerance is imposed. It does not guarantee the distance to the original STL or preservation of its topology. The refinement history is available as :code:`LastAdaptationReport` on the Python workflow object.
+
+Sharp edges, thin walls, small holes and small disconnected components require sufficiently small surface_size and feature_size. The algorithm does not measure every wall thickness or guarantee recovery of every feature. Choose surface_size smaller than the smallest feature of interest and compare the exported boundary and volume with the source geometry. Reducing hsiz or hausd alone does not recover features missing from the background samples. The final element sizes remain controlled by hsiz, hmin and hmax; a large final element size can also reduce the benefit of finer sampling.
+
+With adaptive false, the original STL vertices are added after duplicate and numerical seam welding. SciPy Delaunay triangulation generates the background from the combined points, and the surface samples are assigned a zero level-set value. If Delaunay fails the box coverage and conformity checks, the consistent grid split is used and every surface vertex is inserted into all incident tetrahedra. Adding these points does not constrain the background to reproduce the original triangles or require the mesher to retain the vertices in the final mesh. This mode retains the previous sampling behaviour.
+
 ===========================
 Implicit Tetrahedron Mesher
 ===========================

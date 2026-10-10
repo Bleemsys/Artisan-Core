@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Grid Field Container &#8212; Artisan 0.2.16 documentation</title>
+    <title>Grid Field Container &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -172,7 +172,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -299,7 +309,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -315,6 +327,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hdf5-field-snapshots">HDF5 field snapshots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-hdf5">Reading HDF5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-sdk-and-packaging">Python SDK and packaging</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -438,7 +462,7 @@ document.write(`
 <td><p>A file path string to the grid field file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Gridfield_ID</span></code></p></td>
-<td><p>A fitted field id for saving the grid field, or a file path string to export the fitted field data.</p></td>
+<td><p>The required destination name for the loaded field in Artisan’s grid-field container. Later operations reference this name.</p></td>
 </tr>
 </tbody>
 </table>
@@ -449,6 +473,148 @@ document.write(`
 <a class="reference internal image-reference" href="_images/OPdGridField_02.png"><img alt="_images/OPdGridField_02.png" class="align-right" src="_images/OPdGridField_02.png" style="width: 45%;" />
 </a>
 <p>In Artisan 0.2.14, the grid field container introduces support for defining field-driven TPMS lattices. Future development will focus on extending grid field capabilities to other keywords and applications.</p>
+<section id="hdf5-field-snapshots">
+<h2>HDF5 field snapshots<a class="headerlink" href="#hdf5-field-snapshots" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Export</span></code> supports mesh output, HDF5 output, or both. Existing workflows with
+only a mesh <code class="docutils literal notranslate"><span class="pre">outfile</span></code> retain their mesh export and postprocessing behavior.
+The <code class="docutils literal notranslate"><span class="pre">outfile</span></code> parameter remains required; <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> and <code class="docutils literal notranslate"><span class="pre">GridFieldIDs</span></code>
+are optional. An <code class="docutils literal notranslate"><span class="pre">outfile</span></code> ending in <code class="docutils literal notranslate"><span class="pre">.h5</span></code> or <code class="docutils literal notranslate"><span class="pre">.hdf5</span></code> selects HDF5-only
+output. Otherwise, <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> adds HDF5 output alongside the mesh:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./Test_results/part.stl&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;fieldfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./Test_results/part.h5&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;GridFieldIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;SizeField&quot;</span><span class="p">]</span>
+<span class="p">}}</span>
+</pre></div>
+</div>
+<p>HDF5 contains the current lattice scalar field, when present, and the selected
+named fields. <code class="docutils literal notranslate"><span class="pre">GridFieldIDs</span></code> defaults to an empty list. Selected IDs must exist
+at the export step and be distinct. <code class="docutils literal notranslate"><span class="pre">lattice</span></code> is reserved for the current
+lattice field. An HDF5-only export requires at least one available scalar field;
+it can export selected fitted fields before a lattice has been constructed.
+<code class="docutils literal notranslate"><span class="pre">GridFieldIDs</span></code> requires an HDF5 destination. A second <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> is not
+accepted when <code class="docutils literal notranslate"><span class="pre">outfile</span></code> already selects HDF5.</p>
+<p>Each export step captures independent sampled values before later operations
+modify them. Workflow outputs are published during postprocessing, so an HDF5
+snapshot from the same running workflow cannot be read before postprocessing.
+Use a subsequent workflow or SDK call to read the completed file.</p>
+<p>The format is <code class="docutils literal notranslate"><span class="pre">Artisan.GridField</span></code>, version 1. Root attributes record format,
+Artisan version, workflow step, UTC creation time, block count and completion.
+The layout for a regular grid is:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/fields/lattice/blocks/000000/x
+/fields/lattice/blocks/000000/y
+/fields/lattice/blocks/000000/z
+/fields/lattice/blocks/000000/values
+/fields/SizeField/blocks/000000/x
+/fields/SizeField/blocks/000000/y
+/fields/SizeField/blocks/000000/z
+/fields/SizeField/blocks/000000/values
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">values[i,j,k]</span></code> is associated with the point <code class="docutils literal notranslate"><span class="pre">(x[i],</span> <span class="pre">y[j],</span> <span class="pre">z[k])</span></code>.
+The dimension order is <code class="docutils literal notranslate"><span class="pre">xyz</span></code>; C buffers have z varying fastest. Axes retain
+their actual coordinates, including nonuniform spacing. Values retain float32
+or float64 precision, including NaN and infinity. Scalar datasets use chunks up
+to 64 by 64 by 64, gzip level 1, shuffle and Fletcher32 checksums. Finite-value
+minimum, maximum and counts, plus NaN and infinity counts, support inspection.
+Unknown coordinate/value units are recorded as empty strings rather than
+assumed. Field attributes also record source, labels and coordinate space.
+Local coordinates require a finite, invertible affine <code class="docutils literal notranslate"><span class="pre">grid_to_model</span></code> 4x4
+matrix, stored on each block. The reader preserves this transform; it does not
+apply it automatically. Consumers requiring model coordinates must explicitly
+transform/resample the field first.</p>
+<p>For a deformed structured grid, <code class="docutils literal notranslate"><span class="pre">grid_kind=&quot;structured&quot;</span></code> uses three dense
+datasets <code class="docutils literal notranslate"><span class="pre">coordinates/x</span></code>, <code class="docutils literal notranslate"><span class="pre">coordinates/y</span></code> and <code class="docutils literal notranslate"><span class="pre">coordinates/z</span></code> alongside
+<code class="docutils literal notranslate"><span class="pre">values</span></code>. The writer streams these arrays in chunks instead of flattening
+them into a coordinate table. Rectilinear grids use compact axis vectors.
+Container IDs are percent-encoded as a single group component; the original
+ID is retained in the field’s <code class="docutils literal notranslate"><span class="pre">field_id</span></code> attribute.</p>
+<p>Partitioned runs store one block group per computation partition in a single
+file per export step. Blocks are not automatically stitched or resampled:
+actual spacing may differ between partitions. For fields on the current lattice
+grid, block attributes include <code class="docutils literal notranslate"><span class="pre">core_bounds</span></code>, <code class="docutils literal notranslate"><span class="pre">global_bounds</span></code>, requested
+padding and spacing, and an ownership rule. Padding values remain in the file.
+The core lower boundary is inclusive and upper boundary exclusive, except for
+the global upper boundary, which is inclusive. Independent saved grids retain
+their own coordinates and do not receive unrelated partition ownership bounds.</p>
+<p>HDF5 export works even when there is no zero-level mesh surface. Mesh cleanup
+options affect mesh output only. Each HDF5 file is written to a private temporary
+file and atomically replaces its destination after all requested blocks are
+complete. Failed HDF5 writes preserve the previous HDF5 destination. Mesh and
+HDF5 outputs are individually published; they are not a transaction across
+multiple files. Reusing a destination in different export steps is rejected
+before calculation.</p>
+<section id="reading-hdf5">
+<h3>Reading HDF5<a class="headerlink" href="#reading-hdf5" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">FieldID</span></code> selects the saved field in the HDF5 file. <code class="docutils literal notranslate"><span class="pre">Gridfield_ID</span></code> names
+the loaded field inside Artisan.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">ReadGridField field identifiers</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+<col style="width: 15.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FieldID</span></code></p></td>
+<td><p>Selects the field saved in the HDF5 file.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SizeField</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lattice</span></code> (optional)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Gridfield_ID</span></code></p></td>
+<td><p>Names the loaded field in Artisan’s grid-field container.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LoadedSize</span></code></p></td>
+<td><p>Required; no default</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;ReadGridField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;inp_GridFieldFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./Test_results/part.h5&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Gridfield_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LoadedSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;FieldID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SizeField&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;BlockID&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">}}</span>
+</pre></div>
+</div>
+<p>This example reads the saved <code class="docutils literal notranslate"><span class="pre">SizeField</span></code> into the container as <code class="docutils literal notranslate"><span class="pre">LoadedSize</span></code>.
+Later expressions reference <code class="docutils literal notranslate"><span class="pre">LoadedSize</span></code>, for example <code class="docutils literal notranslate"><span class="pre">LoadedSize</span> <span class="pre">+</span> <span class="pre">1</span></code>.
+The two names may be the same. Existing CSV input uses <code class="docutils literal notranslate"><span class="pre">Gridfield_ID</span></code> only;
+<code class="docutils literal notranslate"><span class="pre">FieldID</span></code> and <code class="docutils literal notranslate"><span class="pre">BlockID</span></code> apply to HDF5 input.</p>
+<p><code class="docutils literal notranslate"><span class="pre">FieldID</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">lattice</span></code>. <code class="docutils literal notranslate"><span class="pre">BlockID</span></code> may be omitted for a single-block
+file and is required for a partitioned file. The selected block is loaded into
+memory with its saved coordinates and shape; it is not silently reshaped onto
+the current lattice grid. Incomplete files and unsupported formats/layouts are
+rejected. Consumers that assume the current lattice grid still require matching
+grids. Rectilinear-only consumers reject structured grids, which need explicit
+resampling before use. Loading every partition into one dense grid is not part
+of this reader.</p>
+<p>From <code class="docutils literal notranslate"><span class="pre">Src</span></code>, run <code class="docutils literal notranslate"><span class="pre">Test_json/FieldContainer/HDF5Export/ExportFields.json</span></code> first,
+then <code class="docutils literal notranslate"><span class="pre">ReadFields.json</span></code>. They demonstrate fitted-field storage, combined mesh
+and HDF5 export, an independent later snapshot, and HDF5 readback.</p>
+</section>
+<section id="python-sdk-and-packaging">
+<h3>Python SDK and packaging<a class="headerlink" href="#python-sdk-and-packaging" title="Link to this heading">#</a></h3>
+<p>Mesh-only SDK <code class="docutils literal notranslate"><span class="pre">Export</span></code> keeps its existing Path/None return. HDF5-only SDK
+<code class="docutils literal notranslate"><span class="pre">Export</span></code> returns the HDF5 Path; combined output returns a list of successfully
+written mesh/HDF5 Paths. <code class="docutils literal notranslate"><span class="pre">API.export_files</span></code> contains the outputs, and workflow
+<code class="docutils literal notranslate"><span class="pre">API.export_results</span></code> includes <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> and <code class="docutils literal notranslate"><span class="pre">field_status</span></code> for HDF5.
+SDK export captures its currently available grid as one block.</p>
+<p>The backend uses h5py, already listed in <code class="docutils literal notranslate"><span class="pre">Src/requirements.txt</span></code>.
+<code class="docutils literal notranslate"><span class="pre">BuildDist.bat</span></code> explicitly includes h5py in Nuitka’s standalone distribution.
+Deliver the entire distribution, including h5py extensions and native HDF5
+libraries. No separately installed Python interpreter is needed by that
+standalone distribution. ArtGUI’s Rust reader is a separate frontend change.</p>
+</section>
+</section>
 </section>
 
 
@@ -486,6 +652,25 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hdf5-field-snapshots">HDF5 field snapshots</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-hdf5">Reading HDF5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-sdk-and-packaging">Python SDK and packaging</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

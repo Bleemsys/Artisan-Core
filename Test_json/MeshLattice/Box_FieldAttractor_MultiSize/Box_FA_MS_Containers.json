@@ -1,0 +1,49 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {"Domain": [[0.0, 1000.0], [0.0, 1000.0], [0.0, 1000.0]], "Shape": "Box"},
+    "Geomfile": "",
+    "Rot": [0.0, 0.0, 0.0],
+    "res": [50.0, 50.0, 50.0],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 1073741824
+  },
+  "WorkFlow": {
+    "1": {
+      "ReadMesh": {"MeshID": "CubeGeom", "meshfile": ".//sample-obj//cube_1mm.stl", "elem_type": "Triangle"}
+    },
+    "2": {
+      "OP_Fit_GridField": {
+        "inp_ptFieldFile": ".//Test_json//MeshLattice//Box_FieldAttractor_MultiSize//container_field_points.csv",
+        "out_gridFieldFile": "SizeField"
+      }
+    },
+    "3": {
+      "Gen_BasicCartesianHexMesh_MultiSize": {
+        "num_elem": [8, 8, 8],
+        "x_range": [0.0, 1000.0],
+        "y_range": [0.0, 1000.0],
+        "z_range": [0.0, 1000.0],
+        "ori": [0.0, 0.0, 0.0],
+        "Normal": [0.0, 0.0, 1.0],
+        "z_angle": 0.0,
+        "Meshfile": "BoxHexMesh",
+        "Geomfile": "CubeGeom",
+        "numPrjLayers": 0,
+        "LayerDepth": 1.0,
+        "numCoverNodes": 1,
+        "MultiSize": {"Type": "Field_Attractor", "Data": [[1200.0, 0.08]], "FieldFile": "SizeField"}
+      }
+    },
+    "4": {
+      "ExportMeshID": {"MeshID": "BoxHexMesh", "out_meshfile": ".//Test_results//BoxHexMesh_Containers.inp", "elem_type": "Hex"}
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": false,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

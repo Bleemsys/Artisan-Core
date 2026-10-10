@@ -12,7 +12,15 @@ from collections import defaultdict
 from pathlib import Path
 
 COMMAND = re.compile(r'^(?:Add_|Subtract_|Substract_|Intersect_|Check_|Define_|Gen_|Proc_Mesh_|OP_|HS_|Lin_|Field_|Inv_)[A-Za-z0-9_]+$')
-STANDALONE = {'Export', 'ExportMeshID', 'ReadMesh', 'RemoveMesh', 'ReadGridField', 'Evaluate_Points', 'GeomFill'}
+STANDALONE = {'Export', 'ExportMeshID', 'ReadMesh', 'RemoveMesh', 'ReadGridField', 'Evaluate_Points', 'GeomBuild', 'GeomFill'}
+# These commands have partial illustrations in the manuals. Their required
+# fields are verified against Artisan/command_schemas.py; do not offer a partial
+# illustration as an executable preset or invent values for missing fields.
+REQUIRED_PRESET_FIELDS = {
+    'Add_Lattice': {'Rot', 'Trans'},
+    'HS_Interpolate': {'Rot', 'Trans'},
+    'Gen_ParametricLineMesh': {'step_size', 'closedcurve'},
+}
 
 
 def numeric_types(value, pointer=''):
@@ -98,7 +106,7 @@ def load_categories():
     return definitions, by_keyword
 
 
-def generate(root, output):
+def generate(root, output, keywords=None):
     category_definitions, category_by_keyword = load_categories()
     labels = json.loads(Path(__file__).with_name('operation_labels.json').read_text(encoding='utf-8'))
     metadata = json.loads(Path(__file__).with_name('operation_metadata.json').read_text(encoding='utf-8'))
@@ -108,12 +116,17 @@ def generate(root, output):
 
     def add(obj, source, kind, mode='complete'):
         for keyword, params, step in operations_in(obj, candidates):
+            missing = REQUIRED_PRESET_FIELDS.get(keyword, set()) - params.keys()
+            if missing:
+                issues.append({'source': source, 'keyword': keyword,
+                               'issue': 'Skipped incomplete preset; missing required parameters: ' + ', '.join(sorted(missing))})
+                continue
             # Older examples omit the new unit-cell rotation parameter.
             if keyword == 'Gen_ConformalLatticeMesh' and 'Rot' not in params:
                 params = {**params, 'Rot': [0.0, 0.0, 0.0]}
             candidates[keyword].append({'params': params, 'source': source, 'kind': kind, 'step': step, 'extraction': mode})
 
-    for path in sorted((root / ('Src/Test_json' if (root / 'Src/Test_json').is_dir() else 'Test_json')).rglob('*.json')):
+    for path in sorted((root / 'Src/Test_json').rglob('*.json')):
         source = path.relative_to(root).as_posix()
         example_files.append(source)
         try:
@@ -133,6 +146,15 @@ def generate(root, output):
                 add(obj, source, 'manual', mode)
             if mode not in ('complete', 'property fragment'):
                 issues.append({'source': source, 'issue': mode})
+
+    # Some supported commands have no manual/example workflow yet. Keep their
+    # reviewed starters separate and only use them until a real example exists.
+    fallback_keywords = []
+    templates = json.loads(Path(__file__).with_name('operation_templates.json').read_text(encoding='utf-8'))
+    for keyword, template in templates.items():
+        if keyword not in candidates:
+            add({keyword: template['params']}, template['source'], 'starter')
+            fallback_keywords.append(keyword)
 
     def rank(candidate):
         # A complete tutorial/manual example is a starting preset, not a claim
@@ -164,6 +186,17 @@ def generate(root, output):
             if len(types) > 1:
                 conflicts.append({'keyword': keyword, 'parameter': pointer, 'types': sorted(types), 'resolution': 'Preserve the type of each source preset; no global coercion.'})
 
+    if keywords:
+        selected = set(keywords)
+        missing = selected - {op['keyword'] for op in catalog}
+        if missing:
+            raise ValueError(f'No source examples for keyword(s): {", ".join(sorted(missing))}')
+        previous_path = output / 'operations.js'
+        if not previous_path.is_file():
+            raise ValueError('--keywords requires an existing operation catalog at --output.')
+        previous = json.loads(previous_path.read_text(encoding='utf-8').split('window.ARTISAN_OPERATIONS = ', 1)[1].strip().removesuffix(';'))
+        catalog = [op for op in previous if op['keyword'] not in selected] + [op for op in catalog if op['keyword'] in selected]
+
     category_order = {definition['name']: index for index, definition in enumerate(category_definitions)}
     catalog.sort(key=lambda item: (category_order.get(item['category'], len(category_order)), item['keyword'].lower()))
     categories = [{key: definition[key] for key in ('name', 'description', 'references')} | {
@@ -181,16 +214,20 @@ def generate(root, output):
     report = {**info, 'keywords': [op['keyword'] for op in catalog], 'sourceIssues': issues, 'numericTypeVariations': conflicts,
               'manualSources': doc_files, 'exampleSources': example_files,
               'unclassifiedKeywords': unclassified,
+              'starterTemplateKeywords': sorted(fallback_keywords),
               'categoryAssignmentsWithoutSource': sorted(set(category_by_keyword) - set(candidates))}
+    if keywords:
+        report['refreshedKeywords'] = sorted(set(keywords))
     (output.parent / 'operations-report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     return info
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--artisan-root', type=Path, default=next((p for p in Path(__file__).resolve().parents if (p / 'Doc').is_dir() and ((p / 'Src/Test_json').is_dir() or (p / 'Test_json').is_dir())), Path(__file__).resolve().parents[3]))
+    parser.add_argument('--artisan-root', type=Path, default=Path(__file__).resolve().parents[3])
     parser.add_argument('--output', type=Path, default=Path(__file__).resolve().parents[1] / 'ui')
+    parser.add_argument('--keywords', nargs='+', help='Refresh only these keywords in an existing catalog.')
     args = parser.parse_args()
-    if not (args.artisan_root / 'Doc').is_dir() or not ((args.artisan_root / 'Src/Test_json').is_dir() or (args.artisan_root / 'Test_json').is_dir()):
-        parser.error('--artisan-root must contain Doc and either Test_json or Src/Test_json')
-    print(json.dumps(generate(args.artisan_root, args.output), indent=2))
+    if not (args.artisan_root / 'Doc').is_dir() or not (args.artisan_root / 'Src/Test_json').is_dir():
+        parser.error('--artisan-root must contain Doc and Src/Test_json')
+    print(json.dumps(generate(args.artisan_root, args.output, args.keywords), indent=2))

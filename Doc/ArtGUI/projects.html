@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Projects, geometry and file paths &#8212; Artisan 0.2.16 documentation</title>
+    <title>Projects, geometry and file paths &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -337,6 +337,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understand-the-working-directory">Understand the working directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-new-design">Set up a new design</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-post-processing">Resolution and post-processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#field-references">Field references</a></li>
 </ul>
             </nav>
         </div>
@@ -493,6 +494,14 @@ In the engine-bracket example, <strong>Combine Meshes</strong> and <strong>Remov
 are enabled. Removing isolated parts can remove disconnected components, so
 review the result if the design intentionally contains separate pieces.</p>
 </section>
+<section id="field-references">
+<h2>Field references<a class="headerlink" href="#field-references" title="Link to this heading">#</a></h2>
+<p>Use <strong>Fields → Add</strong> to open an exported Artisan HDF5 field. Saving the project
+keeps its file path, selected field and block under <code class="docutils literal notranslate"><span class="pre">ArtGUI.fields</span></code>. The field
+data remains in the external file. Reopen it by selecting its project entry;
+slice, palette, opacity and probe settings are not saved in the project.
+See <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a> for the viewing controls.</p>
+</section>
 </section>
 
 
@@ -545,6 +554,7 @@ review the result if the design intentionally contains separate pieces.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understand-the-working-directory">Understand the working directory</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-a-new-design">Set up a new design</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resolution-and-post-processing">Resolution and post-processing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#field-references">Field references</a></li>
 </ul>
   </nav></div>
 

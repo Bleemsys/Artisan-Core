@@ -65,9 +65,11 @@ below the viewport to confirm the active layer and displayed detail.
    reduce the geometry used by Artisan. Measurements are disabled on sampled
    previews. Use Full Detail before assessing holes or missing surfaces.
 
-Full-detail STL loading warns for files larger than 256 MB and has a
-10-million-triangle limit in this version. Large text meshes can take longer
-to parse. Use **Cancel** beside the loading progress indicator to stop loading.
+Full Detail has no fixed application-imposed file-size or triangle-count cap.
+Practical capacity depends on available memory and graphics resources. Start
+with Quick Preview for large STL files and close unneeded layers before loading
+full detail. Large text meshes can take longer to parse. Use **Cancel** beside
+the loading progress indicator to stop loading.
 
 Look inside with a section plane
 ================================
@@ -143,7 +145,32 @@ The INP reader does not support higher-order elements, part/assembly instances,
 include files, generated node/element definitions or unsupported coordinate
 systems. Export a flat, supported mesh before viewing those models.
 
-INP limits are 128 MB per file, 500,000 nodes, 500,000 elements and
-2 million processed faces. Loading is cancellable; there is no sampled
-INP Quick Preview. The viewer does not provide mesh editing, a solver or
-analysis-result plotting.
+INP viewing has no fixed application-imposed file-size, node, element or face
+count cap. Available memory and graphics resources still limit practical size.
+Loading is cancellable; there is no sampled INP Quick Preview. The viewer does
+not provide mesh editing, a solver or analysis-result plotting.
+
+Inspect an HDF5 field
+=====================
+
+#. Choose **View field…** beside Load result. Select an existing workflow export,
+   or choose **Open another HDF5 file…**. With no field exports, a file picker
+   opens directly. You can also use **Fields → Add**.
+#. Select a field and, if needed, a partition block in Properties.
+#. Choose an X, Y or Z slice and move the position slider. The slice snaps to
+   an original grid plane. Load a mesh to compare both in model coordinates.
+#. Adjust **Colour**, range and opacity. Use **Probe** to read a nearest stored
+   grid value, and **Copy value** to copy it.
+
+The display can sample a slice for speed; Probe still reads an original value.
+The inspector shows grid dimensions, precision, available units and value range.
+Missing/nonfinite values appear as gaps. Unit labels do not convert coordinates.
+
+ArtGUI reads the requested slice rather than loading the whole field into the
+viewer. It supports completed Artisan grid-field snapshots, not arbitrary HDF5
+files. One partition block is displayed at a time, including its padding.
+Structured/deformed grids, combined block views and volume rendering are not
+supported. Use **Remove field file** to close a file.
+
+**Save PNG…** includes the displayed field plane but not its legend or probe
+tooltip. After generating new output, reopen the field to inspect the new data.

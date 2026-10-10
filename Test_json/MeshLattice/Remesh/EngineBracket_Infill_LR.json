@@ -7,10 +7,18 @@
                 "memorylimit": 16106127360
                 },
  "WorkFlow":{
-        "1": {"Gen_SurfaceReMesh":{"size":[3.0, 3.0, 3.0], 
+        "1": {"Gen_SurfaceReMesh":{
               "mesh_file":".//sample-obj//EngineBracket.stl",
-              "ShortEdgeThreshold": 1.0,
-              "export_mesh": ".//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl"}
+              "export_mesh": ".//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl",
+              "hsiz": 3.0,
+              "hmin": 1.0,
+              "hmax": 0.0,
+              "hausd": 0.01,
+              "hgrad": 1.3,
+              "angle": 45.0,
+              "detect_sharp_edges": true,
+              "optimize_only": false,
+              "verbose": -1}
              },
 
         "2": {"Add_Lattice":{

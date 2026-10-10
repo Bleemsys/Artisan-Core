@@ -1,6 +1,11 @@
+import {initLanguage, translate as t} from './i18n.js';
+import {ARTGUI_VERSION} from './version.js';
+import {createFieldInspector} from './field-inspector.js';
 import {openOperationPicker} from './operation-picker.js';
+import {isFieldFile, exportMode, setExportMode, exportError, exportWorkflowError, parseGridFieldIds} from './export-options.js';
 import {operationIcon,iconLicense} from './operation-icons.js';
 import {createRunProgress} from './run-progress.js';
+import {createResourceMonitor} from './resource-monitor.js';
 import {integratedGroups,integratedNames,definitionTypes,isMeshType,definitionTemplate,definitionError,latticeReferences} from './lattice-schema.js';
 import {parseNumericJson, stringifyNumericJson, cloneNumericJson, assignNumericJson, numberType, numberText, setNumber} from './numeric-json.js';
 
@@ -9,26 +14,59 @@ import {parseNumericJson, stringifyNumericJson, cloneNumericJson, assignNumericJ
 let viewerReady = Promise.resolve();
 
 (() => {
+  initLanguage();
   const invoke = window.__TAURI__?.core?.invoke;
+  createResourceMonitor({invoke});
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const clone = cloneNumericJson;
   let applyLatticeDraft=null;
   const presetSelections = new WeakMap();
+  const exportDrafts = new WeakMap();
   const fileIssues = new Map();
   const defaultSetup = parseNumericJson('{"Type":"Geometry","Sample":{"Domain":[[0.0,0.0],[0.0,0.0],[0.0,0.0]],"Shape":"Box"},"Geomfile":"","Rot":[0.0,0.0,0.0],"res":[5.0,5.0,5.0],"Padding":4,"onGPU":false,"JsonWorkDir":true,"memorylimit":1073741824000}');
   const defaultPost = {CombineMeshes:true,RemovePartitionMeshFile:false,RemoveIsolatedParts:true,ExportLazPts:false};
   let doc = {Setup:clone(defaultSetup),WorkFlow:{},PostProcess:clone(defaultPost)};
   let currentPath = '', selected = null, dirty = false, toastTimer, previewWorker = null, previewAbort = null, previewCancelReject = null, previewProgressUnlisten = null, activePreviewJob = '', previewRequest = 0, loadedGeometryPath = '', loadedPreviewMode = '', loadedLayerId = 'source', viewer = null, backendPath = localStorage.getItem('artisan.backend') || '';
 
+  const fieldInspector=createFieldInspector({invoke,getViewer:()=>viewer,getReferences:()=>doc.ArtGUI?.fields||[],
+    addReference:ref=>{const files=ensureFiles();files.fields ||= [];files.fields.push(ref);markDirty();},
+    removeReference:id=>{if(doc.ArtGUI?.fields)doc.ArtGUI.fields=doc.ArtGUI.fields.filter(f=>f.id!==id);if(selected==='field:'+id)selected='setup';markDirty();},
+    onSelect:id=>{selected='field:'+id;refreshAll();},onChange:()=>{refreshTree();if(selected?.startsWith('field:'))refreshProperties();},onReferenceChanged:markDirty,toast});
+
+  // Resize the existing viewer in place; its camera, layers and field session stay alive.
+  const workspace=document.querySelector('.workspace'),expandWorkspace=$('expand-workspace');
+  let workspaceExpanded=false;
+  function setWorkspaceExpanded(expanded){
+    workspaceExpanded=expanded;
+    workspace.classList.toggle('workspace-expanded',expanded);
+    expandWorkspace.setAttribute('aria-pressed',String(expanded));
+    expandWorkspace.setAttribute('aria-label',expanded?'Restore workspace layout':'Expand workspace');
+    expandWorkspace.title=expanded?'Restore workspace layout (Esc)':'Expand workspace';
+    $('workspace-size-label').textContent=expanded?'Restore layout':'Expand';
+    $('workspace-size-icon').setAttribute('d',expanded?'M3 7h4V3m6 0v4h4M7 17v-4H3m14 0h-4v4':'M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4');
+    if(expanded)expandWorkspace.setAttribute('aria-keyshortcuts','Escape');
+    else expandWorkspace.removeAttribute('aria-keyshortcuts');
+  }
+  expandWorkspace.onclick=()=>setWorkspaceExpanded(!workspaceExpanded);
+  document.addEventListener('keydown',event=>{
+    if(event.key!=='Escape'||event.defaultPrevented||event.isComposing||!workspaceExpanded)return;
+    // Let dialogs, editors, viewer menus and measurement tools handle Escape first.
+    if(!$('modal-backdrop').classList.contains('hidden')||
+       event.target.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"])')||
+       $('viewer-toolbar').querySelector('details[open]')||viewer&&viewer.measureMode!=='off')return;
+    event.preventDefault();event.stopImmediatePropagation();
+    setWorkspaceExpanded(false);expandWorkspace.focus();
+  });
+
   let pythonPath=localStorage.getItem('artisan.python')||'';
   let preparingGeneration=false;
   const runProgress=createRunProgress({invoke,labelFor:titleFor,listen:window.__TAURI__?.event?.listen,toast,onBusy:busy=>{
     document.querySelectorAll('.project-panel,.properties-panel,.workflow-controls').forEach(el=>el.inert=busy);
-    for(const id of ['new-project','open-project','save-project','json-button','choose-backend','load-geometry','empty-load','load-result'])$(id).disabled=busy;
+    for(const id of ['new-project','open-project','save-project','json-button','choose-backend','load-geometry','empty-load','load-result','view-generated-field'])$(id).disabled=busy;
   }});
 
-  function markDirty(){dirty=true;$('dirty-state').textContent='Unsaved changes';$('project-name').textContent=currentPath?currentPath.split(/[\\/]/).pop():'Untitled workflow';refreshTree();refreshTimeline();}
+  function markDirty(){dirty=true;$('project-name').translate=!currentPath;$('dirty-state').textContent='Unsaved changes';$('project-name').textContent=currentPath?currentPath.split(/[\\/]/).pop():'Untitled workflow';refreshTree();refreshTimeline();}
   function stepKeys(){return Object.keys(doc.WorkFlow||{}).sort((a,b)=>Number(a)-Number(b));}
   function selectedStep(){return selected && doc.WorkFlow[selected] ? doc.WorkFlow[selected] : null;}
   function stepTitle(key){const s=doc.WorkFlow[key]||{};return Object.keys(s)[0]||'Operation';}
@@ -64,6 +102,11 @@ let viewerReady = Promise.resolve();
         for(const f of state[key]){if(!f||typeof f.id!=='string'||! /^(result|geometry-[a-z0-9-]+|support-[a-z0-9-]+)$/.test(f.id)||ids.has(f.id)||typeof f.path!=='string'||!f.path.trim())throw Error('Invalid or duplicate project file reference.');ids.add(f.id);}
       }
     }
+    if(result.ArtGUI?.fields!==undefined){
+      const fields=result.ArtGUI.fields,ids=new Set([...result.ArtGUI.geometry,...result.ArtGUI.supportingFiles].map(f=>f.id));
+      if(!Array.isArray(fields)||fields.length>32)throw Error('Invalid field file list.');
+      for(const f of fields){if(!f||typeof f.id!=='string'||!/^field-[a-z0-9-]+$/.test(f.id)||ids.has(f.id)||typeof f.path!=='string'||!f.path.trim()||(f.fieldId!==undefined&&typeof f.fieldId!=='string')||(f.blockId!==undefined&&(!Number.isSafeInteger(f.blockId)||f.blockId<0)))throw Error('Invalid field file reference.');ids.add(f.id);}
+    }
     return result;
   }
   function parameterPresetControl(keyword,params){
@@ -76,7 +119,7 @@ let viewerReady = Promise.resolve();
   function latticeDefinitions(){return stepKeys().filter(k=>doc.WorkFlow[k]?.Define_Lattice).map(key=>({key,params:doc.WorkFlow[key].Define_Lattice}));}
   function latticeTree(){
     const definitions=latticeDefinitions(),refs=[...new Set(latticeReferences(doc).map(r=>r.value).filter(v=>/\.(txt|mld)$/i.test(v)))];
-    return [true,false].map(mesh=>`<div class="tree-group"><div class="project-group-heading"><span class="tree-label">${mesh?'Mesh / Conformal lattices':'Custom unit cells'}</span><button class="text-button" data-new-lattice="${mesh?'mesh':'cell'}" aria-label="Add ${mesh?'mesh or conformal lattice':'custom unit cell'}">＋ Add</button></div>${definitions.filter(({params})=>isMeshType(params.definition?.type)===mesh).map(({key,params})=>`<button class="tree-item project-file ${selected===key?'active':''}" data-lattice-step="${esc(key)}"><span class="project-file-text"><strong>${esc(params.la_name)}</strong><small>${esc(definitionTypes[params.definition?.type]||params.definition?.type||'Definition')}</small></span></button>`).join('')}${refs.filter(v=>/\.mld$/i.test(v)===mesh).map(v=>`<button class="tree-item project-file" data-lattice-reference="${esc(v)}" title="${esc(v)}"><span class="project-file-text"><strong>${esc(nameForPath(v))}</strong><small>External definition · import to edit</small></span></button>`).join('')}<button class="text-button lattice-import" data-import-lattice="${mesh?'mesh':'cell'}">Import .${mesh?'mld':'txt'}…</button></div>`).join('');
+    return [true,false].map(mesh=>`<div class="tree-group"><div class="project-group-heading"><span class="tree-label">${mesh?'Mesh / Conformal lattices':'Custom unit cells'}</span><button class="text-button" data-new-lattice="${mesh?'mesh':'cell'}" aria-label="Add ${mesh?'mesh or conformal lattice':'custom unit cell'}">＋ Add</button></div>${definitions.filter(({params})=>isMeshType(params.definition?.type)===mesh).map(({key,params})=>`<button class="tree-item project-file ${selected===key?'active':''}" data-lattice-step="${esc(key)}"><span class="project-file-text"><strong translate="no">${esc(params.la_name)}</strong><small>${esc(definitionTypes[params.definition?.type]||params.definition?.type||'Definition')}</small></span></button>`).join('')}${refs.filter(v=>/\.mld$/i.test(v)===mesh).map(v=>`<button class="tree-item project-file" data-lattice-reference="${esc(v)}" title="${esc(v)}"><span class="project-file-text"><strong translate="no">${esc(nameForPath(v))}</strong><small>External definition · import to edit</small></span></button>`).join('')}<button class="text-button lattice-import" data-import-lattice="${mesh?'mesh':'cell'}">Import .${mesh?'mld':'txt'}…</button></div>`).join('');
   }
   function bindLatticeTree(){
     $('project-tree').querySelectorAll('[data-new-lattice]').forEach(b=>b.onclick=()=>newLatticeDialog(b.dataset.newLattice==='mesh'));
@@ -131,7 +174,7 @@ let viewerReady = Promise.resolve();
   function renderLatticeProperties(params){
     const value=params.definition||{},d=value.definition||{},type=value.type;
     if(!definitionTypes[type])return false;
-    $('properties-title').textContent=params.la_name||'Lattice definition';$('properties-subtitle').textContent=definitionTypes[type];
+    $('properties-title').translate=!params.la_name;$('properties-title').textContent=params.la_name||'Lattice definition';$('properties-subtitle').textContent=definitionTypes[type];
     const input=(key,label,help='',kind='text')=>key==='la_name'?`<div class="field"><label for="lattice-la_name-select">${label}</label>${latticePicker('lattice-la_name',d.la_name,'data-lattice-field="la_name" data-kind="text"','data-lattice-browse="la_name"',true,params.la_name)}<p class="field-help">${help}</p></div>`:`<div class="field"><label for="lattice-${key}">${label}</label>${kind==='json'?`<textarea id="lattice-${key}" data-lattice-field="${key}" data-kind="json" class="lattice-array">${esc(stringifyNumericJson(d[key]||[]))}</textarea>`:`<div class="${['meshfile','file','la_name'].includes(key)?'path-row':''}"><input id="lattice-${key}" data-lattice-field="${key}" data-kind="${kind}" type="${kind==='number'?'number':'text'}" ${kind==='number'?'step="any" min="0"':''} ${key==='la_name'?'list="lattice-choices"':''} value="${esc(d[key]??'')}">${['meshfile','file','la_name'].includes(key)?`<button class="icon-button" data-lattice-browse="${key}" aria-label="Browse ${label}">…</button>`:''}</div>`}${help?`<p class="field-help">${help}</p>`:''}</div>`;
 
     let fields='';
@@ -177,17 +220,17 @@ let viewerReady = Promise.resolve();
   function refreshTree(){
     const item=(file,support=false)=>{
       const key=file.id==='source'?'geometry':'file:'+file.id,layer=viewer?.layers.get(file.id),loaded=layer?.path===file.path;
-      return `<button class="tree-item project-file ${selected===key?'active':''}" data-file="${esc(file.id)}" title="${esc(file.path)}"><span class="tree-icon">${support?'▤':'◇'}</span><span class="project-file-text"><strong>${esc(file.path?nameForPath(file.path):'Source geometry')}</strong><small>${support?'Supporting file':file.id==='source'?'Workflow source':file.id==='result'?'Generated result':'Reference geometry'}${fileIssues.has(file.id)?' · Load failed':loaded?' · '+(layer.mesh.visible?'Shown':'Hidden'):''}</small></span></button>`;
+      return `<button class="tree-item project-file ${selected===key?'active':''}" data-file="${esc(file.id)}" title="${esc(file.path)}"><span class="tree-icon">${support?'▤':'◇'}</span><span class="project-file-text"><strong ${file.path?'translate="no"':''}>${esc(file.path?nameForPath(file.path):'Source geometry')}</strong><small>${support?'Supporting file':file.id==='source'?'Workflow source':file.id==='result'?'Generated result':'Reference geometry'}${fileIssues.has(file.id)?' · Load failed':loaded?' · '+(layer.mesh.visible?'Shown':'Hidden'):''}</small></span></button>`;
     };
     $('project-tree').innerHTML=`<div class="tree-group"><div class="tree-label">Project</div><button class="tree-item ${selected==='setup'?'active':''}" data-select="setup"><span class="tree-icon">◈</span>Project settings</button></div>
       <div class="tree-group"><div class="project-group-heading"><span class="tree-label">Geometry</span><button class="text-button" id="add-project-geometry" aria-label="Add reference geometry">＋ Add</button></div>${item({id:'source',path:doc.Setup.Geomfile||''})}${projectFiles().map(f=>item(f)).join('')}</div>
-      <div class="tree-group"><div class="project-group-heading"><span class="tree-label">Supporting files</span><button class="text-button" id="add-supporting-file" aria-label="Add supporting file">＋ Add</button></div>${supportingFiles().map(f=>item(f,true)).join('')||'<p class="project-empty">Attach field data, point clouds, or other project files.</p>'}</div>${latticeTree()}`;
+      <div class="tree-group"><div class="project-group-heading"><span class="tree-label">Supporting files</span><button class="text-button" id="add-supporting-file" aria-label="Add supporting file">＋ Add</button></div>${supportingFiles().map(f=>item(f,true)).join('')||'<p class="project-empty">Attach field data, point clouds, or other project files.</p>'}</div>${latticeTree()}${fieldInspector.treeHtml()}`;
     $('project-tree').querySelector('[data-select]').onclick=()=>{selected='setup';refreshAll();};
     $('project-tree').querySelectorAll('[data-file]').forEach(button=>button.onclick=()=>{
       const id=button.dataset.file;selected=id==='source'?'geometry':'file:'+id;refreshTree();refreshProperties();refreshTimeline();
       const file=fileRecord(id);if(!supportingFiles().some(f=>f.id===id)&&file?.path){const layer=viewer?.layers.get(id);if(layer?.path===file.path)viewer.setActiveLayer(id);else loadPreview(file.path,'quick',id);}
     });
-    $('add-project-geometry').onclick=()=>addProjectFile(false);$('add-supporting-file').onclick=()=>addProjectFile(true);bindLatticeTree();
+    fieldInspector.bindTree();$('add-project-geometry').onclick=()=>addProjectFile(false);$('add-supporting-file').onclick=()=>addProjectFile(true);bindLatticeTree();
   }
   async function addProjectFile(support){
     if(!invoke){toast('File browsing is available in the desktop app.');return;}
@@ -209,7 +252,7 @@ let viewerReady = Promise.resolve();
   }
   function showFileProperties(file,support=false){
     const host=$('properties-content'),source=file.id==='source',layer=viewer?.layers.get(file.id),loaded=!!file.path&&layer?.path===file.path;
-    $('properties-title').textContent=file.path?nameForPath(file.path):'Source geometry';$('properties-subtitle').textContent=source?'Workflow source geometry':support?'Supporting file':'Project geometry';
+    $('properties-title').translate=!file.path;$('properties-title').textContent=file.path?nameForPath(file.path):'Source geometry';$('properties-subtitle').textContent=source?'Workflow source geometry':support?'Supporting file':'Project geometry';
     host.innerHTML=(fileIssues.has(file.id)?section('Preview unavailable',`<p class="project-path" role="status">${esc(fileIssues.get(file.id))}</p>`):'')+section('File',`<p class="project-path">${esc(file.path||'No source geometry selected.')}</p><p class="field-help">${source?(doc.Setup.Type==='Sample'?'The project uses a sample domain. Loading a source file switches it to Geometry mode.':'This file defines the workflow source. Domain, resolution and compute options are in Project settings.'):support?'Attached for reference. Set the relevant workflow parameter to use this file.':'Previewing a reference does not change the workflow source.'}</p>`)+
       (loaded?section('Mesh',`<p>${esc(fileStats(layer))}</p>${layer.metadata?`<p class="project-path">${esc(Object.entries(layer.metadata.types).map(([type,count])=>type+': '+count.toLocaleString()).join(' · '))}</p><p class="field-help">${layer.metadata.beamCount?'Beams display as centre lines. ':''}Solid elements display their outer surface. Sections clip the display without creating cut faces.</p>`:''}<label class="project-visible"><input id="file-visible" type="checkbox" ${layer.mesh.visible?'checked':''}> Visible in workspace</label>`):'')+
       (!support?geometryBounds(loaded?layer:null):'')+
@@ -254,8 +297,45 @@ let viewerReady = Promise.resolve();
   function numberParent(path){const [root,rest]=propertyRoot(path),parts=rest.split('.'),key=parts.pop();return {parent:parts.length?readAt(root,parts.join('.')):root,key};}
   function numberInput(parent,key){const type=numberType(parent,key);return `step="${type==='integer'?'1':'any'}" data-number-type="${type}" value="${esc(numberText(parent,key))}"`;}
   function numberInputForPath(path){const {parent,key}=numberParent(path);return numberInput(parent,key);}
+  function exportParameterError(params){return exportDrafts.get(params)?.error||exportError(params);}
+  function renderExportProperties(params){
+    const mode=exportMode(params),hasFields=mode!=='mesh',draft=exportDrafts.get(params);
+    const pathInput=(key,label,help)=>`<div class="field"><label for="export-${key}">${label}</label><div class="path-row"><input id="export-${key}" type="text" data-export-value="${key}" value="${esc(params[key]??'')}" aria-describedby="export-error"><button class="icon-button" data-export-browse="${key}" aria-label="Choose ${label}">…</button></div><p class="field-help">${help}</p></div>`;
+    return `<div data-export-editor><div class="field"><label for="export-mode">Output mode</label><select id="export-mode"><option value="mesh" ${mode==='mesh'?'selected':''}>Mesh only</option><option value="field" ${mode==='field'?'selected':''}>HDF5 field only</option><option value="both" ${mode==='both'?'selected':''}>Mesh plus HDF5 field</option></select><p class="field-help">Selecting Mesh only removes fieldfile and GridFieldIDs.</p></div>`+
+      pathInput('outfile',mode==='field'?'Field output (outfile)':'Mesh output (outfile)',mode==='field'?'Use .h5 or .hdf5 to save sampled grid values and coordinates.':'Use a supported mesh extension, for example .stl, .obj or .ply.')+
+      (mode==='both'?pathInput('fieldfile','Additional field output (fieldfile)','Use .h5 or .hdf5. Artisan writes this field file alongside the mesh.'):'')+
+      (hasFields||Object.hasOwn(params,'GridFieldIDs')?`<div class="field"><label for="export-gridfields">Grid field IDs (GridFieldIDs, optional)</label><textarea id="export-gridfields" aria-describedby="export-gridfields-help export-error">${esc(draft?.text??JSON.stringify(params.GridFieldIDs??[],null,2))}</textarea><p class="field-help" id="export-gridfields-help">Enter a JSON array, for example ["SizeField"]. Use field IDs created before this step. The current lattice field is included automatically when present; [] adds no named fields.</p></div>`:'')+
+      `<p id="export-error" class="lattice-error" role="status">${esc(exportParameterError(params))}</p>${hasFields?'<button class="button subtle" id="view-export-field">View exported field…</button>':''}</div>`+
+      Object.entries(params).filter(([key])=>!['outfile','fieldfile','GridFieldIDs'].includes(key)).map(([key,value])=>field(key,value,`Export.${key}`,updateField)).join('');
+  }
+  function attachExportEvents(){
+    const params=selectedStep()?.Export;if(!params||!$('export-mode'))return;
+    const paint=()=>{const error=exportParameterError(params);$('export-error').textContent=error;const ids=$('export-gridfields');if(ids)ids.setAttribute('aria-invalid',exportDrafts.has(params)?'true':'false');};
+    $('export-mode').onchange=event=>{const mode=event.target.value;setExportMode(params,mode);if(mode==='mesh')exportDrafts.delete(params);markDirty();refreshProperties();};
+    $('properties-content').querySelectorAll('[data-export-value]').forEach(input=>input.onchange=()=>{params[input.dataset.exportValue]=input.value;markDirty();refreshProperties();});
+    const ids=$('export-gridfields');if(ids)ids.oninput=()=>{
+      try{const names=parseGridFieldIds(ids.value);if(names.length)params.GridFieldIDs=names;else delete params.GridFieldIDs;exportDrafts.delete(params);}
+      catch(error){exportDrafts.set(params,{text:ids.value,error:error.message});}
+      markDirty();paint();
+    };
+    $('properties-content').querySelectorAll('[data-export-browse]').forEach(button=>button.onclick=async()=>{
+      if(!invoke){toast('File browsing is available in the installed desktop app.');return;}
+      const key=button.dataset.exportBrowse,originalDoc=doc;
+      try{const path=await invoke('choose_output',{kind:key==='fieldfile'||exportMode(params)==='field'?'field':'mesh',path:typeof params[key]==='string'?params[key]:null});if(path&&doc===originalDoc&&selectedStep()?.Export===params){params[key]=path;markDirty();refreshProperties();}}
+      catch(error){toast(`Could not choose output: ${error.message||error}`);}
+    });
+    if($('view-export-field'))$('view-export-field').onclick=async()=>{
+      if(!invoke){toast('Field reading is available in the desktop app.');return;}
+      if(runProgress.busy){toast('Wait for Artisan to finish exporting.');return;}
+      const error=exportParameterError(params);if(error){toast(error);return;}
+      try{const output=exportMode(params)==='both'?params.fieldfile:params.outfile;const path=await invoke('resolve_field_output',{path:output,workflowPath:currentPath||null,backendPath:backendPath||null,jsonWorkDir:doc.Setup.JsonWorkDir??null});await fieldInspector.load(path);}catch(error){toast(`Could not open exported field: ${error.message||error}`);}
+    };
+    paint();
+  }
+
   function attachPropertyEvents(){
     bindLatticePickers();
+    attachExportEvents();
     $('properties-content').querySelectorAll('[data-lattice-ref-browse]').forEach(el=>el.onclick=async()=>{if(!invoke)return;try{const path=await invoke('choose_lattice_input',{kind:'la_name'});if(path)updateField(el.dataset.latticeRefBrowse,path);}catch(e){toast(String(e));}});
 
     $('properties-content').querySelectorAll('[data-value]').forEach(el=>el.addEventListener('change',()=>{
@@ -269,8 +349,12 @@ let viewerReady = Promise.resolve();
     $('properties-content').querySelectorAll('[data-browse]').forEach(el=>el.onclick=async()=>{if(!invoke){toast('File browsing is available in the installed desktop app.');return;}const path=await invoke(/outfile|output/i.test(el.dataset.browse)?'choose_output':'choose_geometry');if(path){updateField(el.dataset.browse,path);if(el.dataset.browse==='Setup.Geomfile')loadPreview(path);}});
   }
   function refreshProperties(){
+    $('properties-title').translate=true;$('properties-subtitle').translate=true;
     applyLatticeDraft=null;
     const host=$('properties-content');
+    const footer=document.querySelector('.properties-footer');if(footer?.lastChild)footer.lastChild.textContent=selected?.startsWith('field:')?' Field display settings; exported values stay unchanged':' Changes update the workflow JSON';
+    if(selected?.startsWith('field:')){fieldInspector.renderProperties(selected.slice(6));return;}
+
     if(selectedStep()?.Define_Lattice&&renderLatticeProperties(selectedStep().Define_Lattice))return;
     if(selected?.startsWith('file:')){const file=fileRecord(selected.slice(5));if(file){showFileProperties(file,supportingFiles().some(f=>f.id===file.id));return;}}
     if(selected==='geometry'){showFileProperties(fileRecord('source'));return;}
@@ -286,7 +370,7 @@ let viewerReady = Promise.resolve();
         section('Post process',Object.entries(doc.PostProcess).map(([k,v])=>field(k,v,`PostProcess.${k}`,updateField)).join(''));
     }else if(selectedStep()){
       const step=selectedStep(), commands=Object.entries(step);$('properties-title').textContent=titleFor(commands[0]?.[0]||'Operation');$('properties-subtitle').textContent=`Workflow step ${String(stepKeys().indexOf(selected)+1).padStart(2,'0')} · ${commands.map(([keyword])=>keyword).join(' / ')}`;
-      host.innerHTML=commands.map(([keyword,params])=>section(titleFor(keyword),parameterPresetControl(keyword,params)+Object.entries(params).map(([k,v])=>field(k,v,`${keyword}.${k}`,updateField)).join(''))).join('');
+      host.innerHTML=commands.map(([keyword,params])=>section(titleFor(keyword),parameterPresetControl(keyword,params)+(keyword==='Export'?renderExportProperties(params):Object.entries(params).map(([k,v])=>field(k,v,`${keyword}.${k}`,updateField)).join('')))).join('');
     }else{$('properties-title').textContent='Properties';$('properties-subtitle').textContent='Select a project or workflow step';host.innerHTML='<div class="empty-properties">Select project settings or a workflow step to view and edit its parameters.</div>';}
     attachPropertyEvents();
   }
@@ -307,7 +391,7 @@ let viewerReady = Promise.resolve();
   function showModal(html){modalCleanup?.();$('modal').innerHTML=html;$('modal-backdrop').classList.remove('hidden');$('modal').querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModal);$('modal-backdrop').onclick=e=>{if(e.target===$('modal-backdrop'))closeModal();};}
   function closeModal(){modalCleanup?.();$('modal-backdrop').classList.add('hidden');$('modal').innerHTML='';}
   function showAbout(){
-    showModal(`<div class="modal-head"><div><h2 id="about-title">About ArtGUI</h2><p>Artisan Workbench · Version 0.1.0</p></div><button class="icon-button" data-close aria-label="Close About">×</button></div>
+    showModal(`<div class="modal-head"><div><h2 id="about-title">About ArtGUI</h2><p>Artisan Workbench · Version ${esc(ARTGUI_VERSION)}</p></div><button class="icon-button" data-close aria-label="Close About">×</button></div>
       <div class="modal-body about-body"><p><strong>Developed by Yikun Wang</strong></p><p>ArtGUI is distributed under the MIT License.</p><p>Artisan-core is distributed under CC BY-NC-ND 3.0 for non-commercial applications, or refer to your license file.</p><p class="about-credit">Legacy icon credit: Freepik from www.flaticon.com</p>
       <div class="about-icon-credits"><p><strong>Operation and picker icons</strong><br><a href="https://lucide.dev/" target="_blank" rel="noopener noreferrer" data-about-link>Lucide</a> · Version 1.48.0 · ISC License<br>Feather-derived icons: MIT License · Cole Bemis</p><p>Bundled with ArtGUI for offline use. <a href="https://lucide.dev/license" target="_blank" rel="noopener noreferrer" data-about-link>License information ↗</a></p><details class="about-licenses"><summary>View full icon license notices</summary><pre>${esc(iconLicense)}</pre></details></div>
       <div class="about-links"><a href="https://bleemsys.com/Artisan.html" target="_blank" rel="noopener noreferrer" data-about-link>Artisan website ↗</a><a href="https://bleemsys.com/Artisan/docs/index.html" target="_blank" rel="noopener noreferrer" data-about-link>Online help manual ↗</a></div>
@@ -320,19 +404,19 @@ let viewerReady = Promise.resolve();
     modal.querySelector('[data-close]').focus();
   }
   function openJson(){if(applyLatticeDraft&&!applyLatticeDraft())return;showModal(`<div class="modal-head"><div><h2>Workflow JSON</h2><p>Artisan's original Setup / WorkFlow / PostProcess structure is preserved.</p></div><button class="icon-button" data-close>×</button></div><div class="modal-body"><textarea id="json-editor" class="json-editor" spellcheck="false">${esc(workflowJson().trimEnd())}</textarea></div><div class="modal-foot"><button class="button" data-close>Cancel</button><button class="button primary" id="apply-json">Apply JSON</button></div>`);$('apply-json').onclick=()=>{try{const next=parseNumericJson($('json-editor').value);const normalized=normalizeWorkflow(next);resetViewer();doc=normalized;selected=null;markDirty();refreshAll();closeModal();toast('Workflow JSON applied');}catch(e){toast(`Invalid workflow JSON: ${e.message}`);};};}
-  function refreshAll(){refreshTree();refreshTimeline();refreshProperties();$('project-name').textContent=currentPath?nameForPath(currentPath).replace(/\.json$/i,''):'Untitled workflow';updateGeometryLabel();}
-  function updateGeometryLabel(){const p=doc.Setup.Geomfile||'';$('geometry-label').textContent=p?nameForPath(p):'Load a model to preview your design';}
-  function guardUnsaved(){return !dirty||confirm('Discard unsaved changes?');}
-  function resetViewer(){fileIssues.clear();cancelPreview();viewer?.clear();loadedGeometryPath='';loadedPreviewMode='';loadedLayerId='source';$('preview-mode').disabled=true;$('mesh-info').textContent='No model loaded';$('viewport-empty').classList.remove('hidden');}
+  function refreshAll(){$('project-name').translate=!currentPath;refreshTree();refreshTimeline();refreshProperties();$('project-name').textContent=currentPath?nameForPath(currentPath).replace(/\.json$/i,''):'Untitled workflow';updateGeometryLabel();}
+  function updateGeometryLabel(){const p=doc.Setup.Geomfile||'';$('geometry-label').translate=!p;$('geometry-label').textContent=p?nameForPath(p):'Load a model to preview your design';}
+  function guardUnsaved(){return !dirty||confirm(t('Discard unsaved changes?'));}
+  function resetViewer(){fieldInspector.reset();fileIssues.clear();cancelPreview();viewer?.clear();loadedGeometryPath='';loadedPreviewMode='';loadedLayerId='source';$('preview-mode').disabled=true;$('mesh-info').textContent='No model loaded';$('viewport-empty').classList.remove('hidden');}
   function newProject(){if(runProgress.busy||!guardUnsaved())return;runProgress.reset();resetViewer();doc={Setup:clone(defaultSetup),WorkFlow:{},PostProcess:clone(defaultPost)};currentPath='';selected='setup';dirty=false;$('dirty-state').textContent='All changes saved';$('project-name').textContent='Untitled workflow';refreshAll();}
   async function openProject(){if(!guardUnsaved())return;if(invoke){try{const f=await invoke('open_workflow');if(!f)return;loadWorkflow(f.contents,f.path);}catch(e){toast(`Could not open workflow: ${e}`);}}else{$('fallback-file').click();}}
   function loadWorkflow(text,path){try{const parsed=parseNumericJson(text);if(!parsed.Setup||!parsed.WorkFlow)throw Error('Expected Setup and WorkFlow sections.');const nextDoc=normalizeWorkflow(parsed);resetViewer();doc=nextDoc;runProgress.reset();currentPath=path||'';selected='setup';dirty=false;$('dirty-state').textContent='All changes saved';refreshAll();if(doc.Setup.Type==='Geometry'&&doc.Setup.Geomfile)loadPreview(doc.Setup.Geomfile);toast('Workflow opened');}catch(e){toast(`Could not read workflow: ${e.message}`);}}
-  async function saveProject(){if(runProgress.busy)return false;if(applyLatticeDraft&&!applyLatticeDraft())return false;const contents=workflowJson().trimEnd()+'\n';if(invoke){try{const p=await invoke('save_workflow',{path:currentPath||null,contents});if(p){currentPath=p;dirty=false;$('dirty-state').textContent='All changes saved';$('project-name').textContent=nameForPath(p).replace(/\.json$/i,'');toast('Workflow saved');}return !!p;}catch(e){toast(`Could not save: ${e}`);return false;}}const blob=new Blob([contents],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nameForPath(currentPath||'Artisan_workflow.json');a.click();URL.revokeObjectURL(a.href);dirty=false;$('dirty-state').textContent='Downloaded JSON';return true;}
+  async function saveProject(){if(runProgress.busy)return false;const exportIssue=exportWorkflowError(doc.WorkFlow,exportDrafts);if(exportIssue){toast(exportIssue);return false;}if(applyLatticeDraft&&!applyLatticeDraft())return false;const contents=workflowJson().trimEnd()+'\n';if(invoke){try{const p=await invoke('save_workflow',{path:currentPath||null,contents});if(p){currentPath=p;dirty=false;$('dirty-state').textContent='All changes saved';$('project-name').textContent=nameForPath(p).replace(/\.json$/i,'');toast('Workflow saved');}return !!p;}catch(e){toast(`Could not save: ${e}`);return false;}}const blob=new Blob([contents],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nameForPath(currentPath||'Artisan_workflow.json');a.click();URL.revokeObjectURL(a.href);dirty=false;$('dirty-state').textContent='Downloaded JSON';return true;}
   function showSettings(){selected='setup';refreshTree();refreshProperties();}
   function editSetup(){showSettings();}
   function removeStep(){if(!selectedStep())return;const definition=selectedStep().Define_Lattice;if(definition&&latticeReferences(doc).some(r=>r.value===definition.la_name)){toast('This definition is still used. Update or remove its references first.');return;}delete doc.WorkFlow[selected];reindex();markDirty();refreshAll();}
   function moveStep(offset){if(!selectedStep())return;const keys=stepKeys(),i=keys.indexOf(selected),j=Math.max(0,Math.min(keys.length-1,i+offset));if(i===j)return;const values=keys.map(k=>doc.WorkFlow[k]);[values[i],values[j]]=[values[j],values[i]];doc.WorkFlow=Object.fromEntries(values.map((v,n)=>[String(n+1),v]));selected=String(j+1);markDirty();refreshAll();}
-  function clearWorkflow(){if(!stepKeys().length||!confirm('Remove every operation from this workflow?'))return;doc.WorkFlow={};selected=null;markDirty();refreshAll();}
+  function clearWorkflow(){if(!stepKeys().length||!confirm(t('Remove every operation from this workflow?')))return;doc.WorkFlow={};selected=null;markDirty();refreshAll();}
   function backendDescription(){return backendPath+(/\.py$/i.test(backendPath)?`\nPython: ${pythonPath||'System Python (python)'}`:'');}
   function selectBackend(path,python=pythonPath){
     backendPath=path;pythonPath=python;localStorage.setItem('artisan.backend',path);localStorage.setItem('artisan.python',python);
@@ -351,7 +435,57 @@ let viewerReady = Promise.resolve();
     }catch(e){toast(`Could not open backend picker: ${e}`);}
   }
   async function loadGeometry(){if(!invoke){toast('Geometry browsing is unavailable: the Tauri bridge did not load.');return;}try{const p=await invoke('choose_geometry');if(!p)return;doc.Setup.Type='Geometry';doc.Setup.Geomfile=p;markDirty();refreshProperties();updateGeometryLabel();await loadPreview(p);}catch(e){toast(`Could not open geometry picker: ${e}`);}}
-  async function loadResult(){if(!invoke){toast('Use the desktop app to load a result file.');return;}try{const path=await invoke('choose_geometry');if(path){const state=ensureFiles();state.geometry=state.geometry.filter(f=>f.id!=='result');state.geometry.push({id:'result',path});markDirty();await loadPreview(path,'quick','result');}}catch(e){toast(`Could not load result: ${e}`);}}
+  async function viewField(){await chooseExportedOutput('field');}
+  async function loadResult(){await chooseExportedOutput('mesh');}
+  async function browseResult(){
+    try{const path=await invoke('choose_result');if(path)await openResult(path);}
+    catch(error){toast(`Could not load result: ${error.message||error}`);}
+  }
+  async function openResult(path){
+    if(runProgress.busy||preparingGeneration){toast('Wait for Artisan to finish exporting.');return;}
+    if(isFieldFile(path)){await fieldInspector.load(path);return;}
+    const state=ensureFiles();state.geometry=state.geometry.filter(f=>f.id!=='result');state.geometry.push({id:'result',path});markDirty();await loadPreview(path,'quick','result');
+  }
+  async function chooseExportedOutput(kind){
+    if(!invoke){toast('Use the desktop app to open exported files.');return;}
+    if(runProgress.busy||preparingGeneration){toast('Wait for Artisan to finish exporting.');return;}
+    const isField=kind==='field',title=isField?'Exported fields':'Exported results';
+    const browse=isField?()=>fieldInspector.browse():browseResult;
+    const open=isField?path=>fieldInspector.load(path):openResult;
+    const outputs=stepKeys().flatMap(step=>{
+      const params=doc.WorkFlow[step].Export;
+      if(!params||typeof params!=='object'||Array.isArray(params))return [];
+      const mode=exportMode(params),output=isField&&mode==='both'?params.fieldfile:params.outfile;
+      if(typeof output!=='string'||!output.trim()||isFieldFile(output)!==isField)return [];
+      const supported=isField||/\.(stl|obj|ply|inp)$/i.test(output);
+      return [{step,output,supported}];
+    });
+    if(!outputs.length){await browse();return;}
+    showModal(`<div class="modal-head"><div><h2 id="exported-outputs-title">${title}</h2><p>${isField?'HDF5':'Mesh'} outputs from the current JSON workflow</p></div><button class="icon-button" data-close aria-label="Close ${title.toLowerCase()}">×</button></div><div class="modal-body"><div id="exported-output-list" class="exported-field-list">${outputs.map((output,index)=>`<button class="button exported-field-option" data-exported-output="${index}" aria-describedby="exported-output-status-${index}" disabled><strong>Step ${esc(output.step)} · ${esc(nameForPath(output.output))}</strong><span class="exported-field-path">${esc(output.output)}</span><span class="exported-field-state" id="exported-output-status-${index}" role="status">${output.supported?'Checking file…':'Preview unavailable · supported formats: STL, OBJ, PLY and INP.'}</span></button>`).join('')}</div>${isField?'':'<p class="field-help">The viewer supports STL, OBJ, PLY and INP meshes.</p>'}</div><div class="modal-foot"><button class="button" data-close>Cancel</button><button class="button primary" id="browse-exported-output">${isField?'Open another HDF5 file…':'Open another result file…'}</button></div>`);
+    const list=$('exported-output-list'),context={workflowPath:currentPath||null,backendPath:backendPath||null,jsonWorkDir:doc.Setup.JsonWorkDir??null};
+    const modal=$('modal');modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','exported-outputs-title');
+    const previousFocus=document.activeElement;
+    modalCleanup=()=>{for(const name of ['role','aria-modal','aria-labelledby'])modal.removeAttribute(name);modalCleanup=null;if(previousFocus?.isConnected)previousFocus.focus();};
+    $('browse-exported-output').onclick=()=>{closeModal();browse();};
+    $('browse-exported-output').focus();
+    await Promise.all(outputs.map(async(output,index)=>{
+      if(!output.supported)return;
+      const button=list.querySelector(`[data-exported-output="${index}"]`),status=button.querySelector('.exported-field-state');
+      try{
+        const path=await invoke('resolve_export_output',{path:output.output,...context});
+        if($('exported-output-list')!==list)return;
+        status.textContent='Ready to view';button.disabled=false;
+        button.onclick=async()=>{
+          closeModal();
+          try{await open(path);}catch(error){toast(`Could not open exported ${isField?'field':'result'}: ${error.message||error}`);}
+        };
+      }catch(error){
+        if($('exported-output-list')!==list)return;
+        status.textContent='Not available · generate this export or open another file.';
+        button.title=String(error.message||error);
+      }
+    }));
+  }
   function setPreviewProgress(visible, loaded=0, total=0, label='Preparing geometry…'){
     const host=$('preview-progress'),bar=$('preview-progress-bar');
     host.classList.toggle('hidden',!visible);
@@ -387,7 +521,6 @@ let viewerReady = Promise.resolve();
       const ext=path.split('.').pop().toLowerCase();let positions,totalTriangles,shownTriangles,center=null,bounds=null,inp=null;
       if(ext==='inp'){
         const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});if(request!==previewRequest)return;
-        if(file.size>128*1024*1024)throw Error('INP viewing is limited to 128 MB per file.');
         inp=await loadStlWorker(window.__TAURI__.core.convertFileSrc(file.path),'full',file.size,request,true);
         positions=inp.positions;center=inp.center;bounds=inp.bounds;totalTriangles=shownTriangles=positions.length/9;
       }else if(ext==='stl'&&mode==='quick'){
@@ -405,7 +538,6 @@ let viewerReady = Promise.resolve();
       }else if(ext==='stl'){
         const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});
         if(request!==previewRequest)return;
-        if(file.size>256*1024*1024&&!confirm(`This STL is ${formatBytes(file.size)}. Full detail may use several times that amount of working memory. Continue?`)){setPreviewProgress(false);$('mesh-info').textContent=(layerId==='source'?'Source · ':layerId==='result'?'Result · ':nameForPath(path)+' · ')+(loadedPreviewMode==='quick'?'Quick preview remains loaded · '+nameForPath(loadedGeometryPath):'Full-detail loading cancelled');return;}
         const url=window.__TAURI__.core.convertFileSrc(file.path);
         const result=await loadStlWorker(url,'full',file.size,request);
         if(request!==previewRequest)return;
@@ -466,19 +598,22 @@ let viewerReady = Promise.resolve();
   async function generate(){
     if(runProgress.busy||preparingGeneration)return;
     if(applyLatticeDraft&&!applyLatticeDraft())return;
+    const exportIssue=exportWorkflowError(doc.WorkFlow,exportDrafts);if(exportIssue){toast(exportIssue);return;}
     const latticeError=latticeWorkflowError();if(latticeError){toast(latticeError);return;}
     const domainError=sampleDomainError();if(domainError){selected='setup';refreshAll();toast(domainError);return;}
     if(!stepKeys().length){toast('Add at least one operation before generating.');return;}
     if(!invoke||!backendPath){toast('Choose ArtisanMain.exe or ArtisanMain.py with Backend… first.');return;}
     preparingGeneration=true;$('generate').disabled=true;
+    let fieldsReleased=false;
     try{if(!(await saveProject()))return;
+      fieldInspector.releaseForGeneration();fieldsReleased=true;
       await runProgress.run({contents:workflowJson(Object.fromEntries(Object.entries(doc).filter(([key])=>key!=='ArtGUI'))).trimEnd(),backendPath,pythonPath:pythonPath||null,workflowPath:currentPath},doc.WorkFlow);
-    }finally{preparingGeneration=false;$('generate').disabled=false;}
+    }finally{if(fieldsReleased)fieldInspector.resumeAfterGeneration();preparingGeneration=false;$('generate').disabled=false;}
   }
   async function init(){
     $('backend-indicator').textContent=backendPath?nameForPath(backendPath):'Not connected';if(backendPath)$('backend-indicator').title=backendDescription();
     $('help-button').onclick=showAbout;
-    $('new-project').onclick=newProject;$('open-project').onclick=openProject;$('save-project').onclick=saveProject;$('json-button').onclick=openJson;$('add-operation-bottom').onclick=showPicker;$('reset-properties').onclick=editSetup;$('remove-step').onclick=removeStep;$('move-up').onclick=()=>moveStep(-1);$('move-down').onclick=()=>moveStep(1);$('clear-workflow').onclick=clearWorkflow;$('choose-backend').onclick=chooseBackend;$('load-geometry').onclick=$('empty-load').onclick=loadGeometry;$('fit-view').onclick=()=>viewer?.fit();$('view-cube').onclick=()=>viewer?.reset();$('load-result').onclick=loadResult;$('preview-mode').onclick=()=>{if(loadedGeometryPath)loadPreview(loadedGeometryPath,loadedPreviewMode==='quick'?'full':'quick',loadedLayerId);};$('cancel-preview').onclick=cancelPreview;$('generate').onclick=generate;
+    $('new-project').onclick=newProject;$('open-project').onclick=openProject;$('save-project').onclick=saveProject;$('json-button').onclick=openJson;$('add-operation-bottom').onclick=showPicker;$('reset-properties').onclick=editSetup;$('remove-step').onclick=removeStep;$('move-up').onclick=()=>moveStep(-1);$('move-down').onclick=()=>moveStep(1);$('clear-workflow').onclick=clearWorkflow;$('choose-backend').onclick=chooseBackend;$('load-geometry').onclick=$('empty-load').onclick=loadGeometry;$('fit-view').onclick=()=>viewer?.fit();$('view-cube').onclick=()=>viewer?.reset();$('load-result').onclick=loadResult;$('view-generated-field').onclick=viewField;$('preview-mode').onclick=()=>{if(loadedGeometryPath)loadPreview(loadedGeometryPath,loadedPreviewMode==='quick'?'full':'quick',loadedLayerId);};$('cancel-preview').onclick=cancelPreview;$('generate').onclick=generate;
     document.body.insertAdjacentHTML('beforeend','<input id="fallback-file" type="file" accept=".json,application/json" hidden>');$('fallback-file').onchange=e=>{const f=e.target.files[0];if(f){const r=new FileReader();r.onload=()=>loadWorkflow(r.result,f.name);r.readAsText(f);}};
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();}if(e.key==='Escape')closeModal();});refreshAll();selected='setup';refreshTree();refreshProperties();
     viewerReady=(async()=>{
@@ -490,6 +625,7 @@ let viewerReady = Promise.resolve();
           onLayerSelected:(id,layer)=>{if(!layer)return;loadedLayerId=id;loadedGeometryPath=layer.path;loadedPreviewMode=layer.mode;updatePreviewMode(layer.mode,layer.total,layer.shown,/\.stl$/i.test(layer.path));$('mesh-info').textContent=`${id==='source'?'Source':id==='result'?'Result':nameForPath(layer.path)} · ${layer.mode==='quick'?'Quick preview':'Full detail'} · ${layer.metadata?fileStats(layer):layer.shown.toLocaleString()+' of '+layer.total.toLocaleString()+' triangles'}`;refreshTree();},
           exportImage:invoke?async blob=>{const path=await invoke('save_view_image',{pngData:Array.from(new Uint8Array(await blob.arrayBuffer()))});if(path)toast('Viewport image saved.');}:null
         });
+        fieldInspector.attachViewer();
       }catch(e){
         console.error('ArtGUI 3D viewer startup failed:',e);
         $('mesh-info').textContent='3D preview could not start. Workflow editing is available.';

@@ -43,8 +43,8 @@ Create a custom unit cell
 
 Choose the reference domain to match how the cell will be used. **Hex** uses
 the unit cube. **Tet** uses the standard tetrahedron: coordinates are
-non-negative and X + Y + Z must not exceed 1. **Quad** is for an appropriate
-surface-cell workflow. A domain selection does not convert an incompatible
+non-negative and X + Y + Z must not exceed 1. **Quad** and **Triangle** are for quadrilateral and triangular
+surface-cell workflows respectively. A domain selection does not convert an incompatible
 mesh into a compatible one.
 
 Create a mesh or conformal lattice
@@ -62,7 +62,7 @@ Create a mesh or conformal lattice
 
 Match a conformal unit cell's reference domain to its mesh: Hex and Tet cells
 require the corresponding volume-mesh arrangement; surface workflows may
-use Quad cells. A conformal definition refers to a separate unit cell, not
+use Quad or Triangle cells matched to the surface mesh. A conformal definition refers to a separate unit cell, not
 to itself or another mesh/conformal lattice definition.
 
 .. important::

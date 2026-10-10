@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Build and edit workflows &#8212; Artisan 0.2.16 documentation</title>
+    <title>Build and edit workflows &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -334,8 +334,11 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-operation">Add an operation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-parameters-and-presets">Edit parameters and presets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-mesh-and-field-data">Export mesh and field data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-hdf5-fields">Inspect HDF5 fields</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reorder-or-remove-steps">Reorder or remove steps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-json-editor">Use the JSON editor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-what-to-export">Choose what to export</a></li>
 </ul>
             </nav>
         </div>
@@ -376,7 +379,13 @@ step at the end is a common final action in a modelling workflow.</span><a class
 <p><strong>Common</strong> contains frequently used operations. <strong>Recent</strong> lists operations
 you have added, while <strong>Favorites</strong> contains those marked with a star.
 <strong>All operations</strong> provides the full catalogue and a category filter. Search
-looks across the catalogue rather than only the current tab.</p>
+looks across the catalogue rather than only the current tab, and supports
+English and Chinese names and descriptions as well as command keywords.</p>
+<p>The updated catalogue includes polycube hex meshing, geometry-domain rebuilding,
+field inversion, geometry distance fields and mesh smoothing. Some commands use
+a clearly labelled starter template when no full example is available; review
+its inputs and preceding steps before running. Available operations must also
+be supported by your selected Artisan backend.</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id2">
 <caption><span class="caption-text">Operation categories</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
@@ -438,6 +447,134 @@ their types through JSON editing, saving and reordering. Integer fields reject
 fractional values. If a parameter genuinely needs a different numeric type,
 change it explicitly in <strong>JSON</strong> and check the operation’s requirements.</p>
 </section>
+<section id="export-mesh-and-field-data">
+<h2>Export mesh and field data<a class="headerlink" href="#export-mesh-and-field-data" title="Link to this heading">#</a></h2>
+<p>Select <strong>Export model</strong> and choose an <strong>Output mode</strong>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode</p></th>
+<th class="head"><p>Artisan parameters</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mesh only</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">outfile</span></code> names the mesh file. Existing outfile-only examples remain unchanged when opened or saved.</p></td>
+</tr>
+<tr class="row-odd"><td><p>HDF5 field only</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">outfile</span></code> ends in <code class="docutils literal notranslate"><span class="pre">.h5</span></code> or <code class="docutils literal notranslate"><span class="pre">.hdf5</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Mesh plus HDF5 field</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">outfile</span></code> names the mesh; <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> names the additional <code class="docutils literal notranslate"><span class="pre">.h5</span></code> or <code class="docutils literal notranslate"><span class="pre">.hdf5</span></code> file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For field output, enter <strong>Grid field IDs</strong> as a JSON array, such as
+<code class="docutils literal notranslate"><span class="pre">[&quot;SizeField&quot;]</span></code>. These are IDs created earlier in the workflow, for example
+by <code class="docutils literal notranslate"><span class="pre">OP_Fit_GridField</span></code>. The current lattice field is included automatically
+when present; an empty list adds no named fields. Do not include <code class="docutils literal notranslate"><span class="pre">lattice</span></code>
+in the list: that name is reserved for the current lattice field.</p>
+<p>The resulting Export parameters for combined output are:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./Test_results/part.stl&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;fieldfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;./Test_results/part.h5&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;GridFieldIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;SizeField&quot;</span><span class="p">]</span>
+<span class="p">}}</span>
+</pre></div>
+</div>
+<p>Changing to <strong>Mesh only</strong> removes <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> and <code class="docutils literal notranslate"><span class="pre">GridFieldIDs</span></code>. Changing
+between field modes retains the selected IDs and adjusts the output extension.
+The file buttons open Save dialogs filtered for mesh or HDF5 output. Paths
+follow the workflow’s working-directory setting, just as other Artisan paths.</p>
+<p>ArtGUI reports invalid filenames, duplicate or reserved field IDs, malformed
+ID arrays and incompatible output combinations before saving or generation.
+Artisan checks that the selected fields actually exist at the export step.</p>
+<p>Use <strong>View exported field…</strong> in Export properties to open the existing output.
+<strong>View field…</strong> in the <strong>3D Workspace</strong>, beside <strong>Load result</strong>, is always
+visible. It lists HDF5 outputs from the current JSON workflow, with the Export
+step number and filename. Both HDF5-only <code class="docutils literal notranslate"><span class="pre">outfile</span></code> and combined-output
+<code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> paths are included. Existing files are ready to view; missing files
+are marked unavailable until generated. The list is refreshed whenever the
+button is clicked, so an existing output can be viewed without rerunning Artisan.
+Choose <strong>Open another HDF5 file…</strong> to browse for another snapshot. With no HDF5
+exports in the workflow, <strong>View field…</strong> opens the HDF5 file picker directly.
+<strong>Load result</strong> uses the same chooser for mesh <code class="docutils literal notranslate"><span class="pre">outfile</span></code> exports from the
+current JSON, including combined mesh/field Export steps. Rows show the step
+number and filename. Missing files are unavailable until generated. STL, OBJ,
+PLY and INP outputs can be previewed; other export formats are listed with a
+preview-unavailable message. Choosing an available result loads it in the
+3D Workspace and records it under Geometry. <strong>Open another result file…</strong>
+opens the file picker, which also accepts HDF5 fields. With no mesh exports,
+<strong>Load result</strong> opens the picker directly. Both choosers refresh on each click.</p>
+<p>See <a class="reference internal" href="../FieldContainer.html#gridfieldcontainer"><span class="std std-ref">Grid Field Container</span></a> for the field-file layout and readback parameters.</p>
+</section>
+<section id="inspect-hdf5-fields">
+<h2>Inspect HDF5 fields<a class="headerlink" href="#inspect-hdf5-fields" title="Link to this heading">#</a></h2>
+<p>Choose <strong>View field…</strong> to select a current-workflow HDF5 output or browse for
+another completed Artisan <code class="docutils literal notranslate"><span class="pre">.h5</span></code> / <code class="docutils literal notranslate"><span class="pre">.hdf5</span></code> snapshot. <strong>Fields → Add</strong> opens
+the HDF5 file picker directly. <strong>Load result → Open another result file…</strong>
+also accepts HDF5 fields. Select a field in the project tree to open
+its inspector. Load source/result meshes to overlay the field at its original
+model position. A saved <code class="docutils literal notranslate"><span class="pre">grid_to_model</span></code> affine transform aligns local grids.</p>
+<ul class="simple">
+<li><p><strong>X / Y / Z</strong> selects the slice direction in stored grid coordinates. The
+position slider or number snaps to the nearest original grid plane.</p></li>
+<li><p><strong>Colour</strong> selects Viridis or blue/white/red and controls the range. Lock
+the range to compare slices; <strong>Use saved field range</strong> covers all blocks.
+Unlocking uses finite values in the displayed slice. NaN/infinity are gaps.</p></li>
+<li><p><strong>Display</strong> controls field/mesh visibility and opacity. Slice quality limits
+each preview edge to 128, 256 or 512 samples.</p></li>
+<li><p><strong>Probe</strong> in the viewport toolbar reads a nearest original grid point and
+reports its indices, coordinates, stored precision and value. Local grids
+also report model coordinates. <strong>Copy value</strong> copies the original value.</p></li>
+<li><p><strong>Partition block</strong> selects one exported block when there are several.
+Exported padding is included; this release does not merge overlapping blocks.</p></li>
+</ul>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/field-viewer.jpg"><img alt="ArtGUI showing an exported SizeField slice over a mesh, with a colour legend, exact stored-value probe and field inspector." src="../_images/field-viewer.jpg" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Inspect a fitted field in model coordinates and probe an original value.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The inspector reports dimensions, precision, available units, saved finite
+range and nonfinite counts. Units are unspecified when absent from the file;
+viewer unit labels do not rescale coordinates.</p>
+<p>ArtGUI reads metadata, one block’s compact axes and bounded strips of the
+requested plane. It keeps the full values in the file. Preview slices may be
+sampled on large grids; probes always read original values. A billion-value
+grid therefore does not require a billion-value browser allocation. Changing
+the slice cancels older requests between native reads.</p>
+<p>This release supports completed <code class="docutils literal notranslate"><span class="pre">Artisan.GridField</span></code> version 1 rectilinear
+snapshots, including nonuniform strictly increasing axes, with float32/float64
+point values, <code class="docutils literal notranslate"><span class="pre">xyz</span></code> axes and <code class="docutils literal notranslate"><span class="pre">C;z-fastest</span></code> ordering. Each axis needs at least
+two points. Axis vectors may total up to two million coordinates per block;
+compressed chunks above 32 MiB are rejected. Up to eight files may be open.
+<strong>Remove field file</strong> closes a file. Structured/deformed grid display,
+combined partition views, isosurfaces and volume rendering need later updates.</p>
+<p>Saving records the field-file path and selected field/block under
+<code class="docutils literal notranslate"><span class="pre">ArtGUI.fields</span></code>. Select the saved reference after reopening to inspect it.
+Slice position, palette, opacity and probe results are session settings.
+ArtGUI references are omitted from the JSON sent to Artisan. New/Open and
+Apply JSON close field handles and clear the display.</p>
+<p>After saving successfully, <strong>Generate</strong> unloads displayed fields and cancels
+pending reads. ArtGUI waits for native HDF5 handles to close before starting
+Artisan so it can overwrite exported files. Fields stay closed throughout the
+run, including cancellation or failure. Saved references remain in the tree;
+select a reference or use <strong>View field…</strong> after the run to reopen the snapshot.</p>
+<p>Windows development builds use the native Rust HDF5 reader and bundle its DLL
+dependencies beside ArtGUI. <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">run</span> <span class="pre">dev</span></code> and <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">run</span> <span class="pre">build</span></code> automatically
+prepare them and pass <code class="docutils literal notranslate"><span class="pre">HDF5_DIR</span></code> to Tauri. They detect the active Conda
+environment or a standard Anaconda installation; an explicit <code class="docutils literal notranslate"><span class="pre">HDF5_DIR</span></code>
+overrides detection. <code class="docutils literal notranslate"><span class="pre">dev-windows.bat</span></code> and <code class="docutils literal notranslate"><span class="pre">build-windows.bat</span></code> invoke those
+same commands. Activating Conda alone does not set <code class="docutils literal notranslate"><span class="pre">HDF5_DIR</span></code>. Python is
+used only by the build helper; delivered users need no Python, Anaconda or
+separate HDF5 installation. Rebuild/restart ArtGUI for this update.</p>
+</section>
 <section id="reorder-or-remove-steps">
 <h2>Reorder or remove steps<a class="headerlink" href="#reorder-or-remove-steps" title="Link to this heading">#</a></h2>
 <p>Select a card and choose <strong>Up</strong> or <strong>Down</strong> to move it. <strong>Remove step</strong> removes
@@ -475,6 +612,32 @@ problem.</p>
 It does not confirm that the files exist or that Artisan can execute every
 operation. Inspect the run log after generation.</p>
 </div>
+</section>
+<section id="choose-what-to-export">
+<h2>Choose what to export<a class="headerlink" href="#choose-what-to-export" title="Link to this heading">#</a></h2>
+<p>Select an <strong>Export model</strong> card and choose <strong>Output mode</strong>:</p>
+<ul class="simple">
+<li><p><strong>Mesh only</strong>: write a mesh, such as STL, to <code class="docutils literal notranslate"><span class="pre">outfile</span></code>.</p></li>
+<li><p><strong>HDF5 field only</strong>: write sampled field values to an <code class="docutils literal notranslate"><span class="pre">.h5</span></code> or <code class="docutils literal notranslate"><span class="pre">.hdf5</span></code>
+<code class="docutils literal notranslate"><span class="pre">outfile</span></code>.</p></li>
+<li><p><strong>Mesh plus HDF5 field</strong>: write a mesh to <code class="docutils literal notranslate"><span class="pre">outfile</span></code> and a field snapshot
+to <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code>.</p></li>
+</ul>
+<p>To include named grid fields, enter their existing IDs in <strong>Grid field IDs</strong>,
+for example <code class="docutils literal notranslate"><span class="pre">[&quot;SizeField&quot;]</span></code>. Create those fields before Export. The current
+lattice field is included automatically when present; <code class="docutils literal notranslate"><span class="pre">[]</span></code> adds no named fields.
+Choosing Mesh only removes <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> and <code class="docutils literal notranslate"><span class="pre">GridFieldIDs</span></code>. Check output paths
+after changing modes and save before generation.</p>
+<p>Use <strong>Load result</strong> for a mesh and <strong>View field…</strong> for an HDF5 snapshot.
+Supported exports and previews are different: not every exported mesh format
+can be shown in ArtGUI. See <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a>.</p>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/export-options.png"><img alt="ArtGUI 0.1.1 Export properties with mesh, HDF5 field and combined output choices." src="../_images/export-options.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Choose the output mode on the Export card before setting the output paths.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 
@@ -525,8 +688,11 @@ operation. Inspect the run log after generation.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-operation">Add an operation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edit-parameters-and-presets">Edit parameters and presets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-mesh-and-field-data">Export mesh and field data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-hdf5-fields">Inspect HDF5 fields</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reorder-or-remove-steps">Reorder or remove steps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-json-editor">Use the JSON editor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-what-to-export">Choose what to export</a></li>
 </ul>
   </nav></div>
 

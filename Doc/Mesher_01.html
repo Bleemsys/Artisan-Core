@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Meshing 01 &#8212; Artisan 0.2.16 documentation</title>
+    <title>Meshing 01 &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -172,7 +172,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -698,7 +708,7 @@ document.write(`
 </section>
 <section id="surface-remesh">
 <h2>Surface Remesh<a class="headerlink" href="#surface-remesh" title="Link to this heading">#</a></h2>
-<p>The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SurfaceReMesh</span></code> does the combined functions. User may find the example of Engine bracket remeshing at <code class="code docutils literal notranslate"><span class="pre">Remesh\EngineBracket_Infill_LR.json</span></code>.</p>
+<p>The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_SurfaceReMesh</span></code> utilizes the MMG surface remesher to regenerate the triangles of an existing surface mesh. User may load a geometry or a mesh from the mesh container, and export the resultant mesh to a file or store it in the mesh container. The remeshing process works directly on the surface triangles and does not require a field grid. User may find the example of Engine bracket remeshing at <code class="code docutils literal notranslate"><span class="pre">Remesh\EngineBracket_Infill_LR.json</span></code>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;Setup&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;Type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj/EngineBracket.stl&quot;</span><span class="p">,</span>
 <span class="w">           </span><span class="nt">&quot;Rot&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span>
@@ -709,10 +719,17 @@ document.write(`
 <span class="w">           </span><span class="p">},</span>
 <span class="nt">&quot;WorkFlow&quot;</span><span class="p">:{</span>
 <span class="w">   </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Gen_SurfaceReMesh&quot;</span><span class="p">:{</span>
-<span class="w">         </span><span class="nt">&quot;size&quot;</span><span class="p">:[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.0</span><span class="p">],</span>
 <span class="w">         </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="s2">&quot;.//sample-obj//EngineBracket.stl&quot;</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;ShortEdgeThreshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">         </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl&quot;</span><span class="p">}</span>
+<span class="w">         </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;hsiz&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;hmin&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;hmax&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;hausd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;hgrad&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">45.0</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;detect_sharp_edges&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;optimize_only&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;verbose&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
 
 <span class="w">   </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:{</span>
@@ -745,47 +762,51 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">size</span></code></p></td>
-<td><p>the average size of the mesh;</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">mesh_file</span></code></p></td>
-<td><p>read in mesh file, if none, i.e. <code class="code docutils literal notranslate"><span class="pre">&quot;mesh_file&quot;:&quot;&quot;</span></code>, it will take the <code class="code docutils literal notranslate"><span class="pre">Geomfile`</span></code> in the setup section;</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">ShortEdgeThreshold</span></code></p></td>
-<td><p>the threshold of short edge, any edges shorter than this shall be collapsed;</p></td>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">mesh_file</span></code></p></td>
+<td><p>the input triangular surface mesh file or mesh ID in the mesh container; if <code class="code docutils literal notranslate"><span class="pre">&quot;mesh_file&quot;:&quot;&quot;</span></code>, it will take the <code class="code docutils literal notranslate"><span class="pre">Geomfile</span></code> in the setup section;</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">export_mesh</span></code></p></td>
-<td><p>the resultant mesh</p></td>
+<td><p>the resultant mesh file or mesh ID in the mesh container;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">hsiz</span></code></p></td>
+<td><p>the constant target edge size; <code class="code docutils literal notranslate"><span class="pre">0.0</span></code> disables the constant size prescription;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">hmin</span></code></p></td>
+<td><p>the minimum target edge size; <code class="code docutils literal notranslate"><span class="pre">0.0</span></code> allows MMG to choose it automatically;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">hmax</span></code></p></td>
+<td><p>the maximum target edge size; <code class="code docutils literal notranslate"><span class="pre">0.0</span></code> allows MMG to choose it automatically; a positive value shall not be smaller than <code class="code docutils literal notranslate"><span class="pre">hmin</span></code>;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>the positive tolerance for approximating the surface geometry; a smaller value provides a closer approximation and usually generates more triangles; the default is <code class="code docutils literal notranslate"><span class="pre">0.01</span></code>;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">hgrad</span></code></p></td>
+<td><p>the gradation of mesh size; values closer to <code class="code docutils literal notranslate"><span class="pre">1.0</span></code> give smoother size transitions, while larger values allow faster changes; the value shall be greater than <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>, or <code class="code docutils literal notranslate"><span class="pre">-1.0</span></code> to disable gradation; the default is <code class="code docutils literal notranslate"><span class="pre">1.3</span></code>;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">angle</span></code></p></td>
+<td><p>the angle threshold for detecting sharp edges, in degrees from <code class="code docutils literal notranslate"><span class="pre">0.0</span></code> to <code class="code docutils literal notranslate"><span class="pre">180.0</span></code>; a smaller value generally detects more sharp edges; the default is <code class="code docutils literal notranslate"><span class="pre">45.0</span></code>;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">detect_sharp_edges</span></code></p></td>
+<td><p>enable automatic detection of sharp edges and corners; the default is <code class="code docutils literal notranslate"><span class="pre">true</span></code>;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">optimize_only</span></code></p></td>
+<td><p>improve mesh quality while keeping the initial mesh size distribution; omit <code class="code docutils literal notranslate"><span class="pre">hsiz</span></code>, <code class="code docutils literal notranslate"><span class="pre">hmin</span></code>, <code class="code docutils literal notranslate"><span class="pre">hmax</span></code> and the legacy size parameters in this mode; the default is <code class="code docutils literal notranslate"><span class="pre">false</span></code>;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">verbose</span></code></p></td>
+<td><p>the level of MMG diagnostic output, from <code class="code docutils literal notranslate"><span class="pre">-1</span></code> for quiet output to <code class="code docutils literal notranslate"><span class="pre">10</span></code> for detailed output; the default is <code class="code docutils literal notranslate"><span class="pre">-1</span></code>;</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>the legacy size parameter, accepted as a scalar or three lengths; the maximum value supplies <code class="code docutils literal notranslate"><span class="pre">hsiz</span></code>, unless <code class="code docutils literal notranslate"><span class="pre">hsiz</span></code> is provided explicitly;</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">ShortEdgeThreshold</span></code></p></td>
+<td><p>the legacy parameter that now supplies <code class="code docutils literal notranslate"><span class="pre">hmin</span></code>, unless <code class="code docutils literal notranslate"><span class="pre">hmin</span></code> is provided explicitly; it no longer merges nearby vertices.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>The parameters <code class="code docutils literal notranslate"><span class="pre">hsiz</span></code>, <code class="code docutils literal notranslate"><span class="pre">hmin</span></code>, <code class="code docutils literal notranslate"><span class="pre">hmax</span></code> and <code class="code docutils literal notranslate"><span class="pre">hausd</span></code> use the same units as the input mesh coordinates. In this example, the target edge size is <code class="code docutils literal notranslate"><span class="pre">3.0</span></code> and the minimum target size is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>. The sizing parameters prescribe target sizes; curved regions and sharp features may require smaller elements.</p>
 <img alt="_images/EngineBracket_SurfaceRemsh.png" src="_images/EngineBracket_SurfaceRemsh.png" />
-<p>Please note, this is not the universal remesher, but a simple remeshing function for a mesh with averaging size.</p>
-<p>The input mesh geometry may contain sharp or non-smooth features. To improve surface quality, the mesh can be smoothed and remeshed using the keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_Smoothing</span></code>. This process is controlled by the following parameters:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Details</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code></p></td>
-<td><p>The input watertight triangular surface mesh.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
-<td><p>The output triangular surface mesh after smoothing.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">feature_size</span></code></p></td>
-<td><p>The characteristic size of geometric features to be smoothed. Smaller features below this size will be removed during smoothing.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>Please note, the function supports open and closed triangular surface meshes with consistently oriented, nondegenerate triangles. The surface geometry is reconstructed from the input mesh, rather than projected onto the original implicit field. The remeshing process may change the number and indices of vertices and triangles; associated data fields are not transferred.</p>
 </section>
 <section id="stacked-layer-mesher">
 <h2>Stacked Layer Mesher<a class="headerlink" href="#stacked-layer-mesher" title="Link to this heading">#</a></h2>

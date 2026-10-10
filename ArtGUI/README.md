@@ -1,76 +1,242 @@
-# ArtGUI
+# ArtGUI Tauri Workbench
 
-Desktop workflow editor and 3D viewer for Artisan, built with Tauri, Rust, JavaScript and Three.js. This folder contains GUI source, required images/icons, dependency manifests and lockfiles. Installed libraries and build outputs are deliberately excluded.
+Independent desktop GUI prototype. The frontend is local HTML/CSS/JavaScript hosted in a Tauri window. Its WebGL geometry viewer uses a locally bundled Three.js build; no network connection or VTK install is needed at runtime.
 
-## Run from source on Windows
+## Features in this build
 
-Install Node.js with npm, Rust/Cargo (MSVC toolchain), Microsoft C++ Build Tools with the Windows SDK, and the Microsoft Edge WebView2 runtime. Then, from this folder:
+- Project, geometry, ordered operations, timeline, and parameter panels based on the selected ArtGUI layout.
+- Loads 65 operation keywords and 371 distinct parameter presets generated from 29 source RST manuals under `Doc` and 121 JSON examples under `Src/Test_json`. The properties panel offers an Example preset selector; choosing one replaces that operation’s parameters with the selected source example. Check example file paths before generating.
+- Reads, edits, and writes Artisan's `Setup`, numbered `WorkFlow`, and `PostProcess` JSON sections. Numeric types are preserved: `5.0` and `0.0` remain floats, while `5` and `0` remain integers. This includes presets, imported workflows, nested arrays, form edits, JSON edits, cloning, and reordering. Integer fields reject fractional values; change a field’s type explicitly through the JSON editor when needed.
+- Native workflow and geometry file dialogs; a custom JSON editor; operation search; reordering; backend selection; and Artisan generation.
+- Runs the packaged `ArtisanMain.exe -f <workflow.json>` locally. Package resources are copied into the Tauri application's resource directory.
+- WebGL 3D preview with orbit, zoom, and fit-to-model controls. Binary and ASCII STL files are scanned facet-by-facet in Rust; the reduced Quick Preview is written to a small local cache file before it reaches the WebView. Large STLs open in Quick Preview (up to 120,000 triangles sampled across the file); Full Detail is available on demand without application-imposed file-size or triangle-count limits. Actual capacity depends on available memory, browser buffer capacity and graphics resources. ASCII STL, OBJ, and ASCII PLY remain supported, though large text meshes can take longer to parse. The reduced preview is display-only; Artisan generation uses the original geometry path.
 
-```powershell
-npm ci
+## Interface language
+
+Use the top-right **中文 / English** button to switch between English and Simplified
+Chinese. The preference is saved locally, with English as the default. Switching
+updates the current interface in place without resetting the workflow, unsaved
+parameter edits, viewer, or active run. The operation picker searches both English
+and Chinese names and descriptions; Artisan command keywords stay unchanged.
+
+Translation catalogs live in `ui/locales/zh-CN.js` and
+`ui/locales/operations-zh-CN.js`. English UI strings are fallback keys. `ui/i18n.js`
+localizes display text and accessibility labels, retaining English sources for
+switching back and observing newly rendered controls. Mark user-defined text with
+`translate="no"`; form values, JSON, file paths, technical identifiers and engine
+logs are not translated. Options retain their original values. Native system file
+dialogs follow the operating system language, and untranslated messages fall back
+to English. Extend the catalogs when adding UI copy.
+
+## ArtGUI version
+
+The `version` field in `package.json` is the single source of truth for the
+ArtGUI release. It is separate from the Artisan engine and project format versions.
+
+Edit that field and run `npm run sync-version`, or use
+`npm version patch --no-git-tag-version` (the npm version hook synchronizes it).
+Commit the updated manifests, lockfiles and `ui/version.js`.
+
+Tauri reads `../package.json` directly for the application/installer version.
+The synchronizer updates the Rust package, both lockfiles, and the About dialog's
+`ARTGUI_VERSION` export. It runs before `npm run dev` and `npm run build`, and in
+Tauri development/build hooks. For a browser-only preview or direct Cargo build,
+run `npm run sync-version` first. `npm run check-version` checks for stale
+generated values without changing files. Do not edit generated values manually.
+
+The application executable is `src-tauri/target/release/ArtGUI.exe`. Both Cargo and Tauri use this binary name; the installer packages `ArtGUI.exe`.
+
+## Build on Windows
+
+These instructions apply to a fresh GitHub checkout. In the full Artisan repository the application is under `Src/ArtGUI`; in an ArtGUI-only checkout it is the repository root. Run the commands from the directory containing `package.json`. All command examples below use **Command Prompt (CMD)**. Replace example paths with your own paths.
+
+### Build prerequisites
+
+Install the following on the build computer:
+
+- [Node.js](https://nodejs.org/) LTS with npm.
+- [Rust](https://www.rust-lang.org/tools/install) with the **x86_64-pc-windows-msvc** host/toolchain.
+- Microsoft C++ Build Tools with **Desktop development with C++**, including the Windows SDK, and the WebView2 runtime. Follow the [Tauri Windows prerequisites](https://v2.tauri.app/start/prerequisites/#windows).
+- [Python 3](https://www.python.org/downloads/windows/) for `scripts/prepare_hdf5.py`. This helper uses only the standard library; ArtGUI compilation does not require h5py or Artisan's Python packages.
+- The standalone **x64 MSVC HDF5 shared-library development package** described below.
+
+Check that the command-line tools are available in a new CMD window:
+
+```bat
+node --version
+npm --version
+rustc --version
+cargo --version
+python --version
+```
+
+Python is currently a build-time requirement even when Artisan will be delivered as a Nuitka executable. Anaconda is optional. Users of the installed, fully packaged application do not need these build tools, Python, Anaconda or a separate HDF5 installation.
+
+### Download and install HDF5
+
+Use the official [HDF5 1.14.6 release](https://github.com/HDFGroup/hdf5/releases/tag/hdf5_1.14.6). Under **Assets**, download one of:
+
+- **`hdf5-1.14.6-win-vs2022_cl.msi`**: run the installer and record the installation directory.
+- **`hdf5-1.14.6-win-vs2022_cl.zip`**: extract the precompiled SDK to a directory of your choice.
+
+Choose the Microsoft C/MSVC (`cl`) Windows package. The source-code archives, Intel compiler packages and a runtime DLL by itself are not the SDK used by this guide. HDF5 1.14.6 matches the native version used by the current `hdf5-metno` 0.14.1 integration; validate other native versions before using them.
+
+Locate the SDK directory with this layout; it may be inside another directory after extraction:
+
+```text
+<HDF5 SDK root>\
+  include\hdf5.h
+  include\H5pubconf.h
+  lib\hdf5.lib
+  bin\hdf5.dll
+```
+
+The current ArtGUI build uses the shared-library import library **`hdf5.lib`**. A static-only package containing `libhdf5.lib` does not satisfy this configuration. Headers, import library and runtime DLLs must come from the same x64 installation. Keep all supplied dependency DLLs in `bin`; copying only `hdf5.dll` can leave required dependencies missing. The Rust HDF5 bindings are downloaded by Cargo from `Cargo.toml`, while this native SDK must be installed separately.
+
+### Configure HDF5 in CMD
+
+Enter the application directory and set the SDK root. `C:\Libraries\HDF5\1.14.6` is an example location, not an assumed installer default:
+
+```bat
+cd /d "C:\path\to\ArtGUI"
+set "HDF5_DIR=C:\Libraries\HDF5\1.14.6"
+dir "%HDF5_DIR%\include\hdf5.h"
+dir "%HDF5_DIR%\include\H5pubconf.h"
+dir "%HDF5_DIR%\lib\hdf5.lib"
+dir "%HDF5_DIR%\bin\hdf5.dll"
+```
+
+Each `dir` command should find its file. Set `HDF5_DIR` to the directory above `include`, `lib` and `bin`. Paths containing spaces work with the quoted `set "NAME=value"` syntax; the quotes are not part of the value. Continue in the same CMD window. Repeat the `set` commands in a new window, or save the variables in Windows user environment settings and open a new CMD window.
+
+If `python --version` cannot find Python, or you want a specific interpreter, set its full executable path:
+
+```bat
+set "ARTGUI_BUILD_PYTHON=C:\path\to\python.exe"
+```
+
+With a standalone SDK and no override, the helper uses `python` on PATH. `ARTGUI_BUILD_PYTHON` affects the build helper, not the Artisan backend selected in the GUI.
+
+An existing Anaconda installation is an alternative when it contains the complete development files. With no explicit `HDF5_DIR`, the launcher checks the active Conda environment and standard Anaconda locations. You can select an activated environment explicitly with `set "HDF5_DIR=%CONDA_PREFIX%"`; its files must exist under `Library\include`, `Library\lib` and `Library\bin`. The launcher also accepts that `Library` directory as the SDK root. Installing only the Python h5py package does not guarantee the required headers and import library are present.
+
+### Develop or build the installer
+
+Install frontend dependencies once, then launch development:
+
+```bat
+npm install
 npm run dev
 ```
 
-`npm ci` restores the locked JavaScript dependencies and copies the required Three.js files and license into ignored `ui/vendor/`. Cargo restores Rust dependencies during the first build. Network access is needed for dependency downloads; the GUI and viewer run locally afterward. Do not commit `node_modules`, `ui/vendor`, `src-tauri/target`, or engine runtimes.
+To compile the release application and installer from the same configured CMD window:
 
-## Choose the Artisan backend
-
-Click **Backend…** and select either:
-
-- `ArtisanMain.py` in the repository root. Choose the `python.exe` from the Python environment containing Artisan's dependencies, or leave the interpreter blank to use `python` from PATH. See the repository's installation instructions for engine requirements. The script runs from its own directory.
-- A separately packaged `ArtisanMain.exe`.
-
-Backend and Python interpreter selections are remembered locally. The Python backend requires a compatible Python environment; GUI build tools do not install the engine's Python dependencies. This GUI source folder does not duplicate the encrypted Artisan engine or its runtime.
-
-## Build an installer
-
-```powershell
-npm ci
+```bat
 npm run build
 ```
 
-Installer output is under `src-tauri/target/release/bundle/`. The default installer contains the GUI and viewer; users select their external engine through Backend. The default WebView2 bootstrapper may download WebView2 if it is missing.
+The installer outputs are under `src-tauri/target/release/bundle/`. Both npm commands run `scripts/run-tauri.cjs`, which prepares HDF5 before starting Tauri, passes `HDF5_DIR` to Cargo and adds the SDK's `bin` directory to PATH for that build process. No separate permanent PATH change is required for these commands. Use these npm entry points for the documented preparation; invoking Cargo or Tauri directly bypasses it.
 
-To intentionally package a separately built Artisan executable and its runtime:
+The helper collects HDF5's DLL dependency chain into `src-tauri/resources/hdf5/`, records hashes in `runtime-manifest.json`, updates `src-tauri/tauri.conf.json` and copies the DLLs beside development executables. The installer places the required DLLs beside the installed ArtGUI executable. These files are prepared on the build computer; GitHub readers should obtain their own SDK using the instructions above.
 
-```powershell
-$env:ARTISAN_PACKAGE_DIR = 'C:\path\to\ArtisanMain.dist'
-.\build-windows.bat
+For distribution, retain the license notices supplied with HDF5 and any bundled dependency DLLs. The helper collects available notices from the Conda package cache, but does not collect notices automatically from a standalone SDK. Copy those notices into `src-tauri/resources/hdf5/licenses/` before the final build; the helper maps that directory into the installed `hdf5-licenses/` directory. For an SDK that has a root `COPYING` file, for example:
+
+```bat
+if not exist "src-tauri\resources\hdf5\licenses" mkdir "src-tauri\resources\hdf5\licenses"
+copy /Y "%HDF5_DIR%\COPYING" "src-tauri\resources\hdf5\licenses\HDF5-COPYING.txt"
 ```
 
-This optional script copies the engine to ignored local resources and applies `src-tauri/tauri.bundle-engine.conf.json`. Do not commit those generated resources.
+Also retain any separate notices supplied for the dependency DLLs you distribute, then run `npm run build` again if the installer was already generated. Keep the packaged DLLs and notices with the installed application.
 
-## Features
+### Package the Artisan backend
 
-- Source/reference geometry, supporting files, mesh/conformal lattice definitions and custom unit cells (Hex, Tet, Quad and Triangle domains).
-- 65 operation types with 371 source example presets; Common, Recent, Favorites and searchable lists; insertion at a chosen workflow position.
-- Numeric JSON preservation, including decimal tokens needed by Artisan; GUI metadata is excluded from engine input.
-- STL, OBJ, PLY and supported INP previews; geometry bounds and XYZ lengths; Orbit/Pan/Zoom, sections, measurements and visibility controls.
-- Compact generation progress with console, log and progress-file updates, cancellation and log access.
-- About information with bundled Lucide/Feather icon notices.
+ArtGUI can be compiled and used to view files before a backend is bundled. **Generate** requires `ArtisanMain.exe`; in development use **Backend…** to select it.
 
-See [project files and INP](docs/project-files-and-inp.md), [lattice definitions](docs/LATTICE_DEFINITIONS.md), [run progress](docs/RUN_PROGRESS.md), and [operation picker](OPERATION_PICKER.md).
+To produce a package with the backend included, first build Artisan using its Nuitka workflow. Set `ARTISAN_PACKAGE_DIR` to the complete output directory containing `ArtisanMain.exe` and all adjacent runtime files, then run from the ArtGUI folder with the HDF5 settings above still active:
 
-## Development checks and generated assets
-
-```powershell
-npm test
-cargo test --manifest-path src-tauri/Cargo.toml
-python scripts/generate_icons.py
-python scripts/generate_operations.py --artisan-root ..
+```bat
+set "ARTISAN_PACKAGE_DIR=C:\path\to\ArtisanMain.dist"
+build-windows.bat
 ```
 
-The checked-in operation catalog is ready to use; regeneration is optional. The generator accepts both the public `Doc` + `Test_json` layout and the development `Doc` + `Src/Test_json` layout. It uses only Python's standard library and reads manuals/examples without running the engine. Catalog presets retain their numeric types; check example file paths before generating models.
+The script copies the complete backend directory and invokes the same npm build. For an offline installer, configure Tauri's WebView2 install mode to `offlineInstaller`; the default bootstrapper downloads WebView2 if it is missing. Three.js and OrbitControls are bundled locally.
 
-An optional Python-launch test requires `ARTGUI_TEST_PYTHON` to point to an interpreter:
+### Common HDF5 build problems
 
-```powershell
-$env:ARTGUI_TEST_PYTHON = 'C:\path\to\python.exe'
-cargo test --manifest-path src-tauri/Cargo.toml python_subprocess_preserves_paths_and_working_directory -- --ignored
+| Message or symptom | What to check |
+| --- | --- |
+| `Unable to locate HDF5 root directory and/or headers`, or `Could not find HDF5 development files` | Install the complete Windows SDK, set `HDF5_DIR`, check all four files above and run `npm run build` in the same CMD window. |
+| `HDF5_DIR does not contain complete x64 HDF5 development files` | The path may point at `bin`, an outer ZIP directory, or a runtime-only installation. Select the actual SDK root containing `include`, `lib` and `bin`. |
+| `Could not run HDF5 build helper` | Install Python 3 and make `python` available, or set `ARTGUI_BUILD_PYTHON` to its full executable path. |
+| `Expected x64 DLL`, a linker architecture error, or HDF5 version mismatch | Use the x64 MSVC Rust toolchain and one matching x64 SDK for headers, libraries and DLLs. When switching SDKs, run `cargo clean --manifest-path src-tauri/Cargo.toml`, then rebuild through npm. |
+| `Missing runtime dependency: ...` | Restore the complete SDK `bin` directory and its required dependency DLLs, then build again. |
+| The installed application reports a missing HDF5 DLL | Rebuild through npm with a complete SDK and reinstall the resulting package. Keep the bundled DLLs beside the application executable. |
+
+## Operation categories
+
+Operations are grouped by purpose, using the manual chapters and example workflows. The nine groups are Geometry & shells, Lattices & transitions, Volume meshing, Surface meshing, Mesh processing, Lines & paths, Fields, Analysis & FEA, and Import, export & storage.
+
+`scripts/operation_categories.json` maintains explicit keyword assignments, descriptions, and source references. Update this file when adding or moving an operation, then regenerate the catalog. Duplicate assignments are rejected. New keywords without an assignment appear under Uncategorized and are listed in `operations-report.json` for review.
+
+The Add operation picker shows categories in workflow order, with operation counts and a brief explanation of each group. Search matches category names as well as operation keywords, display names and preset sources.
+
+The grouping reflects each operation’s primary purpose: lattice interpolation is under Lattices & transitions; operations that reshape an existing mesh using a field are under Mesh processing; conformal FEA lattice mesh generation is under Analysis & FEA; compression and decompression are under Import, export & storage. Some operations also support workflows described in other chapters.
+
+## Export mesh and HDF5 fields
+
+Select **Export model**, then choose **Mesh only**, **HDF5 field only**, or **Mesh plus HDF5 field**. Mesh-only workflows keep the existing `outfile` syntax. HDF5-only output uses a `.h5` / `.hdf5` `outfile`; combined output adds `fieldfile`. Optional `GridFieldIDs` is a JSON array of named grid fields created before the Export step. The current lattice field is included automatically when present. Invalid output combinations and field-ID drafts must be corrected before saving or generating. Native output dialogs offer the matching mesh/HDF5 filters.
+
+ArtGUI reads completed HDF5 field snapshots through a native Rust reader. Use **Load result**, **Fields → Add**, or **View exported field…** to inspect slices, mesh overlays and original grid values. See [Field viewer guide](docs/field-viewer.md) for supported grids, large-file limits and Windows HDF5 packaging. Rebuild/restart Tauri after this update.
+
+## Regenerate the operation catalog
+
+From `Src/ArtGUI`, run:
+
+```bat
+python scripts/generate_operations.py
 ```
 
-The fake-engine subprocess fixture is intentionally ignored during ordinary tests. Full model generation requires the real Artisan engine and suitable input files.
+To refresh just Export while preserving the other bundled operations, run `python scripts/generate_operations.py --keywords Export`. The report records the refreshed keywords.
 
-## Third-party notices
+The generator uses Python's standard library and discovers the Artisan root relative to its own location. For a different source checkout, pass `--artisan-root "C:\path\to\Artisan"`.
 
-Keep `ui/icons/lucide/LICENSE.txt` with the icon assets. Three.js's MIT notice is restored into `ui/vendor/THREE-LICENSE.txt` during setup and included in builds. These licenses do not change the Artisan engine's license; see the repository license information.
+- `ui/operations.js` contains the catalog, source references, example presets, and numeric type metadata. Each preset includes `paramsJson`, a JSON string that retains decimal notation when loaded by the JavaScript interface.
+- `ui/numeric-json.js` preserves numeric tokens through import, edits, and export. Types are stored with their containing objects/arrays, so moving workflow steps does not change them. Catalog metadata is never added to exported Artisan workflows.
+- `operations-report.json` records source coverage, extracted keywords, incomplete manual snippets, and parameters whose types differ between examples.
+
+Source RST files take priority over generated `_build` copies, which are excluded. Complete tutorial/manual examples are preferred as the initial preset; executable examples provide alternatives and additional operations. Example presets are starting configurations, not authoritative engine defaults. Different shapes, parameter sets, values, and numeric types are retained separately rather than merged into one synthetic configuration.
+
+Only operations appearing in workflow steps or explicit operation JSON blocks are included. Parameter-only fragments and symbolic illustrations are not presented as new keywords. Complete operation objects can be recovered from incomplete illustrative workflows; those recoveries and trailing-comma corrections are recorded in the report. Source files are never rewritten.
+
+Catalog regeneration is a development step. Distributed users need neither the manual/example folders nor Python to open the bundled catalog.
+
+## Development
+
+Follow [Build on Windows](#build-on-windows) to install the SDK and configure CMD, then run `npm run dev` from the application folder. In a development run, use **Backend…** to select `ArtisanMain.exe` when running workflows.
+
+## Resource monitor
+
+The bottom panel has **Workflow** and **Resources** tabs. Workflow is selected on startup. Resources shows system RAM and CPU, the current Artisan process group (including workers), and ArtGUI plus its WebView/viewer processes. The three sections sit side by side when the panel is wide; narrower panels place the history chart below the summaries or stack all sections. Tab switching preserves the panel's height. A compact system RAM/CPU summary stays beside the progress bar, on its left. Generate, Stop and log controls remain outside the tabs.
+
+A native Rust sampler updates once per second, including when Workflow is selected or the window is minimized. Select Artisan, ArtGUI or System for the last 60 seconds of memory or CPU history. Monitoring is local and uses the `sysinfo` Rust crate, fetched by Cargo; it adds no Python requirement or separately installed runtime library. Process groups follow parent/child identities rather than executable names, exclude Artisan from the GUI group, and retain live workers whose parent exits. Only Artisan runs started by this ArtGUI instance are included.
+
+RAM is resident process memory, summed across the group; shared pages may be counted more than once. System RAM includes other applications and OS use, so the group totals need not equal system usage. Values use MiB/GiB. CPU percentages use total machine capacity (0–100%); initial CPU readings show a dash until a second sample is available. Observed run peak is the highest Artisan group RAM sampled during the latest run, and can miss bursts between samples. It resets for a new run and remains after completion. Short runs may finish between samples. Missing or stale readings are marked unavailable. Monitoring does not change the workflow JSON or Artisan's memory limit.
+
+## 3D Workspace controls
+
+- **Expand** in the 3D Workspace header temporarily hides Project, Properties and Workflow/Resources, giving the viewer the full workspace area. The top bar, viewer tools and bottom Generate/Stop, RAM/CPU and log controls remain available. **Restore layout** returns the panels with their previous selections. Esc also restores the layout when a dialog, editor, viewer menu or measurement tool is not handling the key. Expanding resizes the existing viewer without reloading geometry or HDF5 data; the camera, visible layers, field slice and measurements are retained. Restore the layout to edit field or workflow properties. ArtGUI starts with the normal layout each time.
+- **Load source** selects the workflow's geometry. **Load result** opens an output mesh or HDF5 field as a separate viewer layer; select the generated file after an Artisan run. Result loading does not replace the workflow source path. Both meshes retain their original coordinate positions. New/Open project clears both layers.
+- **View** offers front, back, left, right, top, bottom and isometric views, using Z as the vertical axis. Click a face, edge or corner of the orientation cube to orient the model. **Fit view** frames visible layers; **Reset** returns to an isometric camera.
+- Switch between perspective and orthographic projection, or between solid, wireframe and solid-with-triangle-edges display. Edges are rendered by a shader without building a second CPU edge mesh. Dense edge displays can still be visually crowded.
+- **Mouse controls** uses the preferred button mapping. Orbit, Pan and Zoom tools temporarily assign that action to the left button. More > Mouse controls configures left/right buttons, sensitivity and scroll direction. Middle drag zooms; touch uses one finger to orbit and two to pan/zoom.
+- **Section** clips the display with an X, Y, Z or custom-normal plane. Move its position slider and optionally reverse the visible side. It is a display cut with no filled cap; it does not modify the mesh or export a cut model.
+- **Visibility** controls source/result visibility, opacity and colour independently. Make active selects the model affected by the Quick Preview / Full Detail switch. Transparency is for visual comparison and may have sorting artifacts on complex intersecting surfaces.
+- **Measure** selects a model and measures distance with two clicks or an angle with three (the second is the vertex). Optional vertex snapping selects triangle vertices near the click. Only a visible full-detail mesh can be measured; sampled Quick Preview is intentionally excluded. Measurements describe the loaded mesh, with its floating-point precision. Very large full-detail meshes may take longer to pick.
+- **More** contains grid, axes, bounding box/dimensions, background, unit labels, mouse preferences, named camera views and PNG export. Mesh coordinates are unitless: choose the appropriate label; changing it does not rescale geometry.
+- Named camera views store camera position, target, projection and zoom. Viewer preferences and saved cameras persist locally across sessions, separately from Artisan workflow JSON. Measurement annotations are session-only and are cleared when their model is replaced.
+- **Save PNG** uses a native Save dialog. Choose an opaque or transparent background and whether to include measurement annotations. The image uses the current viewport resolution; screenshots do not change the mesh.
+
+The native preview service returns original mesh bounds. The STL worker retains its centring offset so the renderer can align source and result while keeping GPU coordinates near the model origin. Rebuild/restart Tauri after updating this version so the Rust service and frontend use the same coordinate convention.
+
+## Project files and INP meshes
+
+See [Project files and INP guide](docs/project-files-and-inp.md) for supported meshes, file references, limits, and validation.
+

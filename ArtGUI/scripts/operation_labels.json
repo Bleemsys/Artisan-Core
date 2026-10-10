@@ -20,6 +20,7 @@
   "Gen_HexMesh": "Layered hex mesh",
   "Gen_SphericalMesh": "Spherical mesh",
   "Gen_StackedLayerMesh": "Stacked layer mesh",
+  "Gen_TetMesh_Adaptive": "Adaptive Tetrahedron Mesher",
   "Gen_TetBasicMesh": "Tetrahedral mesh",
   "Gen_TetBasicMesh_HexSplit": "Tet mesh from grid",
   "Gen_TetBasicMesh_wFeature": "Implicit tet mesh",
@@ -63,5 +64,12 @@
   "OP_Decompress": "Load compressed field",
   "ReadGridField": "Import grid field",
   "ReadMesh": "Import mesh",
-  "RemoveMesh": "Remove stored mesh"
+  "RemoveMesh": "Remove stored mesh",
+  "Gen_PolyCubeHexMesh": "Generate polycube hex mesh",
+  "Proc_BoxSlices": "Slice boxes",
+  "GeomBuild": "Rebuild geometry domain",
+  "GeomFill": "Trim field to geometry",
+  "Inv_Field": "Invert field",
+  "OP_GeomSDF_GridField": "Geometry distance grid field",
+  "Proc_Mesh_Smoothing": "Smooth mesh"
 }

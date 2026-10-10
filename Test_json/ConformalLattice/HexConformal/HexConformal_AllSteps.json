@@ -1,0 +1,120 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Geomfile": ".//sample-obj//crank_handle.stl",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.2,
+      0.2,
+      0.2
+    ],
+    "Padding": 5,
+    "onGPU": false,
+    "memorylimit": 16106127360
+  },
+  "WorkFlow": {
+    "1": {
+      "Proc_Mesh_PolyCube": {
+        "inp_meshfile": ".//sample-obj//crank_handle.inp",
+        "out_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "cube": 5000000.0,
+        "smoothness": 100.0,
+        "distortion_angle": 1.0,
+        "distortion_volume": 1.0,
+        "max_iteration": 200
+      }
+    },
+    "2": {
+      "Proc_Mesh_ExtractSurf": {
+        "inp_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "out_meshfile": ".//Test_results//crank_handle_polycube_exterior.stl",
+        "isSplitTris": false,
+        "Elem_Type": "Tet"
+      }
+    },
+    "3": {
+      "Gen_BasicCartesianHexMesh": {
+        "num_elem": [
+          15,
+          30,
+          25
+        ],
+        "x_range": [
+          0.0,
+          24.0
+        ],
+        "y_range": [
+          0.0,
+          78.0
+        ],
+        "z_range": [
+          0.0,
+          80.0
+        ],
+        "ori": [
+          -12.0,
+          -12.0,
+          -80.0
+        ],
+        "Normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "z_angle": 0.0,
+        "Meshfile": ".//Test_results//crank_handle_polycube_mesh.med",
+        "Geomfile": ".//Test_results//crank_handle_polycube_exterior.stl",
+        "numPrjLayers": 1,
+        "LayerDepth": 2.0,
+        "numCoverNodes": 2
+      }
+    },
+    "4": {
+      "Proc_Mesh_MappingHexElem": {
+        "inp_original_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "inp_deformed_meshfile": ".//sample-obj//crank_handle.inp",
+        "inp_Hex_meshfile": ".//Test_results//crank_handle_polycube_mesh.med",
+        "out_meshfile": ".//Test_results//crank_handle_hex_mesh.med"
+      }
+    },
+    "5": {
+      "Add_Lattice": {
+        "la_name": ".//Test_json//ConformalLattice//HexConformal//crank_handle_conformal.mld",
+        "size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "thk": 0.15,
+        "Rot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Trans": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "6": {
+      "Export": {
+        "outfile": ".//Test_results//crank_handle_conformal_HexInfill.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

@@ -150,7 +150,8 @@ measured wall thickness for every lattice type.
 4. Inspect the supplied result first
 ====================================
 
-#. Choose **Load result** and open
+#. Choose **Load result** and select the supplied output in the export list,
+   or use **Open another result file…** to open
    ``Test_results/EngineBracket_HS_Lin_TPMS_Infill_LR.stl``.
 #. Open **Visibility**. Hide the source so that its solid surface does not
    cover the lattice result.

@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="./details.css">
 
   <link rel="stylesheet" href="./viewer.css">
+  <link rel="stylesheet" href="./field.css">
+  <link rel="stylesheet" href="./resource-monitor.css">
 
   <link rel="stylesheet" href="./operation-picker.css">
 </head>
@@ -44,7 +46,7 @@
 
     <div class="project-state"><strong id="project-name">Untitled workflow</strong><span id="dirty-state">All changes saved</span></div>
 
-    <div class="top-actions"><button class="button" id="help-button" title="About ArtGUI" aria-haspopup="dialog">Help</button></div>
+    <div class="top-actions"><button type="button" class="button language-toggle" id="language-toggle" translate="no" lang="zh-CN" title="Switch to Simplified Chinese" aria-label="Switch to Simplified Chinese">中文</button><button class="button" id="help-button" title="About ArtGUI" aria-haspopup="dialog">Help</button></div>
 
   </header>
 
@@ -64,9 +66,9 @@
 
     <section class="center-column">
 
-      <section class="panel viewport-panel">
+      <section class="panel viewport-panel" id="workspace-viewer">
 
-        <div class="viewport-head"><div><h2>3D Workspace</h2><p id="geometry-label">Load a model to preview your design</p></div><div class="view-actions"><button class="button subtle" id="load-geometry">Load source</button><button class="button subtle" id="load-result">Load result</button><button class="button subtle" id="fit-view">Fit view</button><button class="button subtle" id="preview-mode" disabled title="Switch between quick preview and full detail">Full detail</button><button class="button subtle" id="view-cube" title="Reset camera to isometric view">Reset</button></div></div>
+        <div class="viewport-head"><div><h2>3D Workspace</h2><p id="geometry-label">Load a model to preview your design</p></div><div class="view-actions"><button class="button subtle" id="load-geometry">Load source</button><button class="button subtle" id="load-result" title="View mesh exports from the current JSON or open another result file">Load result</button><button class="button subtle" id="view-generated-field" title="View HDF5 exports from the current JSON or open another field file">View field…</button><button class="button subtle" id="fit-view">Fit view</button><button class="button subtle" id="preview-mode" disabled title="Switch between quick preview and full detail">Full detail</button><button class="button subtle" id="view-cube" title="Reset camera to isometric view">Reset</button><button type="button" class="button subtle workspace-size-button" id="expand-workspace" aria-label="Expand workspace" aria-pressed="false" aria-controls="workspace-viewer" title="Expand workspace"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="workspace-size-icon" d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg><span id="workspace-size-label">Expand</span></button></div></div>
 
         <div id="viewer-toolbar" class="viewer-toolbar" aria-label="3D view controls"></div>
 
@@ -76,17 +78,46 @@
 
       </section>
 
-      <section class="panel workflow-panel">
-
-        <div class="workflow-head"><div><h2>Workflow</h2><span class="count-pill" id="operation-count">0 steps</span></div><div class="workflow-controls"><button class="text-button" id="clear-workflow">Clear workflow</button><button class="button subtle" id="add-operation-bottom">＋ Add step</button><button class="button subtle" id="remove-step">Remove step</button><button class="button subtle" id="move-up" title="Move selected step earlier" aria-label="Move step up">↑ Up</button><button class="button subtle" id="move-down" title="Move selected step later" aria-label="Move step down">↓ Down</button></div></div>
-
-        <div class="timeline" id="timeline"></div>
-
+      <section class="panel workflow-panel workspace-tabs" aria-label="Workflow and resources">
+        <div class="workspace-tabstrip" role="tablist" aria-label="Workspace panel">
+          <button type="button" id="workflow-tab" role="tab" aria-controls="workflow-content" aria-selected="true" tabindex="0">Workflow <span class="count-pill" id="operation-count">0 steps</span></button>
+          <button type="button" id="resources-tab" role="tab" aria-controls="resources-content" aria-selected="false" tabindex="-1">Resources</button>
+        </div>
+        <div class="workspace-panes">
+          <div id="workflow-content" role="tabpanel" aria-labelledby="workflow-tab">
+            <div class="workflow-head"><div class="workflow-controls"><button class="text-button" id="clear-workflow">Clear workflow</button><button class="button subtle" id="add-operation-bottom">＋ Add step</button><button class="button subtle" id="remove-step">Remove step</button><button class="button subtle" id="move-up" title="Move selected step earlier" aria-label="Move step up">↑ Up</button><button class="button subtle" id="move-down" title="Move selected step later" aria-label="Move step down">↓ Down</button></div></div>
+            <div class="timeline" id="timeline"></div>
+          </div>
+          <div id="resources-content" role="tabpanel" aria-labelledby="resources-tab" hidden inert>
+            <div class="resource-caption"><span id="resource-message" role="status">Collecting resource readings…</span><span id="resource-run-state">Artisan idle</span></div>
+            <div class="resource-columns">
+              <section class="resource-system" aria-label="System resources">
+                <h3>System RAM</h3><div class="resource-values"><strong id="resource-ram">—</strong><span id="resource-ram-percent">—</span></div>
+                <div class="resource-meter" id="resource-ram-meter" role="meter" aria-label="System RAM used" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+                <p id="resource-available">— available</p><div class="resource-values resource-cpu"><span>System CPU</span><strong id="resource-cpu">—</strong></div>
+              </section>
+              <section class="resource-processes" aria-label="Process group resources">
+                <h3>Process groups</h3>
+                <table title="RAM is summed resident memory; shared pages may be counted in more than one process. CPU is a percentage of total machine capacity."><thead><tr><th scope="col">Group</th><th scope="col">RAM</th><th scope="col">CPU</th></tr></thead><tbody>
+                  <tr><th scope="row">Artisan + workers<small id="resource-artisan-count">Idle</small></th><td id="resource-artisan-ram">—</td><td id="resource-artisan-cpu">—</td></tr>
+                  <tr><th scope="row">ArtGUI + viewer<small id="resource-artgui-count">—</small></th><td id="resource-artgui-ram">—</td><td id="resource-artgui-cpu">—</td></tr>
+                </tbody></table>
+              </section>
+              <section class="resource-history" aria-label="Resource history">
+                <div class="resource-history-head"><h3 id="resource-history-heading">Memory history</h3><label class="resource-source-label"><span class="resource-sr-only">History source</span><select id="resource-source"><option value="artisan">Artisan</option><option value="artgui">ArtGUI</option><option value="system">System</option></select></label></div>
+                <div class="resource-history-tools"><span id="resource-chart-unit">GiB · last 60 s</span><div><button type="button" data-resource-metric="memory" aria-pressed="true">Memory</button><button type="button" data-resource-metric="cpu" aria-pressed="false">CPU</button></div></div>
+                <svg id="resource-chart" role="img" aria-label="Waiting for memory history"></svg>
+                <p class="resource-peak" title="Highest Artisan group RAM sampled during the latest run; short bursts between samples may be missed.">Observed run peak <strong id="resource-peak">—</strong></p>
+              </section>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="run-panel" aria-label="Artisan generation">
         <div class="runbar"><div class="runbar-status"><span class="status-dot" id="run-dot"></span><span id="status-text" role="status">Ready to build</span></div>
-          <div id="run-live" class="run-live" hidden><progress id="run-progress-bar" max="100" aria-label="Generation progress" title="Engine-reported progress; updates between operations"></progress><span id="run-percent">—</span><time id="run-elapsed" title="Elapsed time">00:00</time></div>
+          <div class="run-status-meters"><span class="run-resource-brief" id="run-resource-brief" aria-label="System resource usage">RAM — · CPU —</span>
+          <div id="run-live" class="run-live" hidden><progress id="run-progress-bar" max="100" aria-label="Generation progress" title="Engine-reported progress; updates between operations"></progress><span id="run-percent">—</span><time id="run-elapsed" title="Elapsed time">00:00</time></div></div>
           <button class="text-button" id="toggle-run-log" aria-expanded="false" aria-controls="run-log" hidden>Show log</button><button class="button stop-button" id="stop-generation" hidden>Stop</button><button class="button primary generate" id="generate">Generate model <span>→</span></button>
         </div>
         <div id="run-log" class="run-log" hidden><div class="run-log-head"><strong>Run log</strong><span id="run-detail"></span><label><input type="checkbox" id="run-autoscroll" checked> Auto-scroll</label><button class="text-button" id="copy-run-log">Copy</button><button class="text-button" id="open-run-log" disabled>Open log</button></div><div id="run-log-scroll" class="run-log-scroll"><pre id="run-log-text" tabindex="0" aria-label="Run messages"></pre></div><div id="run-log-path" class="run-log-path"></div></div>

@@ -1,0 +1,65 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 16106127360
+  },
+  "WorkFlow": {
+    "1": {
+      "Gen_TetMesh_Adaptive": {
+        "mesh_file": ".//sample-obj//EngineBracket.stl",
+        "export_mesh": ".//Test_json//MeshLattice//AdaptiveTet//EngineBracket_Adaptive.inp",
+        "sampling_size": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "padding": 6.0,
+        "hsiz": 3.0,
+        "hmin": 0.0,
+        "hmax": 0.0,
+        "hausd": 0.1,
+        "hgrad": 1.3,
+        "angle": 45.0,
+        "detect_sharp_edges": false,
+        "allow_swaps": true,
+        "max_points": 250000
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": false,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

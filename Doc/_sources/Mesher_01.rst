@@ -391,7 +391,7 @@ Similar to the tetrahedron mesher, Artisan also features a Voronoi mesher that u
 Surface Remesh
 ==============
 
-The function utilizes the Artisan infrastructure of extracting the mesh from field. Often user may load a geometry and re-export it out for remeshing the surface triangles. The keyword :code:`Gen_SurfaceReMesh` does the combined functions. User may find the example of Engine bracket remeshing at :code:`Remesh\\EngineBracket_Infill_LR.json`.
+The keyword :code:`Gen_SurfaceReMesh` utilizes the MMG surface remesher to regenerate the triangles of an existing surface mesh. User may load a geometry or a mesh from the mesh container, and export the resultant mesh to a file or store it in the mesh container. The remeshing process works directly on the surface triangles and does not require a field grid. User may find the example of Engine bracket remeshing at :code:`Remesh\\EngineBracket_Infill_LR.json`.
 
 .. code-block:: json
 
@@ -405,10 +405,17 @@ The function utilizes the Artisan infrastructure of extracting the mesh from fie
                 },
      "WorkFlow":{
         "1": {"Gen_SurfaceReMesh":{
-              "size":[3.0, 3.0, 3.0], 
               "mesh_file":".//sample-obj//EngineBracket.stl",
-              "ShortEdgeThreshold": 1.0,
-              "export_mesh": ".//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl"}
+              "export_mesh": ".//Test_json//MeshLattice//Remesh//EngineBracket_Remesh.stl",
+              "hsiz": 3.0,
+              "hmin": 1.0,
+              "hmax": 0.0,
+              "hausd": 0.01,
+              "hgrad": 1.3,
+              "angle": 45.0,
+              "detect_sharp_edges": true,
+              "optimize_only": false,
+              "verbose": -1}
              },
 
         "2": {"Add_Lattice":{
@@ -436,33 +443,38 @@ The keyword :code:`Gen_SurfaceReMesh` has the following parameters definitions.
 
    * - Parameter
      - Details
-   * - :code:`size`
-     - the average size of the mesh; 
    * - :code:`mesh_file`
-     - read in mesh file, if none, i.e. :code:`"mesh_file":""`, it will take the :code:`Geomfile`` in the setup section;
+     - the input triangular surface mesh file or mesh ID in the mesh container; if :code:`"mesh_file":""`, it will take the :code:`Geomfile` in the setup section;
+   * - :code:`export_mesh`
+     - the resultant mesh file or mesh ID in the mesh container;
+   * - :code:`hsiz`
+     - the constant target edge size; :code:`0.0` disables the constant size prescription;
+   * - :code:`hmin`
+     - the minimum target edge size; :code:`0.0` allows MMG to choose it automatically;
+   * - :code:`hmax`
+     - the maximum target edge size; :code:`0.0` allows MMG to choose it automatically; a positive value shall not be smaller than :code:`hmin`;
+   * - :code:`hausd`
+     - the positive tolerance for approximating the surface geometry; a smaller value provides a closer approximation and usually generates more triangles; the default is :code:`0.01`;
+   * - :code:`hgrad`
+     - the gradation of mesh size; values closer to :code:`1.0` give smoother size transitions, while larger values allow faster changes; the value shall be greater than :code:`1.0`, or :code:`-1.0` to disable gradation; the default is :code:`1.3`;
+   * - :code:`angle`
+     - the angle threshold for detecting sharp edges, in degrees from :code:`0.0` to :code:`180.0`; a smaller value generally detects more sharp edges; the default is :code:`45.0`;
+   * - :code:`detect_sharp_edges`
+     - enable automatic detection of sharp edges and corners; the default is :code:`true`;
+   * - :code:`optimize_only`
+     - improve mesh quality while keeping the initial mesh size distribution; omit :code:`hsiz`, :code:`hmin`, :code:`hmax` and the legacy size parameters in this mode; the default is :code:`false`;
+   * - :code:`verbose`
+     - the level of MMG diagnostic output, from :code:`-1` for quiet output to :code:`10` for detailed output; the default is :code:`-1`;
+   * - :code:`size`
+     - the legacy size parameter, accepted as a scalar or three lengths; the maximum value supplies :code:`hsiz`, unless :code:`hsiz` is provided explicitly;
    * - :code:`ShortEdgeThreshold`
-     - the threshold of short edge, any edges shorter than this shall be collapsed;
-   * - :code:`export_mesh` 
-     - the resultant mesh 
+     - the legacy parameter that now supplies :code:`hmin`, unless :code:`hmin` is provided explicitly; it no longer merges nearby vertices.
+
+The parameters :code:`hsiz`, :code:`hmin`, :code:`hmax` and :code:`hausd` use the same units as the input mesh coordinates. In this example, the target edge size is :code:`3.0` and the minimum target size is :code:`1.0`. The sizing parameters prescribe target sizes; curved regions and sharp features may require smaller elements.
 
 .. image:: ./pictures/EngineBracket_SurfaceRemsh.png
 
-Please note, this is not the universal remesher, but a simple remeshing function for a mesh with averaging size. 
-
-The input mesh geometry may contain sharp or non-smooth features. To improve surface quality, the mesh can be smoothed and remeshed using the keyword :code:`Proc_Mesh_Smoothing`. This process is controlled by the following parameters: 
-
-.. list-table::
-   :widths: 30 70
-   :header-rows: 1
-
-   * - Parameter
-     - Details
-   * - :code:`inp_meshfile`
-     - The input watertight triangular surface mesh. 
-   * - :code:`out_meshfile`
-     - The output triangular surface mesh after smoothing.
-   * - :code:`feature_size`
-     - The characteristic size of geometric features to be smoothed. Smaller features below this size will be removed during smoothing. 
+Please note, the function supports open and closed triangular surface meshes with consistently oriented, nondegenerate triangles. The surface geometry is reconstructed from the input mesh, rather than projected onto the original implicit field. The remeshing process may change the number and indices of vertices and triangles; associated data fields are not transferred.
 
 ====================
 Stacked Layer Mesher

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>API Interface &#8212; Artisan 0.2.16 documentation</title>
+    <title>API Interface &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,14 +36,14 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'API';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ArtGUI" href="ArtGUI.html" />
+    <link rel="next" title="ArtGUI user guide" href="ArtGUI.html" />
     <link rel="prev" title="Interface to FEA" href="FEAInter.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -172,7 +172,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">API Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -338,6 +348,12 @@ document.write(`
   <section id="api-interface">
 <h1>API Interface<a class="headerlink" href="#api-interface" title="Link to this heading">#</a></h1>
 <p>Users have the flexibility to interact with Artisan using either Python or C++ through its API interface. This interface allows Artisan to be integrated as a computational engine backend or component for various application development needs. The Artisan API is designed to be compatible with keywords for simplicity and consistency. Users can access its functionalities through keyword-based inputs and retrieve the geometry (e.g., vertices and faces) at any design stage. The examples in this section can be found under the <code class="code docutils literal notranslate"><span class="pre">Interface</span></code> folder.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Export</span></code> also supports HDF5 sampled fields. A mesh <code class="docutils literal notranslate"><span class="pre">outfile</span></code> alone keeps
+the existing behavior. An <code class="docutils literal notranslate"><span class="pre">outfile</span></code> ending in <code class="docutils literal notranslate"><span class="pre">.h5</span></code>/<code class="docutils literal notranslate"><span class="pre">.hdf5</span></code> selects field
+output; an optional <code class="docutils literal notranslate"><span class="pre">fieldfile</span></code> adds field output alongside a mesh. Optional
+<code class="docutils literal notranslate"><span class="pre">GridFieldIDs</span></code> selects fitted fields from the grid-field container. See
+<a class="reference internal" href="FieldContainer.html#gridfieldcontainer"><span class="std std-ref">Grid Field Container</span></a> for the HDF5 format, partition metadata, readback,
+SDK return values and Nuitka packaging requirements.</p>
 <section id="python-api">
 <h2>Python API<a class="headerlink" href="#python-api" title="Link to this heading">#</a></h2>
 <p>Artisan has the native Python APIs. User may import the ArtisanMain and call the functions as with other python modulus. In general API interface provides three simple ways to access the Artisan computational power, <code class="code docutils literal notranslate"><span class="pre">Execution</span></code>, <code class="code docutils literal notranslate"><span class="pre">Run</span></code> and <code class="code docutils literal notranslate"><span class="pre">WorkItem</span></code>. Former two functions allows user direct inputs the entire JSON string through a string or a file, whereas the latter enable user to manipulate the lattice design step by step and extract the geometry at any design stage.</p>
@@ -907,7 +923,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ArtGUI</p>
+        <p class="prev-next-title">ArtGUI user guide</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

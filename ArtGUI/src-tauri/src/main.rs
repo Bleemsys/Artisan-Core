@@ -1,5 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod field_reader;
+use field_reader::{FieldFiles, resolve_export_output, resolve_field_output, choose_result, choose_field_file, open_field_file, read_field_slice, probe_field, cancel_field_request, close_field_file};
+mod resources;
+use resources::{ResourceMonitor, resource_snapshot};
 mod generation;
 use generation::{generate_workflow, cancel_generation, open_run_log, GenerationState};
 use serde::Serialize;
@@ -103,12 +107,27 @@ fn export_lattice_definition(contents: String, name: String, mesh: bool) -> Resu
 }
 
 #[tauri::command]
-fn choose_output() -> Option<String> {
-    rfd::FileDialog::new()
-        .add_filter("3D model", &["stl", "obj", "ply"])
-        .set_file_name("Artisan_output.stl")
-        .save_file()
-        .map(|path| path.to_string_lossy().into_owned())
+fn choose_output(kind: Option<String>, path: Option<String>) -> Option<String> {
+    let field = kind.as_deref() == Some("field");
+    let mut dialog = if field {
+        rfd::FileDialog::new()
+            .add_filter("HDF5 field", &["h5", "hdf5"])
+            .set_file_name("Artisan_output.h5")
+    } else {
+        rfd::FileDialog::new()
+            .add_filter("3D model", &["stl", "obj", "ply", "off", "vtk", "vtu", "inp", "msh", "mesh", "med"])
+            .set_file_name("Artisan_output.stl")
+    };
+    if let Some(value) = path.filter(|value| !value.trim().is_empty()) {
+        let current = Path::new(&value);
+        if let Some(name) = current.file_name() {
+            dialog = dialog.set_file_name(name.to_string_lossy());
+        }
+        if let Some(parent) = current.parent().filter(|parent| parent.is_absolute() && parent.is_dir()) {
+            dialog = dialog.set_directory(parent);
+        }
+    }
+    dialog.save_file().map(|path| path.to_string_lossy().into_owned())
 }
 
 const MAX_QUICK_TRIANGLES: usize = 120_000;
@@ -431,12 +450,25 @@ fn find_backend_root(exe: &Path) -> Result<(PathBuf, PathBuf), String> {
 
 fn main() {
     tauri::Builder::default()
+        .manage(FieldFiles::default())
         .manage(PreviewJobs::default())
         .manage(GenerationState::default())
-        .on_window_event(|window,event| { if matches!(event,tauri::WindowEvent::CloseRequested {..}) { generation::stop_on_close(&window.state::<GenerationState>()); } })
+        .manage(ResourceMonitor::default())
+        .setup(|app| { resources::start(app.handle().clone()); Ok(()) })
+        .on_window_event(|window,event| { if matches!(event,tauri::WindowEvent::CloseRequested {..}) { window.state::<ResourceMonitor>().stop(); generation::stop_on_close(&window.state::<GenerationState>()); } })
         .invoke_handler(tauri::generate_handler![
+            resource_snapshot,
             open_workflow,
             choose_geometry,
+            choose_result,
+            choose_field_file,
+            resolve_field_output,
+            resolve_export_output,
+            open_field_file,
+            read_field_slice,
+            probe_field,
+            cancel_field_request,
+            close_field_file,
             choose_lattice_input,
             open_lattice_definition,
             export_lattice_definition,

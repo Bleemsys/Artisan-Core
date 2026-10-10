@@ -88,10 +88,11 @@ A large file will not load
 ==========================
 
 Try Quick Preview for a large STL and close unneeded viewer layers. The
-full-detail STL and INP readers have different limits; see :doc:`viewer`.
+full-detail readers rely on available memory and graphics resources; see
+:doc:`viewer`.
 An unsupported INP structure requires a compatible flat mesh export, not
 just a larger memory setting. ArtGUI's engine memory setting does not
-override viewer limits.
+reserve memory for the viewer.
 
 Where are Save As, Undo and the old Update view button?
 =======================================================
@@ -109,3 +110,11 @@ triggered the problem, and the relevant run-log messages. Include a minimal
 workflow and the necessary input files when you can share them. Mention the
 working-directory setting, and distinguish a preview problem from an engine
 failure. A screenshot of the affected panel is useful for interface issues.
+
+An HDF5 field is unavailable or disappears
+==========================================
+
+Check that the Export step requests an HDF5 output and the run completed.
+Choose **View field…** and reopen the file. Fields close before each run so
+Artisan can overwrite them; this is expected. An arbitrary HDF5 file or an
+incomplete snapshot may not be supported. See :doc:`viewer`.

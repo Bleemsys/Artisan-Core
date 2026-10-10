@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Inspect models in the 3D Workspace &#8212; Artisan 0.2.16 documentation</title>
+    <title>Inspect models in the 3D Workspace &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -339,6 +339,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-a-distance-or-angle">Measure a distance or angle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-view-or-an-image">Save a view or an image</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-meshes">Supported meshes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-an-hdf5-field">Inspect an HDF5 field</a></li>
 </ul>
             </nav>
         </div>
@@ -407,9 +408,11 @@ below the viewport to confirm the active layer and displayed detail.</p>
 reduce the geometry used by Artisan. Measurements are disabled on sampled
 previews. Use Full Detail before assessing holes or missing surfaces.</p>
 </div>
-<p>Full-detail STL loading warns for files larger than 256 MB and has a
-10-million-triangle limit in this version. Large text meshes can take longer
-to parse. Use <strong>Cancel</strong> beside the loading progress indicator to stop loading.</p>
+<p>Full Detail has no fixed application-imposed file-size or triangle-count cap.
+Practical capacity depends on available memory and graphics resources. Start
+with Quick Preview for large STL files and close unneeded layers before loading
+full detail. Large text meshes can take longer to parse. Use <strong>Cancel</strong> beside
+the loading progress indicator to stop loading.</p>
 </section>
 <section id="look-inside-with-a-section-plane">
 <h2>Look inside with a section plane<a class="headerlink" href="#look-inside-with-a-section-plane" title="Link to this heading">#</a></h2>
@@ -477,10 +480,33 @@ three-dimensional body.</p>
 <p>The INP reader does not support higher-order elements, part/assembly instances,
 include files, generated node/element definitions or unsupported coordinate
 systems. Export a flat, supported mesh before viewing those models.</p>
-<p>INP limits are 128 MB per file, 500,000 nodes, 500,000 elements and
-2 million processed faces. Loading is cancellable; there is no sampled
-INP Quick Preview. The viewer does not provide mesh editing, a solver or
-analysis-result plotting.</p>
+<p>INP viewing has no fixed application-imposed file-size, node, element or face
+count cap. Available memory and graphics resources still limit practical size.
+Loading is cancellable; there is no sampled INP Quick Preview. The viewer does
+not provide mesh editing, a solver or analysis-result plotting.</p>
+</section>
+<section id="inspect-an-hdf5-field">
+<h2>Inspect an HDF5 field<a class="headerlink" href="#inspect-an-hdf5-field" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Choose <strong>View field…</strong> beside Load result. Select an existing workflow export,
+or choose <strong>Open another HDF5 file…</strong>. With no field exports, a file picker
+opens directly. You can also use <strong>Fields → Add</strong>.</p></li>
+<li><p>Select a field and, if needed, a partition block in Properties.</p></li>
+<li><p>Choose an X, Y or Z slice and move the position slider. The slice snaps to
+an original grid plane. Load a mesh to compare both in model coordinates.</p></li>
+<li><p>Adjust <strong>Colour</strong>, range and opacity. Use <strong>Probe</strong> to read a nearest stored
+grid value, and <strong>Copy value</strong> to copy it.</p></li>
+</ol>
+<p>The display can sample a slice for speed; Probe still reads an original value.
+The inspector shows grid dimensions, precision, available units and value range.
+Missing/nonfinite values appear as gaps. Unit labels do not convert coordinates.</p>
+<p>ArtGUI reads the requested slice rather than loading the whole field into the
+viewer. It supports completed Artisan grid-field snapshots, not arbitrary HDF5
+files. One partition block is displayed at a time, including its padding.
+Structured/deformed grids, combined block views and volume rendering are not
+supported. Use <strong>Remove field file</strong> to close a file.</p>
+<p><strong>Save PNG…</strong> includes the displayed field plane but not its legend or probe
+tooltip. After generating new output, reopen the field to inspect the new data.</p>
 </section>
 </section>
 
@@ -536,6 +562,7 @@ analysis-result plotting.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-a-distance-or-angle">Measure a distance or angle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-view-or-an-image">Save a view or an image</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-meshes">Supported meshes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-an-hdf5-field">Inspect an HDF5 field</a></li>
 </ul>
   </nav></div>
 

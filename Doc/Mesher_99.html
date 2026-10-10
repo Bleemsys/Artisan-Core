@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Field Driven Meshing &#8212; Artisan 0.2.16 documentation</title>
+    <title>Field Driven Meshing &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -172,7 +172,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -322,7 +332,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-field">Scaler Field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-field">Scaler Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-and-field-containers">Mesh and field containers</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-field">Geometry Field</a></li>
 </ul>
             </nav>
@@ -467,11 +480,44 @@ document.write(`
 <td><p>when <code class="code docutils literal notranslate"><span class="pre">&quot;Type&quot;:</span> <span class="pre">&quot;Field_Attractor&quot;</span></code>, it shall be list with 2 elements, the first element defines the lower bound of field that used to be attract mesh nodes, the second one defines the scale to the intensity.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">FieldFile</span></code></p></td>
-<td><p>This defines the field file path, i.e. csv file. The field file shall contains the x, y, z and field value. Use shall refer to <span class="xref std std-ref">Field Operation</span> for file format details.</p></td>
+<td><p>A point-field CSV path or a fitted scalar grid-field ID. CSV points are fitted onto the calculation grid. A grid-field ID created with <code class="code docutils literal notranslate"><span class="pre">OP_Fit_GridField</span></code>, <code class="code docutils literal notranslate"><span class="pre">ReadGridField</span></code> or another grid-field operation uses its saved coordinates and scalar values directly. See <a class="reference internal" href="FieldContainer.html#gridfieldcontainer"><span class="std std-ref">Grid Field Container</span></a>.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<section id="mesh-and-field-containers">
+<h3>Mesh and field containers<a class="headerlink" href="#mesh-and-field-containers" title="Link to this heading">#</a></h3>
+<p><code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> uses the mesh interface for both
+<code class="code docutils literal notranslate"><span class="pre">Geomfile</span></code> and <code class="code docutils literal notranslate"><span class="pre">Meshfile</span></code>. <code class="code docutils literal notranslate"><span class="pre">Geomfile</span></code> may name a triangle mesh
+in the mesh container or a geometry file. <code class="code docutils literal notranslate"><span class="pre">Meshfile</span></code> may name the generated
+hex mesh in the mesh container or an output file. The generated mesh ID can be
+used by a later mesh-processing or lattice operation, or written to disk with
+<code class="code docutils literal notranslate"><span class="pre">ExportMeshID</span></code>.</p>
+<p>For <code class="code docutils literal notranslate"><span class="pre">Field_Attractor</span></code>, the field interface resolves <code class="code docutils literal notranslate"><span class="pre">FieldFile</span></code>.
+Fitted grid fields keep their own grid shape, origin and spacing, which may
+differ from the lattice calculation grid. Gradients use the physical field
+coordinates. Nodes sample the lower grid point along each axis, including the
+last grid point at the upper domain boundary. Nodes outside a stored field’s
+domain stay fixed. Invalid scalar values or inconsistent grid metadata are
+reported as errors.</p>
+<p>Point-field CSV inputs retain the existing fitting and point-cloud coverage
+rule for Cartesian generation. A named fitted grid has its grid domain as its
+coverage; it does not retain the original cloud’s sampling gaps. Thus a sparse
+CSV and a fitted grid may affect different nodes. The shared deformation
+implementation is also used by <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_FieldDrivenMesh</span></code> and the
+Cartesian stage of <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_HexSplit</span></code>.</p>
+<p>Constant fields and thresholds above all sampled values produce no movement.
+When the selected values all equal one value but have a nonzero gradient,
+selected nodes use the full attraction intensity. The existing displacement
+formula is retained. Correct physical spacing can change the attraction
+direction for anisotropic grids compared with older versions that assumed
+equal spacing on all axes.</p>
+<p>The example
+<code class="code docutils literal notranslate"><span class="pre">.\Test_json\MeshLattice\Box_FieldAttractor_MultiSize\Box_FA_MS_Containers.json</span></code>
+demonstrates <code class="code docutils literal notranslate"><span class="pre">ReadMesh</span></code> -&gt; <code class="code docutils literal notranslate"><span class="pre">OP_Fit_GridField</span></code> -&gt;
+<code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh_MultiSize</span></code> -&gt; <code class="code docutils literal notranslate"><span class="pre">ExportMeshID</span></code>.
+It reads the geometry into <code class="code docutils literal notranslate"><span class="pre">CubeGeom</span></code>, fits <code class="code docutils literal notranslate"><span class="pre">SizeField</span></code>, generates
+<code class="code docutils literal notranslate"><span class="pre">BoxHexMesh</span></code> in memory, then exports that mesh. Run it from <code class="code docutils literal notranslate"><span class="pre">Src</span></code>.</p>
 <img alt="_images/FieldDrivenMesh_01.png" src="_images/FieldDrivenMesh_01.png" />
 <p>In the example, the csv file contains many spatial data points, this could lead longer computational time. The example <code class="code docutils literal notranslate"><span class="pre">Box_FA_tetmesh_MS.json</span></code> demonstrates the operations on the tet mesh. The section that defines the field operation is as below.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -500,6 +546,7 @@ document.write(`
 </div>
 <p>The results is below. Please note that two examples here used different domain size and fields. The field can be either full coverage on the domain, or partially covers the interested areas. It is highly recommend to place more spatial points on the high interested area in order to interpolate the field values at the nodal positions.</p>
 <img alt="_images/FieldDrivenMesh_02.png" src="_images/FieldDrivenMesh_02.png" />
+</section>
 </section>
 <section id="geometry-field">
 <h2>Geometry Field<a class="headerlink" href="#geometry-field" title="Link to this heading">#</a></h2>
@@ -705,7 +752,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-field">Scaler Field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-field">Scaler Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-and-field-containers">Mesh and field containers</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-field">Geometry Field</a></li>
 </ul>
   </nav></div>

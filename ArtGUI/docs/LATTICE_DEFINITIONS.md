@@ -7,7 +7,7 @@ The Project panel has two definition sections. Artisan's integrated lattices rem
 Use **Add** to create a Mesh lattice or Conformal lattice, or **Import .mld** to load an existing definition.
 
 - **Mesh lattice:** select a mesh file or enter a mesh variable produced by an earlier workflow step, and set joint smoothing `k` (zero disables smoothing).
-- **Conformal lattice:** also choose an integrated lattice, a project custom unit cell, or a `.txt` definition. Match the unit cell's Hex/Tet reference domain to the volume mesh. Surface conformal workflows may use Quad or Triangle cells.
+- **Conformal lattice:** also choose an integrated lattice, a project custom unit cell, or a `.txt` definition. Match the unit cell's Hex/Tet reference domain to the volume mesh. Surface conformal workflows may use Quad cells.
 
 Click **Apply definition**, then **Add lattice step** to insert an `Add_Lattice` operation immediately after the definition. Set size, thickness, rotation, translation and Fill on that operation. Mesh/conformal operations start with Fill disabled. Their size is the computational search scale; start near the mesh element size and consult the manual for the intended mesh.
 

@@ -1,11 +1,11 @@
 # Geometry, supporting files, and INP viewing
 
-Restart the development app to load this update: close its window, stop the existing terminal process with Ctrl+C, then run `npm run dev` from the ArtGUI folder.
+Restart the development app to load this update: close its window, stop the existing terminal process with Ctrl+C, then run `npm run dev` from the ArtGUI_Tauri folder.
 
 ## Project panel
 
 - **Project settings** contains the workflow setup.
-- **Geometry** contains the workflow source plus any reference meshes you add. Use **+ Add** to attach a reference without changing the workflow source. Click a mesh to load it and inspect its properties. The **Load result** button also adds its file to this list.
+- **Geometry** contains the workflow source plus any reference meshes you add. Use **+ Add** to attach a reference without changing the workflow source. Click a mesh to load it and inspect its properties. The **Load result** button lists mesh `outfile` outputs from the current JSON workflow, including combined mesh/HDF5 Export steps. Each row shows the Export step and filename; missing files and formats without a preview reader are disabled. Choose an available STL, OBJ, PLY or INP file to preview it and add it to this list. **Open another result file…** opens the file picker, which also accepts HDF5 fields. With no mesh exports, **Load result** opens that picker directly. The list refreshes on each click, including after JSON edits.
 - **Supporting files** lets you attach CSV field data, point clouds, custom cell files, or other files. Attaching a file does not automatically connect it to a workflow operation; set that operation's file parameter separately.
 - Mesh properties show node/element counts for INP, triangle counts for surface files, and a visibility checkbox after loading. **Preview mesh** reloads a mesh. Supported mesh files attached under Supporting files can also be previewed.
 - **Remove from project** removes an attachment and its preview, leaving the disk file intact.
@@ -28,7 +28,7 @@ Supported flat Abaqus/meshio-style files contain explicit `*NODE` and `*ELEMENT`
 
 This first reader rejects higher-order elements, part/assembly instances, include files, generated node/element definitions, and unsupported coordinate systems with an explicit error. Export those models as a flat supported mesh before loading. Axisymmetric elements are displayed in their supplied coordinates, without revolving them into a 3D body.
 
-Limits: **128 MB per INP file**, **500,000 nodes**, **500,000 elements**, and **2 million processed faces**. INP loads use a cancellable background worker; there is no sampled INP Quick Preview.
+Full-model viewing has no application-imposed file-size, node-count, element-count or processed-face caps. Actual capacity depends on available memory, browser buffer capacity and graphics resources. INP loads use a cancellable background worker; there is no sampled INP Quick Preview.
 
 ## Validation
 

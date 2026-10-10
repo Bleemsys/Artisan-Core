@@ -80,3 +80,18 @@ Useful controls
 
 When generation is running, workflow editing is locked. You can continue to
 inspect the model in the viewer. See :doc:`generation` for progress and logs.
+
+Language and workspace size
+===========================
+
+Use **中文 / English** at the top right to switch languages. Your preference is
+saved locally. Switching preserves the current project, edits, view and running
+calculation. JSON keywords, file paths and backend logs retain their original text.
+
+Choose **Expand** above the viewer for more room to inspect a model. Choose
+**Restore layout** to return to the panels. Escape also restores the layout when
+no dialog or other active interaction needs it.
+
+The **Resources** tab beside Workflow shows memory and CPU use; see
+:doc:`generation`. Use **View field…** or the Project panel's **Fields** section
+to inspect an exported HDF5 field; see :doc:`viewer`.

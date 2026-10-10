@@ -1,0 +1,31 @@
+<!doctype html><meta charset="utf-8"><title>ArtGUI localization checks</title>
+<button id="language-toggle" translate="no">中文</button>
+<button id="save" title="Save">Save</button>
+<input id="draft" value="Save"><textarea id="json">{"name":"Save","Type":"Geometry"}</textarea>
+<span translate="no" id="filename">Save</span><pre id="log">Save</pre>
+<div class="step-card"><p id="summary">Save</p></div>
+<select id="select"><option>Front</option><option>Back</option></select>
+<div id="dynamic"></div><h1 id="result">Running…</h1>
+<script type="module">
+import {initLanguage,setLanguage} from '../ui/i18n.js';
+const $=id=>document.getElementById(id),checks=[];
+function assert(condition,name){if(!condition)throw Error(name);checks.push(name);}
+const flush=()=>new Promise(resolve=>setTimeout(resolve,0));
+try{
+  initLanguage();setLanguage('en');$('select').value='Back';
+  const input=$('draft');input.value='未提交的 draft';input.focus();input.setSelectionRange(2,4);
+  setLanguage('zh-CN');
+  assert($('save').textContent==='保存'&&$('save').title==='保存','text and tooltip translate');
+  assert($('select').value==='Back'&&$('select').selectedOptions[0].textContent==='后视','implicit option value and selection survive');
+  assert(input===$('draft')&&input.value==='未提交的 draft'&&input.selectionStart===2&&document.activeElement===input,'draft, node identity, focus and cursor survive');
+  assert($('json').value==='{"name":"Save","Type":"Geometry"}','JSON stays byte-for-byte unchanged');
+  assert(['filename','log','summary'].every(id=>$(id).textContent==='Save'),'user labels, logs and workflow summaries remain unchanged');
+  $('dynamic').innerHTML='<button title="Open">Open</button>';await flush();
+  assert($('dynamic').textContent==='打开','new UI translates automatically');
+  $('save').textContent='New';await flush();assert($('save').textContent==='新建','dynamic text changes translate');
+  setLanguage('en');
+  assert($('save').textContent==='New'&&$('save').title==='Save'&&$('dynamic').textContent==='Open','switch restores current English text');
+  setLanguage('zh-CN');setLanguage('en');assert($('select').value==='Back','repeated switches preserve selection');
+  $('result').textContent=`PASS: ${checks.length} browser checks`;const pre=document.createElement('pre');pre.textContent=checks.join('\n');document.body.append(pre);
+}catch(error){$('result').textContent='FAIL: '+error.message;}
+</script>

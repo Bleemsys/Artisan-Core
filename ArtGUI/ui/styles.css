@@ -2,3 +2,6 @@
 
 /* WebGL preview controls and background loading state */
 #model-canvas{touch-action:none;cursor:grab}#model-canvas:active{cursor:grabbing}.viewport-progress{min-height:30px;display:flex;align-items:center;gap:10px;padding:4px 14px;background:#f5f7f9;border-top:1px solid #e6ebef;color:#6c7b89;font-size:9px}.viewport-progress.hidden{display:none}.viewport-progress progress{width:150px;height:6px;accent-color:#2867d8}.viewport-progress .text-button{padding:4px 6px}
+
+/* Language switching keeps the current layout and reserves room for either label. */
+.top-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}.language-toggle{min-width:65px;white-space:nowrap}html[lang="zh-CN"] body{font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}html[lang="zh-CN"] .form-section h3{letter-spacing:.03em}html[lang="zh-CN"] .field-help{line-height:1.6}

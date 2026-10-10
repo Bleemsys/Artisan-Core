@@ -1,0 +1,35 @@
+{
+  "GeomBuild": {
+    "params": {
+      "Geomfile": ".//sample-obj//EngineBracket.STL"
+    },
+    "source": "Src/Artisan/command_schemas.py + Src/Artisan/Service.py (starter template; review paths and prior steps)"
+  },
+  "GeomFill": {
+    "params": {
+      "Fill": true
+    },
+    "source": "Src/Artisan/command_schemas.py + Src/Artisan/Service.py (starter template; review paths and prior steps)"
+  },
+  "Inv_Field": {
+    "params": {
+      "Scale": -1.0
+    },
+    "source": "Src/Artisan/command_schemas.py + Src/Artisan/Service.py (starter template; review paths and prior steps)"
+  },
+  "OP_GeomSDF_GridField": {
+    "params": {
+      "inp_meshfile": ".//sample-obj//EngineBracket.STL",
+      "out_gridfieldFile": "GeometrySDF"
+    },
+    "source": "Src/Artisan/command_schemas.py + Src/Artisan/Service.py (starter template; review paths and prior steps)"
+  },
+  "Proc_Mesh_Smoothing": {
+    "params": {
+      "inp_meshfile": ".//sample-obj//EngineBracket.STL",
+      "out_meshfile": ".//Test_results//EngineBracket_smoothed.stl",
+      "feature_size": 1.0
+    },
+    "source": "Src/Artisan/command_schemas.py + Src/Artisan/Service.py (starter template; review paths and prior steps)"
+  }
+}

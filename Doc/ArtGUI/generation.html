@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Generate models and read the log &#8212; Artisan 0.2.16 documentation</title>
+    <title>Generate models and read the log &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -336,6 +336,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-starting">Before starting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-progress">Follow progress</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finish-cancel-or-recover">Finish, cancel or recover</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitor-memory-and-cpu">Monitor memory and CPU</a></li>
 </ul>
             </nav>
         </div>
@@ -427,7 +428,10 @@ the preceding operation messages before changing parameters.</p>
 <p>Stopping a run retains partial output files. An existing STL on disk might
 therefore be incomplete or left over from an earlier run. Check the final
 status and file modification time before treating it as the current result.</p>
-<p>On success, choose <strong>Load result</strong> and select the file written by Export.
+<p>On success, choose <strong>Load result</strong> and select a mesh from the current workflow’s
+export list, or use <strong>Open another result file…</strong>. Missing files and formats
+without a supported preview are marked in the list. Use <strong>View field…</strong> for
+HDF5 outputs.
 If you generated to the same filename as an already loaded result, reload it;
 the viewer does not automatically refresh it. Hide the source or adjust
 opacity in <strong>Visibility</strong> to inspect the lattice clearly.</p>
@@ -435,6 +439,23 @@ opacity in <strong>Visibility</strong> to inspect the lattice clearly.</p>
 The log panel shows its path. Artisan’s own <code class="docutils literal notranslate"><span class="pre">.log</span></code> and <code class="docutils literal notranslate"><span class="pre">.prg</span></code> files use
 a unique run name in the engine’s selected working directory. These are
 separate from the project JSON and exported mesh.</p>
+</section>
+<section id="monitor-memory-and-cpu">
+<h2>Monitor memory and CPU<a class="headerlink" href="#monitor-memory-and-cpu" title="Link to this heading">#</a></h2>
+<p>Open <strong>Resources</strong> beside Workflow to check system usage and the separate
+Artisan and ArtGUI process groups. Choose a source and <strong>Memory</strong> or <strong>CPU</strong> to
+view the last 60 seconds. Readings update about once a second; brief peaks can
+be missed. These readings help explain a busy computer, not predict completion.</p>
+<p>Displayed HDF5 fields close before generation so Artisan can write their files.
+Their project references remain. After the run, use <strong>View field…</strong> or select a
+field reference to reopen it, including after a stopped or failed run.</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/resources.png"><img alt="ArtGUI 0.1.1 Resources tab showing system usage and ArtGUI memory history." src="../_images/resources.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Resources separates system usage from Artisan and ArtGUI. This example shows ArtGUI memory while the backend is idle.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 
@@ -487,6 +508,7 @@ separate from the project JSON and exported mesh.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#before-starting">Before starting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#follow-progress">Follow progress</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finish-cancel-or-recover">Finish, cancel or recover</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitor-memory-and-cpu">Monitor memory and CPU</a></li>
 </ul>
   </nav></div>
 

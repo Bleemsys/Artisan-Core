@@ -77,7 +77,10 @@ Stopping a run retains partial output files. An existing STL on disk might
 therefore be incomplete or left over from an earlier run. Check the final
 status and file modification time before treating it as the current result.
 
-On success, choose **Load result** and select the file written by Export.
+On success, choose **Load result** and select a mesh from the current workflow's
+export list, or use **Open another result file…**. Missing files and formats
+without a supported preview are marked in the list. Use **View field…** for
+HDF5 outputs.
 If you generated to the same filename as an already loaded result, reload it;
 the viewer does not automatically refresh it. Hide the source or adjust
 opacity in **Visibility** to inspect the lattice clearly.
@@ -86,3 +89,21 @@ ArtGUI retains a full run transcript in its application-data ``runs`` folder.
 The log panel shows its path. Artisan's own ``.log`` and ``.prg`` files use
 a unique run name in the engine's selected working directory. These are
 separate from the project JSON and exported mesh.
+
+Monitor memory and CPU
+======================
+
+Open **Resources** beside Workflow to check system usage and the separate
+Artisan and ArtGUI process groups. Choose a source and **Memory** or **CPU** to
+view the last 60 seconds. Readings update about once a second; brief peaks can
+be missed. These readings help explain a busy computer, not predict completion.
+
+Displayed HDF5 fields close before generation so Artisan can write their files.
+Their project references remain. After the run, use **View field…** or select a
+field reference to reopen it, including after a stopped or failed run.
+
+.. figure:: images/resources.png
+   :width: 100%
+   :alt: ArtGUI 0.1.1 Resources tab showing system usage and ArtGUI memory history.
+
+   Resources separates system usage from Artisan and ArtGUI. This example shows ArtGUI memory while the backend is idle.

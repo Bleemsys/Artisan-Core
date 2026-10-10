@@ -8,13 +8,18 @@ and inspecting the resulting meshes. You can open an existing workflow, change
 its parameters, and compare the source geometry with the generated model in
 one window.
 
-This guide covers **ArtGUI 0.1.0, the Artisan Workbench interface**. It describes
+This guide covers **ArtGUI 0.1.1, the Artisan Workbench interface**. It describes
 the workbench with a Project panel, a central 3D Workspace and Workflow, and a
 Properties panel. The older ribbon-style ArtGUI interface has different controls.
 
 No JSON editing is needed for the first walkthrough. Start with
 :doc:`ArtGUI/quickstart`, then use the other chapters as a reference when you
 need them.
+
+Use **中文 / English** at the top right to switch the interface language.
+This guide keeps English button names so you can find the same controls in either
+language. Screenshots illustrate the core layout; newer controls are described
+in the relevant chapters.
 
 .. figure:: ArtGUI/images/workbench.png
    :width: 100%

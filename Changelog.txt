@@ -166,6 +166,13 @@ This is simple change log recording the major and minor updates
 - Add -g option 
 - Doc updates
 
+0.2.17
+- Bug fix
+- update algorithm for conformal lattice calculation
+- update new keywords for general purpose conformal lattice auto generation
+- update the export keywords
+- ArtGUI 0.1.1
+- Doc updates
 
 
 

@@ -3,6 +3,13 @@ API Interface
 
 Users have the flexibility to interact with Artisan using either Python or C++ through its API interface. This interface allows Artisan to be integrated as a computational engine backend or component for various application development needs. The Artisan API is designed to be compatible with keywords for simplicity and consistency. Users can access its functionalities through keyword-based inputs and retrieve the geometry (e.g., vertices and faces) at any design stage. The examples in this section can be found under the :code:`Interface` folder.
 
+``Export`` also supports HDF5 sampled fields. A mesh ``outfile`` alone keeps
+the existing behavior. An ``outfile`` ending in ``.h5``/``.hdf5`` selects field
+output; an optional ``fieldfile`` adds field output alongside a mesh. Optional
+``GridFieldIDs`` selects fitted fields from the grid-field container. See
+:ref:`gridfieldcontainer` for the HDF5 format, partition metadata, readback,
+SDK return values and Nuitka packaging requirements.
+
 ==========
 Python API
 ==========

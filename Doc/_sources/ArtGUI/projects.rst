@@ -127,3 +127,12 @@ The **Post process** section exposes the workflow's post-processing options.
 In the engine-bracket example, **Combine Meshes** and **Remove Isolated Parts**
 are enabled. Removing isolated parts can remove disconnected components, so
 review the result if the design intentionally contains separate pieces.
+
+Field references
+================
+
+Use **Fields → Add** to open an exported Artisan HDF5 field. Saving the project
+keeps its file path, selected field and block under ``ArtGUI.fields``. The field
+data remains in the external file. Reopen it by selecting its project entry;
+slice, palette, opacity and probe settings are not saved in the project.
+See :doc:`viewer` for the viewing controls.

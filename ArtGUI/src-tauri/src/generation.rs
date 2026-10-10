@@ -19,6 +19,11 @@ pub struct GenerationState {
     active: Mutex<Option<(String, Arc<AtomicBool>, Option<u32>)>>,
     logs: Mutex<HashMap<String, PathBuf>>,
 }
+impl GenerationState {
+    pub fn resource_run(&self) -> Option<(String, Option<u32>)> {
+        self.active.lock().ok()?.as_ref().map(|(id, _, pid)| (id.clone(), *pid))
+    }
+}
 #[derive(Clone, Serialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct RunUpdate {
@@ -456,6 +461,10 @@ pub async fn generate_workflow(
         }
         fs::write(&temp, contents).map_err(|e| format!("Could not prepare workflow: {e}"))?;
         let result = (|| {
+            // Hold the guard through process exit, including failure/cancellation.
+            // Closing must finish before Artisan can overwrite any HDF5 output.
+            let fields = app.state::<super::field_reader::FieldFiles>().inner().clone();
+            let _field_generation = fields.prepare_generation()?;
             let child = hidden(
                 backend_command(&exe, python_path.as_deref(), &temp)
                     .current_dir(&working_dir)

@@ -1,0 +1,36 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {"Domain": [[0, 8], [0, 8], [0, 8]], "Shape": "Box"},
+    "Geomfile": "",
+    "Rot": [0, 0, 0],
+    "res": [0.2, 0.2, 0.2],
+    "Padding": 2,
+    "onGPU": false,
+    "memorylimit": 104857600,
+    "JsonWorkDir": false
+  },
+  "WorkFlow": {
+    "1": {
+      "Add_Lattice": {
+        "la_name": "BCCubic",
+        "size": [2, 2, 2],
+        "thk": 0.2,
+        "Rot": [0, 0, 0],
+        "Trans": [0, 0, 0],
+        "Inv": false,
+        "Fill": true,
+        "Cube_Request": {}
+      }
+    },
+    "2": {"Export": {"outfile": "Test_results/export_snapshots/initial.stl"}},
+    "3": {"OP_Expr_OffsetField": {"expr": "0.1 * sin(2 * pi * x / 4)", "Fill": true}},
+    "4": {"Export": {"outfile": "Test_results/export_snapshots/final.stl"}}
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

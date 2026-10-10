@@ -1,3 +1,4 @@
+import {translate as t} from './i18n.js';
 import {operationIcon} from './operation-icons.js';
 
 const common = ['Add_Lattice','Add_Shell','Boundary_Inflation','Proc_Mesh_Trim','Gen_BasicCartesianHexMesh','Export'];
@@ -28,7 +29,7 @@ export function openOperationPicker({operations, steps, selected, showModal, clo
   const selectedIndex=steps.findIndex(s=>s.key===selected);position.value=selectedIndex>=0?String(selectedIndex+1):'end';
   function render(){
     const terms=query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    visible=terms.length?operations.filter(o=>{const text=[o.label,o.keyword,o.category,o.description,...(o.searchTerms||[])].join(' ').toLowerCase();return terms.every(t=>text.includes(t));}):
+    visible=terms.length?operations.filter(o=>{const text=[o.label,t(o.label),o.keyword,o.category,t(o.category),o.description,t(o.description),...(o.searchTerms||[])].join(' ').toLowerCase();return terms.every(t=>text.includes(t));}):
       tab==='all'?operations.filter(o=>!category||o.category===category):(tab==='common'?common:tab==='recent'?recent:favorites).map(k=>known.get(k)).filter(Boolean);
     if(!visible.some(o=>o.keyword===active))active=visible[0]?.keyword||'';
     modal.querySelectorAll('[data-picker-tab]').forEach(b=>b.setAttribute('aria-pressed',String(!terms.length&&b.dataset.pickerTab===tab)));

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Conformal Lattice 02 &#8212; Artisan 0.2.16 documentation</title>
+    <title>Conformal Lattice 02 &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -172,7 +172,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -322,7 +332,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-options-for-the-polycube-workflow">New Options for the Polycube Workflow</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polycube-generation">PolyCube Generation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polycube-hex-meshing-cartesianfit">Polycube Hex Meshing: CartesianFit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cartesian-meshing">Cartesian Meshing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-back-transformation">Pull back Transformation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation">Recommendation</a></li>
@@ -356,6 +368,64 @@ document.write(`
 <p class="admonition-title">Warning</p>
 <p>This feature requires users to carefully check up the output of every single step, and make sure the results satisfy the requirements.</p>
 </div>
+<section id="new-options-for-the-polycube-workflow">
+<span id="polycube-workflow-additions"></span><h2>New Options for the Polycube Workflow<a class="headerlink" href="#new-options-for-the-polycube-workflow" title="Link to this heading">#</a></h2>
+<p>The updated workflow can generate an adaptive tetrahedral background mesh,
+deform it into a polycube, and improve the fitted hexahedral mesh before mapping
+it back to the original shape. The main keywords are summarized below.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Recent additions</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Keyword</p></th>
+<th class="head"><p>Purpose and main controls</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Gen_TetMesh_Adaptive</span></code></p></td>
+<td><p>Optional first step for generating the background Tet mesh. <code class="code docutils literal notranslate"><span class="pre">sampling_size</span></code> controls the initial sampling; <code class="code docutils literal notranslate"><span class="pre">hsiz</span></code> controls the target element size. Adaptive surface sizing is enabled with <code class="code docutils literal notranslate"><span class="pre">adaptive:</span> <span class="pre">true</span></code> and controlled by <code class="code docutils literal notranslate"><span class="pre">surface_size</span></code> and <code class="code docutils literal notranslate"><span class="pre">feature_size</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_PolyCube</span></code></p></td>
+<td><p>Deforms the Tet mesh with faster energy and derivative calculations. New optional controls are <code class="code docutils literal notranslate"><span class="pre">minimum_jacobian</span></code> (default 0.001), <code class="code docutils literal notranslate"><span class="pre">continuation_steps</span></code> (3), <code class="code docutils literal notranslate"><span class="pre">ftol</span></code> (1e-8), <code class="code docutils literal notranslate"><span class="pre">gtol</span></code> (1e-6), and <code class="code docutils literal notranslate"><span class="pre">quality_report</span></code>. The optimizer limits steps to prevent local Tet inversions and increases the cubeness weight gradually.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">Gen_PolyCubeHexMesh</span></code></p></td>
+<td><p>Generates Hex elements directly from the deformed Tet mesh. It uses a basic Cartesian grid, fits the boundary, and improves cell shape and spacing. <code class="code docutils literal notranslate"><span class="pre">cell_size</span></code> controls mesh density; <code class="code docutils literal notranslate"><span class="pre">quality_iterations</span></code> controls the improvement stage; <code class="code docutils literal notranslate"><span class="pre">preserve_features</span></code> enables feature-aware fitting.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Use <code class="code docutils literal notranslate"><span class="pre">Gen_PolyCubeHexMesh</span></code> in place of the basic Cartesian meshing step
+when boundary fitting and quality improvement are wanted. For example, insert
+the following operation into the <code class="code docutils literal notranslate"><span class="pre">WorkFlow</span></code> section:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_PolyCubeHexMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube.inp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube_mesh.med&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cell_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;quality_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;preserve_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_scaled_jacobian&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube_hex_quality.json&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Continue with <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_MappingHexElem</span></code> and the conformal lattice
+generation steps described below. Keep the original and deformed Tet meshes
+with identical vertex numbering and element connectivity for this mapping.</p>
+<p>The two quality limits have different meanings: <code class="code docutils literal notranslate"><span class="pre">minimum_jacobian</span></code>
+limits each Tet’s signed volume relative to its original volume, while
+<code class="code docutils literal notranslate"><span class="pre">min_scaled_jacobian</span></code> controls Hex shape quality. Inspect the quality
+reports before mapping; a valid polycube mesh may still be an unconverged
+partial result, and the mapped Hex mesh needs a separate quality check.</p>
+<p>A complete combined example is provided in
+<code class="code docutils literal notranslate"><span class="pre">.//Test_json//ConformalLattice//HexConformal//HexConformal_AdaptiveTet_CartesianFit_AllSteps.json</span></code>.
+The detailed parameter descriptions and the original Cartesian workflow remain
+in the following sections.</p>
+</section>
 <section id="polycube-generation">
 <h2>PolyCube Generation<a class="headerlink" href="#polycube-generation" title="Link to this heading">#</a></h2>
 <p>This is the first step in the process. Polycube generation transforms the given tetrahedral mesh into a near-polycube shape. At a later stage, users can utilize other meshing tools available in Artisan, such as Cartesian meshers, to create a more fitted mesh for this transformed shape. Here uses the crank handle model as example to create the polycube shape. The example file is <code class="code docutils literal notranslate"><span class="pre">HexConformal_Step01_Polycube.json</span></code>.</p>
@@ -371,11 +441,16 @@ document.write(`
 <span class="w">          </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Proc_Mesh_PolyCube&quot;</span><span class="p">:{</span>
 <span class="w">                   </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//crank_handle.inp&quot;</span><span class="p">,</span>
 <span class="w">                   </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube.inp&quot;</span><span class="p">,</span>
-<span class="w">                   </span><span class="nt">&quot;cube&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5000000.0</span><span class="p">,</span>
-<span class="w">                   </span><span class="nt">&quot;smoothness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                   </span><span class="nt">&quot;distortion_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                   </span><span class="nt">&quot;distortion_volume&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">                   </span><span class="nt">&quot;max_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">                   </span><span class="nt">&quot;cube&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">500.0</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;smoothness&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;distortion_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;distortion_volume&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;max_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;minimum_jacobian&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;continuation_steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;ftol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e-8</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;gtol&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1e-6</span><span class="p">,</span>
+<span class="w">                   </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube_quality.json&quot;</span>
 <span class="w">                   </span><span class="p">}</span>
 <span class="w">              </span><span class="p">},</span>
 <span class="w">          </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -394,7 +469,11 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The JSON configuration above performs two tasks: first, it generates a polycube shape using the provided tetrahedral mesh, and second, it extracts the exterior triangular mesh as an STL file for subsequent processing. The keyword <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_PolyCube</span></code> drives the deformation of the input mesh into a polycube shape. This process solves an optimization problem based on an objective function that combines shape cubeness, distortion minimization, and surface smoothness. The current implementation uses <code class="code docutils literal notranslate"><span class="pre">L-BFGS-B</span></code> solver in <code class="code docutils literal notranslate"><span class="pre">scipy</span></code> to solve this equation. The parameters for this keyword are explained in detail below.</p>
+<p>The JSON configuration above generates a polycube shape and extracts its exterior
+triangular mesh. <code class="code docutils literal notranslate"><span class="pre">Proc_Mesh_PolyCube</span></code> combines cubeness, distortion and surface
+smoothness in a feasible L-BFGS optimizer. The C++ implementation caches reference
+geometry and computes finite-difference derivatives from only the affected faces
+and tetrahedra. Coordinates are normalized internally and restored before export.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
 <col style="width: 30.0%" />
@@ -416,23 +495,210 @@ document.write(`
 <td><p>a float number controlling the weight of cubeness in the deformation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">smoothness</span></code></p></td>
-<td><p>a float number controlling the weight of smoothness in the deformation. The recommended value is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.</p></td>
+<td><p>Nonnegative surface-smoothness weight. The example uses 10; tune relative to the other weights.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">distortion_angle</span></code></p></td>
-<td><p>a float number controlling the weight of shape distortion. The recommended value is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.</p></td>
+<td><p>Nonnegative shape-distortion weight. The example uses 10.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">distortion_volume</span></code></p></td>
-<td><p>a float number controlling the weight of volumetric distortion. The recommended value is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.</p></td>
+<td><p>Nonnegative volume-distortion weight. The example uses 10.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">max_iteration</span></code></p></td>
-<td><p>The maximum number of iteration.</p></td>
+<td><p>Total iteration budget across continuation stages; stages do not multiply this budget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">minimum_jacobian</span></code></p></td>
+<td><p>Optional minimum signed volume ratio to each original tetrahedron, strictly between 0 and 1; default 0.001. This is not a scaled Jacobian or an absolute mesh volume.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">continuation_steps</span></code></p></td>
+<td><p>Optional positive integer; default 3. Cubeness increases geometrically from 1% to 100% of the requested weight. Use 1 to apply the target weight immediately. The stage count is capped by the iteration budget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">ftol</span></code></p></td>
+<td><p>Optional relative energy-reduction tolerance; default 1e-8. The objective is divided by max(1, all target weights) before applying this tolerance. A heavily restricted feasible step cannot by itself trigger this stopping rule. Set 0 to disable the small-positive-reduction criterion.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">gtol</span></code></p></td>
+<td><p>Optional gradient infinity-norm tolerance; default 1e-6. Applies to normalized coordinates and the scaled objective.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
+<td><p>Optional JSON report path; default empty (no report file). Its parent directory must exist.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>Every accepted step is checked along its entire path using a cubic Bernstein
+bound on each tetrahedron’s relative determinant. When thin tetrahedra restrict a
+step, a local direction adjustment allows other regions to keep moving. The same
+determinant check also applies to adjusted directions. The original reference
+mesh and its vertex connectivity remain fixed throughout all stages.</p>
+<p>Invalid input (degenerate elements, non-manifold faces, or folded adjacent tets)
+is rejected before export. These checks and the determinant floor prevent local
+inversions; they do not certify the absence of collisions between distant mesh
+regions. The keyword does not repair an already folded input mesh.</p>
+<p>On an iteration limit or stalled search, the keyword returns a valid partial
+deformation and logs a warning. Inspect its alignment before generating hexes.
+The report distinguishes <code class="code docutils literal notranslate"><span class="pre">converged</span></code> from <code class="code docutils literal notranslate"><span class="pre">valid</span></code>, and contains stage
+energies, stopping reasons, minimum volume ratio, volume-ratio percentiles
+(0, 5, 50, 95, 100), the worst tetrahedron indices (zero-based), cubeness and mean
+axis-deviation angle, accepted-step history, backtracks and elapsed time.
+Convergence is a numerical stopping condition, not a guarantee of a perfect
+polycube. Extremely large cubeness weights can force the solution against the
+determinant floor; start with the balanced weights shown above.</p>
+<p>Existing JSON files remain accepted. To use the Python safeguards from a packaged
+<code class="code docutils literal notranslate"><span class="pre">ArtisanMain.exe</span></code>, rebuild that executable after updating the source; replacing
+<code class="code docutils literal notranslate"><span class="pre">Snippetslib.pyd</span></code> alone updates only the native calculations.</p>
 <p>Below shows comparison between the original crank handle model, and the generated polycube shape of the given mesh. The exterior triangle mesh will be then used for creating Cartesian mesh.</p>
 <img alt="_images/crank_handle.png" src="_images/crank_handle.png" />
 <img alt="_images/PolyCube.png" src="_images/PolyCube.png" />
+</section>
+<section id="polycube-hex-meshing-cartesianfit">
+<h2>Polycube Hex Meshing: CartesianFit<a class="headerlink" href="#polycube-hex-meshing-cartesianfit" title="Link to this heading">#</a></h2>
+<p>The keyword <code class="code docutils literal notranslate"><span class="pre">Gen_PolyCubeHexMesh</span></code> generates Hex elements from a valid
+<strong>deformed polycube Tet mesh</strong>. Version 2 uses the same grid generator and
+cell-selection code as <code class="code docutils literal notranslate"><span class="pre">Gen_BasicCartesianHexMesh</span></code>, with its direct
+projection disabled. It then fits the boundary and explicitly improves cell
+shape and spacing. The legacy keyword itself is unchanged.</p>
+<p>Bounds and the exterior surface come from the input Tet mesh. An intermediate
+STL is optional. The combined example is
+<code class="code docutils literal notranslate"><span class="pre">.//Test_json//ConformalLattice//HexConformal//HexConformal_AdaptiveTet_CartesianFit_AllSteps.json</span></code>.
+Relative paths are resolved from <code class="code docutils literal notranslate"><span class="pre">Src</span></code>. The example is schema-validated;
+its complete crank-handle pipeline has not been executed in these regressions.
+The original and deformed Tet meshes used in the later mapping step must have
+matching connectivity. Folded background tetrahedra must be repaired upstream.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;Gen_PolyCubeHexMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;inp_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube.inp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube_mesh.med&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cell_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;numCoverNodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_iteration&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;preserve_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;feature_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">45.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min_scaled_jacobian&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;surface_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//crank_handle_polycube_hex_quality.json&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">CartesianFit parameters</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">inp_meshfile</span></code>, <code class="code docutils literal notranslate"><span class="pre">out_meshfile</span></code></p></td>
+<td><p>Required Tet input and Hex output, as paths or mesh-container IDs. Hex files need a volume format such as INP, MED, VTK or VTU.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">cell_size</span></code></p></td>
+<td><p>Required positive scalar or three positive sizes in geometry units. Grid counts are rounded up and spacing adjusted down to the automatic bounds. Anisotropic requested sizes are respected by the optimization target.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">method</span></code>, <code class="code docutils literal notranslate"><span class="pre">bounds</span></code></p></td>
+<td><p><code class="code docutils literal notranslate"><span class="pre">CartesianFit</span></code> and <code class="code docutils literal notranslate"><span class="pre">Auto</span></code> only; both remain the defaults. Bounds ignore unused Tet vertices. Manual rotated grids are not exposed by this keyword.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">numCoverNodes</span></code></p></td>
+<td><p>Integer from -1 to 8, using the legacy cell-selection rule. Default -1 selects by cell centre and preserves the earlier keyword’s selection convention. Values 0..8 select cells with at least that many corners inside/on the geometry; 0 retains the bounding grid. Use 2 to match that setting in legacy workflows. Selection choices can change topology or make fitting impossible.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">max_iteration</span></code></p></td>
+<td><p>Maximum boundary-fitting iterations; default 100. Fitting also distributes boundary displacement through interior nodes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">quality_iterations</span></code></p></td>
+<td><p>Maximum additional shape/spacing optimization iterations after a successful fit; default 40. Set 0 for fitting only. Optimization may stop early when no admissible improving move is found.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">preserve_features</span></code></p></td>
+<td><p>Default true. Associates boundary nodes with surface patches, feature curves and corners. Associations are local heuristics; the report identifies unmatched input corners. False uses unrestricted closest-surface fitting without feature associations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">feature_angle</span></code></p></td>
+<td><p>Sharp-edge normal-angle threshold in degrees; default 45, strictly between 0 and 180. Smaller angles detect more features, including possible triangulation noise.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">size_weight</span></code></p></td>
+<td><p>Nonnegative weight on squared log-volume error relative to the initial Cartesian cell volume; default 0.1. Shape improvement remains active when this is 0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">smoothness</span></code></p></td>
+<td><p>Positive weight, default 0.05. Penalizes changes to seed edge vectors during fitting and differences in neighbouring log-volumes during quality improvement.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">min_scaled_jacobian</span></code></p></td>
+<td><p>Quality floor at 27 sample points per cell; default 0.1, strictly between 0 and 1. The quality stage also retains the fitted mesh’s minimum, allowing only 1e-9 numerical slack.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">surface_tolerance</span></code></p></td>
+<td><p>Maximum sampled surface distance in both directions, in geometry units. Default is one quarter of the smallest requested cell size. Samples include vertices, edge midpoints and face centres; this is not a Hausdorff bound.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">max_cells</span></code></p></td>
+<td><p>Maximum cells in the entire bounding grid before selection; default 250000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
+<td><p>Optional JSON path; default empty. Its parent must exist. Diagnostics are also available as <code class="code docutils literal notranslate"><span class="pre">WorkFlow.LastHexMeshReport</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The seed is compacted to remove unused vertices. Boundary faces are found by
+face incidence, and closed-manifold checks and boundary component/Euler
+signatures guard against obvious topology changes. The selected connectivity
+stays fixed throughout fitting and optimization.</p>
+<p>Fitting uses bidirectional closest-point distances and a sparse deformation
+solve. Target triangles are grouped into patches across non-sharp edges. Patch
+incidence on the seed boundary distinguishes true geometric features from
+Cartesian staircase edges. Feature curves are divided at geometric corners.</p>
+<p>Exact projection of every staircase boundary face onto a plane can collapse
+hexes when connectivity is fixed. Quality-stage projection therefore allows
+patch nodes within half the surface tolerance of their assigned patch and
+curve nodes within one quarter of that tolerance of their assigned curve.
+Matched corners have exact target positions in proposed moves. During guarded
+fitting, partial moves may leave corner residuals; acceptance allows these
+within the same quarter-tolerance feature band. The report gives actual feature
+and corner residuals. This is tolerance-controlled feature fitting, not a claim
+of exact feature preservation. Every accepted final mesh must still satisfy
+the bidirectional surface tolerance. Unmatched features can require a finer grid.</p>
+<p>The second stage runs even when no boundary fitting was needed. Its objective
+combines mean-ratio shape distortion, squared log-volume error, a smooth
+worst-cell emphasis and neighbouring volume grading. Jacobians are measured
+relative to the initial grid spacing, so intentional anisotropy is not treated
+as an error. Analytic derivatives drive projected, preconditioned descent.
+Every accepted quality move lowers this objective while preserving the fit
+tolerance and the fitted minimum scaled Jacobian. This does not guarantee that
+every individual quality statistic improves or that the global optimum is found.</p>
+<p>Both stages shorten or reject moves that violate the quality floor or a
+conservative whole-cell determinant check. This check requires all 27 Bernstein
+coefficients of the triquadratic determinant to be positive with a numerical
+margin. It can reject a valid cell; checking corner determinants alone would
+be insufficient. Geometry and optimization use normalized float64 coordinates.
+Open3D chooses candidate triangles in float32; closest points on those triangles
+are recomputed in float64. Reverse surface queries triangulate boundary quads,
+which approximates warped bilinear faces.</p>
+<p>Reports include initial, fitted and final quality, surface errors, feature
+associations and residuals, fitting/optimization stop reasons, objective change,
+and iteration/backtracking counts. Aspect ratio uses the ratio of largest to
+smallest Jacobian singular values, sampled at 27 points. Cell volumes use exact
+tensor Simpson integration of the determinant; their coefficient of variation
+measures size distribution. Aspect ratio complements scaled Jacobian: an
+elongated orthogonal box still has scaled Jacobian one.</p>
+<p>If fitting fails, the operation writes its failure report when requested and
+raises an error without replacing the output mesh. Invalid inputs or invalid
+initial topology raise errors before fitting. If fitting succeeds but further
+quality improvement is blocked, it returns the last acceptable fitted mesh
+and records why optimization stopped.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This implementation does not add padding, change connectivity, perform
+cuboid decomposition, or optimize the later mapping to the original shape.
+It does not certify global non-overlap or resolve features below the grid
+spacing. Local validity of the polycube Hex mesh does not guarantee validity
+after mapping. Inspect that mesh separately. Reducing cell size can help;
+fixed-connectivity fitting is not guaranteed to succeed at every resolution.
+<code class="code docutils literal notranslate"><span class="pre">CuboidLayout</span></code> is not available.</p>
+</div>
+<p>Surface fitting and distortion objectives are informed by Li et al. (2021),
+<em>Interactive All-Hex Meshing via Cuboid Decomposition</em>, sections 4.3-4.4,
+<a class="reference external" href="https://arxiv.org/abs/2109.06279">https://arxiv.org/abs/2109.06279</a>. This is an independent Cartesian implementation,
+not a reproduction of the complete paper’s algorithm.
+The whole-cell determinant test follows the Bernstein-bound principle in
+Johnen, Weill and Remacle (2017), <em>Robust and efficient validation of the linear
+hexahedral element</em>, <a class="reference external" href="https://doi.org/10.1016/j.proeng.2017.09.809">https://doi.org/10.1016/j.proeng.2017.09.809</a>.</p>
 </section>
 <section id="cartesian-meshing">
 <h2>Cartesian Meshing<a class="headerlink" href="#cartesian-meshing" title="Link to this heading">#</a></h2>
@@ -606,7 +872,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-options-for-the-polycube-workflow">New Options for the Polycube Workflow</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polycube-generation">PolyCube Generation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polycube-hex-meshing-cartesianfit">Polycube Hex Meshing: CartesianFit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cartesian-meshing">Cartesian Meshing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pull-back-transformation">Pull back Transformation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation">Recommendation</a></li>

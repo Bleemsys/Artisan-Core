@@ -1,0 +1,33 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {"Domain": [[0.0, 4.0], [0.0, 4.0], [0.0, 4.0]], "Shape": "Box"},
+    "Geomfile": "",
+    "Rot": [0.0, 0.0, 0.0],
+    "res": [0.25, 0.25, 0.25],
+    "Padding": 2,
+    "onGPU": false,
+    "memorylimit": 1073741824
+  },
+  "WorkFlow": {
+    "1": {"ReadGridField": {
+      "inp_GridFieldFile": "./Test_results/HDF5Export.h5",
+      "Gridfield_ID": "ReloadedField",
+      "FieldID": "SizeField"
+    }},
+    "2": {"OP_ExprOperation_GridField": {
+      "expression": "ReloadedField + 10",
+      "out_gridFieldFile": "OffsetField"
+    }},
+    "3": {"Export": {
+      "outfile": "./Test_results/HDF5Export_Reloaded.h5",
+      "GridFieldIDs": ["OffsetField"]
+    }}
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

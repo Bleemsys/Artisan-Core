@@ -1,5 +1,4 @@
 // Abaqus mesh reader for flat, explicit-node Artisan/meshio exports.
-const MAX_ITEMS=500000, MAX_FACES=2000000;
 const shapes={
   line:{count:2,edges:[[0,1]]},tri:{count:3,faces:[[0,1,2]]},quad:{count:4,faces:[[0,1,2,3]]},
   tet:{count:4,solid:true,faces:[[0,2,1],[0,1,3],[1,2,3],[2,0,3]]},
@@ -38,24 +37,23 @@ export function parseInp(text,progress=()=>{}){
         if(values.length<3||values.length>4||values.some(s=>!s))throw Error('Expected node ID, X, Y, and optional Z.');
         const id=idValue(values[0]),p=values.slice(1).map(v=>Number(v.replace(/[dD]/,'e')));if(p.length===2)p.push(0);
         if(!p.every(Number.isFinite)||nodes.has(id))throw Error('Invalid coordinates or duplicate node ID.');
-        nodes.set(id,p);if(nodes.size>MAX_ITEMS)throw Error('INP preview is limited to 500,000 nodes.');
+        nodes.set(id,p);
       }else if(mode==='ELEMENT'){
         pending.push(...values.map(idValue));
         if(pending.length>shape.count+1)throw Error(`Expected ${shape.count} nodes for ${type}.`);
-        if(pending.length===shape.count+1){const [id,...ids]=pending;if(elementIds.has(id))throw Error('Duplicate element ID.');elementIds.add(id);elements.push({id,type,nodes:ids,set:elset});types[type]=(types[type]||0)+1;pending=[];if(elements.length>MAX_ITEMS)throw Error('INP preview is limited to 500,000 elements.');}
+        if(pending.length===shape.count+1){const [id,...ids]=pending;if(elementIds.has(id))throw Error('Duplicate element ID.');elementIds.add(id);elements.push({id,type,nodes:ids,set:elset});types[type]=(types[type]||0)+1;pending=[];}
       }
       if(++recordCount%20000===0)progress('Reading INP nodes and elements…');
     }catch(e){throw Error(`INP line ${lineNumber}: ${e.message}`);}
   }
   if(pending.length)throw Error('Incomplete final element.');
   if(!nodes.size||!elements.length)throw Error('No explicit nodes and supported elements found in this INP file.');
-  const solidFaces=new Map(),shellFaces=[],beamIds=[],used=new Set();let faceCount=0;
+  const solidFaces=new Map(),shellFaces=[],beamIds=[],used=new Set();
   for(const element of elements){
     const s=shapeFor(element.type),ids=element.nodes;
     for(const id of ids){if(!nodes.has(id))throw Error(`Element ${element.id} references missing node ${id}.`);used.add(id);}
     if(s.edges){for(const edge of s.edges)beamIds.push(edge.map(i=>ids[i]));continue;}
     for(const face of s.faces){
-      if(++faceCount>MAX_FACES)throw Error('INP preview exceeds the 2-million-face processing limit.');
       const f=face.map(i=>ids[i]);
       if(s.solid){const key=[...f].sort((a,b)=>a-b).join(',');const existing=solidFaces.get(key);if(existing)existing.count++;else solidFaces.set(key,{ids:f,count:1});}
       else shellFaces.push(f);

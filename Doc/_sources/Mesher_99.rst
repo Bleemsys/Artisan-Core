@@ -133,7 +133,46 @@ Here the parameter :code:`MultiSize` contains three setup parameters:
    * - :code:`Data` 
      - when :code:`"Type": "Field_Attractor"`, it shall be list with 2 elements, the first element defines the lower bound of field that used to be attract mesh nodes, the second one defines the scale to the intensity. 
    * - :code:`FieldFile`
-     - This defines the field file path, i.e. csv file. The field file shall contains the x, y, z and field value. Use shall refer to :ref:`Field Operation<_chapter-FieldOpt>` for file format details. 
+     - A point-field CSV path or a fitted scalar grid-field ID. CSV points are fitted onto the calculation grid. A grid-field ID created with :code:`OP_Fit_GridField`, :code:`ReadGridField` or another grid-field operation uses its saved coordinates and scalar values directly. See :ref:`gridfieldcontainer`.
+
+Mesh and field containers
+-------------------------
+
+:code:`Gen_BasicCartesianHexMesh_MultiSize` uses the mesh interface for both
+:code:`Geomfile` and :code:`Meshfile`. :code:`Geomfile` may name a triangle mesh
+in the mesh container or a geometry file. :code:`Meshfile` may name the generated
+hex mesh in the mesh container or an output file. The generated mesh ID can be
+used by a later mesh-processing or lattice operation, or written to disk with
+:code:`ExportMeshID`.
+
+For :code:`Field_Attractor`, the field interface resolves :code:`FieldFile`.
+Fitted grid fields keep their own grid shape, origin and spacing, which may
+differ from the lattice calculation grid. Gradients use the physical field
+coordinates. Nodes sample the lower grid point along each axis, including the
+last grid point at the upper domain boundary. Nodes outside a stored field's
+domain stay fixed. Invalid scalar values or inconsistent grid metadata are
+reported as errors.
+
+Point-field CSV inputs retain the existing fitting and point-cloud coverage
+rule for Cartesian generation. A named fitted grid has its grid domain as its
+coverage; it does not retain the original cloud's sampling gaps. Thus a sparse
+CSV and a fitted grid may affect different nodes. The shared deformation
+implementation is also used by :code:`Proc_Mesh_FieldDrivenMesh` and the
+Cartesian stage of :code:`Gen_TetBasicMesh_HexSplit`.
+
+Constant fields and thresholds above all sampled values produce no movement.
+When the selected values all equal one value but have a nonzero gradient,
+selected nodes use the full attraction intensity. The existing displacement
+formula is retained. Correct physical spacing can change the attraction
+direction for anisotropic grids compared with older versions that assumed
+equal spacing on all axes.
+
+The example
+:code:`.\\Test_json\\MeshLattice\\Box_FieldAttractor_MultiSize\\Box_FA_MS_Containers.json`
+demonstrates :code:`ReadMesh` -> :code:`OP_Fit_GridField` ->
+:code:`Gen_BasicCartesianHexMesh_MultiSize` -> :code:`ExportMeshID`.
+It reads the geometry into :code:`CubeGeom`, fits :code:`SizeField`, generates
+:code:`BoxHexMesh` in memory, then exports that mesh. Run it from :code:`Src`.
 
 
 .. image:: ./pictures/FieldDrivenMesh_01.png

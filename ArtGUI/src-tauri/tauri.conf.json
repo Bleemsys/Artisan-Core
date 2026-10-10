@@ -1,10 +1,13 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Artisan Workbench",
-  "version": "0.1.0",
+  "mainBinaryName": "ArtGUI",
+  "version": "../package.json",
   "identifier": "org.artisan.workbench",
   "build": {
-    "frontendDist": "../ui"
+    "frontendDist": "../ui",
+    "beforeDevCommand": "node scripts/sync-version.cjs",
+    "beforeBuildCommand": "node scripts/sync-version.cjs"
   },
   "app": {
     "withGlobalTauri": true,
@@ -48,6 +51,31 @@
     "shortDescription": "Build and run Artisan workflows",
     "icon": [
       "icons/icon.ico"
-    ]
+    ],
+    "resources": {
+      "resources/artisan/": "artisan/",
+      "resources/hdf5/api-ms-win-crt-convert-l1-1-0.dll": "api-ms-win-crt-convert-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-environment-l1-1-0.dll": "api-ms-win-crt-environment-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-filesystem-l1-1-0.dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-heap-l1-1-0.dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-math-l1-1-0.dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-runtime-l1-1-0.dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-stdio-l1-1-0.dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-string-l1-1-0.dll": "api-ms-win-crt-string-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-time-l1-1-0.dll": "api-ms-win-crt-time-l1-1-0.dll",
+      "resources/hdf5/api-ms-win-crt-utility-l1-1-0.dll": "api-ms-win-crt-utility-l1-1-0.dll",
+      "resources/hdf5/hdf5.dll": "hdf5.dll",
+      "resources/hdf5/icudt78.dll": "icudt78.dll",
+      "resources/hdf5/icuuc78.dll": "icuuc78.dll",
+      "resources/hdf5/libcrypto-3-x64.dll": "libcrypto-3-x64.dll",
+      "resources/hdf5/libcurl.dll": "libcurl.dll",
+      "resources/hdf5/libssh2.dll": "libssh2.dll",
+      "resources/hdf5/psl-5.dll": "psl-5.dll",
+      "resources/hdf5/szip.dll": "szip.dll",
+      "resources/hdf5/vcruntime140.dll": "vcruntime140.dll",
+      "resources/hdf5/zlib.dll": "zlib.dll",
+      "resources/hdf5/runtime-manifest.json": "hdf5-runtime-manifest.json",
+      "resources/hdf5/licenses/": "hdf5-licenses/"
+    }
   }
 }

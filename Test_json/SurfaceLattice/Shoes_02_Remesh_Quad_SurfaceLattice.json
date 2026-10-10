@@ -1,0 +1,71 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Geomfile": ".//sample-obj//Shore//Shoes_02.stl",
+    "Rot": [0.0, 0.0, 0.0],
+    "res": [0.4, 0.4, 0.4],
+    "Padding": 5,
+    "onGPU": false,
+    "memorylimit": 16106127360,
+    "JsonWorkDir": false
+  },
+  "WorkFlow": {
+    "1": {
+      "Gen_SurfaceReMesh": {
+        "mesh_file": ".//sample-obj//Shore//Shoes_02.stl",
+        "export_mesh": ".//Test_results//Shoes_02_surface_remeshed.stl",
+        "hsiz": 3.0,
+        "hmin": 1.0,
+        "hmax": 4.0,
+        "hausd": 0.1,
+        "hgrad": 1.3,
+        "angle": 45.0,
+        "detect_sharp_edges": true,
+        "optimize_only": false,
+        "verbose": -1
+      }
+    },
+    "2": {
+      "Gen_SimpleQuadMesh": {
+        "inp_meshfile": ".//Test_results//Shoes_02_surface_remeshed.stl",
+        "out_meshfile": ".//Test_results//Shoes_02_surface_quad.inp",
+        "size": [8.0, 8.0, 8.0]
+      }
+    },
+    "3": {
+      "Define_Lattice": {
+        "la_name": "Shoes02QuadSurfaceLattice",
+        "definition": {
+          "type": "MeshLattice",
+          "definition": {
+            "meshfile": ".//Test_results//Shoes_02_surface_quad.inp",
+            "k": 0.0
+          }
+        }
+      }
+    },
+    "4": {
+      "Add_Lattice": {
+        "la_name": "Shoes02QuadSurfaceLattice",
+        "size": [8.0, 8.0, 8.0],
+        "thk": 1.0,
+        "Rot": [0.0, 0.0, 0.0],
+        "Trans": [0.0, 0.0, 0.0],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "5": {
+      "Export": {
+        "outfile": ".//Test_results//Shoes_02_quad_surface_lattice.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

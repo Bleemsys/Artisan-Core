@@ -28,7 +28,14 @@ Add an operation
 **Common** contains frequently used operations. **Recent** lists operations
 you have added, while **Favorites** contains those marked with a star.
 **All operations** provides the full catalogue and a category filter. Search
-looks across the catalogue rather than only the current tab.
+looks across the catalogue rather than only the current tab, and supports
+English and Chinese names and descriptions as well as command keywords.
+
+The updated catalogue includes polycube hex meshing, geometry-domain rebuilding,
+field inversion, geometry distance fields and mesh smoothing. Some commands use
+a clearly labelled starter template when no full example is available; review
+its inputs and preceding steps before running. Available operations must also
+be supported by your selected Artisan backend.
 
 .. list-table:: Operation categories
    :widths: 35 65
@@ -77,6 +84,137 @@ their types through JSON editing, saving and reordering. Integer fields reject
 fractional values. If a parameter genuinely needs a different numeric type,
 change it explicitly in **JSON** and check the operation's requirements.
 
+Export mesh and field data
+==========================
+
+Select **Export model** and choose an **Output mode**:
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Mode
+     - Artisan parameters
+   * - Mesh only
+     - ``outfile`` names the mesh file. Existing outfile-only examples remain unchanged when opened or saved.
+   * - HDF5 field only
+     - ``outfile`` ends in ``.h5`` or ``.hdf5``.
+   * - Mesh plus HDF5 field
+     - ``outfile`` names the mesh; ``fieldfile`` names the additional ``.h5`` or ``.hdf5`` file.
+
+For field output, enter **Grid field IDs** as a JSON array, such as
+``["SizeField"]``. These are IDs created earlier in the workflow, for example
+by ``OP_Fit_GridField``. The current lattice field is included automatically
+when present; an empty list adds no named fields. Do not include ``lattice``
+in the list: that name is reserved for the current lattice field.
+
+The resulting Export parameters for combined output are:
+
+.. code-block:: json
+
+    {"Export": {
+        "outfile": "./Test_results/part.stl",
+        "fieldfile": "./Test_results/part.h5",
+        "GridFieldIDs": ["SizeField"]
+    }}
+
+Changing to **Mesh only** removes ``fieldfile`` and ``GridFieldIDs``. Changing
+between field modes retains the selected IDs and adjusts the output extension.
+The file buttons open Save dialogs filtered for mesh or HDF5 output. Paths
+follow the workflow's working-directory setting, just as other Artisan paths.
+
+ArtGUI reports invalid filenames, duplicate or reserved field IDs, malformed
+ID arrays and incompatible output combinations before saving or generation.
+Artisan checks that the selected fields actually exist at the export step.
+
+Use **View exported field…** in Export properties to open the existing output.
+**View field…** in the **3D Workspace**, beside **Load result**, is always
+visible. It lists HDF5 outputs from the current JSON workflow, with the Export
+step number and filename. Both HDF5-only ``outfile`` and combined-output
+``fieldfile`` paths are included. Existing files are ready to view; missing files
+are marked unavailable until generated. The list is refreshed whenever the
+button is clicked, so an existing output can be viewed without rerunning Artisan.
+Choose **Open another HDF5 file…** to browse for another snapshot. With no HDF5
+exports in the workflow, **View field…** opens the HDF5 file picker directly.
+**Load result** uses the same chooser for mesh ``outfile`` exports from the
+current JSON, including combined mesh/field Export steps. Rows show the step
+number and filename. Missing files are unavailable until generated. STL, OBJ,
+PLY and INP outputs can be previewed; other export formats are listed with a
+preview-unavailable message. Choosing an available result loads it in the
+3D Workspace and records it under Geometry. **Open another result file…**
+opens the file picker, which also accepts HDF5 fields. With no mesh exports,
+**Load result** opens the picker directly. Both choosers refresh on each click.
+
+See :ref:`gridfieldcontainer` for the field-file layout and readback parameters.
+
+Inspect HDF5 fields
+===================
+
+Choose **View field…** to select a current-workflow HDF5 output or browse for
+another completed Artisan ``.h5`` / ``.hdf5`` snapshot. **Fields → Add** opens
+the HDF5 file picker directly. **Load result → Open another result file…**
+also accepts HDF5 fields. Select a field in the project tree to open
+its inspector. Load source/result meshes to overlay the field at its original
+model position. A saved ``grid_to_model`` affine transform aligns local grids.
+
+* **X / Y / Z** selects the slice direction in stored grid coordinates. The
+  position slider or number snaps to the nearest original grid plane.
+* **Colour** selects Viridis or blue/white/red and controls the range. Lock
+  the range to compare slices; **Use saved field range** covers all blocks.
+  Unlocking uses finite values in the displayed slice. NaN/infinity are gaps.
+* **Display** controls field/mesh visibility and opacity. Slice quality limits
+  each preview edge to 128, 256 or 512 samples.
+* **Probe** in the viewport toolbar reads a nearest original grid point and
+  reports its indices, coordinates, stored precision and value. Local grids
+  also report model coordinates. **Copy value** copies the original value.
+* **Partition block** selects one exported block when there are several.
+  Exported padding is included; this release does not merge overlapping blocks.
+
+.. figure:: images/field-viewer.jpg
+   :width: 100%
+   :alt: ArtGUI showing an exported SizeField slice over a mesh, with a colour legend, exact stored-value probe and field inspector.
+
+   Inspect a fitted field in model coordinates and probe an original value.
+
+The inspector reports dimensions, precision, available units, saved finite
+range and nonfinite counts. Units are unspecified when absent from the file;
+viewer unit labels do not rescale coordinates.
+
+ArtGUI reads metadata, one block's compact axes and bounded strips of the
+requested plane. It keeps the full values in the file. Preview slices may be
+sampled on large grids; probes always read original values. A billion-value
+grid therefore does not require a billion-value browser allocation. Changing
+the slice cancels older requests between native reads.
+
+This release supports completed ``Artisan.GridField`` version 1 rectilinear
+snapshots, including nonuniform strictly increasing axes, with float32/float64
+point values, ``xyz`` axes and ``C;z-fastest`` ordering. Each axis needs at least
+two points. Axis vectors may total up to two million coordinates per block;
+compressed chunks above 32 MiB are rejected. Up to eight files may be open.
+**Remove field file** closes a file. Structured/deformed grid display,
+combined partition views, isosurfaces and volume rendering need later updates.
+
+Saving records the field-file path and selected field/block under
+``ArtGUI.fields``. Select the saved reference after reopening to inspect it.
+Slice position, palette, opacity and probe results are session settings.
+ArtGUI references are omitted from the JSON sent to Artisan. New/Open and
+Apply JSON close field handles and clear the display.
+
+After saving successfully, **Generate** unloads displayed fields and cancels
+pending reads. ArtGUI waits for native HDF5 handles to close before starting
+Artisan so it can overwrite exported files. Fields stay closed throughout the
+run, including cancellation or failure. Saved references remain in the tree;
+select a reference or use **View field…** after the run to reopen the snapshot.
+
+Windows development builds use the native Rust HDF5 reader and bundle its DLL
+dependencies beside ArtGUI. ``npm run dev`` and ``npm run build`` automatically
+prepare them and pass ``HDF5_DIR`` to Tauri. They detect the active Conda
+environment or a standard Anaconda installation; an explicit ``HDF5_DIR``
+overrides detection. ``dev-windows.bat`` and ``build-windows.bat`` invoke those
+same commands. Activating Conda alone does not set ``HDF5_DIR``. Python is
+used only by the build helper; delivered users need no Python, Anaconda or
+separate HDF5 installation. Rebuild/restart ArtGUI for this update.
+
 Reorder or remove steps
 =======================
 
@@ -119,3 +257,30 @@ problem.
    Applying valid JSON only confirms that the editor can read its structure.
    It does not confirm that the files exist or that Artisan can execute every
    operation. Inspect the run log after generation.
+
+Choose what to export
+=====================
+
+Select an **Export model** card and choose **Output mode**:
+
+* **Mesh only**: write a mesh, such as STL, to ``outfile``.
+* **HDF5 field only**: write sampled field values to an ``.h5`` or ``.hdf5``
+  ``outfile``.
+* **Mesh plus HDF5 field**: write a mesh to ``outfile`` and a field snapshot
+  to ``fieldfile``.
+
+To include named grid fields, enter their existing IDs in **Grid field IDs**,
+for example ``["SizeField"]``. Create those fields before Export. The current
+lattice field is included automatically when present; ``[]`` adds no named fields.
+Choosing Mesh only removes ``fieldfile`` and ``GridFieldIDs``. Check output paths
+after changing modes and save before generation.
+
+Use **Load result** for a mesh and **View field…** for an HDF5 snapshot.
+Supported exports and previews are different: not every exported mesh format
+can be shown in ArtGUI. See :doc:`viewer`.
+
+.. figure:: images/export-options.png
+   :width: 100%
+   :alt: ArtGUI 0.1.1 Export properties with mesh, HDF5 field and combined output choices.
+
+   Choose the output mode on the Export card before setting the output paths.

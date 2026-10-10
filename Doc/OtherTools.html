@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tools &#8212; Artisan 0.2.16 documentation</title>
+    <title>Tools &#8212; Artisan 0.2.17 documentation</title>
   
   
   
@@ -36,14 +36,14 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=4e5ace54"></script>
+    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'OtherTools';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Basics 01" href="QStart/QStart.html" />
+    <link rel="next" title="Getting Started" href="QStart/QStart.html" />
     <link rel="prev" title="Introduction" href="Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.16 documentation</p>
+    <p class="title logo__title">Artisan 0.2.17 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -172,7 +172,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">GUI for Artisan</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
 </ul>
 
@@ -339,7 +349,20 @@ document.write(`
 <h1>Tools<a class="headerlink" href="#tools" title="Link to this heading">#</a></h1>
 <section id="artgui">
 <h2>ArtGUI<a class="headerlink" href="#artgui" title="Link to this heading">#</a></h2>
-<p>ArtGUI is a dedicated simple graphic user interface to Artisan-core backend. It aims to provide a simple integrated environment that user could create, assemble and test the lattice design with Artisan. ArtGUI is bundled with Artisan-core, providing an all-in-one standalone package that requires no additional downloads or installations. ArtGUI is coded using python Tkinter for the general setup interface, and use VTK for displaying models. ArtGUI is open source software distributed under MIT license. User may refer to <a class="reference internal" href="ArtGUI.html#chapter-artgui"><span class="std std-ref">ArtGUI</span></a> chapter for more details.</p>
+<p>ArtGUI is the desktop workbench for designing lattices with Artisan. It brings
+together a Project panel, an editable Workflow, a Properties panel and a 3D
+Workspace. You can open and save JSON workflows, add operations, edit parameters,
+define custom unit cells, and compare source geometry with generated results.
+The interface supports English and Chinese. HDF5 field snapshots can also be
+inspected using slices and a value probe.</p>
+<p>Start the application with <code class="docutils literal notranslate"><span class="pre">ArtGUI.exe</span></code>. ArtGUI provides the editor and viewer;
+the Artisan backend performs the calculations. Select a compatible backend
+through <strong>Backend…</strong> before generating a model. Existing mesh results and field
+snapshots can be inspected without rerunning Artisan.</p>
+<p>The current <strong>ArtGUI 0.1.1</strong> workbench uses Tauri and a web-based 3D viewer.
+For a short walkthrough, see <a class="reference internal" href="ArtGUI/quickstart.html"><span class="doc">Your first model: engine bracket</span></a>. The full
+<a class="reference internal" href="ArtGUI.html#chapter-artgui"><span class="std std-ref">ArtGUI user guide</span></a> covers projects, workflow editing,
+lattice definitions, generation and viewing results.</p>
 </section>
 <section id="third-party-apps">
 <h2>Third Party Apps<a class="headerlink" href="#third-party-apps" title="Link to this heading">#</a></h2>
@@ -378,7 +401,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Basics 01</p>
+        <p class="prev-next-title">Getting Started</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

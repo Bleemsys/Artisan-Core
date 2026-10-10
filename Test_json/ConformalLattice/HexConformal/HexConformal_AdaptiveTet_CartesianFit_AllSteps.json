@@ -1,0 +1,166 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Sample": {
+      "Domain": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": ".//sample-obj//crank_handle.stl",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.2,
+      0.2,
+      0.2
+    ],
+    "Padding": 5,
+    "onGPU": false,
+    "JsonWorkDir": false,
+    "memorylimit": 16106127360
+  },
+  "WorkFlow": {
+    "1": {
+      "Gen_TetMesh_Adaptive": {
+        "mesh_file": ".//sample-obj//crank_handle.stl",
+        "export_mesh": ".//Test_results//crank_handle_adaptive_tet.inp",
+        "sampling_size": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "padding": 12.0,
+        "hsiz": 10.0,
+        "hmin": 2.0,
+        "hmax": 0.0,
+        "hausd": 0.1,
+        "hgrad": 1.3,
+        "angle": 45.0,
+        "detect_sharp_edges": false,
+        "allow_swaps": true,
+        "max_points": 750000,
+        "adaptive": true,
+        "surface_size": 1.5,
+        "feature_size": 0.75,
+        "adapt_band": 1.5,
+        "adapt_iterations": 8
+      }
+    },
+    "2": {
+      "Proc_Mesh_PolyCube": {
+        "inp_meshfile": ".//Test_results//crank_handle_adaptive_tet.inp",
+        "out_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "cube": 500.0,
+        "smoothness": 10.0,
+        "distortion_angle": 10.0,
+        "distortion_volume": 10.0,
+        "max_iteration": 200,
+        "minimum_jacobian": 0.001,
+        "continuation_steps": 3,
+        "ftol": 1e-08,
+        "gtol": 1e-06,
+        "quality_report": ".//Test_results//crank_handle_polycube_quality.json"
+      }
+    },
+    "3": {
+      "Proc_Mesh_ExtractSurf": {
+        "inp_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "out_meshfile": ".//Test_results//crank_handle_polycube_exterior.stl",
+        "isSplitTris": false,
+        "Elem_Type": "Tet"
+      }
+    },
+    "4": {
+      "Gen_PolyCubeHexMesh": {
+        "inp_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "out_meshfile": ".//Test_results//crank_handle_polycube_mesh.med",
+        "method": "CartesianFit",
+        "cell_size": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "bounds": "Auto",
+        "max_iteration": 100,
+        "min_scaled_jacobian": 0.1,
+        "surface_tolerance": 6.5,
+        "smoothness": 0.05,
+        "max_cells": 250000,
+        "quality_report": ".//Test_results//crank_handle_polycube_hex_quality.json",
+        "numCoverNodes": -1,
+        "quality_iterations": 40,
+        "preserve_features": true,
+        "feature_angle": 45.0,
+        "size_weight": 0.1
+      }
+    },
+    "5": {
+      "Proc_Mesh_MappingHexElem": {
+        "inp_original_meshfile": ".//Test_results//crank_handle_polycube.inp",
+        "inp_deformed_meshfile": ".//Test_results//crank_handle_adaptive_tet.inp",
+        "inp_Hex_meshfile": ".//Test_results//crank_handle_polycube_mesh.med",
+        "out_meshfile": ".//Test_results//crank_handle_hex_mesh.med"
+      }
+    },
+    "6": {
+      "Add_Lattice": {
+        "la_name": ".//Test_json//ConformalLattice//HexConformal//crank_handle_conformal.mld",
+        "size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "thk": 0.15,
+        "Rot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Trans": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "7": {
+      "Export": {
+        "outfile": ".//Test_results//crank_handle_conformal_HexInfill.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  },
+  "ArtGUI": {
+    "version": 1,
+    "geometry": [
+      {
+        "id": "result",
+        "path": "\\\\?\\C:\\Users\\wangy\\Documents\\Project-Artisan\\Artisan\\Artisan\\Artisan_Dist\\Test_results\\crank_handle_conformal_HexInfill.stl"
+      }
+    ],
+    "supportingFiles": []
+  }
+}

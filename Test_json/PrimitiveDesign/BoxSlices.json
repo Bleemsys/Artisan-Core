@@ -1,0 +1,106 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -5.0,
+          5.0
+        ],
+        [
+          -5.0,
+          5.0
+        ],
+        [
+          -5.0,
+          5.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.2,
+      0.2,
+      0.2
+    ],
+    "Padding": 2,
+    "onGPU": false,
+    "memorylimit": 1073741824
+  },
+  "WorkFlow": {
+    "1": {
+      "Proc_BoxSlices": {
+        "Source": "Geometry",
+        "outfile": ".//Test_results/BoxSlices.stl",
+        "Boxes": [
+          {
+            "ori": [
+              0.0,
+              0.0,
+              -3.0
+            ],
+            "normal": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "length": [
+              10.0,
+              10.0,
+              1.5
+            ],
+            "z_angle": 0.0
+          },
+          {
+            "ori": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "normal": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "length": [
+              10.0,
+              10.0,
+              1.5
+            ],
+            "z_angle": 0.0
+          },
+          {
+            "ori": [
+              0.0,
+              0.0,
+              3.0
+            ],
+            "normal": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "length": [
+              10.0,
+              10.0,
+              1.5
+            ],
+            "z_angle": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": false,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

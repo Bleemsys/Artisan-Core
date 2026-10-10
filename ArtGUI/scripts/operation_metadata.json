@@ -173,6 +173,19 @@
       "volume"
     ]
   },
+  "Gen_TetMesh_Adaptive": {
+    "icon": "triangle",
+    "description": "Generate a solid tetrahedral mesh with optional adaptive background sampling.",
+    "searchTerms": [
+      "tet",
+      "volume",
+      "level set",
+      "Delaunay",
+      "adaptive",
+      "surface_size",
+      "feature_size"
+    ]
+  },
   "Gen_TetBasicMesh": {
     "icon": "triangle",
     "description": "Generate a tetrahedral volume mesh.",
@@ -474,11 +487,15 @@
   },
   "Export": {
     "icon": "file-output",
-    "description": "Export the generated model.",
+    "description": "Export a mesh, sampled grid fields in HDF5, or both.",
     "searchTerms": [
       "save",
       "output",
-      "stl"
+      "stl",
+      "hdf5",
+      "h5",
+      "field",
+      "grid"
     ]
   },
   "ExportMeshID": {
@@ -530,6 +547,70 @@
       "clear",
       "memory",
       "id"
+    ]
+  },
+  "Gen_PolyCubeHexMesh": {
+    "icon": "box",
+    "description": "Generate a hexahedral mesh fitted to a polycube boundary.",
+    "searchTerms": [
+      "polycube",
+      "hex",
+      "cartesian",
+      "boundary fitting"
+    ]
+  },
+  "Proc_BoxSlices": {
+    "icon": "layers",
+    "description": "Export box-defined slices of geometry or a field.",
+    "searchTerms": [
+      "section",
+      "slice",
+      "box"
+    ]
+  },
+  "GeomBuild": {
+    "icon": "box",
+    "description": "Rebuild the calculation domain and geometry field from a mesh; place before field modelling.",
+    "searchTerms": [
+      "domain",
+      "geometry",
+      "reset"
+    ]
+  },
+  "GeomFill": {
+    "icon": "scissors",
+    "description": "Intersect the current field with the source geometry field.",
+    "searchTerms": [
+      "fill",
+      "intersection",
+      "trim"
+    ]
+  },
+  "Inv_Field": {
+    "icon": "blend",
+    "description": "Invert the sign of the current field with a scale factor.",
+    "searchTerms": [
+      "inverse",
+      "negative",
+      "scale"
+    ]
+  },
+  "OP_GeomSDF_GridField": {
+    "icon": "box",
+    "description": "Sample a mesh signed-distance field on the current calculation grid.",
+    "searchTerms": [
+      "sdf",
+      "distance",
+      "grid"
+    ]
+  },
+  "Proc_Mesh_Smoothing": {
+    "icon": "layers",
+    "description": "Smooth a surface through its distance field using the current sampling resolution.",
+    "searchTerms": [
+      "smooth",
+      "surface",
+      "feature"
     ]
   }
 }

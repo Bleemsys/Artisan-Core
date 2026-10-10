@@ -50,6 +50,7 @@ export function createRunProgress({invoke,listen,onBusy,toast,labelFor=name=>nam
         append([result.cancelled?'Run stopped. Partial output files may remain.':result.success?'Generation completed.':`Artisan exited with code ${result.exitCode??'unknown'}. See the messages above.`]);
         $('run-log-path').textContent=result.logPath||'';$('open-run-log').disabled=!result.logPath;
         if(!result.success&&!result.cancelled)toggleLog(true);
+        return result;
       }catch(e){$('run-elapsed').textContent=elapsed();active=false;stage='Generation failed';$('run-dot').className='status-dot failed';append([String(e)]);toggleLog(true);}
       finally{active=false;clearInterval(timer);timer=null;unlisten?.();unlisten=null;onBusy(false);$('stop-generation').hidden=true;$('generate').hidden=false;$('generate').disabled=false;$('generate').textContent='Generate again';render();}
     }
