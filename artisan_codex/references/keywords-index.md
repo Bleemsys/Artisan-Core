@@ -1,93 +1,19 @@
-# Artisan Keywords Index
+# Find a public operation
 
-This index is generated from the observed JSON example workflows. Use it to find examples for a keyword or operation.
+Use the goal below to choose a family. For exact required keys, types, choices, and defaults, search that command in `references/parameters.md`; nested inputs are in `references/parameter-catalog.json`. These references cover the reviewed build, not a promise that every released executable supports every command.
 
-## Most Common Operations
+| Goal | Starting commands |
+|---|---|
+| Add or change lattice infill | `Add_Lattice`, `Subtract_Lattice`, `Define_Lattice` |
+| Change between lattice designs | `Lin_Interpolate`, `HS_Interpolate`, `Add_Attractor`, `OP_FieldMerge` |
+| Combine or trim geometry | `Add_Geometry`, `Subtract_Geometry`, `Intersect_Geometry`, `GeomBuild`, `GeomFill` |
+| Import or export stored meshes | `ReadMesh`, `ExportMeshID`, `RemoveMesh` |
+| Generate tet domains | `Gen_TetMesh_Adaptive`, `Gen_TetMesh_SizeField`, `Gen_TetBasicMesh` |
+| Generate other mesh layouts | `Gen_BoxMesh`, `Gen_CylindricalMesh`, `Gen_SphericalMesh`, `Gen_BasicCartesianHexMesh` |
+| Process a mesh | `Proc_Mesh_ExtractSurf`, `Proc_Mesh_Trim`, `Proc_Mesh_Smoothing`, `Gen_SurfaceReMesh` |
+| Create, calculate, or read a scalar field | `Define_ScalarField_CombineGeometry`, `OP_Fit_GridField`, `OP_ExprOperation_GridField`, `ReadGridField` |
+| Change field thickness/shape | `OP_OffsetField`, `OP_Expr_OffsetField`, `OP_FieldOffset_GeomField` |
+| Export or save a design | `Export`, `OP_Compress`, `OP_Decompress` |
+| Check inputs or inspect values | `Check_Geometry`, `Evaluate_Points` |
 
-- `Export`: 107 examples
-- `Add_Lattice`: 99 examples
-- `Gen_BoxMesh`: 12 examples
-- `Add_Geometry`: 11 examples
-- `Gen_ConformalLatticeMesh`: 7 examples
-- `Proc_Mesh_Trim`: 7 examples
-- `HS_Interpolate`: 7 examples
-- `Add_Attractor`: 7 examples
-- `OP_FieldMerge`: 6 examples
-- `Gen_TetBasicMesh_HexSplit`: 6 examples
-- `Proc_Mesh_ExtractSurf`: 6 examples
-- `Gen_BasicCartesianHexMesh`: 6 examples
-- `Gen_SphericalMesh`: 6 examples
-
-## Operation Families
-
-### Lattice
-
-- `Add_Lattice`
-- `Define_Lattice`
-- `Subtract_Lattice`
-- `HS_Interpolate`
-- `Lin_Interpolate`
-- `Add_Attractor`
-- `OP_FieldMerge`
-- `Field_Boundary`
-
-### Geometry
-
-- `Add_Geometry`
-- `Subtract_Geometry`
-- `Intersect_Geometry`
-- `Substract_Surf_Plate`
-- `Add_Surf_Plate`
-
-### Mesh Generation
-
-- `Gen_BoxMesh`
-- `Gen_CylindricalMesh`
-- `Gen_SphericalMesh`
-- `Gen_CappedConeMesh`
-- `Gen_BasicCartesianHexMesh`
-- `Gen_BasicCartesianHexMesh_MultiSize`
-- `Gen_TetBasicMesh`
-- `Gen_TetBasicMesh_HexSplit`
-- `Gen_TetBasicMesh_wFeature`
-- `Gen_VoronoiPolyMesh`
-- `Gen_VoronoiPolyMesh_HexSplit`
-- `Gen_BasicQuadMesh`
-- `Gen_SimpleQuadMesh`
-- `Gen_StackedLayerMesh`
-
-### Mesh Processing
-
-- `Proc_Mesh_ExtractSurf`
-- `Proc_Mesh_Trim`
-- `Proc_Mesh_GenSkin`
-- `Proc_Mesh_SurfMeshMap`
-- `Proc_Mesh_PolyCube`
-- `Proc_Mesh_MappingHexElem`
-- `Proc_Mesh_Octree`
-- `Proc_Mesh_FieldDrivenMesh`
-- `Gen_SurfaceReMesh`
-
-### Fields
-
-- `OP_OffsetField`
-- `OP_Expr_OffsetField`
-- `OP_FieldOffset_GeomField`
-- `OP_EdgeEnhance`
-- `OP_CornerEnhance`
-- `OP_Fit_GridField`
-- `OP_ExprOperation_GridField`
-- `ReadGridField`
-- `Gen_FrameField`
-- `Gen_Field_Laplace`
-- `Gen_Mesh_Streamlines`
-
-### I/O And Containers
-
-- `ReadMesh`
-- `RemoveMesh`
-- `Export`
-- `ExportMeshID`
-- `Evaluate_Points`
-- `OP_Compress`
-- `OP_Decompress`
+For another public command, search its exact name in the parameter reference rather than inventing one. Use a shipped user example for an extensible `definition`, `Paras`, or other object whose detailed format is not listed.

@@ -1,0 +1,3380 @@
+{
+  "skill_version": "0.1.0",
+  "checked_artisan_build": "0.2.18.dev",
+  "scope": "Public JSON input structure only. Required/default values describe the reviewed build; referenced objects and geometry must also be valid. Older packaged builds may differ.",
+  "conventions": [
+    "Numeric values are finite; use JSON true/false for booleans, not 0/1.",
+    "Names and capitalization are exact; do not add undocumented keys.",
+    "An optional parameter without an explicit default may acquire command-specific behavior; omission is not a universal default.",
+    "Objects described without members are extensible public payloads; consult the matching user guide or a shipped example."
+  ],
+  "sections": {
+    "Setup.Geometry": {
+      "parameters": {
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "res": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Padding": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "onGPU": {
+          "type": "boolean",
+          "required": true
+        },
+        "memorylimit": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "JsonWorkDir": {
+          "type": "one_of",
+          "alternatives": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string",
+              "meaning": "file path or existing container ID"
+            }
+          ],
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "Type": {
+          "type": "string",
+          "allowed": [
+            "Geometry"
+          ],
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "Sample": {
+          "type": "object",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "Setup.Sample": {
+      "parameters": {
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "res": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Padding": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "onGPU": {
+          "type": "boolean",
+          "required": true
+        },
+        "memorylimit": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "JsonWorkDir": {
+          "type": "one_of",
+          "alternatives": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string",
+              "meaning": "file path or existing container ID"
+            }
+          ],
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "Type": {
+          "type": "string",
+          "allowed": [
+            "Sample"
+          ],
+          "required": true
+        },
+        "Sample": {
+          "type": "object",
+          "schema": {
+            "type": "object",
+            "parameters": {
+              "Domain": {
+                "type": "matrix",
+                "rows": 3,
+                "columns": 2,
+                "items": {
+                  "type": "number"
+                },
+                "constraint": "Each row is [lower, upper], with lower < upper, in x/y/z order.",
+                "required": true
+              },
+              "Shape": {
+                "type": "string",
+                "allowed": [
+                  "Box"
+                ],
+                "required": true
+              }
+            }
+          },
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "PostProcess": {
+      "parameters": {
+        "CombineMeshes": {
+          "type": "boolean",
+          "required": true
+        },
+        "CleanExportedMesh": {
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        "RemovePartitionMeshFile": {
+          "type": "boolean",
+          "required": true
+        },
+        "RemoveIsolatedParts": {
+          "type": "boolean",
+          "required": true
+        },
+        "ExportLazPts": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    }
+  },
+  "commands": {
+    "GeomBuild": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "GeomFill": {
+      "parameters": {
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "ReadMesh": {
+      "parameters": {
+        "MeshID": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "elem_type": {
+          "type": "string",
+          "required": true,
+          "allowed": [
+            "Line",
+            "Triangle",
+            "Quad",
+            "Tet",
+            "Hex"
+          ]
+        }
+      }
+    },
+    "ReadGridField": {
+      "parameters": {
+        "inp_GridFieldFile": {
+          "type": "string",
+          "required": true
+        },
+        "Gridfield_ID": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "FieldID": {
+          "type": "string",
+          "nonempty": true,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "BlockID": {
+          "type": "integer",
+          "minimum": 0,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "RemoveMesh": {
+      "parameters": {
+        "MeshID": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        }
+      }
+    },
+    "ExportMeshID": {
+      "parameters": {
+        "MeshID": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "elem_type": {
+          "type": "string",
+          "required": true,
+          "allowed": [
+            "Line",
+            "Triangle",
+            "Quad",
+            "Tet",
+            "Hex"
+          ]
+        }
+      }
+    },
+    "Field_Boundary": {
+      "parameters": {
+        "Boundary": {
+          "type": "string",
+          "allowed": [
+            "Box"
+          ],
+          "required": true
+        }
+      }
+    },
+    "Define_Lattice": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "definition": {
+          "type": "object",
+          "required": true
+        }
+      }
+    },
+    "Add_Lattice": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Trans": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Cube_Request": {
+          "type": "object",
+          "meaning": "Use {} unless an explicitly configured Cube request is needed; a nonempty request requires ID.",
+          "required": true
+        },
+        "Inv": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Subtract_Lattice": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Trans": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Cube_Request": {
+          "type": "object",
+          "meaning": "Use {} unless an explicitly configured Cube request is needed; a nonempty request requires ID.",
+          "required": true
+        },
+        "Inv": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Add_Geometry": {
+      "parameters": {
+        "Name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "k_factor": {
+          "type": "number",
+          "required": true
+        },
+        "Paras": {
+          "type": "object",
+          "required": true
+        },
+        "push2GeomField": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Subtract_Geometry": {
+      "parameters": {
+        "Name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "k_factor": {
+          "type": "number",
+          "required": true
+        },
+        "Paras": {
+          "type": "object",
+          "required": true
+        },
+        "push2GeomField": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Intersect_Geometry": {
+      "parameters": {
+        "Name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "k_factor": {
+          "type": "number",
+          "required": true
+        },
+        "Paras": {
+          "type": "object",
+          "required": true
+        },
+        "push2GeomField": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Add_Attractor": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Trans": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Cube_Request": {
+          "type": "object",
+          "meaning": "Use {} unless an explicitly configured Cube request is needed; a nonempty request requires ID.",
+          "required": true
+        },
+        "pt": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "r": {
+          "type": "number",
+          "required": true
+        },
+        "Inv": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "Lin_Interpolate": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Trans": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Cube_Request": {
+          "type": "object",
+          "meaning": "Use {} unless an explicitly configured Cube request is needed; a nonempty request requires ID.",
+          "required": true
+        },
+        "pt_01": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "n_vec_01": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "pt_02": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "n_vec_02": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "Inv": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "HS_Interpolate": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Trans": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Cube_Request": {
+          "type": "object",
+          "meaning": "Use {} unless an explicitly configured Cube request is needed; a nonempty request requires ID.",
+          "required": true
+        },
+        "pt": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "n_vec": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        }
+      }
+    },
+    "Add_Shell": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        }
+      }
+    },
+    "Inv_Field": {
+      "parameters": {
+        "Scale": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "Boundary_Inflation": {
+      "parameters": {
+        "offset": {
+          "type": "number",
+          "required": true
+        },
+        "scale_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        }
+      }
+    },
+    "Add_Surf_Plate": {
+      "parameters": {
+        "Surffile": {
+          "type": "string",
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "GeomTrim": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Substract_Surf_Plate": {
+      "parameters": {
+        "Surffile": {
+          "type": "string",
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "GeomTrim": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Gen_TetBasicMesh": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "ConvertTet2Beam": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Gen_TetBasicMesh_wFeature": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "elem_size": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "init_seed_size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "convergence_tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "max_iter": {
+          "type": "integer",
+          "minimum": 1,
+          "required": true
+        },
+        "MultiSize": {
+          "type": "object",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "Gen_TetBasicMesh_HexSplit": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "ConvertTet2Beam": {
+          "type": "boolean",
+          "required": true
+        },
+        "MultiSize": {
+          "type": "object",
+          "parameters": {
+            "Type": {
+              "type": "string",
+              "allowed": [
+                "Attractor",
+                "Field_Attractor"
+              ],
+              "required": true
+            },
+            "Data": {
+              "type": "one_of",
+              "alternatives": [
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 5,
+                  "min_rows": 1
+                },
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 2,
+                  "min_rows": 1
+                }
+              ],
+              "required": true
+            },
+            "FieldFile": {
+              "type": "string",
+              "required": false,
+              "default": ""
+            }
+          },
+          "constraint": "{} disables this option. Attractor Data rows contain five numbers; Field_Attractor Data rows contain two numbers.",
+          "required": true
+        }
+      }
+    },
+    "Gen_VoronoiPolyMesh": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "remove_tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        }
+      }
+    },
+    "Gen_VoronoiPolyMesh_HexSplit": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "remove_tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        }
+      }
+    },
+    "Gen_PolyCubeHexMesh": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "meaning": "file path or existing container ID",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "meaning": "file path or existing container ID",
+          "required": true
+        },
+        "cell_size": {
+          "type": "one_of",
+          "alternatives": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "exclusive_minimum": true
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "exclusive_minimum": true
+              },
+              "length": 3
+            }
+          ],
+          "required": true
+        },
+        "method": {
+          "type": "string",
+          "allowed": [
+            "CartesianFit"
+          ],
+          "required": false,
+          "default": "CartesianFit"
+        },
+        "bounds": {
+          "type": "string",
+          "allowed": [
+            "Auto"
+          ],
+          "required": false,
+          "default": "Auto"
+        },
+        "max_iteration": {
+          "type": "integer",
+          "minimum": 1,
+          "required": false,
+          "default": 100
+        },
+        "min_scaled_jacobian": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "exclusive_minimum": true,
+          "exclusive_maximum": true,
+          "required": false,
+          "default": 0.1
+        },
+        "smoothness": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": false,
+          "default": 0.05
+        },
+        "surface_tolerance": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "required": false,
+          "default": null
+        },
+        "max_cells": {
+          "type": "integer",
+          "minimum": 1,
+          "required": false,
+          "default": 250000
+        },
+        "quality_report": {
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": false,
+          "default": -1
+        },
+        "quality_iterations": {
+          "type": "integer",
+          "minimum": 0,
+          "required": false,
+          "default": 40
+        },
+        "preserve_features": {
+          "type": "boolean",
+          "required": false,
+          "default": true
+        },
+        "feature_angle": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180,
+          "exclusive_minimum": true,
+          "exclusive_maximum": true,
+          "required": false,
+          "default": 45.0
+        },
+        "size_weight": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "default": 0.1
+        }
+      }
+    },
+    "Gen_BasicCartesianHexMesh": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "x_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "y_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "z_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "z_angle": {
+          "type": "number",
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "numPrjLayers": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "LayerDepth": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": true
+        },
+        "isProjection": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "Gen_BasicCartesianHexMesh_MultiSize": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "x_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "y_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "z_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "z_angle": {
+          "type": "number",
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "numPrjLayers": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "LayerDepth": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": true
+        },
+        "MultiSize": {
+          "type": "object",
+          "parameters": {
+            "Type": {
+              "type": "string",
+              "allowed": [
+                "Attractor",
+                "Field_Attractor"
+              ],
+              "required": true
+            },
+            "Data": {
+              "type": "one_of",
+              "alternatives": [
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 5,
+                  "min_rows": 1
+                },
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 2,
+                  "min_rows": 1
+                }
+              ],
+              "required": true
+            },
+            "FieldFile": {
+              "type": "string",
+              "required": false,
+              "default": ""
+            }
+          },
+          "constraint": "{} disables this option. Attractor Data rows contain five numbers; Field_Attractor Data rows contain two numbers.",
+          "required": true
+        }
+      }
+    },
+    "Gen_ExtHexMesh_Geomfield": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": true
+        },
+        "AttractionRatio": {
+          "type": "number",
+          "required": true
+        },
+        "isPreAttraction": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Gen_BasicQuadMesh": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "x_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "y_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "z_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "z_angle": {
+          "type": "number",
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": true
+        },
+        "isProjection": {
+          "type": "boolean",
+          "required": true
+        },
+        "isSplitTris": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Gen_SimpleQuadMesh": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        }
+      }
+    },
+    "Gen_SurfaceReMesh": {
+      "parameters": {
+        "mesh_file": {
+          "type": "nullable",
+          "value": {
+            "type": "string",
+            "meaning": "file path or existing container ID"
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "export_mesh": {
+          "type": "string",
+          "meaning": "file path or existing container ID",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hmax": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hmin": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hsiz": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hausd": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hgrad": {
+          "type": "number",
+          "constraint": "Greater than 1, or -1.",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "angle": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "detect_sharp_edges": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "verbose": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 10,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "size": {
+          "type": "nullable",
+          "value": {
+            "type": "one_of",
+            "alternatives": [
+              {
+                "type": "one_of",
+                "alternatives": [
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusive_minimum": true
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "minimum": 0,
+                      "exclusive_minimum": true
+                    },
+                    "length": 3
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "exclusive_minimum": true
+                },
+                "length": 1
+              }
+            ]
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "ShortEdgeThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "optimize_only": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      },
+      "constraints": [
+        "When hmin and hmax are both positive, hmin must not exceed hmax."
+      ]
+    },
+    "Gen_TetMesh_SizeField": {
+      "parameters": {
+        "mesh_file": {
+          "type": "string",
+          "meaning": "file path or existing container ID",
+          "required": true
+        },
+        "export_mesh": {
+          "type": "string",
+          "meaning": "file path or existing container ID",
+          "required": true
+        },
+        "size_field": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "sampling_size": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "hausd": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": false,
+          "default": 0.01
+        },
+        "surface_tolerance": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "required": false,
+          "default": null
+        },
+        "hgrad": {
+          "type": "number",
+          "minimum": 1,
+          "exclusive_minimum": true,
+          "required": false,
+          "default": 1.3
+        },
+        "feature_angle": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180,
+          "required": false,
+          "default": 45.0
+        },
+        "preserve_features": {
+          "type": "boolean",
+          "required": false,
+          "default": true
+        },
+        "size_iterations": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 20,
+          "required": false,
+          "default": 3
+        },
+        "max_points": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 2147483647,
+          "required": false,
+          "default": 250000
+        },
+        "quality_report": {
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      }
+    },
+    "Gen_TetMesh_Adaptive": {
+      "parameters": {
+        "mesh_file": {
+          "type": "nullable",
+          "value": {
+            "type": "string",
+            "meaning": "file path or existing container ID"
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "export_mesh": {
+          "type": "string",
+          "meaning": "file path or existing container ID",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hmax": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hmin": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hsiz": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hausd": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "hgrad": {
+          "type": "number",
+          "constraint": "Greater than 1, or -1.",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "angle": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "detect_sharp_edges": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "sampling_size": {
+          "type": "one_of",
+          "alternatives": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "exclusive_minimum": true
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "exclusive_minimum": true
+              },
+              "length": 3
+            }
+          ],
+          "required": true
+        },
+        "padding": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "weld_tolerance": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "allow_swaps": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "max_points": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 2147483647,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "adaptive": {
+          "type": "boolean",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "surface_size": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "feature_size": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "adapt_band": {
+          "type": "nullable",
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "adapt_iterations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      },
+      "constraints": [
+        "When hmin and hmax are both positive, hmin must not exceed hmax."
+      ]
+    },
+    "Gen_CylindricalMesh": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "r_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "phi_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Height": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "Mesh_file": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_CappedConeMesh": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "r_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "phi_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Height": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "Mesh_file": {
+          "type": "string",
+          "required": true
+        },
+        "r_bottom": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "UB_heightRatio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "required": true
+        },
+        "Preserve_thickness": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Gen_SphericalMesh": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "r_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "phi_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "Mesh_file": {
+          "type": "string",
+          "required": true
+        },
+        "theta_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        }
+      }
+    },
+    "Gen_BoxMesh": {
+      "parameters": {
+        "num_elem": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "length": 3,
+          "required": true
+        },
+        "x_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "y_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "z_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "ori": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Normal": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "z_angle": {
+          "type": "number",
+          "required": true
+        },
+        "Mesh_file": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_HexMesh": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "Meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "layerDepth": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "required": true
+        },
+        "layerAttractionRatio": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "required": true
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": true
+        },
+        "Size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "Padding": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "MultiSize": {
+          "type": "object",
+          "parameters": {
+            "Type": {
+              "type": "string",
+              "allowed": [
+                "Attractor",
+                "Field_Attractor"
+              ],
+              "required": true
+            },
+            "Data": {
+              "type": "one_of",
+              "alternatives": [
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 5,
+                  "min_rows": 1
+                },
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 2,
+                  "min_rows": 1
+                }
+              ],
+              "required": true
+            },
+            "FieldFile": {
+              "type": "string",
+              "required": false,
+              "default": ""
+            }
+          },
+          "constraint": "{} disables this option. Attractor Data rows contain five numbers; Field_Attractor Data rows contain two numbers. Only Attractor is accepted by this command.",
+          "required": true
+        }
+      },
+      "constraints": [
+        "layerDepth and layerAttractionRatio must have equal lengths."
+      ]
+    },
+    "Gen_ConformalLatticeMesh": {
+      "parameters": {
+        "definition_file": {
+          "type": "string",
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "length": 3,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_StackedLayerMesh": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "inp_geommeshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "num_layers": {
+          "type": "integer",
+          "minimum": 1,
+          "required": true
+        },
+        "layer_thk": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "projection_direction": {
+          "type": "integer",
+          "required": true
+        },
+        "projection_diff_calc_step": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "length": 3,
+          "required": true
+        }
+      }
+    },
+    "Gen_ParametricLineMesh": {
+      "parameters": {
+        "x_expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "y_expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "z_expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "t_min": {
+          "type": "number",
+          "required": true
+        },
+        "t_max": {
+          "type": "number",
+          "required": true
+        },
+        "step_size": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "closedcurve": {
+          "type": "boolean",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "constraints": [
+        "t_min < t_max"
+      ]
+    },
+    "Gen_SDFVectorFieldLineMesh": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "x_expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "y_expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "z_expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "start_points": {
+          "type": "matrix",
+          "items": {
+            "type": "number"
+          },
+          "columns": 3,
+          "min_rows": 1,
+          "required": true
+        },
+        "attraction_strength": {
+          "type": "number",
+          "required": true
+        },
+        "projection_width": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "influence_width": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "n_points": {
+          "type": "integer",
+          "minimum": 2,
+          "required": true
+        },
+        "step_size": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_Z_ContourLines": {
+      "parameters": {
+        "res": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "PlaneHeights": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_FrameField": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "num_layers": {
+          "type": "integer",
+          "minimum": 1,
+          "required": true
+        },
+        "out_fieldfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_fieldfile_02": {
+          "type": "string",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        }
+      }
+    },
+    "Gen_MaterialPoints_SurfaceLayers": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "depth": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "res": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "sampling": {
+          "type": "string",
+          "allowed": [
+            "Grid",
+            "Poisson"
+          ],
+          "required": true
+        },
+        "out_matpoints_file": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_MSTMesh_Basic": {
+      "parameters": {
+        "inp_matpoints_file": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Gen_Mesh_Streamlines": {
+      "parameters": {
+        "inp_fieldfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "source": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "sink": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "step": {
+          "type": "number",
+          "minimum": 0,
+          "exclusive_minimum": true,
+          "required": true
+        },
+        "num_integration_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "required": true
+        },
+        "num_streamlines_seeds": {
+          "type": "integer",
+          "minimum": 1,
+          "required": true
+        },
+        "source_plane_dir": {
+          "type": "array",
+          "length": 3,
+          "items": {
+            "type": "number"
+          },
+          "constraint": "At least one component must be nonzero.",
+          "required": true
+        },
+        "source_plane_radius": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "min_streamlines_spacing": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        }
+      }
+    },
+    "Gen_Field_Laplace": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "res": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "sources": {
+          "type": "one_of",
+          "alternatives": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "length": 3
+            },
+            {
+              "type": "matrix",
+              "items": {
+                "type": "number"
+              },
+              "columns": 3
+            }
+          ],
+          "required": true
+        },
+        "source_strengths": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "required": true
+        },
+        "sinks": {
+          "type": "one_of",
+          "alternatives": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "length": 3
+            },
+            {
+              "type": "matrix",
+              "items": {
+                "type": "number"
+              },
+              "columns": 3
+            }
+          ],
+          "required": true
+        },
+        "sink_strengths": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "required": true
+        },
+        "influence_factors": {
+          "type": "object",
+          "schema": {
+            "type": "object",
+            "parameters": {
+              "radius": {
+                "type": "number",
+                "minimum": 0,
+                "exclusive_minimum": true,
+                "required": true
+              },
+              "kernel": {
+                "type": "string",
+                "nonempty": true,
+                "required": true
+              }
+            }
+          },
+          "required": true
+        },
+        "solver_factors": {
+          "type": "object",
+          "schema": {
+            "type": "object",
+            "parameters": {
+              "method": {
+                "type": "string",
+                "nonempty": true,
+                "required": true
+              },
+              "tol": {
+                "type": "number",
+                "minimum": 0,
+                "exclusive_minimum": true,
+                "required": true
+              },
+              "maxiter": {
+                "type": "integer",
+                "minimum": 1,
+                "required": true
+              }
+            }
+          },
+          "required": true
+        },
+        "out_fieldfile": {
+          "type": "string",
+          "required": true
+        },
+        "is_create_on_lattice_field": {
+          "type": "boolean",
+          "required": true
+        }
+      },
+      "constraints": [
+        "source_strengths/sink_strengths must contain one shared value or one value per corresponding source/sink point."
+      ]
+    },
+    "Proc_Mesh_ExtractSurf": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Elem_Type": {
+          "type": "string",
+          "allowed": [
+            "Tet",
+            "Hex"
+          ],
+          "required": true
+        },
+        "isSplitTris": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_SurfMeshMap": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "isCvt2beam": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_Smoothing": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "feature_size": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_Octree": {
+      "parameters": {
+        "Type": {
+          "type": "string",
+          "allowed": [
+            "Geom",
+            "Field"
+          ],
+          "required": true
+        },
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Fieldfile": {
+          "type": "string",
+          "required": true
+        },
+        "numCoverNodes": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 8,
+          "required": true
+        },
+        "num_refinements": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "refine_stepsize": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_Trim": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "elem_type": {
+          "type": "string",
+          "required": true
+        },
+        "tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "num_beam_refinement": {
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        "remove_short_beams": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_GenSkin": {
+      "parameters": {
+        "Geomfile": {
+          "type": "string",
+          "required": true
+        },
+        "lattice_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "faces_angles": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "long_edge_tol": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_FieldDrivenMesh": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "MultiSize": {
+          "type": "object",
+          "parameters": {
+            "Type": {
+              "type": "string",
+              "allowed": [
+                "Attractor",
+                "Field_Attractor"
+              ],
+              "required": true
+            },
+            "Data": {
+              "type": "one_of",
+              "alternatives": [
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 5,
+                  "min_rows": 1
+                },
+                {
+                  "type": "matrix",
+                  "items": {
+                    "type": "number"
+                  },
+                  "columns": 2,
+                  "min_rows": 1
+                }
+              ],
+              "required": true
+            },
+            "FieldFile": {
+              "type": "string",
+              "required": false,
+              "default": ""
+            }
+          },
+          "constraint": "{} disables this option. Attractor Data rows contain five numbers; Field_Attractor Data rows contain two numbers.",
+          "required": true
+        }
+      }
+    },
+    "Proc_Mesh_PolyCube": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "cube": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "smoothness": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "distortion_angle": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "distortion_volume": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "max_iteration": {
+          "type": "integer",
+          "minimum": 1,
+          "required": true
+        },
+        "minimum_jacobian": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "exclusive_minimum": true,
+          "exclusive_maximum": true,
+          "required": false,
+          "default": 0.001
+        },
+        "continuation_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "required": false,
+          "default": 3
+        },
+        "ftol": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "default": 1e-08
+        },
+        "gtol": {
+          "type": "number",
+          "minimum": 0,
+          "required": false,
+          "default": 1e-06
+        },
+        "quality_report": {
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      }
+    },
+    "Proc_Mesh_MappingHexElem": {
+      "parameters": {
+        "inp_original_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "inp_deformed_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "inp_Hex_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "OP_Fit_GridField": {
+      "parameters": {
+        "inp_ptFieldFile": {
+          "type": "string",
+          "required": true
+        },
+        "out_gridFieldFile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "OP_ExprOperation_GridField": {
+      "parameters": {
+        "expression": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "out_gridFieldFile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Define_ScalarField_CombineGeometry": {
+      "parameters": {
+        "field_id": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "default_value": {
+          "type": "number",
+          "required": true
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "type": "object",
+              "parameters": {
+                "name": {
+                  "type": "string",
+                  "nonempty": true,
+                  "required": false,
+                  "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+                },
+                "geometry": {
+                  "type": "string",
+                  "meaning": "file path or existing container ID",
+                  "required": true
+                },
+                "value": {
+                  "type": "number",
+                  "required": true
+                },
+                "transition_width": {
+                  "type": "number",
+                  "minimum": 0,
+                  "required": false,
+                  "default": 0.0
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "overlap": {
+          "type": "string",
+          "allowed": [
+            "Minimum",
+            "Maximum"
+          ],
+          "required": false,
+          "default": "Minimum"
+        }
+      }
+    },
+    "OP_GeomSDF_GridField": {
+      "parameters": {
+        "inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "out_gridfieldFile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "OP_OffsetField": {
+      "parameters": {
+        "Max_Offset": {
+          "type": "number",
+          "required": true
+        },
+        "Min_Offset": {
+          "type": "number",
+          "required": true
+        },
+        "FieldFile": {
+          "type": "string",
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        }
+      },
+      "constraints": [
+        "Min_Offset <= Max_Offset"
+      ]
+    },
+    "OP_Expr_OffsetField": {
+      "parameters": {
+        "expr": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        }
+      }
+    },
+    "OP_FieldOffset_GeomField": {
+      "parameters": {
+        "Name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "Paras": {
+          "type": "object",
+          "required": true
+        },
+        "min": {
+          "type": "number",
+          "required": true
+        },
+        "max": {
+          "type": "number",
+          "required": true
+        },
+        "min_val": {
+          "type": "number",
+          "required": true
+        },
+        "max_val": {
+          "type": "number",
+          "required": true
+        },
+        "min_max_opt": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        }
+      }
+    },
+    "OP_FieldMerge": {
+      "parameters": {
+        "la_name": {
+          "type": "string",
+          "nonempty": true,
+          "required": true
+        },
+        "size": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "exclusive_minimum": true
+          },
+          "length": 3,
+          "required": true
+        },
+        "thk": {
+          "type": "number",
+          "minimum": 0,
+          "required": true
+        },
+        "Rot": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Trans": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 3,
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Cube_Request": {
+          "type": "object",
+          "meaning": "Use {} unless an explicitly configured Cube request is needed; a nonempty request requires ID.",
+          "required": true
+        },
+        "OP_para": {
+          "type": "object",
+          "required": true
+        }
+      }
+    },
+    "OP_EdgeEnhance": {
+      "parameters": {
+        "max_offset": {
+          "type": "number",
+          "required": true
+        },
+        "min_offset": {
+          "type": "number",
+          "required": true
+        },
+        "meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "Angles": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "length": 2,
+          "required": true
+        },
+        "r": {
+          "type": "number",
+          "required": true
+        },
+        "MergeNodes": {
+          "type": "boolean",
+          "required": true
+        }
+      },
+      "constraints": [
+        "min_offset <= max_offset"
+      ]
+    },
+    "OP_CornerEnhance": {
+      "parameters": {
+        "max_offset": {
+          "type": "number",
+          "required": true
+        },
+        "min_offset": {
+          "type": "number",
+          "required": true
+        },
+        "meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Fill": {
+          "type": "boolean",
+          "required": true
+        },
+        "k": {
+          "type": "number",
+          "required": true
+        },
+        "threshold": {
+          "type": "number",
+          "required": true
+        },
+        "r": {
+          "type": "number",
+          "required": true
+        },
+        "param": {
+          "type": "object",
+          "schema": {
+            "type": "object",
+            "parameters": {
+              "sigma_factor": {
+                "type": "number",
+                "required": true
+              },
+              "grid_factor": {
+                "type": "integer",
+                "required": true
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "constraints": [
+        "min_offset <= max_offset"
+      ]
+    },
+    "OP_Compress": {
+      "parameters": {
+        "compressed_file": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "OP_Decompress": {
+      "parameters": {
+        "compressed_file": {
+          "type": "string",
+          "required": true
+        },
+        "rebuild": {
+          "type": "boolean",
+          "required": true
+        },
+        "OP_type": {
+          "type": "string",
+          "allowed": [
+            "Build",
+            "Union",
+            "Intersection",
+            "Diff"
+          ],
+          "required": true
+        }
+      }
+    },
+    "Proc_BoxSlices": {
+      "parameters": {
+        "Boxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "type": "object",
+              "parameters": {
+                "ori": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "length": 3,
+                  "required": true
+                },
+                "length": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusive_minimum": true
+                  },
+                  "length": 3,
+                  "required": true
+                },
+                "normal": {
+                  "type": "array",
+                  "length": 3,
+                  "items": {
+                    "type": "number"
+                  },
+                  "constraint": "At least one component must be nonzero.",
+                  "required": false,
+                  "default": [
+                    0,
+                    0,
+                    1
+                  ]
+                },
+                "z_angle": {
+                  "type": "number",
+                  "required": false,
+                  "default": 0.0
+                }
+              }
+            }
+          },
+          "min_length": 1,
+          "required": true
+        },
+        "outfile": {
+          "type": "string",
+          "required": true
+        },
+        "Source": {
+          "type": "string",
+          "allowed": [
+            "Geometry",
+            "Field"
+          ],
+          "required": false,
+          "default": "Geometry"
+        }
+      }
+    },
+    "Export": {
+      "parameters": {
+        "outfile": {
+          "type": "string",
+          "meaning": "surface output path, or .h5/.hdf5 for fields only",
+          "required": true
+        },
+        "fieldfile": {
+          "type": "string",
+          "meaning": "HDF5 output path ending in .h5 or .hdf5",
+          "required": false,
+          "omission": "May be omitted; no default specified at this input layer. See the command guide for behavior."
+        },
+        "GridFieldIDs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "nonempty": true
+          },
+          "required": false,
+          "default": []
+        }
+      },
+      "constraints": [
+        "fieldfile is only allowed with a mesh outfile.",
+        "Nonempty GridFieldIDs requires an HDF5 destination; IDs must be distinct and cannot be lattice."
+      ]
+    },
+    "Evaluate_Points": {
+      "parameters": {
+        "Inp_meshfile": {
+          "type": "string",
+          "required": true
+        },
+        "Export_file": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "Check_Geometry": {
+      "parameters": {
+        "Inp_meshfile": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  }
+}

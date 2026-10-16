@@ -1,42 +1,23 @@
-# Artisan Docs Map
+# Public manual map
 
-Use this file to choose which Artisan documentation source to read. Prefer these `.rst` sources over generated `.html` files.
+Use the bundled references for routine help. If more detail is needed, open the public manual supplied with the installed application. Original source files are not a requirement. Locate a chapter by title; HTML filenames below are navigation hints and may vary by release. Never copy source/build internals from a manual into a user response or shared skill.
 
-## Start Here
+| User question | Manual chapter | Common HTML filename |
+|---|---|---|
+| Getting started, setup, simple infill | Introduction; Basics 01; Basics 02 | `Intro.html`, `QStart/QStart.html`, `GeomOPT/GeomOPT.html` |
+| Desktop workbench | Tools; ArtGUI user guide | `OtherTools.html`, `ArtGUI.html`, `ArtGUI/quickstart.html` |
+| A custom user-defined cell | Customization | `Customization/Customization.html` |
+| Mesh-edge lattices | Mesh Lattice | `Mesh.html` |
+| General meshing, containers | Meshing 01; Meshing 02 | `Mesher_01.html`, `Mesher_02.html` |
+| Graded tet domains with conformal infill | Meshing 03; subsection 4 links to Conformal Lattice 01 | `GradedTetLattice.html` |
+| Field-driven meshing | Field Driven Meshing | `Mesher_99.html` |
+| Mesh processing | Mesh Process | `ProcMesh.html` |
+| Tet/hex conformal lattices | Conformal Lattice 01; Conformal Lattice 02 | `Conformal.html`, `Conformal_02.html` |
+| Scalar field creation and operations | Grid Field Container; Field Operation | `FieldContainer.html`, `OPField.html` |
+| Surface export, HDF5 snapshots/readback, cleanup | Export, immediately after Compression | `Export.html` |
+| Compressed design storage | Compression | `Compression.html` |
+| Beam/shell analysis outputs | FEA Interface | `FEAInter.html` |
+| An explicitly requested SDK integration | API Interface | `API.html` |
+| Surface lattices, primitives, lines, transitions | Surface Lattice; Primitive Design; Line Structure; Lattice Transition | `SurfaceLattice.html`, `Primitive.html`, `LineStructure.html`, `TransLattice.html` |
 
-- Overview and installation: `Doc/_build/html/_sources/Intro.rst`
-- Documentation table of contents: `Doc/_build/html/_sources/index.rst`
-- API interface: `Doc/_build/html/_sources/API.rst`
-- GUI: `Doc/_build/html/_sources/ArtGUI.rst`
-
-## Core Lattice Topics
-
-- Custom lattice definitions: `Doc/_build/html/_sources/Customization/Customization.rst`
-- Mesh lattice: `Doc/_build/html/_sources/Mesh.rst`
-- Surface lattice: `Doc/_build/html/_sources/SurfaceLattice.rst`
-- Lattice transition and merge: `Doc/_build/html/_sources/TransLattice.rst`
-- Compression/decompression: `Doc/_build/html/_sources/Compression.rst`
-
-## Meshing
-
-- Cartesian, surface, Voronoi, stacked layer, contour lines: `Doc/_build/html/_sources/Mesher_01.rst`
-- Tetrahedron, implicit tetrahedron, mesh container: `Doc/_build/html/_sources/Mesher_02.rst`
-- Field-driven meshing: `Doc/_build/html/_sources/Mesher_99.rst`
-- Mesh processing: `Doc/_build/html/_sources/ProcMesh.rst`
-- Primitive design: `Doc/_build/html/_sources/Primitive.rst`
-
-## Fields And Operations
-
-- Field operation: `Doc/_build/html/_sources/OPField.rst`
-- Grid field container: `Doc/_build/html/_sources/FieldContainer.rst`
-- Line structure: `Doc/_build/html/_sources/LineStructure.rst`
-
-## Conformal Workflows
-
-- Tet and mesh conformal lattice: `Doc/_build/html/_sources/Conformal.rst`
-- Hex conformal/polycube workflow: `Doc/_build/html/_sources/Conformal_02.rst`
-
-## Analysis And Export
-
-- FEA interface and export: `Doc/_build/html/_sources/FEAInter.rst`
-- Tools overview: `Doc/_build/html/_sources/OtherTools.rst`
+In older manuals, Meshing 03 may still be titled Graded Tet Lattice, and HDF5 material may still be under Grid Field Container. Check available features against the installed build. Do not require a private development repository to reconcile release differences.

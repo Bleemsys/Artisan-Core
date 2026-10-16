@@ -1,3 +1,4 @@
-display_name: Artisan
-short_description: Work with Artisan lattice-generation workflows, examples, docs, and APIs.
-default_prompt: Use the Artisan skill to inspect the docs and examples, then help me create, modify, or explain an Artisan workflow.
+interface:
+  display_name: "Artisan"
+  short_description: "Choose lattice parameters and build Artisan workflows"
+  default_prompt: "Use $artisan to help me choose parameters and create a complete workflow for my lattice design."
