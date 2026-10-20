@@ -360,6 +360,13 @@ complementary slot cutters for intersecting plates, and exports the slotted
 plates as separate STL meshes. The worked example uses five horizontal plates
 and three vertical plates. A smaller two-plate workflow is provided first so
 that the sequence is easy to inspect and adapt.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/PlateSlicing_Overview.png"><img alt="Source geometry, unslotted plate sections and the eight slotted plates." src="_images/PlateSlicing_Overview.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The full example rendered from Artisan 0.2.18 output. Orange identifies horizontal plates; blue identifies vertical plates.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The workflow uses <code class="docutils literal notranslate"><span class="pre">Proc_BoxSlices</span></code>, <code class="docutils literal notranslate"><span class="pre">Gen_SlotCutters</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Clear_LatticeField</span></code>, <code class="docutils literal notranslate"><span class="pre">Add_Geometry</span></code>, <code class="docutils literal notranslate"><span class="pre">Subtract_Geometry</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Store_LatticeMesh</span></code> and <code class="docutils literal notranslate"><span class="pre">ExportMeshID</span></code>. Use an Artisan backend that supports
@@ -388,8 +395,8 @@ calculation domain and plate positions when adapting the workflow.</p>
 <p><code class="docutils literal notranslate"><span class="pre">Proc_BoxSlices</span></code> defines the slicing boxes. Here <code class="docutils literal notranslate"><span class="pre">Source:</span> <span class="pre">&quot;Geometry&quot;</span></code>
 selects the input geometry and <code class="docutils literal notranslate"><span class="pre">Target:</span> <span class="pre">&quot;FieldContainer&quot;</span></code> requests named
 fields for subsequent operations. Each box has its own <code class="docutils literal notranslate"><span class="pre">FieldID</span></code>.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-text">Box settings used in this example</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Box settings used in this example</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 25.0%" />
 <col style="width: 75.0%" />
@@ -410,7 +417,7 @@ fields for subsequent operations. Each box has its own <code class="docutils lit
 <td><p>Plate normal: <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">1]</span></code> for horizontal plates and <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">0]</span></code> for vertical plates here.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length</span></code></p></td>
-<td><p>Box dimensions; the example uses <code class="docutils literal notranslate"><span class="pre">[110,</span> <span class="pre">110,</span> <span class="pre">4]</span></code> for the plate footprint and thickness.</p></td>
+<td><p>Box size parameters; the example uses <code class="docutils literal notranslate"><span class="pre">[110,</span> <span class="pre">110,</span> <span class="pre">4]</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">z_angle</span></code></p></td>
 <td><p>Box orientation setting, retained as <code class="docutils literal notranslate"><span class="pre">0</span></code> in this workflow.</p></td>
@@ -422,6 +429,9 @@ fields for subsequent operations. Each box has its own <code class="docutils lit
 145 and 175. Their x and y coordinates are -83.8332 and -0.9393. It places
 <code class="docutils literal notranslate"><span class="pre">V01</span></code> through <code class="docutils literal notranslate"><span class="pre">V03</span></code> at y coordinates -30, -0.9393 and 30, with x = -83.8332
 and z = 100. The smaller example keeps only <code class="docutils literal notranslate"><span class="pre">H01</span></code> and <code class="docutils literal notranslate"><span class="pre">V01</span></code>.</p>
+<p>In the Artisan 0.2.18 output used for these figures, <code class="docutils literal notranslate"><span class="pre">length:</span> <span class="pre">[110,</span> <span class="pre">110,</span> <span class="pre">4]</span></code>
+produces plates 8 model units thick. For example, the unslotted <code class="docutils literal notranslate"><span class="pre">H03</span></code>
+mesh spans z = 96 to 104 around its z = 100 position.</p>
 <p>These locations are specific to the supplied source model. Reposition and
 resize the boxes to intersect your own geometry; a named box alone does not
 establish that the resulting plate is useful or that two plates intersect.</p>
@@ -459,6 +469,13 @@ Use unique output names for every pair to keep references unambiguous.</p>
 <p>For five horizontal and three vertical plates the supplied workflow defines
 15 pairs, one for every H/V combination. Other plate layouts should create
 pairs for the intersections that need joints.</p>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="_images/PlateSlicing_Joint.png"><img alt="H03 and V02 at their original positions and separated to reveal their slots." src="_images/PlateSlicing_Joint.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">H03 and V02 isolated from the full eight-plate workflow. The right view uses display offsets only; the additional slots serve the other plates in the full example.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="build-and-store-each-slotted-plate">
 <h2>3. Build and store each slotted plate<a class="headerlink" href="#build-and-store-each-slotted-plate" title="Link to this heading">#</a></h2>
@@ -513,6 +530,13 @@ it does not specify the effect of clearing on every other backend resource.</p>
 vertical. Its <code class="docutils literal notranslate"><span class="pre">PostProcess</span></code> section is preserved in the downloadable files,
 including <code class="docutils literal notranslate"><span class="pre">CombineMeshes:</span> <span class="pre">true</span></code>. Inspect the actual exported files before
 relying on a particular cleanup or combination outcome for your backend.</p>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/PlateSlicing_Parts.png"><img alt="Top views of H01 to H05 and front views of V01 to V03 with their slot openings." src="_images/PlateSlicing_Parts.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">All eight exported plates shown individually at a common physical scale. Plate IDs match the JSON; small disconnected regions present in the output are retained.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>In ArtGUI, open the JSON, select the updated backend and check the input and
 output paths before generating. Load the exported meshes together to inspect
 the joint locations, then inspect each plate separately for slot openings,

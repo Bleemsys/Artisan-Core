@@ -9,6 +9,13 @@ plates as separate STL meshes. The worked example uses five horizontal plates
 and three vertical plates. A smaller two-plate workflow is provided first so
 that the sequence is easy to inspect and adapt.
 
+.. figure:: pictures/PlateSlicing_Overview.png
+   :width: 100%
+   :align: center
+   :alt: Source geometry, unslotted plate sections and the eight slotted plates.
+
+   The full example rendered from Artisan 0.2.18 output. Orange identifies horizontal plates; blue identifies vertical plates.
+
 The workflow uses ``Proc_BoxSlices``, ``Gen_SlotCutters``,
 ``Clear_LatticeField``, ``Add_Geometry``, ``Subtract_Geometry``,
 ``Store_LatticeMesh`` and ``ExportMeshID``. Use an Artisan backend that supports
@@ -56,7 +63,7 @@ fields for subsequent operations. Each box has its own ``FieldID``.
    * - ``normal``
      - Plate normal: ``[0, 0, 1]`` for horizontal plates and ``[0, 1, 0]`` for vertical plates here.
    * - ``length``
-     - Box dimensions; the example uses ``[110, 110, 4]`` for the plate footprint and thickness.
+     - Box size parameters; the example uses ``[110, 110, 4]``.
    * - ``z_angle``
      - Box orientation setting, retained as ``0`` in this workflow.
 
@@ -64,6 +71,10 @@ The full workflow places ``H01`` through ``H05`` at z coordinates 40, 85, 100,
 145 and 175. Their x and y coordinates are -83.8332 and -0.9393. It places
 ``V01`` through ``V03`` at y coordinates -30, -0.9393 and 30, with x = -83.8332
 and z = 100. The smaller example keeps only ``H01`` and ``V01``.
+
+In the Artisan 0.2.18 output used for these figures, ``length: [110, 110, 4]``
+produces plates 8 model units thick. For example, the unslotted ``H03``
+mesh spans z = 96 to 104 around its z = 100 position.
 
 These locations are specific to the supplied source model. Reposition and
 resize the boxes to intersect your own geometry; a named box alone does not
@@ -107,6 +118,13 @@ Use unique output names for every pair to keep references unambiguous.
 For five horizontal and three vertical plates the supplied workflow defines
 15 pairs, one for every H/V combination. Other plate layouts should create
 pairs for the intersections that need joints.
+
+.. figure:: pictures/PlateSlicing_Joint.png
+   :width: 100%
+   :align: center
+   :alt: H03 and V02 at their original positions and separated to reveal their slots.
+
+   H03 and V02 isolated from the full eight-plate workflow. The right view uses display offsets only; the additional slots serve the other plates in the full example.
 
 3. Build and store each slotted plate
 -------------------------------------
@@ -169,6 +187,13 @@ The full workflow requests eight separate exports, five horizontal and three
 vertical. Its ``PostProcess`` section is preserved in the downloadable files,
 including ``CombineMeshes: true``. Inspect the actual exported files before
 relying on a particular cleanup or combination outcome for your backend.
+
+.. figure:: pictures/PlateSlicing_Parts.png
+   :width: 100%
+   :align: center
+   :alt: Top views of H01 to H05 and front views of V01 to V03 with their slot openings.
+
+   All eight exported plates shown individually at a common physical scale. Plate IDs match the JSON; small disconnected regions present in the output are retained.
 
 In ArtGUI, open the JSON, select the updated backend and check the input and
 output paths before generating. Load the exported meshes together to inspect
