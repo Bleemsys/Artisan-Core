@@ -1,3 +1,4 @@
+import {isOpacity} from './object-opacity.js';
 import {decodeFieldSlice,defaultFieldRange,colourStops,normalizedValues} from './field-data.js';
 import {FieldLayer} from './field-layer.js';
 
@@ -15,7 +16,8 @@ export function createFieldInspector({invoke,getViewer,getReferences,addReferenc
     const field=e.info.fields.find(f=>f.id===fieldId)||e.info.fields.find(f=>f.id!=='lattice'&&f.blocks.some(b=>b.supported))||e.info.fields[0];
     const block=field.blocks.find(b=>b.id===blockId)||field.blocks[0];
     const changed=e.ref.fieldId!==field.id,referenceChanged=changed||e.ref.blockId!==block.id;e.ref.fieldId=field.id;e.ref.blockId=block.id;if(referenceChanged&&entries.has(e.ref.id))onReferenceChanged();
-    if(!e.style||changed)e.style={range:defaultFieldRange(field),map:'viridis',opacity:.85,visible:true,lock:true,quality:256,probe:false,showMesh:true,meshOpacity:.2};
+    if(!e.style||changed)e.style={range:defaultFieldRange(field),map:'viridis',opacity:.85,visible:true,lock:true,quality:256,probe:false};
+    const opacity=e.ref.opacityByField?.[field.id];e.style.opacity=isOpacity(opacity)?opacity:.85;
     e.axis=2;e.position=block.bounds?(block.bounds[2][0]+block.bounds[2][1])/2:0;e.probe=null;
   }
   function attachViewer() {
@@ -23,7 +25,7 @@ export function createFieldInspector({invoke,getViewer,getReferences,addReferenc
     let button=$('field-probe-tool');
     if(!button){button=document.createElement('button');button.id='field-probe-tool';button.className='button subtle field-probe-tool';button.textContent='Probe';button.title='Click a field slice to inspect a stored grid value';$('viewer-toolbar').insertBefore(button,$('viewer-toolbar').lastElementChild);}
     button.onclick=()=>{const e=selected();if(!e||!e.layer||e.loading)return;e.style.probe=!e.style.probe;if(e.style.probe)viewer.setMeasureMode('off');paintToolbar();};
-    viewer.pickField=event=>{const e=selected();if(!e?.style.probe||!e.layer||e.loading||!e.style.visible)return false;const point=e.layer.pick(event);if(point)probe(e,point);return true;};
+    viewer.pickField=event=>{const e=selected();if(!e?.style.probe||!e.layer||e.loading||!e.style.visible||e.style.opacity===0)return false;const point=e.layer.pick(event);if(point)probe(e,point);return true;};
     viewer.onFieldRender=()=>{for(const e of entries.values())e.layer?.positionLabel();};
     viewer.onMeasureModeChange=mode=>{if(mode!=='off'){const e=selected();if(e)e.style.probe=false;paintToolbar();}};
     if(!$('field-legend')){const legend=document.createElement('div');legend.id='field-legend';legend.className='field-legend';legend.hidden=true;$('viewport').append(legend);}
@@ -31,7 +33,6 @@ export function createFieldInspector({invoke,getViewer,getReferences,addReferenc
   }
   function paintToolbar(){const button=$('field-probe-tool'),e=selected();if(button){button.disabled=!e?.layer||e.loading||!e.style.visible;button.classList.toggle('primary',!!e?.style.probe);button.setAttribute('aria-pressed',String(!!e?.style.probe));}}
   function paintLegend(){const host=$('field-legend'),e=selected();if(!host)return;host.hidden=!e?.layer||!e.style.visible||e.loading;if(host.hidden)return;const field=fieldFor(e);host.innerHTML=`<strong translate="no">${esc(field.id)}</strong><span>${esc(field.valueUnits||'Units unspecified')}</span><div class="field-legend-scale"><div style="background:linear-gradient(to top,${colourStops[e.style.map].join(',')})"></div><div><span>${fmt(e.style.range[1])}</span><span>${fmt(e.style.range[0])}</span></div></div><small>Nonfinite values: gaps</small>`;}
-  function meshStyle(e) {const viewer=getViewer();if(!viewer)return;for(const [id,layer] of viewer.layers){layer.mesh.visible=e.style.showMesh;viewer.setOpacity(id,e.style.meshOpacity);}viewer.refreshLayers();viewer.refreshHelpers();viewer.render();}
   async function load(path,reference=null,wantedField=null) {
     if(!invoke){toast('Field reading is available in the desktop app.');return;}
     if(generationSuspended){toast('Open the field after generation finishes.');return;}
@@ -45,7 +46,7 @@ export function createFieldInspector({invoke,getViewer,getReferences,addReferenc
       const ref=existing||{id:'field-'+crypto.randomUUID(),path:info.path};
       const e={ref,info,sequence:0,loading:false,error:'',timer:null,layer:null};
       initialise(e,wantedField||ref.fieldId,ref.blockId);entries.set(ref.id,e);errors.delete(ref.id);if(!existing)addReference(ref);
-      attachViewer();active=ref.id;onSelect(active);await readSlice(e,true);if(epoch===currentEpoch)meshStyle(e);
+      attachViewer();active=ref.id;onSelect(active);await readSlice(e,true);
     } catch(error){if(epoch===currentEpoch){if(reference)errors.set(reference.id,String(error));toast(`Could not open field: ${error.message||error}`);refresh();}}
     finally{opening=false;}
   }
@@ -107,7 +108,7 @@ export function createFieldInspector({invoke,getViewer,getReferences,addReferenc
       section('Field',`<label for="inspect-field">Field ID</label><select id="inspect-field">${e.info.fields.map(f=>`<option value="${esc(f.id)}" ${f.id===field.id?'selected':''}>${esc(f.id)}</option>`).join('')}</select>${field.blocks.length>1?`<label for="inspect-block">Partition block</label><select id="inspect-block">${field.blocks.map(b=>`<option value="${b.id}" ${b.id===block.id?'selected':''}>Block ${b.id}</option>`).join('')}</select><p class="field-help">One block at a time; exported padding is included.</p>`:''}<dl class="field-facts"><dt>Grid</dt><dd>${block.shape.join(' × ')}</dd><dt>Values</dt><dd>${count}</dd><dt>Precision</dt><dd>${esc(block.dtype)}</dd><dt>Coordinates</dt><dd>${esc(field.coordinateSpace)} · ${esc(field.coordinateUnits||'units unspecified')}</dd><dt>Value units</dt><dd>${esc(field.valueUnits||'unspecified')}</dd><dt>Saved range</dt><dd>${fmt(block.statistics.minimum)} to ${fmt(block.statistics.maximum)}</dd><dt>Nonfinite</dt><dd>${block.statistics.nanCount} NaN · ${block.statistics.infCount} infinity</dd></dl>`)+
       section('Slice',`<div class="field-axis-buttons">${[0,1,2].map(i=>`<button class="button ${e.axis===i?'primary':''}" data-field-axis="${i}" ${!block.supported?'disabled':''}>${'XYZ'[i]}</button>`).join('')}</div><label for="field-position">Position in grid coordinates</label><input id="field-position" type="number" step="any" min="${bounds[0]}" max="${bounds[1]}" value="${e.position}" ${!block.supported?'disabled':''}><input id="field-position-slider" aria-label="Slice position" type="range" min="${bounds[0]}" max="${bounds[1]}" step="any" value="${e.position}" ${!block.supported?'disabled':''}><p class="field-help">Position snaps to the nearest original grid plane.</p>`)+
       section('Colour',`<label for="field-colour">Colour map</label><select id="field-colour"><option value="viridis" ${style.map==='viridis'?'selected':''}>Viridis</option><option value="diverging" ${style.map==='diverging'?'selected':''}>Blue / white / red</option></select><div class="field-range"><label>Minimum<input id="field-range-min" type="number" step="any" value="${style.range[0]}"></label><label>Maximum<input id="field-range-max" type="number" step="any" value="${style.range[1]}"></label></div><label class="field-check"><input id="field-lock-range" type="checkbox" ${style.lock?'checked':''}> Lock colour range</label><button class="button subtle" id="field-auto-range">Use saved field range</button>`)+
-      section('Display',`<label class="field-check"><input id="field-visible" type="checkbox" ${style.visible?'checked':''}> Show field</label><label for="field-opacity">Field opacity</label><input id="field-opacity" type="range" min="0" max="1" step=".05" value="${style.opacity}"><label class="field-check"><input id="field-show-mesh" type="checkbox" ${style.showMesh?'checked':''}> Show meshes</label><label for="field-mesh-opacity">Mesh opacity</label><input id="field-mesh-opacity" type="range" min="0" max="1" step=".05" value="${style.meshOpacity}"><label for="field-quality">Slice quality</label><select id="field-quality">${[[128,'Quick preview (up to 128 × 128)'],[256,'Preview (up to 256 × 256)'],[512,'Detailed slice (up to 512 × 512)']].map(([v,label])=>`<option value="${v}" ${style.quality===v?'selected':''}>${label}</option>`).join('')}</select><p class="field-help">Only the requested slice is read. Detailed slices may still be sampled on large grids.</p>`)+
+      section('Display',`<label class="field-check"><input id="field-visible" type="checkbox" ${style.visible?'checked':''}> Show field</label><label for="field-opacity">Field opacity</label><input id="field-opacity" type="range" min="0" max="1" step=".01" value="${style.opacity}"><output id="field-opacity-value" for="field-opacity" translate="no">${Math.round(style.opacity*100)}%</output><label for="field-quality">Slice quality</label><select id="field-quality">${[[128,'Quick preview (up to 128 × 128)'],[256,'Preview (up to 256 × 256)'],[512,'Detailed slice (up to 512 × 512)']].map(([v,label])=>`<option value="${v}" ${style.quality===v?'selected':''}>${label}</option>`).join('')}</select><p class="field-help">Only the requested slice is read. Detailed slices may still be sampled on large grids.</p>`)+
       section('Probe',probeHtml)+`<p id="field-status" class="field-help" role="status">${esc(e.loading?'Loading slice…':e.error||`${e.slice?.sampled?'Sampled display':'Original grid slice'}; probes read original values.`)}</p><button class="button subtle" id="remove-field-file">Remove field file</button>`;
     const redraw=()=>{e.layer?.setStyle(style);paintToolbar();paintLegend();};
     $('inspect-field').onchange=event=>select(id,event.target.value);
@@ -122,9 +123,7 @@ export function createFieldInspector({invoke,getViewer,getReferences,addReferenc
     $('field-lock-range').onchange=event=>{style.lock=event.target.checked;if(!style.lock)readSlice(e);};
     $('field-auto-range').onclick=()=>{style.range=defaultFieldRange(field);style.lock=true;redraw();refresh();};
     $('field-visible').onchange=event=>{style.visible=event.target.checked;redraw();};
-    $('field-opacity').oninput=event=>{style.opacity=Number(event.target.value);redraw();};
-    $('field-show-mesh').onchange=event=>{style.showMesh=event.target.checked;meshStyle(e);};
-    $('field-mesh-opacity').oninput=event=>{style.meshOpacity=Number(event.target.value);meshStyle(e);};
+    $('field-opacity').oninput=event=>{style.opacity=Number(event.target.value);e.ref.opacityByField={...e.ref.opacityByField,[e.ref.fieldId]:style.opacity};$('field-opacity-value').textContent=Math.round(style.opacity*100)+'%';redraw();onReferenceChanged();};
     if($('copy-field-value'))$('copy-field-value').onclick=async()=>{try{await navigator.clipboard.writeText(e.probe.value===null?e.probe.kind:String(e.probe.value));toast('Stored value copied.');}catch{toast('Select the value to copy it.');}};
     $('remove-field-file').onclick=()=>remove(id);
   }

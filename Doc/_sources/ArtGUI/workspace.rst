@@ -21,11 +21,11 @@ The main areas
    * - Area
      - Use it to
    * - Top bar
-     - Create, open and save a project; open the JSON editor; choose a backend;
+     - Create, open, save or Save as a project; open the JSON editor; choose a backend;
        open Help. The project name and saved/unsaved status appear here.
    * - Project
      - Select project settings, source and reference geometry, supporting
-       files, mesh/conformal lattice definitions and custom unit cells.
+       files, point clouds, HDF5 fields, mesh/conformal lattice definitions and custom unit cells.
    * - 3D Workspace
      - Load source and result files, navigate around models, control layers,
        section the display, take measurements and save images.
@@ -65,6 +65,8 @@ Useful controls
      - Action
    * - **Ctrl+S**
      - Save the current project.
+   * - **Ctrl+Shift+S**
+     - Save as a new project filename or location.
    * - **JSON**
      - Open the complete workflow for text editing.
    * - **Esc**
@@ -77,6 +79,9 @@ Useful controls
      - Frame the visible model layers.
    * - **Reset**
      - Return the camera to an isometric view.
+   * - **Clean scratch**
+     - Clear files and subfolders inside ViewScratch; cached previews close.
+       See :doc:`viewer` before cleaning.
 
 When generation is running, workflow editing is locked. You can continue to
 inspect the model in the viewer. See :doc:`generation` for progress and logs.
@@ -95,3 +100,12 @@ no dialog or other active interaction needs it.
 The **Resources** tab beside Workflow shows memory and CPU use; see
 :doc:`generation`. Use **View field…** or the Project panel's **Fields** section
 to inspect an exported HDF5 field; see :doc:`viewer`.
+
+Select a geometry, field or point cloud in Project to show that object's
+display controls in Properties. Its opacity slider affects only that object;
+another object's opacity control is not included in the selected Properties.
+
+The **Expand / Collapse** control on the Workflow/Resources panel shows or
+hides its contents. Selecting either tab reopens the panel. This is separate
+from expanding the 3D Workspace; it preserves the current selection and data.
+In Chinese, **Point clouds → + Add** appears as **点云 → + 添加**.

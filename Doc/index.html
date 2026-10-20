@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Artisan’s documentation &#8212; Artisan 0.2.17 documentation</title>
+    <title>Artisan’s documentation &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -134,7 +134,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -160,18 +160,21 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -355,7 +358,6 @@ document.write(`
 </li>
 <li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="OtherTools.html#artgui">ArtGUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="OtherTools.html#third-party-apps">Third Party Apps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a><ul>
@@ -392,6 +394,16 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#adaptive-tetrahedron-mesher">Adaptive Tetrahedron Mesher</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#mesh-container">Mesh Container</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="GradedTetLattice.html">Meshing 03</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#set-the-sampling-grid">1. Set the sampling grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#define-the-regional-size-field">2. Define the regional size field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#generate-the-tet-cell-domains">3. Generate the tet cell domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#fill-the-tet-domains-with-a-conformal-lattice">4. Fill the tet domains with a conformal lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#export-and-apply-basic-cleanup">5. Export and apply basic cleanup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#run-the-complete-example">Run the complete example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GradedTetLattice.html#shoe-model-with-varying-cell-size">Shoe model with varying cell size</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a><ul>
@@ -435,6 +447,16 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Primitive.html#primitive-shape-and-geometry-handling">Primitive Shape and Geometry handling</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#inputs-and-example-files">Inputs and example files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#create-and-name-the-plate-fields">1. Create and name the plate fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#generate-one-cutter-pair-per-plate-intersection">2. Generate one cutter pair per plate intersection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#build-and-store-each-slotted-plate">3. Build and store each slotted plate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#export-and-inspect-the-plates">4. Export and inspect the plates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#complete-two-plate-workflow">Complete two-plate workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#extending-the-example">Extending the example</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#external-field-enhancement">External Field Enhancement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#geometry-feature-enhancement">Geometry Feature Enhancement</a></li>
@@ -443,7 +465,7 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="FieldContainer.html#hdf5-field-snapshots">HDF5 field snapshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FieldContainer.html#scalar-fields-from-geometry-regions">Scalar Fields from Geometry Regions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a><ul>
@@ -471,6 +493,13 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Export.html#export-a-surface-or-field">Export a surface or field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Export.html#control-surface-output">Control surface output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Export.html#export-a-stored-mesh">Export a stored mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Export.html#hdf5-field-snapshots">HDF5 field snapshots</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="FEAInter.html#mesh-export">Mesh Export</a></li>
 <li class="toctree-l2"><a class="reference internal" href="FEAInter.html#sdf-export">SDF Export</a></li>
@@ -483,6 +512,7 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#recent-workbench-updates">Recent workbench updates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#what-you-work-with">What you work with</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ArtGUI.html#where-to-find-more-detail">Where to find more detail</a></li>
 </ul>

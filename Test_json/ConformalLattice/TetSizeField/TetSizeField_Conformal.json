@@ -1,0 +1,166 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -0.1,
+          6.1
+        ],
+        [
+          -0.1,
+          3.1
+        ],
+        [
+          -0.1,
+          3.1
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.025,
+      0.025,
+      0.025
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 4294967296,
+    "JsonWorkDir": false
+  },
+  "WorkFlow": {
+    "1": {
+      "ReadMesh": {
+        "MeshID": "Solid",
+        "meshfile": ".//sample-obj//TetSizeField//solid.inp",
+        "elem_type": "Triangle"
+      }
+    },
+    "2": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "CellSize",
+        "default_value": 1.0,
+        "regions": [
+          {
+            "name": "FineRegion",
+            "geometry": ".//sample-obj//TetSizeField//fine_region.inp",
+            "value": 0.4,
+            "transition_width": 2.0
+          }
+        ],
+        "overlap": "Minimum"
+      }
+    },
+    "3": {
+      "Export": {
+        "outfile": ".//Test_results//TetSizeField_Conformal_CellSize.h5",
+        "GridFieldIDs": [
+          "CellSize"
+        ]
+      }
+    },
+    "4": {
+      "Gen_TetMesh_SizeField": {
+        "mesh_file": "Solid",
+        "export_mesh": "TetDomains",
+        "size_field": "CellSize",
+        "sampling_size": 0.75,
+        "hausd": 0.03,
+        "surface_tolerance": 0.06,
+        "hgrad": 1.3,
+        "preserve_features": true,
+        "feature_angle": 45.0,
+        "size_iterations": 3,
+        "max_points": 250000,
+        "quality_report": ".//Test_results//TetSizeField_Conformal_quality.json"
+      }
+    },
+    "5": {
+      "ExportMeshID": {
+        "MeshID": "TetDomains",
+        "out_meshfile": ".//Test_results//TetSizeField_Conformal_domains.inp",
+        "elem_type": "Tet"
+      }
+    },
+    "6": {
+      "Define_Lattice": {
+        "la_name": "GradedTetInfill",
+        "definition": {
+          "type": "ConformalLattice",
+          "definition": {
+            "meshfile": "TetDomains",
+            "la_name": "Icosahedral",
+            "k": 0.0,
+            "ExportFEAMeshFile": ".//Test_results//TetSizeField_Conformal_struts.inp"
+          }
+        }
+      }
+    },
+    "7": {
+      "Add_Lattice": {
+        "la_name": "GradedTetInfill",
+        "size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "thk": 0.04,
+        "Rot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Trans": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "8": {
+      "Intersect_Geometry": {
+        "Name": "Solid",
+        "k_factor": 0.0,
+        "Paras": {
+          "Scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "Rot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Trans": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "push2GeomField": false
+      }
+    },
+    "9": {
+      "Export": {
+        "outfile": ".//Test_results//TetSizeField_Conformal.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

@@ -7,6 +7,9 @@ import {translate, setLanguage, getLanguage, LANGUAGE_KEY} from '../ui/i18n.js';
 test('language selection, English fallback, whitespace and dynamic counts', () => {
   setLanguage('zh-CN');
   assert.equal(translate(' Save '),' 保存 ');
+  assert.equal(translate('Expand'),'展开');
+  assert.equal(translate('Collapse'),'收起');
+  assert.equal(translate('Expand workflow and resources'),'展开工作流与资源');
   assert.equal(translate('1 step'),'1 个步骤');
   assert.equal(translate('12 steps'),'12 个步骤');
   assert.equal(translate('Search results · 2 operations'),'搜索结果 · 2 个操作');
@@ -15,6 +18,9 @@ test('language selection, English fallback, whitespace and dynamic counts', () =
   assert.equal(translate('Untranslated future message'),'Untranslated future message');
   setLanguage('en');
   assert.equal(translate('Save'),'Save');
+  assert.equal(translate('Expand'),'Expand');
+  assert.equal(translate('Collapse'),'Collapse');
+  assert.equal(translate('Expand workflow and resources'),'Expand workflow and resources');
   assert.throws(()=>setLanguage('fr'),/Unsupported language/);
   assert.equal(getLanguage(),'en');
 });

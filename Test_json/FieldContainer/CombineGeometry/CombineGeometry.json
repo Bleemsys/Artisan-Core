@@ -1,0 +1,81 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -2.0,
+          6.0
+        ],
+        [
+          -2.0,
+          6.0
+        ],
+        [
+          -2.0,
+          6.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 1073741824
+  },
+  "WorkFlow": {
+    "1": {
+      "ReadMesh": {
+        "meshfile": ".//sample-obj//CombineGeometry//region.inp",
+        "MeshID": "HeelRegion",
+        "elem_type": "Triangle"
+      }
+    },
+    "2": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "CellSize",
+        "default_value": 8.0,
+        "regions": [
+          {
+            "name": "Heel",
+            "geometry": "HeelRegion",
+            "value": 4.0,
+            "transition_width": 2.0
+          }
+        ],
+        "overlap": "Minimum"
+      }
+    },
+    "3": {
+      "OP_ExprOperation_GridField": {
+        "expression": "CellSize * 0.5",
+        "out_gridFieldFile": "HalfSize"
+      }
+    },
+    "4": {
+      "Export": {
+        "outfile": ".//Test_results//CombineGeometry_Fields.h5",
+        "GridFieldIDs": [
+          "CellSize",
+          "HalfSize"
+        ]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": false,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

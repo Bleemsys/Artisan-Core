@@ -53,11 +53,11 @@ visible, then choose **Fit view**.
 The model looks patchy or has apparent holes
 ============================================
 
-Read the viewport footer. If it says **Quick Preview**, select that layer
-with **Make active** and choose **Load full detail**. Sampled triangles do
-not form a complete surface. Also disable Section and inspect layers
-separately. If gaps remain in full detail, investigate the input mesh,
-workflow and resolution rather than assuming they are a viewer effect.
+Read the viewport footer to check the active layer and Preview mode. Preview
+adapts to the camera and is approximate; wait for detail after moving or zooming.
+For a surface check, select the model and choose **Load full detail** when
+resources allow. Also disable Section and inspect layers separately. If gaps
+remain in full detail, investigate the input mesh, workflow and resolution.
 
 Measurements are unavailable or have the wrong units
 ====================================================
@@ -94,13 +94,16 @@ An unsupported INP structure requires a compatible flat mesh export, not
 just a larger memory setting. ArtGUI's engine memory setting does not
 reserve memory for the viewer.
 
-Where are Save As, Undo and the old Update view button?
-=======================================================
+Keep an original design and reload a changed result
+====================================================
 
-This workbench version uses **Save** for the opened path and does not expose
-a general Undo/Redo command. Make project copies before substantial changes.
-Use **Load result** or **Preview mesh** to reload a file; the legacy ArtGUI
-instructions for Update view do not apply to this interface.
+Choose **Save as** beside Save to create another project JSON. Subsequent Save
+actions use the new path. Choose a different Export output filename as well if
+you want to preserve the earlier mesh or field.
+
+There is no general Undo/Redo command. Use saved project variations before
+substantial edits. Use **Load result** or **Preview mesh** to reload a file;
+legacy Update view instructions do not apply to this interface.
 
 What should I include when reporting a problem?
 ===============================================
@@ -118,3 +121,27 @@ Check that the Export step requests an HDF5 output and the run completed.
 Choose **View field…** and reopen the file. Fields close before each run so
 Artisan can overwrite them; this is expected. An arbitrary HDF5 file or an
 incomplete snapshot may not be supported. See :doc:`viewer`.
+
+A preview disappears after Clean scratch
+========================================
+
+This is expected for layers using ViewScratch. Cleanup closes cached previews
+before deleting their temporary files. Reopen the geometry from Project or
+choose Preview mesh. The project and original model are retained; preparing
+the preview again can take time and disk space.
+
+ViewScratch cannot be written or completely cleaned
+===================================================
+
+Keep ArtGUI in a writable folder and check free disk space. ViewScratch is
+beside the executable, not beside the workflow JSON. Close other ArtGUI windows
+using its files and retry Clean scratch. A reported cleanup failure can leave
+some temporary files in place; it does not mean cleanup finished successfully.
+
+Points or a field are hidden behind geometry
+============================================
+
+Select the obstructing geometry in Project and change its own Opacity or
+visibility. Field opacity and Point opacity affect only the selected data
+object. Check Show field or Show points, the object's opacity, coordinate-column
+mapping and Section clipping. Use Fit view to frame the visible objects.

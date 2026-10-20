@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Meshing 03 &#8212; Artisan 0.2.18 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'GradedTetLattice';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Field Driven Meshing" href="Mesher_99.html" />
+    <link rel="prev" title="Meshing 02" href="Mesher_02.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Meshing 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/GradedTetLattice.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Meshing 03</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-the-sampling-grid">1. Set the sampling grid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-regional-size-field">2. Define the regional size field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-the-tet-cell-domains">3. Generate the tet cell domains</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-the-tet-domains-with-a-conformal-lattice">4. Fill the tet domains with a conformal lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-and-apply-basic-cleanup">5. Export and apply basic cleanup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-complete-example">Run the complete example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shoe-model-with-varying-cell-size">Shoe model with varying cell size</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="meshing-03">
+<span id="graded-tet-lattice"></span><h1>Meshing 03<a class="headerlink" href="#meshing-03" title="Link to this heading">#</a></h1>
+<p>Use a scalar field to make small lattice cells in one region and larger cells
+elsewhere. This example fills a 6 x 3 x 3 box with a conformal <code class="docutils literal notranslate"><span class="pre">Icosahedral</span></code>
+lattice, then exports and cleans the STL surface.</p>
+<p>The workflow is: <strong>define a size field → generate tet domains → fill each
+domain with a lattice → trim to the solid → export and clean</strong>.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="_images/TetSizeField_Conformal_preview.png"><img alt="Conformal lattice with fine cells on the left and larger cells on the right." src="_images/TetSizeField_Conformal_preview.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Smaller tet domains create finer lattice cells; the strut radius stays constant.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>It is included at
+<code class="docutils literal notranslate"><span class="pre">Src/Test_json/ConformalLattice/TetSizeField/TetSizeField_Conformal.json</span></code>.
+The snippets below explain the main steps; use the complete file to run them.</p>
+<section id="set-the-sampling-grid">
+<h2>1. Set the sampling grid<a class="headerlink" href="#set-the-sampling-grid" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Setup</span></code> defines the grid used to sample fields and extract the lattice surface.
+The example uses a box domain from -0.1 to 6.1 in x and -0.1 to 3.1 in y and z,
+slightly larger than the solid. It uses <code class="docutils literal notranslate"><span class="pre">res:</span> <span class="pre">[0.025,</span> <span class="pre">0.025,</span> <span class="pre">0.025]</span></code>.</p>
+<p>Keep these three controls separate:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Main design controls</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Control</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>What it changes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Setup.res</span></code></p></td>
+<td><p>0.025 per axis</p></td>
+<td><p>Grid sampling and surface detail. Smaller spacing needs more memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CellSize</span></code> values</p></td>
+<td><p>0.4 to 1.0</p></td>
+<td><p>Target tet edge lengths, which control the lattice-cell layout.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Add_Lattice.thk</span></code></p></td>
+<td><p>0.04</p></td>
+<td><p>Strut radius for this conformal lattice; diameter is 0.08.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>All lengths use the model’s units. Keep the whole domain in one partition for
+the size-field mesher. The example sets <code class="docutils literal notranslate"><span class="pre">memorylimit</span></code> to 4294967296 (4 GiB);
+larger models or finer grids may need more.</p>
+</section>
+<section id="define-the-regional-size-field">
+<h2>2. Define the regional size field<a class="headerlink" href="#define-the-regional-size-field" title="Link to this heading">#</a></h2>
+<p>The example first loads <code class="docutils literal notranslate"><span class="pre">sample-obj/TetSizeField/solid.inp</span></code> as the triangle
+mesh <code class="docutils literal notranslate"><span class="pre">Solid</span></code>. A second triangle mesh describes the fine region, x = 0 to 2.
+Both inputs are supplied under <code class="docutils literal notranslate"><span class="pre">Src/sample-obj/TetSizeField</span></code>.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Define_ScalarField_CombineGeometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;field_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;default_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;regions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FineRegion&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//sample-obj//TetSizeField//fine_region.inp&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;transition_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Minimum&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Inside the fine region, the target is 0.4. It smoothly increases to 1.0 between
+x = 2 and x = 4, then stays at 1.0. The field uses the grid from <code class="docutils literal notranslate"><span class="pre">Setup</span></code>;
+no <code class="docutils literal notranslate"><span class="pre">grid_spacing</span></code> is needed. Region geometry can also be a mesh-container ID.</p>
+<p>The complete example saves <code class="docutils literal notranslate"><span class="pre">CellSize</span></code> to HDF5 using <code class="docutils literal notranslate"><span class="pre">Export</span></code> with
+<code class="docutils literal notranslate"><span class="pre">GridFieldIDs:</span> <span class="pre">[&quot;CellSize&quot;]</span></code>. This saves both the values and their grid
+coordinates. See <a class="reference internal" href="FieldContainer.html#scalar-field-combine-geometry"><span class="std std-ref">Scalar Fields from Geometry Regions</span></a> for overlap rules and
+<a class="reference internal" href="Export.html#reading-hdf5"><span class="std std-ref">Reading HDF5</span></a> for readback.</p>
+</section>
+<section id="generate-the-tet-cell-domains">
+<h2>3. Generate the tet cell domains<a class="headerlink" href="#generate-the-tet-cell-domains" title="Link to this heading">#</a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_TetMesh_SizeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TetDomains&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;sampling_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hausd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;surface_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.06</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hgrad&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//TetSizeField_Conformal_quality.json&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">TetDomains</span></code> stores the volume mesh for the next step. <code class="docutils literal notranslate"><span class="pre">sampling_size</span></code>
+controls the initial seed, while <code class="docutils literal notranslate"><span class="pre">CellSize</span></code> supplies the final edge-length
+targets. Actual sizes also depend on the boundary and element quality.</p>
+<p>The field must cover the entire solid and contain positive values. This mesher
+accepts one closed, connected triangle shell. See <a class="reference internal" href="Mesher_02.html#tet-mesh-size-field"><span class="std std-ref">Tetrahedral Lattice Layout from a Size Field</span></a>
+for the controls, supported inputs and quality report.</p>
+</section>
+<section id="fill-the-tet-domains-with-a-conformal-lattice">
+<h2>4. Fill the tet domains with a conformal lattice<a class="headerlink" href="#fill-the-tet-domains-with-a-conformal-lattice" title="Link to this heading">#</a></h2>
+<p>For the mesh-based mapping principles and tetrahedral-domain examples, see
+<a class="reference internal" href="Conformal.html#conformallattice"><span class="std std-ref">Conformal Lattice 01</span></a>, especially
+<a class="reference internal" href="Conformal.html#lattice-in-tetrahedron-domain"><span class="std std-ref">Lattice in tetrahedron domain</span></a>.</p>
+<p>Define a lattice that maps the built-in <code class="docutils literal notranslate"><span class="pre">Icosahedral</span></code> unit into each tet,
+then add it to the lattice field. These are steps 6 and 7 in the full workflow:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;6&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Define_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GradedTetInfill&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConformalLattice&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TetDomains&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Icosahedral&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;k&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;7&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Add_Lattice&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;la_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GradedTetInfill&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;thk&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.04</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Trans&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Inv&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Fill&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Cube_Request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here the tet mesh controls cell placement and size. Keep <code class="docutils literal notranslate"><span class="pre">size:</span> <span class="pre">[1,</span> <span class="pre">1,</span> <span class="pre">1]</span></code>
+for this mapping; change the scalar field to adjust the cell layout.</p>
+<p>The next step, <code class="docutils literal notranslate"><span class="pre">Intersect_Geometry</span></code> with <code class="docutils literal notranslate"><span class="pre">Name:</span> <span class="pre">&quot;Solid&quot;</span></code>, trims the struts
+to the original solid. <code class="docutils literal notranslate"><span class="pre">Fill:</span> <span class="pre">false</span></code> leaves that trimming to this explicit
+step instead of using the padded sampling box.</p>
+</section>
+<section id="export-and-apply-basic-cleanup">
+<h2>5. Export and apply basic cleanup<a class="headerlink" href="#export-and-apply-basic-cleanup" title="Link to this heading">#</a></h2>
+<p>After the intersection, <code class="docutils literal notranslate"><span class="pre">Export</span></code> writes the lattice surface to STL.
+The top-level <code class="docutils literal notranslate"><span class="pre">PostProcess</span></code> section enables cleanup:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;CleanExportedMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Cleanup merges identical vertices, removes degenerate triangles and drops
+unused vertices. It does not fill holes or repair non-manifold edges.
+Omitting <code class="docutils literal notranslate"><span class="pre">CleanExportedMesh</span></code> leaves cleanup disabled, so older examples
+remain valid. See <a class="reference internal" href="Export.html#clean-exported-mesh"><span class="std std-ref">Clean exported surface meshes</span></a> for details.</p>
+</section>
+<section id="run-the-complete-example">
+<h2>Run the complete example<a class="headerlink" href="#run-the-complete-example" title="Link to this heading">#</a></h2>
+<p>Use the updated source build with the native Netgen and MMG support installed.
+From <code class="docutils literal notranslate"><span class="pre">Src</span></code>, run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python ArtisanMain.py -f Test_json/ConformalLattice/TetSizeField/TetSizeField_Conformal.json</span>
+</pre></div>
+</div>
+<p>The example uses paths relative to <code class="docutils literal notranslate"><span class="pre">Src</span></code> (<code class="docutils literal notranslate"><span class="pre">JsonWorkDir:</span> <span class="pre">false</span></code>). Keep
+<code class="docutils literal notranslate"><span class="pre">Test_results</span></code> available for the outputs and quality report.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Outputs in Test_results</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 58.0%" />
+<col style="width: 42.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TetSizeField_Conformal_CellSize.h5</span></code></p></td>
+<td><p>Scalar size field and grid coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TetSizeField_Conformal_domains.inp</span></code></p></td>
+<td><p>Tet cell-domain mesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TetSizeField_Conformal_struts.inp</span></code></p></td>
+<td><p>Strut centreline geometry, without FEA material or section definitions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TetSizeField_Conformal_quality.json</span></code></p></td>
+<td><p>Mesher size, shape and boundary checks.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TetSizeField_Conformal.stl</span></code></p></td>
+<td><p>Conformal lattice surface with basic cleanup applied.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="shoe-model-with-varying-cell-size">
+<h2>Shoe model with varying cell size<a class="headerlink" href="#shoe-model-with-varying-cell-size" title="Link to this heading">#</a></h2>
+<p>The same size-field approach can fill a shoe-sole model with a graded
+<code class="docutils literal notranslate"><span class="pre">Icosahedral</span></code> lattice. The complete example is
+<code class="docutils literal notranslate"><span class="pre">Src/Test_json/ConformalLattice/TetSizeField/Shoes_02_SinTet_Conformal.json</span></code>.
+Its paths are relative to <code class="docutils literal notranslate"><span class="pre">Src</span></code> (<code class="docutils literal notranslate"><span class="pre">JsonWorkDir:</span> <span class="pre">false</span></code>).</p>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">CellSize</span></code> is defined by the expression
+<code class="docutils literal notranslate"><span class="pre">12</span> <span class="pre">+</span> <span class="pre">4*sin(2*pi*(y</span> <span class="pre">+</span> <span class="pre">187.7188)/140)</span></code>. The target tet edge length varies
+smoothly from 8 to 16 model units along Y: blue regions have smaller targets
+and finer lattice cells, while red regions have larger targets and coarser
+cells. The lattice thickness parameter stays at <code class="docutils literal notranslate"><span class="pre">thk:</span> <span class="pre">1.2</span></code>; varying cell
+size does not require changing strut thickness.</p>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="_images/Shoe_varytetsize_01.png"><img alt="Oblique view of the shoe-sole lattice with a blue-to-red CellSize field slice overlaid." src="_images/Shoe_varytetsize_01.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Oblique view of the graded shoe-sole lattice and its CellSize field.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="_images/Shoe_varytetsize_02.png"><img alt="Top view of the shoe-sole lattice showing finer and coarser cells along its length." src="_images/Shoe_varytetsize_02.png" style="width: 65%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Top view showing the change in lattice-cell size along the sole.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Mesher_02.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Meshing 02</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Mesher_99.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Field Driven Meshing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-the-sampling-grid">1. Set the sampling grid</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-regional-size-field">2. Define the regional size field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-the-tet-cell-domains">3. Generate the tet cell domains</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fill-the-tet-domains-with-a-conformal-lattice">4. Fill the tet domains with a conformal lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-and-apply-basic-cleanup">5. Export and apply basic cleanup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-complete-example">Run the complete example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shoe-model-with-varying-cell-size">Shoe model with varying cell size</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -18,6 +18,7 @@
 
   <link rel="stylesheet" href="./viewer.css">
   <link rel="stylesheet" href="./field.css">
+  <link rel="stylesheet" href="./point-cloud.css">
   <link rel="stylesheet" href="./resource-monitor.css">
 
   <link rel="stylesheet" href="./operation-picker.css">
@@ -36,6 +37,8 @@
       <button class="button" id="open-project">Open</button>
 
       <button class="button primary" id="save-project">Save</button>
+
+      <button class="button" id="save-project-as">Save as</button>
 
       <span class="divider"></span>
 
@@ -68,7 +71,7 @@
 
       <section class="panel viewport-panel" id="workspace-viewer">
 
-        <div class="viewport-head"><div><h2>3D Workspace</h2><p id="geometry-label">Load a model to preview your design</p></div><div class="view-actions"><button class="button subtle" id="load-geometry">Load source</button><button class="button subtle" id="load-result" title="View mesh exports from the current JSON or open another result file">Load result</button><button class="button subtle" id="view-generated-field" title="View HDF5 exports from the current JSON or open another field file">View field…</button><button class="button subtle" id="fit-view">Fit view</button><button class="button subtle" id="preview-mode" disabled title="Switch between quick preview and full detail">Full detail</button><button class="button subtle" id="view-cube" title="Reset camera to isometric view">Reset</button><button type="button" class="button subtle workspace-size-button" id="expand-workspace" aria-label="Expand workspace" aria-pressed="false" aria-controls="workspace-viewer" title="Expand workspace"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="workspace-size-icon" d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg><span id="workspace-size-label">Expand</span></button></div></div>
+        <div class="viewport-head"><div><h2>3D Workspace</h2><p id="geometry-label">Load a model to preview your design</p></div><div class="view-actions"><button class="button subtle" id="load-geometry">Load source</button><button class="button subtle" id="load-result" title="View mesh exports from the current JSON or open another result file">Load result</button><button class="button subtle" id="view-generated-field" title="View HDF5 exports from the current JSON or open another field file">View field…</button><button class="button subtle" id="fit-view">Fit view</button><button class="button subtle" id="preview-mode" disabled title="Switch between quick preview and full detail">Full detail</button><button class="button subtle" id="view-cube" title="Reset camera to isometric view">Reset</button><button class="button subtle" id="clean-scratch" title="Delete temporary preview files in ViewScratch">Clean scratch</button><button type="button" class="button subtle workspace-size-button" id="expand-workspace" aria-label="Expand workspace" aria-pressed="false" aria-controls="workspace-viewer" title="Expand workspace"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="workspace-size-icon" d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg><span id="workspace-size-label">Expand</span></button></div></div>
 
         <div id="viewer-toolbar" class="viewer-toolbar" aria-label="3D view controls"></div>
 

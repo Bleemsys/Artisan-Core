@@ -1,4 +1,5 @@
 .. _ConformalLattice:
+
 Conformal Lattice 01
 ********************
 
@@ -81,6 +82,10 @@ Lattice in tetrahedron domain
 =============================
 
 Tetrahedron mesh is widely used for domain discretization. It can be applied to most of difficult geometric shape, and has much higher chance of generating the mesh. Unlike the hexahedron element generation which often involves manual domain partition, the tetrahedron element requires less efforts on the domain partition. 
+
+To vary the tet-domain size by region, follow :ref:`graded-tet-lattice`.
+It combines a geometry-based scalar field, ``Gen_TetMesh_SizeField`` and
+``Icosahedral`` infill in one workflow.
 
 We use a sole of shoes to demonstrate how tetrahedron lattice domain infill works on difficult geometry. Here is the main JSON. 
 

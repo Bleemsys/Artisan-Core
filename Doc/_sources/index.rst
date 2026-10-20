@@ -26,18 +26,21 @@ This is a general guide of Artisan usage. This document is regularly updated to 
    Mesh Lattice <Mesh.rst>
    Meshing 01 <Mesher_01.rst>
    Meshing 02 <Mesher_02.rst>
+   Meshing 03 <GradedTetLattice.rst>
    Field Driven Meshing  <Mesher_99.rst>
    Mesh Process  <ProcMesh.rst>
    Conformal Lattice 01 <Conformal.rst>
    Conformal Lattice 02 <Conformal_02.rst>
    Surface Lattice <SurfaceLattice.rst>
    Primitive Design <Primitive.rst>
+   Plate slicing <PlateSlicing.rst>
    Field Operation <OPField.rst>
    Grid Field Container <FieldContainer.rst>
    Line Structure 01 <LineStructure.rst>
    Line Structure 02 <LineStructure_02.rst>
    Lattice Transition <TransLattice.rst>
    Compression <Compression.rst>
+   Export <Export.rst>
    FEA Interface <FEAInter.rst>
    API Interface <API.rst>
    ArtGUI user guide <ArtGUI.rst>

@@ -1,5 +1,9 @@
 // Operation display text only; workflow keywords remain unchanged.
 export default {
+  "Scalar field from regions": "区域标量场",
+  "Combine geometry regions into a scalar field on the project grid.": "在项目网格上组合几何区域，创建标量场。",
+  "Tet mesh from size field": "尺寸场四面体网格",
+  "Create tetrahedral cell domains with sizes controlled by a scalar field.": "创建由标量场控制尺寸的四面体单胞域。",
   "Add geometry": "添加几何体",
   "Combine a geometry with the current model.": "将几何体与当前模型合并。",
   "Add shell": "添加壳体",
@@ -147,5 +151,11 @@ export default {
   "Geometry distance grid field": "几何距离网格场",
   "Sample a mesh signed-distance field on the current calculation grid.": "在当前计算网格上采样网格几何的有符号距离场。",
   "Smooth mesh": "平滑网格",
-  "Smooth a surface through its distance field using the current sampling resolution.": "按当前采样分辨率，通过距离场平滑表面网格。"
+  "Smooth a surface through its distance field using the current sampling resolution.": "按当前采样分辨率，通过距离场平滑表面网格。",
+  "Generate slot cutters": "生成插槽切割场",
+  "Create paired slot cutter fields for two intersecting plate fields.": "为两个相交板片场生成配对的插槽切割场。",
+  "Clear lattice field": "清空点阵场",
+  "Clear the working lattice field before building the next plate.": "构建下一块板片前清空当前工作点阵场。",
+  "Store lattice mesh": "存储点阵网格",
+  "Store the current lattice mesh under a mesh ID for later export.": "以网格 ID 存储当前点阵网格，以便后续导出。"
 };

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Meshing 02 &#8212; Artisan 0.2.17 documentation</title>
+    <title>Meshing 02 &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -44,7 +44,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Mesher_02';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Field Driven Meshing" href="Mesher_99.html" />
+    <link rel="next" title="Meshing 03" href="GradedTetLattice.html" />
     <link rel="prev" title="Meshing 01" href="Mesher_01.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -133,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -159,18 +159,21 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -336,7 +339,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-tetrahedron-mesher">Adaptive Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-geometry-and-field">Prepare the geometry and field</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adjust-meshing-controls">Adjust meshing controls</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-result">Read the result</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -794,6 +805,142 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
+<section id="tetrahedral-lattice-layout-from-a-size-field">
+<span id="tet-mesh-size-field"></span><h3>Tetrahedral Lattice Layout from a Size Field<a class="headerlink" href="#tetrahedral-lattice-layout-from-a-size-field" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Gen_TetMesh_SizeField</span></code> generates tetrahedral cell domains whose sizes follow
+a scalar field. Use these domains to place a conformal lattice. The mesher
+itself produces a volume mesh; the subsequent lattice steps create the struts.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_TetMesh_SizeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TetDomains&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;sampling_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hausd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;surface_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.06</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hgrad&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//TetSizeField_quality.json&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Required mesher inputs</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mesh_file</span></code></p></td>
+<td><p>Closed triangle-surface file or mesh-container ID, resolved through
+MeshInterface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">export_mesh</span></code></p></td>
+<td><p>Output tet-mesh file path or mesh-container ID. An ID such as
+<code class="docutils literal notranslate"><span class="pre">TetDomains</span></code> can be passed directly to <code class="docutils literal notranslate"><span class="pre">ConformalLattice</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size_field</span></code></p></td>
+<td><p>Existing scalar grid-field ID. Values must be finite, strictly positive
+target edge lengths in model units.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_size</span></code></p></td>
+<td><p>Positive initial interior seed size. The scalar field controls the
+final size targets; boundary edges in the seed may be larger.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="prepare-the-geometry-and-field">
+<h4>Prepare the geometry and field<a class="headerlink" href="#prepare-the-geometry-and-field" title="Link to this heading">#</a></h4>
+<p>The surface must be a single connected, closed, manifold, non-self-intersecting
+triangle shell. Separate solids and nested cavity shells are not supported.</p>
+<p>Create the field with <a class="reference internal" href="FieldContainer.html#scalar-field-combine-geometry"><span class="std std-ref">Scalar Fields from Geometry Regions</span></a>, or load a saved
+HDF5 field using <code class="docutils literal notranslate"><span class="pre">ReadGridField</span></code>. It must cover the whole solid on a
+rectilinear 3D grid with at least two points per axis. Values are interpolated
+between grid points; there is no fallback outside the field.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Setup.res</span></code> controls field sampling, not tet size. For this workflow, use
+sufficient <code class="docutils literal notranslate"><span class="pre">Setup.memorylimit</span></code> to keep the complete domain in one partition.
+A partial field cannot size the entire solid.</p>
+</section>
+<section id="adjust-meshing-controls">
+<h4>Adjust meshing controls<a class="headerlink" href="#adjust-meshing-controls" title="Link to this heading">#</a></h4>
+<p>The example values above suit the accompanying box example. Optional controls
+use the defaults below when omitted.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Optional mesher controls</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 18.0%" />
+<col style="width: 57.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>0.01</p></td>
+<td><p>Positive boundary approximation tolerance for each adaptation pass.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">surface_tolerance</span></code></p></td>
+<td><p>2 x <code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>Positive final sampled distance limit against the original surface.
+Exceeding it rejects the output.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hgrad</span></code></p></td>
+<td><p>1.3</p></td>
+<td><p>Size gradation control; must be greater than 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">preserve_features</span></code></p></td>
+<td><p>true</p></td>
+<td><p>Enable sharp-feature detection during adaptation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">feature_angle</span></code></p></td>
+<td><p>45</p></td>
+<td><p>Feature-detection angle, in degrees from 0 to 180.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size_iterations</span></code></p></td>
+<td><p>3</p></td>
+<td><p>Number of adaptation passes, from 2 to 20.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_points</span></code></p></td>
+<td><p>250000</p></td>
+<td><p>Vertex limit checked around native meshing calls. It is not a hard
+limit on peak memory use inside those calls.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
+<td><p>No file</p></td>
+<td><p>Optional JSON report path. Its parent directory must exist and the path
+must differ from the input and output meshes.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="read-the-result">
+<h4>Read the result<a class="headerlink" href="#read-the-result" title="Link to this heading">#</a></h4>
+<p>Tet sizes are approximate: boundary shape, element quality and grading also
+affect them. The report compares requested and achieved edge sizes and records
+element counts, volume, shape quality and sampled boundary error. A successful
+check does not prove exact size matching or absence of global overlaps.
+Boundary error is sampled rather than a certified Hausdorff distance.</p>
+<p>The implementation uses native C++ Netgen for the initial mesh and MMG3D for
+size adaptation. It does not use TetGen or the Netgen Python package. Source
+builds need the updated Snippetslib and native Netgen runtime; older standalone
+executables must be rebuilt. Build details are in <code class="docutils literal notranslate"><span class="pre">SnippetsLib/NETGEN_BUILD.md</span></code>.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">Test_json/ConformalLattice/TetSizeField/TetSizeField.json</span></code> from <code class="docutils literal notranslate"><span class="pre">Src</span></code>
+for a field-and-mesh example. Follow <a class="reference internal" href="GradedTetLattice.html#graded-tet-lattice"><span class="std std-ref">Meshing 03</span></a> to turn the
+tet domains into a conformal lattice and clean the exported STL.</p>
+</section>
+</section>
 </section>
 </section>
 
@@ -818,11 +965,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="Mesher_99.html"
+       href="GradedTetLattice.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Field Driven Meshing</p>
+        <p class="prev-next-title">Meshing 03</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -845,7 +992,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-tetrahedron-mesher">Adaptive Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-geometry-and-field">Prepare the geometry and field</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adjust-meshing-controls">Adjust meshing controls</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-result">Read the result</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

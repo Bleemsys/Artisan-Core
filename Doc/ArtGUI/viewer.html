@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Inspect models in the 3D Workspace &#8212; Artisan 0.2.17 documentation</title>
+    <title>Inspect models in the 3D Workspace &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="../_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -158,18 +158,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -334,12 +337,15 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#move-around-the-model">Move around the model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-source-and-result">Compare source and result</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-preview-and-full-detail">Quick Preview and Full Detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independent-colour-and-opacity-controls">Independent colour and opacity controls</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-preview-and-full-detail">Adaptive Preview and Full Detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clean-temporary-preview-files">Clean temporary preview files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-inside-with-a-section-plane">Look inside with a section plane</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-a-distance-or-angle">Measure a distance or angle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-view-or-an-image">Save a view or an image</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-meshes">Supported meshes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-an-hdf5-field">Inspect an HDF5 field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-csv-or-tsv-point-data">Inspect CSV or TSV point data</a></li>
 </ul>
             </nav>
         </div>
@@ -353,7 +359,7 @@ document.write(`
                   
   <section id="inspect-models-in-the-3d-workspace">
 <h1>Inspect models in the 3D Workspace<a class="headerlink" href="#inspect-models-in-the-3d-workspace" title="Link to this heading">#</a></h1>
-<p>The viewer loads mesh files for inspection. Camera, display, section and
+<p>The viewer loads meshes, Artisan HDF5 fields and CSV/TSV point clouds for inspection. Camera, display, section and
 measurement controls do not change the workflow geometry or the mesh on disk.
 After changing workflow parameters, generate and reload a result to see the
 new design.</p>
@@ -393,26 +399,77 @@ visibility, opacity and colour controls.</span><a class="headerlink" href="#id1"
 <p>Transparency is useful for an overlay, but complex intersecting surfaces can
 show sorting artefacts. Inspect each layer separately if an overlap is unclear.</p>
 </section>
-<section id="quick-preview-and-full-detail">
-<h2>Quick Preview and Full Detail<a class="headerlink" href="#quick-preview-and-full-detail" title="Link to this heading">#</a></h2>
-<p>Large STL files open using a sampled <strong>Quick Preview</strong> of up to 120,000
-triangles. This reduces loading and display cost. Sampling can make surfaces
-look incomplete because many triangles are intentionally omitted.</p>
-<p>Select the layer in Visibility and choose <strong>Load full detail</strong> to load its
-complete mesh. The control may show <strong>Show quick preview</strong> afterwards, or
-<strong>Full detail shown</strong> for a mesh that does not need sampling. Read the footer
-below the viewport to confirm the active layer and displayed detail.</p>
+<section id="independent-colour-and-opacity-controls">
+<h2>Independent colour and opacity controls<a class="headerlink" href="#independent-colour-and-opacity-controls" title="Link to this heading">#</a></h2>
+<p>Select the object in the Project tree, then use its Properties panel:</p>
+<ul class="simple">
+<li><p><strong>Geometry:</strong> use <strong>Display → Display colour</strong> and <strong>Display → Opacity</strong>.
+Source, reference and result geometries each have their own settings.
+A supported mesh in Supporting files has its own opacity too.</p></li>
+<li><p><strong>Field:</strong> use <strong>Display → Field opacity</strong> in the Field inspector. Each field
+file and field ID retains its own opacity. Changing to another field does
+not apply the first field’s setting to it.</p></li>
+<li><p><strong>Point cloud:</strong> use <strong>Point opacity</strong> in the selected cloud’s Properties.
+This changes the points, including their transparency when overlaid on a
+model; it does not dim the geometry.</p></li>
+</ul>
+<p>The selected Properties panel contains only that object’s opacity control.
+Opening, editing or removing a field or point cloud leaves other objects’
+opacity and visibility unchanged. To dim a mesh behind a field or points,
+select that mesh and change its own Opacity. The Visibility menu’s geometry
+opacity controls edit the same settings as geometry Properties.</p>
+<p>Opacity 0 makes the object transparent and 1 (100%) makes it opaque.
+Choose <strong>Save</strong> or <strong>Save as</strong> to retain geometry colours and per-object opacity
+in the project JSON. Geometry settings survive preview/full-detail reloads;
+point settings survive reopening the saved reference. These display changes
+do not modify model coordinates, field values or source files.</p>
+</section>
+<section id="adaptive-preview-and-full-detail">
+<h2>Adaptive Preview and Full Detail<a class="headerlink" href="#adaptive-preview-and-full-detail" title="Link to this heading">#</a></h2>
+<p><strong>Preview</strong> follows zoom, pan and orbit, showing more detail near the area you
+are inspecting and less elsewhere. It supports STL, OBJ, ASCII PLY and the
+supported flat INP meshes. Read the viewport footer to check which layer and
+detail mode are active. Allow new detail to finish loading after moving the
+camera.</p>
+<p>The first opening prepares reusable display data on disk. It can take time
+and disk space for a large model; progress can be cancelled. Later openings
+reuse the completed cache. Changing the source file requires updated preview
+data. The original mesh and workflow are unchanged.</p>
+<p>Select a layer in Project, or use <strong>Make active</strong> in Visibility, then choose
+<strong>Load full detail</strong> when you need the complete mesh. ArtGUI retains the
+previous preview until the new load succeeds. Use <strong>Cancel</strong> beside the
+progress indicator to stop loading. <strong>Show quick preview</strong> returns to Preview.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Quick Preview is a display aid. It does not simplify the original file or
-reduce the geometry used by Artisan. Measurements are disabled on sampled
-previews. Use Full Detail before assessing holes or missing surfaces.</p>
+<p>Preview is an approximate display, not a simplified export or a replacement
+for the original mesh. Measurements require a visible Full Detail mesh.
+Use Full Detail before deciding that a surface has holes or missing parts.</p>
 </div>
-<p>Full Detail has no fixed application-imposed file-size or triangle-count cap.
-Practical capacity depends on available memory and graphics resources. Start
-with Quick Preview for large STL files and close unneeded layers before loading
-full detail. Large text meshes can take longer to parse. Use <strong>Cancel</strong> beside
-the loading progress indicator to stop loading.</p>
+<p>Full-detail capacity depends on current RAM, graphics and viewer resources.
+STL loading checks memory during loading. If it pauses, <strong>Continue in preview</strong>
+keeps the existing preview; <strong>Continue loading</strong> resumes with checks still
+active. For other supported mesh formats, a resource warning can offer
+<strong>Continue in preview</strong> or <strong>Load full geometry</strong>. Attempting a full load
+despite a warning can exhaust resources; it is not a promise that it will fit.
+Close unused layers and use Preview when full detail cannot complete.</p>
+</section>
+<section id="clean-temporary-preview-files">
+<h2>Clean temporary preview files<a class="headerlink" href="#clean-temporary-preview-files" title="Link to this heading">#</a></h2>
+<p>Preview data is stored in <code class="docutils literal notranslate"><span class="pre">ViewScratch</span></code> beside <code class="docutils literal notranslate"><span class="pre">ArtGUI.exe</span></code>, independently
+of the project folder. Keep the application in a writable folder with enough
+free space. Completed caches from the previous application-cache location
+are moved there when their models are opened.</p>
+<p>Choose <strong>Clean scratch</strong>, beside <strong>Reset</strong> in the 3D Workspace header, to delete
+all files and subfolders inside ViewScratch. The ViewScratch folder itself
+remains. Active preview work is cancelled and cached preview layers are closed
+before their files are deleted. Reopen an affected geometry from Project or
+use Preview mesh to prepare its preview again.</p>
+<p>Use ViewScratch only for temporary preview data: everything inside it is
+deleted. Project JSON, source models and exported results stored outside that
+folder are kept. Loaded Full Detail meshes, fields and point clouds remain
+displayed. If cleanup reports a file in use, close other ArtGUI
+windows using the cache and retry. <strong>Reset</strong> only changes the camera; it does
+not clean scratch files.</p>
 </section>
 <section id="look-inside-with-a-section-plane">
 <h2>Look inside with a section plane<a class="headerlink" href="#look-inside-with-a-section-plane" title="Link to this heading">#</a></h2>
@@ -480,10 +537,11 @@ three-dimensional body.</p>
 <p>The INP reader does not support higher-order elements, part/assembly instances,
 include files, generated node/element definitions or unsupported coordinate
 systems. Export a flat, supported mesh before viewing those models.</p>
-<p>INP viewing has no fixed application-imposed file-size, node, element or face
-count cap. Available memory and graphics resources still limit practical size.
-Loading is cancellable; there is no sampled INP Quick Preview. The viewer does
-not provide mesh editing, a solver or analysis-result plotting.</p>
+<p>INP meshes can use adaptive Preview as well as Full Detail. Practical loading
+capacity depends on available memory, graphics and supported input structure;
+Full Detail can be limited by resource checks. Loading is cancellable. The
+viewer does not provide mesh editing or a solver. Use the HDF5 field and CSV/TSV
+point-cloud inspectors for supported scalar-data displays.</p>
 </section>
 <section id="inspect-an-hdf5-field">
 <h2>Inspect an HDF5 field<a class="headerlink" href="#inspect-an-hdf5-field" title="Link to this heading">#</a></h2>
@@ -494,9 +552,13 @@ opens directly. You can also use <strong>Fields → Add</strong>.</p></li>
 <li><p>Select a field and, if needed, a partition block in Properties.</p></li>
 <li><p>Choose an X, Y or Z slice and move the position slider. The slice snaps to
 an original grid plane. Load a mesh to compare both in model coordinates.</p></li>
-<li><p>Adjust <strong>Colour</strong>, range and opacity. Use <strong>Probe</strong> to read a nearest stored
-grid value, and <strong>Copy value</strong> to copy it.</p></li>
+<li><p>Adjust <strong>Colour</strong>, range and <strong>Field opacity</strong> in that field’s Properties.
+Use <strong>Probe</strong> to read a nearest stored grid value, and <strong>Copy value</strong> to copy it.</p></li>
 </ol>
+<p>Field opacity affects only the selected field; there are no mesh-opacity
+controls in this panel. Select a mesh in Geometry to adjust the mesh itself.
+Choose Save to retain opacity separately for each field ID in each file.
+Slice position, palette and probe results remain session settings.</p>
 <p>The display can sample a slice for speed; Probe still reads an original value.
 The inspector shows grid dimensions, precision, available units and value range.
 Missing/nonfinite values appear as gaps. Unit labels do not convert coordinates.</p>
@@ -507,6 +569,35 @@ Structured/deformed grids, combined block views and volume rendering are not
 supported. Use <strong>Remove field file</strong> to close a file.</p>
 <p><strong>Save PNG…</strong> includes the displayed field plane but not its legend or probe
 tooltip. After generating new output, reopen the field to inspect the new data.</p>
+</section>
+<section id="inspect-csv-or-tsv-point-data">
+<h2>Inspect CSV or TSV point data<a class="headerlink" href="#inspect-csv-or-tsv-point-data" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Choose <strong>Point clouds → + Add</strong>, or drag a CSV/TSV file into the viewport.
+Adding a CSV/TSV through Supporting files opens the same importer.</p></li>
+<li><p>Check the delimiter and whether the first row contains headers. Map three
+distinct coordinate columns to X, Y and Z.</p></li>
+<li><p>Choose a scalar column for colouring, or <strong>Solid color</strong>, then choose a
+display limit and <strong>Import and show</strong>.</p></li>
+<li><p>Select the cloud in Project to change <strong>Color by</strong>, <strong>Color map</strong>, <strong>Point
+size</strong>, range, <strong>Point opacity</strong> and <strong>Show points</strong> in its Properties.</p></li>
+<li><p>Enable <strong>Inspect a point</strong> and click a displayed point to see its original
+coordinates, value and data-row identifier. Choose the mesh itself in
+Project if you need to reduce its opacity to see the points behind it.</p></li>
+</ol>
+<p>The importer reads numeric coordinate data. Rows with invalid coordinates are
+skipped and counted; missing scalar values are shown in grey. The viewport
+reports displayed and total point counts. Large clouds are sampled according
+to the display limit (100,000, 250,000 or 1,000,000 points); inspecting a point
+reports the original data for that displayed sample. Point size is in display
+pixels, not model units. Section clipping also applies to the points.</p>
+<p>CSV/TSV paths already referenced by the workflow appear under Point clouds
+as <strong>Referenced CSV · open to view points</strong>. Select one to map and load it;
+the file is not read just because it appears in the tree. Saved mappings reopen
+without repeating the import dialog. Save the project to keep the reference,
+mapping, display choices and point opacity. Keep the external data file with
+the project. <strong>Remove from project</strong> closes the cloud without deleting its file
+or changing another object’s opacity.</p>
 </section>
 </section>
 
@@ -557,12 +648,15 @@ tooltip. After generating new output, reopen the field to inspect the new data.<
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#move-around-the-model">Move around the model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-source-and-result">Compare source and result</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-preview-and-full-detail">Quick Preview and Full Detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independent-colour-and-opacity-controls">Independent colour and opacity controls</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-preview-and-full-detail">Adaptive Preview and Full Detail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clean-temporary-preview-files">Clean temporary preview files</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#look-inside-with-a-section-plane">Look inside with a section plane</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measure-a-distance-or-angle">Measure a distance or angle</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-a-view-or-an-image">Save a view or an image</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-meshes">Supported meshes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-an-hdf5-field">Inspect an HDF5 field</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-csv-or-tsv-point-data">Inspect CSV or TSV point data</a></li>
 </ul>
   </nav></div>
 

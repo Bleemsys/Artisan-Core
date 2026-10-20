@@ -9,3 +9,26 @@ __pycache__/
 *.pyc
 /operations-report.json
 /design-qa.md
+
+# BEGIN ArtGUI source transfer ignores
+/node_modules/
+/.pnpm-store/
+/.vscode/
+/libs/
+/ui/vendor/
+/src-tauri/target/
+/src-tauri/target-artgui/
+/src-tauri/gen/
+/src-tauri/resources/hdf5/
+!/src-tauri/resources/artisan/
+/src-tauri/resources/artisan/*
+!/src-tauri/resources/artisan/README.txt
+/dist/
+**/ViewScratch/
+__pycache__/
+*.pyc
+*.pyo
+/operations-report.json
+/design-qa.md
+artgui-transfer-backups/
+# END ArtGUI source transfer ignores

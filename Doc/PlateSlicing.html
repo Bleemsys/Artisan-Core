@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Slicing geometry with plates &#8212; Artisan 0.2.18 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'PlateSlicing';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Field Operation" href="OPField.html" />
+    <link rel="prev" title="Primitive Design" href="Primitive.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GradedTetLattice.html">Meshing 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Plate slicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/PlateSlicing.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Slicing geometry with plates</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-example-files">Inputs and example files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-name-the-plate-fields">1. Create and name the plate fields</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-one-cutter-pair-per-plate-intersection">2. Generate one cutter pair per plate intersection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-store-each-slotted-plate">3. Build and store each slotted plate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-and-inspect-the-plates">4. Export and inspect the plates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-two-plate-workflow">Complete two-plate workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-example">Extending the example</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="slicing-geometry-with-plates">
+<span id="chapter-plate-slicing"></span><h1>Slicing geometry with plates<a class="headerlink" href="#slicing-geometry-with-plates" title="Link to this heading">#</a></h1>
+<p>This procedure takes plate-shaped sections through a source geometry, creates
+complementary slot cutters for intersecting plates, and exports the slotted
+plates as separate STL meshes. The worked example uses five horizontal plates
+and three vertical plates. A smaller two-plate workflow is provided first so
+that the sequence is easy to inspect and adapt.</p>
+<p>The workflow uses <code class="docutils literal notranslate"><span class="pre">Proc_BoxSlices</span></code>, <code class="docutils literal notranslate"><span class="pre">Gen_SlotCutters</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Clear_LatticeField</span></code>, <code class="docutils literal notranslate"><span class="pre">Add_Geometry</span></code>, <code class="docutils literal notranslate"><span class="pre">Subtract_Geometry</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Store_LatticeMesh</span></code> and <code class="docutils literal notranslate"><span class="pre">ExportMeshID</span></code>. Use an Artisan backend that supports
+these commands and the field-source forms shown below. Values in this chapter
+come from the supplied workflow; they are example settings, not a statement of
+backend defaults or the full set of accepted options.</p>
+<section id="inputs-and-example-files">
+<h2>Inputs and example files<a class="headerlink" href="#inputs-and-example-files" title="Link to this heading">#</a></h2>
+<p>Download <a class="reference download internal" download="" href="_downloads/e56c75c290e1605c80cdc1ca0bfb1e68/PlateSlicing_TwoPlates.json"><code class="xref download docutils literal notranslate"><span class="pre">the</span> <span class="pre">two-plate</span> <span class="pre">workflow</span></code></a>
+or <a class="reference download internal" download="" href="_downloads/2e0692723e18a5a48b898e2720274f7c/PlateSlicing_Full.json"><code class="xref download docutils literal notranslate"><span class="pre">the</span> <span class="pre">full</span> <span class="pre">five-by-three</span> <span class="pre">workflow</span></code></a>.
+The source STL is supplied separately. The full example retains the user’s
+original workflow, including its ArtGUI geometry list.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">Setup.Geomfile</span></code> to the source mesh. Both examples retain
+<code class="docutils literal notranslate"><span class="pre">../../sample-obj/shell_1_of_bdd_.stl</span></code> and <code class="docutils literal notranslate"><span class="pre">JsonWorkDir:</span> <span class="pre">true</span></code>; resolve that
+path relative to the saved JSON file. Update export paths to a writable output
+folder. Coordinates, plate dimensions, sampling resolution and clearance must
+use the same model units as the source geometry.</p>
+<p>The supplied setup uses <code class="docutils literal notranslate"><span class="pre">Type:</span> <span class="pre">&quot;Geometry&quot;</span></code>, sampling resolution
+<code class="docutils literal notranslate"><span class="pre">res:</span> <span class="pre">[0.8,</span> <span class="pre">0.8,</span> <span class="pre">0.8]</span></code>, <code class="docutils literal notranslate"><span class="pre">Padding:</span> <span class="pre">2</span></code> and CPU execution
+(<code class="docutils literal notranslate"><span class="pre">onGPU:</span> <span class="pre">false</span></code>). Its <code class="docutils literal notranslate"><span class="pre">Sample.Domain</span></code> contains zero bounds; this chapter
+retains that setup rather than prescribing it for every input model. Check the
+calculation domain and plate positions when adapting the workflow.</p>
+</section>
+<section id="create-and-name-the-plate-fields">
+<h2>1. Create and name the plate fields<a class="headerlink" href="#create-and-name-the-plate-fields" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Proc_BoxSlices</span></code> defines the slicing boxes. Here <code class="docutils literal notranslate"><span class="pre">Source:</span> <span class="pre">&quot;Geometry&quot;</span></code>
+selects the input geometry and <code class="docutils literal notranslate"><span class="pre">Target:</span> <span class="pre">&quot;FieldContainer&quot;</span></code> requests named
+fields for subsequent operations. Each box has its own <code class="docutils literal notranslate"><span class="pre">FieldID</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Box settings used in this example</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Example use</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FieldID</span></code></p></td>
+<td><p>Unique field name, such as <code class="docutils literal notranslate"><span class="pre">H01</span></code> or <code class="docutils literal notranslate"><span class="pre">V01</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ori</span></code></p></td>
+<td><p>Position vector for the slicing box.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">normal</span></code></p></td>
+<td><p>Plate normal: <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">1]</span></code> for horizontal plates and <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">0]</span></code> for vertical plates here.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">length</span></code></p></td>
+<td><p>Box dimensions; the example uses <code class="docutils literal notranslate"><span class="pre">[110,</span> <span class="pre">110,</span> <span class="pre">4]</span></code> for the plate footprint and thickness.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">z_angle</span></code></p></td>
+<td><p>Box orientation setting, retained as <code class="docutils literal notranslate"><span class="pre">0</span></code> in this workflow.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The full workflow places <code class="docutils literal notranslate"><span class="pre">H01</span></code> through <code class="docutils literal notranslate"><span class="pre">H05</span></code> at z coordinates 40, 85, 100,
+145 and 175. Their x and y coordinates are -83.8332 and -0.9393. It places
+<code class="docutils literal notranslate"><span class="pre">V01</span></code> through <code class="docutils literal notranslate"><span class="pre">V03</span></code> at y coordinates -30, -0.9393 and 30, with x = -83.8332
+and z = 100. The smaller example keeps only <code class="docutils literal notranslate"><span class="pre">H01</span></code> and <code class="docutils literal notranslate"><span class="pre">V01</span></code>.</p>
+<p>These locations are specific to the supplied source model. Reposition and
+resize the boxes to intersect your own geometry; a named box alone does not
+establish that the resulting plate is useful or that two plates intersect.</p>
+</section>
+<section id="generate-one-cutter-pair-per-plate-intersection">
+<h2>2. Generate one cutter pair per plate intersection<a class="headerlink" href="#generate-one-cutter-pair-per-plate-intersection" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Gen_SlotCutters</span></code> refers to the plate fields through <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> and
+names the resulting cutter fields through <code class="docutils literal notranslate"><span class="pre">Cutters</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_SlotCutters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;A&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;B&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;V01&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;open_A&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Negative&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;open_B&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Positive&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;split_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;clearance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.6</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Cutters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;A&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_H&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;B&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_V&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here the slot direction is <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>, the two opening settings are
+<code class="docutils literal notranslate"><span class="pre">Negative</span></code> and <code class="docutils literal notranslate"><span class="pre">Positive</span></code>, the split ratio is <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and clearance is
+<code class="docutils literal notranslate"><span class="pre">1.6</span></code>. Keep the direction and opening settings together when adapting the
+joint, then inspect the resulting openings. The example does not establish
+the complete list of supported opening choices, bounds for the split ratio,
+or whether clearance is applied per side or across the full slot.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Cutters.A</span></code> is later subtracted from plate A; <code class="docutils literal notranslate"><span class="pre">Cutters.B</span></code> is subtracted
+from plate B. Creating cutter fields is a separate step from applying them.
+Use unique output names for every pair to keep references unambiguous.</p>
+<p>For five horizontal and three vertical plates the supplied workflow defines
+15 pairs, one for every H/V combination. Other plate layouts should create
+pairs for the intersections that need joints.</p>
+</section>
+<section id="build-and-store-each-slotted-plate">
+<h2>3. Build and store each slotted plate<a class="headerlink" href="#build-and-store-each-slotted-plate" title="Link to this heading">#</a></h2>
+<p>For each plate, clear the working lattice field, add that plate field,
+subtract its associated cutter fields, then store the resulting mesh:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Clear_LatticeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}},</span>
+<span class="w">  </span><span class="nt">&quot;4&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01&quot;</span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;5&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Subtract_Geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_H&quot;</span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;6&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;Store_LatticeMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_slotted&quot;</span><span class="p">}}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is a numbered workflow fragment. The complete two-plate JSON below
+includes its setup, preceding operations and exports.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Source</span></code> object selects a named field rather than a mesh filename or
+primitive definition. Keep <code class="docutils literal notranslate"><span class="pre">k_factor</span></code> and <code class="docutils literal notranslate"><span class="pre">push2GeomField</span></code> as shown when
+reproducing this example. <code class="docutils literal notranslate"><span class="pre">Store_LatticeMesh</span></code> assigns the result a mesh ID
+that a later <code class="docutils literal notranslate"><span class="pre">ExportMeshID</span></code> references.</p>
+<p>Repeat the sequence for <code class="docutils literal notranslate"><span class="pre">V01</span></code>, subtracting <code class="docutils literal notranslate"><span class="pre">H01_V01_cut_V</span></code> and storing
+<code class="docutils literal notranslate"><span class="pre">V01_slotted</span></code>. In the full example, each horizontal plate receives three
+subtractions and each vertical plate receives five. Store each plate before
+clearing the working field for the next one. The demonstrated sequence reuses
+named plate/cutter fields and previously stored meshes across these clears;
+it does not specify the effect of clearing on every other backend resource.</p>
+</section>
+<section id="export-and-inspect-the-plates">
+<h2>4. Export and inspect the plates<a class="headerlink" href="#export-and-inspect-the-plates" title="Link to this heading">#</a></h2>
+<p>Export each stored plate using its mesh ID:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ExportMeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_slotted&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../../Test_results/BingDunDun_Multi_H01_slotted.stl&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Triangle&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The full workflow requests eight separate exports, five horizontal and three
+vertical. Its <code class="docutils literal notranslate"><span class="pre">PostProcess</span></code> section is preserved in the downloadable files,
+including <code class="docutils literal notranslate"><span class="pre">CombineMeshes:</span> <span class="pre">true</span></code>. Inspect the actual exported files before
+relying on a particular cleanup or combination outcome for your backend.</p>
+<p>In ArtGUI, open the JSON, select the updated backend and check the input and
+output paths before generating. Load the exported meshes together to inspect
+the joint locations, then inspect each plate separately for slot openings,
+thin remnants and disconnected regions. Older operation catalogues may need
+refreshing before these commands or parameter forms appear as Add step presets.</p>
+<p>Sampling resolution affects the representation of thin plates and slots.
+Check whether the example’s 0.8 spacing is sufficient for your dimensions and
+required fit. Geometry output alone does not establish physical assembly
+clearance; verify fit for the intended fabrication process.</p>
+</section>
+<section id="complete-two-plate-workflow">
+<h2>Complete two-plate workflow<a class="headerlink" href="#complete-two-plate-workflow" title="Link to this heading">#</a></h2>
+<p>This reduced workflow keeps the supplied setup and one H/V joint. Adjust its
+model-specific paths and box coordinates before use.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Setup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Sample&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.0</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.0</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">          </span><span class="mf">0.0</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;Shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;Geomfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../../sample-obj/shell_1_of_bdd_.stl&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Rot&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="mi">0</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;res&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span>
+<span class="w">      </span><span class="mf">0.8</span><span class="p">,</span>
+<span class="w">      </span><span class="mf">0.8</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;Padding&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;onGPU&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;JsonWorkDir&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;memorylimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2147483648</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;PostProcess&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;CombineMeshes&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;CleanExportedMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;RemovePartitionMeshFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;RemoveIsolatedParts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;ExportLazPts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;WorkFlow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Proc_BoxSlices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Geometry&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FieldContainer&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Boxes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;FieldID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-83.8332</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">-0.9393</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">40.0</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">1</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="mi">110</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">110</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">4</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;FieldID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;V01&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;ori&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">-83.8332</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">-30.0</span><span class="p">,</span>
+<span class="w">              </span><span class="mf">100.0</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">0</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">              </span><span class="mi">110</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">110</span><span class="p">,</span>
+<span class="w">              </span><span class="mi">4</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;z_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Gen_SlotCutters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;A&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;B&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;V01&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">          </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">          </span><span class="mi">0</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;open_A&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Negative&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;open_B&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Positive&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;split_ratio&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;clearance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.6</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;Cutters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;A&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_H&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;B&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_V&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;3&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Clear_LatticeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;4&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;5&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Subtract_Geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_H&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;6&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Store_LatticeMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_slotted&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;7&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Clear_LatticeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;8&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Add_Geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;V01&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;9&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Subtract_Geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;Source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Field&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_V01_cut_V&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;k_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;push2GeomField&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;10&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Store_LatticeMesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;V01_slotted&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;11&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;ExportMeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;H01_slotted&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../../Test_results/BingDunDun_Multi_H01_slotted.stl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Triangle&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;12&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;ExportMeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;V01_slotted&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;../../Test_results/BingDunDun_Multi_V01_slotted.stl&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Triangle&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="extending-the-example">
+<h2>Extending the example<a class="headerlink" href="#extending-the-example" title="Link to this heading">#</a></h2>
+<p>When adding plates, assign each box a unique <code class="docutils literal notranslate"><span class="pre">FieldID</span></code>; add cutter pairs
+with unique output IDs; subtract every relevant cutter from its plate; and
+store and export that plate with a unique <code class="docutils literal notranslate"><span class="pre">MeshID</span></code> and output filename.
+Preserve this order: plate fields, cutter fields, per-plate construction,
+then mesh exports. Missing references usually indicate a spelling mismatch,
+an omitted producer step or a step placed after its consumer.</p>
+<p>See <a class="reference internal" href="FieldContainer.html"><span class="doc">Grid Field Container</span></a> for named fields, <a class="reference internal" href="GeomOPT/GeomOPT.html"><span class="doc">Guide - Basics 02</span></a> for geometry
+operations and <a class="reference internal" href="ArtGUI/workflows.html"><span class="doc">Build and edit workflows</span></a> for workflow editing.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Primitive.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Primitive Design</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="OPField.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Field Operation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-example-files">Inputs and example files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-and-name-the-plate-fields">1. Create and name the plate fields</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-one-cutter-pair-per-plate-intersection">2. Generate one cutter pair per plate intersection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-and-store-each-slotted-plate">3. Build and store each slotted plate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-and-inspect-the-plates">4. Export and inspect the plates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-two-plate-workflow">Complete two-plate workflow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-example">Extending the example</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

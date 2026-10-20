@@ -15,3 +15,18 @@ Run `python scripts/generate_icons.py` to rebuild the offline `ui/operation-icon
 Catalogue refresh, 2026-10-10: 73 operations cover the current backend registry and schemas, with 416 presets checked against the backend parameter schemas. Added Gen_PolyCubeHexMesh and starters for GeomBuild, GeomFill, Inv_Field, OP_GeomSDF_GridField and Proc_Mesh_Smoothing. Classified and described Proc_BoxSlices. Refreshed polycube, MMG remeshing, adaptive tetrahedral and field examples; excluded four incomplete manual presets. Numeric metadata, icons and Chinese translations were checked. This catalogue refresh does not run geometry calculations or rebuild the release executable; rebuild ArtGUI to include it in a packaged release.
 
 Run `python -m unittest discover -s tests -p test_operation_catalog.py` for starter precedence, incomplete-example exclusion, numeric preservation and metadata checks, and `node --test tests/i18n.test.mjs` for language coverage. When Artisan changes, also compare the generated keywords against `Artisan/Service.py` and `Artisan/command_schemas.py` and validate presets against the current command schemas.
+
+
+Plate slicing update: Add step includes Gen_SlotCutters, Clear_LatticeField and
+Store_LatticeMesh. Proc_BoxSlices retains its file-output preset and also offers
+FieldContainer presets with per-box FieldID. Add_Geometry and Subtract_Geometry
+retain existing presets and offer named-field Source objects. See the Plate
+slicing manual chapter for the required sequence: create plate fields, create
+cutter fields, clear/add/subtract/store each plate, then export stored meshes.
+Preset field and mesh IDs are examples; create their producer steps first and
+use unique names when adding joints or plates. Clear_LatticeField uses {}.
+
+The generator also reads downloadable JSON workflows under Doc/examples; this
+keeps literalinclude-based manual examples available without duplicating them
+in Src/Test_json. Standalone clear/store commands are recognized in manual
+fragments and fallback templates. Regenerate from the complete Artisan root.

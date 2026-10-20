@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tools &#8212; Artisan 0.2.17 documentation</title>
+    <title>Tools &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -158,18 +158,21 @@
 <li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,7 +336,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artgui">ArtGUI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-party-apps">Third Party Apps</a></li>
 </ul>
             </nav>
         </div>
@@ -363,16 +365,6 @@ snapshots can be inspected without rerunning Artisan.</p>
 For a short walkthrough, see <a class="reference internal" href="ArtGUI/quickstart.html"><span class="doc">Your first model: engine bracket</span></a>. The full
 <a class="reference internal" href="ArtGUI.html#chapter-artgui"><span class="std std-ref">ArtGUI user guide</span></a> covers projects, workflow editing,
 lattice definitions, generation and viewing results.</p>
-</section>
-<section id="third-party-apps">
-<h2>Third Party Apps<a class="headerlink" href="#third-party-apps" title="Link to this heading">#</a></h2>
-<p>There are a few recommended open source tools for designing lattice structure with Artisan. Please be aware of the licenses of these software as they may be charge for commercial applications.</p>
-<p>Salome Platform: <a class="reference external" href="https://www.salome-platform.org/">https://www.salome-platform.org/</a></p>
-<p>This is a general CAD platform that integrates many useful features for CAD modelling, FEA/CFD mesh generation etc.. Artisan requires meshing inputs to create mesh lattice and conformal lattice. User may install Salome to create their own mesh.</p>
-<p>Paraview: <a class="reference external" href="https://www.paraview.org/">https://www.paraview.org/</a></p>
-<p>The geometric model of lattice infill could be easily reach to a level of over 1 GB. Paraview loads, manipulates and browsers the large models with the minimum lagging experiences.</p>
-<p>Gmsh: <a class="reference external" href="http://gmsh.info/">http://gmsh.info/</a></p>
-<p>A popular open source mesher for FEA/CFD modelling community. It charges license fees for commercial application. It is lightweight and easy to use.</p>
 </section>
 </section>
 
@@ -422,7 +414,6 @@ lattice definitions, generation and viewing results.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artgui">ArtGUI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#third-party-apps">Third Party Apps</a></li>
 </ul>
   </nav></div>
 

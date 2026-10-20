@@ -1,0 +1,1029 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Sample": {
+      "Domain": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "../../sample-obj/shell_1_of_bdd_.stl",
+    "Rot": [
+      0,
+      0,
+      0
+    ],
+    "res": [
+      0.8,
+      0.8,
+      0.8
+    ],
+    "Padding": 2,
+    "onGPU": false,
+    "JsonWorkDir": true,
+    "memorylimit": 2147483648
+  },
+  "WorkFlow": {
+    "1": {
+      "Proc_BoxSlices": {
+        "Source": "Geometry",
+        "Target": "FieldContainer",
+        "Boxes": [
+          {
+            "FieldID": "H01",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              40.0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "H02",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              85.0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "H03",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              100.0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "H04",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              145.0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "H05",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              175.0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "V01",
+            "ori": [
+              -83.8332,
+              -30.0,
+              100.0
+            ],
+            "normal": [
+              0,
+              1,
+              0
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "V02",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              100.0
+            ],
+            "normal": [
+              0,
+              1,
+              0
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "V03",
+            "ori": [
+              -83.8332,
+              30.0,
+              100.0
+            ],
+            "normal": [
+              0,
+              1,
+              0
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          }
+        ]
+      }
+    },
+    "2": {
+      "Gen_SlotCutters": {
+        "A": "H01",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H01_V01_cut_H",
+          "B": "H01_V01_cut_V"
+        }
+      }
+    },
+    "3": {
+      "Gen_SlotCutters": {
+        "A": "H01",
+        "B": "V02",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H01_V02_cut_H",
+          "B": "H01_V02_cut_V"
+        }
+      }
+    },
+    "4": {
+      "Gen_SlotCutters": {
+        "A": "H01",
+        "B": "V03",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H01_V03_cut_H",
+          "B": "H01_V03_cut_V"
+        }
+      }
+    },
+    "5": {
+      "Gen_SlotCutters": {
+        "A": "H02",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H02_V01_cut_H",
+          "B": "H02_V01_cut_V"
+        }
+      }
+    },
+    "6": {
+      "Gen_SlotCutters": {
+        "A": "H02",
+        "B": "V02",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H02_V02_cut_H",
+          "B": "H02_V02_cut_V"
+        }
+      }
+    },
+    "7": {
+      "Gen_SlotCutters": {
+        "A": "H02",
+        "B": "V03",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H02_V03_cut_H",
+          "B": "H02_V03_cut_V"
+        }
+      }
+    },
+    "8": {
+      "Gen_SlotCutters": {
+        "A": "H03",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H03_V01_cut_H",
+          "B": "H03_V01_cut_V"
+        }
+      }
+    },
+    "9": {
+      "Gen_SlotCutters": {
+        "A": "H03",
+        "B": "V02",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H03_V02_cut_H",
+          "B": "H03_V02_cut_V"
+        }
+      }
+    },
+    "10": {
+      "Gen_SlotCutters": {
+        "A": "H03",
+        "B": "V03",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H03_V03_cut_H",
+          "B": "H03_V03_cut_V"
+        }
+      }
+    },
+    "11": {
+      "Gen_SlotCutters": {
+        "A": "H04",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H04_V01_cut_H",
+          "B": "H04_V01_cut_V"
+        }
+      }
+    },
+    "12": {
+      "Gen_SlotCutters": {
+        "A": "H04",
+        "B": "V02",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H04_V02_cut_H",
+          "B": "H04_V02_cut_V"
+        }
+      }
+    },
+    "13": {
+      "Gen_SlotCutters": {
+        "A": "H04",
+        "B": "V03",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H04_V03_cut_H",
+          "B": "H04_V03_cut_V"
+        }
+      }
+    },
+    "14": {
+      "Gen_SlotCutters": {
+        "A": "H05",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H05_V01_cut_H",
+          "B": "H05_V01_cut_V"
+        }
+      }
+    },
+    "15": {
+      "Gen_SlotCutters": {
+        "A": "H05",
+        "B": "V02",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H05_V02_cut_H",
+          "B": "H05_V02_cut_V"
+        }
+      }
+    },
+    "16": {
+      "Gen_SlotCutters": {
+        "A": "H05",
+        "B": "V03",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H05_V03_cut_H",
+          "B": "H05_V03_cut_V"
+        }
+      }
+    },
+    "17": {
+      "Clear_LatticeField": {}
+    },
+    "18": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "19": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V01_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "20": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V02_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "21": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V03_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "22": {
+      "Store_LatticeMesh": {
+        "MeshID": "H01_slotted"
+      }
+    },
+    "23": {
+      "Clear_LatticeField": {}
+    },
+    "24": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "25": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02_V01_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "26": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02_V02_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "27": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02_V03_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "28": {
+      "Store_LatticeMesh": {
+        "MeshID": "H02_slotted"
+      }
+    },
+    "29": {
+      "Clear_LatticeField": {}
+    },
+    "30": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "31": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03_V01_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "32": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03_V02_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "33": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03_V03_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "34": {
+      "Store_LatticeMesh": {
+        "MeshID": "H03_slotted"
+      }
+    },
+    "35": {
+      "Clear_LatticeField": {}
+    },
+    "36": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "37": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04_V01_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "38": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04_V02_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "39": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04_V03_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "40": {
+      "Store_LatticeMesh": {
+        "MeshID": "H04_slotted"
+      }
+    },
+    "41": {
+      "Clear_LatticeField": {}
+    },
+    "42": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "43": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05_V01_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "44": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05_V02_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "45": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05_V03_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "46": {
+      "Store_LatticeMesh": {
+        "MeshID": "H05_slotted"
+      }
+    },
+    "47": {
+      "Clear_LatticeField": {}
+    },
+    "48": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "V01"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "49": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V01_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "50": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02_V01_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "51": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03_V01_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "52": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04_V01_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "53": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05_V01_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "54": {
+      "Store_LatticeMesh": {
+        "MeshID": "V01_slotted"
+      }
+    },
+    "55": {
+      "Clear_LatticeField": {}
+    },
+    "56": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "V02"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "57": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V02_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "58": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02_V02_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "59": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03_V02_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "60": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04_V02_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "61": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05_V02_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "62": {
+      "Store_LatticeMesh": {
+        "MeshID": "V02_slotted"
+      }
+    },
+    "63": {
+      "Clear_LatticeField": {}
+    },
+    "64": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "V03"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "65": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V03_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "66": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H02_V03_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "67": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H03_V03_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "68": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H04_V03_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "69": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H05_V03_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "70": {
+      "Store_LatticeMesh": {
+        "MeshID": "V03_slotted"
+      }
+    },
+    "71": {
+      "ExportMeshID": {
+        "MeshID": "H01_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_H01_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "72": {
+      "ExportMeshID": {
+        "MeshID": "H02_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_H02_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "73": {
+      "ExportMeshID": {
+        "MeshID": "H03_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_H03_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "74": {
+      "ExportMeshID": {
+        "MeshID": "H04_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_H04_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "75": {
+      "ExportMeshID": {
+        "MeshID": "H05_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_H05_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "76": {
+      "ExportMeshID": {
+        "MeshID": "V01_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_V01_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "77": {
+      "ExportMeshID": {
+        "MeshID": "V02_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_V02_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "78": {
+      "ExportMeshID": {
+        "MeshID": "V03_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_V03_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": false,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  },
+  "ArtGUI": {
+    "version": 1,
+    "geometry": [
+      {
+        "id": "geometry-eb028c5d-ccc9-5835-88e9-0fbe28351d13",
+        "path": "../../Test_results/BingDunDun_Multi_H01_slotted.stl"
+      },
+      {
+        "id": "geometry-cde1a8aa-5897-59ae-afed-fb16d9be4af7",
+        "path": "../../Test_results/BingDunDun_Multi_H02_slotted.stl"
+      },
+      {
+        "id": "geometry-7f0e8c60-0167-522e-97f4-0afcb60e4fe0",
+        "path": "../../Test_results/BingDunDun_Multi_H03_slotted.stl"
+      },
+      {
+        "id": "geometry-a351cd5c-82d9-5397-a8f5-fd4c4144a5ec",
+        "path": "../../Test_results/BingDunDun_Multi_H04_slotted.stl"
+      },
+      {
+        "id": "geometry-ea334ad4-a341-5bdd-b729-fe84960b2ec2",
+        "path": "../../Test_results/BingDunDun_Multi_H05_slotted.stl"
+      },
+      {
+        "id": "geometry-c607eb46-7995-5218-b2e1-fb79a9dea0f5",
+        "path": "../../Test_results/BingDunDun_Multi_V01_slotted.stl"
+      },
+      {
+        "id": "geometry-bee52f16-4ea2-5b58-8ccd-78d2db980888",
+        "path": "../../Test_results/BingDunDun_Multi_V02_slotted.stl"
+      },
+      {
+        "id": "geometry-26aad51f-f609-561b-8cfc-682caed31ac3",
+        "path": "../../Test_results/BingDunDun_Multi_V03_slotted.stl"
+      }
+    ],
+    "supportingFiles": []
+  }
+}

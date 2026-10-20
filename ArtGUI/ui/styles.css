@@ -5,3 +5,9 @@
 
 /* Language switching keeps the current layout and reserves room for either label. */
 .top-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}.language-toggle{min-width:65px;white-space:nowrap}html[lang="zh-CN"] body{font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif}html[lang="zh-CN"] .form-section h3{letter-spacing:.03em}html[lang="zh-CN"] .field-help{line-height:1.6}
+
+
+/* Per-geometry appearance in the Properties panel. */
+.geometry-colour-row{display:flex;align-items:center;gap:10px}
+.geometry-colour-row input[type="color"]{width:48px;min-width:48px;height:32px;padding:2px;cursor:pointer;border:1px solid var(--line);border-radius:5px;background:white}
+.geometry-colour-row output{font:11px ui-monospace,Consolas,monospace;color:#526579}

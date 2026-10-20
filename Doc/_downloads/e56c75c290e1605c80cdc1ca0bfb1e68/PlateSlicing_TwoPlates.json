@@ -1,0 +1,181 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Sample": {
+      "Domain": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "../../sample-obj/shell_1_of_bdd_.stl",
+    "Rot": [
+      0,
+      0,
+      0
+    ],
+    "res": [
+      0.8,
+      0.8,
+      0.8
+    ],
+    "Padding": 2,
+    "onGPU": false,
+    "JsonWorkDir": true,
+    "memorylimit": 2147483648
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": false,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  },
+  "WorkFlow": {
+    "1": {
+      "Proc_BoxSlices": {
+        "Source": "Geometry",
+        "Target": "FieldContainer",
+        "Boxes": [
+          {
+            "FieldID": "H01",
+            "ori": [
+              -83.8332,
+              -0.9393,
+              40.0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "V01",
+            "ori": [
+              -83.8332,
+              -30.0,
+              100.0
+            ],
+            "normal": [
+              0,
+              1,
+              0
+            ],
+            "length": [
+              110,
+              110,
+              4
+            ],
+            "z_angle": 0
+          }
+        ]
+      }
+    },
+    "2": {
+      "Gen_SlotCutters": {
+        "A": "H01",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 1.6,
+        "Cutters": {
+          "A": "H01_V01_cut_H",
+          "B": "H01_V01_cut_V"
+        }
+      }
+    },
+    "3": {
+      "Clear_LatticeField": {}
+    },
+    "4": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "5": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V01_cut_H"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "6": {
+      "Store_LatticeMesh": {
+        "MeshID": "H01_slotted"
+      }
+    },
+    "7": {
+      "Clear_LatticeField": {}
+    },
+    "8": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "V01"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "9": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_V01_cut_V"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "10": {
+      "Store_LatticeMesh": {
+        "MeshID": "V01_slotted"
+      }
+    },
+    "11": {
+      "ExportMeshID": {
+        "MeshID": "H01_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_H01_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "12": {
+      "ExportMeshID": {
+        "MeshID": "V01_slotted",
+        "out_meshfile": "../../Test_results/BingDunDun_Multi_V01_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    }
+  }
+}

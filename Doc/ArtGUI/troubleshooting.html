@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Troubleshooting and common questions &#8212; Artisan 0.2.17 documentation</title>
+    <title>Troubleshooting and common questions &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="../_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -158,18 +158,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -342,9 +345,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-definition-cannot-be-removed-or-generation-rejects-its-order">A definition cannot be removed or generation rejects its order</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#progress-pauses-for-a-long-time">Progress pauses for a long time</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-large-file-will-not-load">A large file will not load</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-are-save-as-undo-and-the-old-update-view-button">Where are Save As, Undo and the old Update view button?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-an-original-design-and-reload-a-changed-result">Keep an original design and reload a changed result</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-should-i-include-when-reporting-a-problem">What should I include when reporting a problem?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-hdf5-field-is-unavailable-or-disappears">An HDF5 field is unavailable or disappears</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-preview-disappears-after-clean-scratch">A preview disappears after Clean scratch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viewscratch-cannot-be-written-or-completely-cleaned">ViewScratch cannot be written or completely cleaned</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#points-or-a-field-are-hidden-behind-geometry">Points or a field are hidden behind geometry</a></li>
 </ul>
             </nav>
         </div>
@@ -402,11 +408,11 @@ visible, then choose <strong>Fit view</strong>.</p>
 </section>
 <section id="the-model-looks-patchy-or-has-apparent-holes">
 <h2>The model looks patchy or has apparent holes<a class="headerlink" href="#the-model-looks-patchy-or-has-apparent-holes" title="Link to this heading">#</a></h2>
-<p>Read the viewport footer. If it says <strong>Quick Preview</strong>, select that layer
-with <strong>Make active</strong> and choose <strong>Load full detail</strong>. Sampled triangles do
-not form a complete surface. Also disable Section and inspect layers
-separately. If gaps remain in full detail, investigate the input mesh,
-workflow and resolution rather than assuming they are a viewer effect.</p>
+<p>Read the viewport footer to check the active layer and Preview mode. Preview
+adapts to the camera and is approximate; wait for detail after moving or zooming.
+For a surface check, select the model and choose <strong>Load full detail</strong> when
+resources allow. Also disable Section and inspect layers separately. If gaps
+remain in full detail, investigate the input mesh, workflow and resolution.</p>
 </section>
 <section id="measurements-are-unavailable-or-have-the-wrong-units">
 <h2>Measurements are unavailable or have the wrong units<a class="headerlink" href="#measurements-are-unavailable-or-have-the-wrong-units" title="Link to this heading">#</a></h2>
@@ -439,12 +445,14 @@ An unsupported INP structure requires a compatible flat mesh export, not
 just a larger memory setting. ArtGUI’s engine memory setting does not
 reserve memory for the viewer.</p>
 </section>
-<section id="where-are-save-as-undo-and-the-old-update-view-button">
-<h2>Where are Save As, Undo and the old Update view button?<a class="headerlink" href="#where-are-save-as-undo-and-the-old-update-view-button" title="Link to this heading">#</a></h2>
-<p>This workbench version uses <strong>Save</strong> for the opened path and does not expose
-a general Undo/Redo command. Make project copies before substantial changes.
-Use <strong>Load result</strong> or <strong>Preview mesh</strong> to reload a file; the legacy ArtGUI
-instructions for Update view do not apply to this interface.</p>
+<section id="keep-an-original-design-and-reload-a-changed-result">
+<h2>Keep an original design and reload a changed result<a class="headerlink" href="#keep-an-original-design-and-reload-a-changed-result" title="Link to this heading">#</a></h2>
+<p>Choose <strong>Save as</strong> beside Save to create another project JSON. Subsequent Save
+actions use the new path. Choose a different Export output filename as well if
+you want to preserve the earlier mesh or field.</p>
+<p>There is no general Undo/Redo command. Use saved project variations before
+substantial edits. Use <strong>Load result</strong> or <strong>Preview mesh</strong> to reload a file;
+legacy Update view instructions do not apply to this interface.</p>
 </section>
 <section id="what-should-i-include-when-reporting-a-problem">
 <h2>What should I include when reporting a problem?<a class="headerlink" href="#what-should-i-include-when-reporting-a-problem" title="Link to this heading">#</a></h2>
@@ -460,6 +468,27 @@ failure. A screenshot of the affected panel is useful for interface issues.</p>
 Choose <strong>View field…</strong> and reopen the file. Fields close before each run so
 Artisan can overwrite them; this is expected. An arbitrary HDF5 file or an
 incomplete snapshot may not be supported. See <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a>.</p>
+</section>
+<section id="a-preview-disappears-after-clean-scratch">
+<h2>A preview disappears after Clean scratch<a class="headerlink" href="#a-preview-disappears-after-clean-scratch" title="Link to this heading">#</a></h2>
+<p>This is expected for layers using ViewScratch. Cleanup closes cached previews
+before deleting their temporary files. Reopen the geometry from Project or
+choose Preview mesh. The project and original model are retained; preparing
+the preview again can take time and disk space.</p>
+</section>
+<section id="viewscratch-cannot-be-written-or-completely-cleaned">
+<h2>ViewScratch cannot be written or completely cleaned<a class="headerlink" href="#viewscratch-cannot-be-written-or-completely-cleaned" title="Link to this heading">#</a></h2>
+<p>Keep ArtGUI in a writable folder and check free disk space. ViewScratch is
+beside the executable, not beside the workflow JSON. Close other ArtGUI windows
+using its files and retry Clean scratch. A reported cleanup failure can leave
+some temporary files in place; it does not mean cleanup finished successfully.</p>
+</section>
+<section id="points-or-a-field-are-hidden-behind-geometry">
+<h2>Points or a field are hidden behind geometry<a class="headerlink" href="#points-or-a-field-are-hidden-behind-geometry" title="Link to this heading">#</a></h2>
+<p>Select the obstructing geometry in Project and change its own Opacity or
+visibility. Field opacity and Point opacity affect only the selected data
+object. Check Show field or Show points, the object’s opacity, coordinate-column
+mapping and Section clipping. Use Fit view to frame the visible objects.</p>
 </section>
 </section>
 
@@ -518,9 +547,12 @@ incomplete snapshot may not be supported. See <a class="reference internal" href
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-definition-cannot-be-removed-or-generation-rejects-its-order">A definition cannot be removed or generation rejects its order</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#progress-pauses-for-a-long-time">Progress pauses for a long time</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-large-file-will-not-load">A large file will not load</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-are-save-as-undo-and-the-old-update-view-button">Where are Save As, Undo and the old Update view button?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keep-an-original-design-and-reload-a-changed-result">Keep an original design and reload a changed result</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-should-i-include-when-reporting-a-problem">What should I include when reporting a problem?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-hdf5-field-is-unavailable-or-disappears">An HDF5 field is unavailable or disappears</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-preview-disappears-after-clean-scratch">A preview disappears after Clean scratch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viewscratch-cannot-be-written-or-completely-cleaned">ViewScratch cannot be written or completely cleaned</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#points-or-a-field-are-hidden-behind-geometry">Points or a field are hidden behind geometry</a></li>
 </ul>
   </nav></div>
 

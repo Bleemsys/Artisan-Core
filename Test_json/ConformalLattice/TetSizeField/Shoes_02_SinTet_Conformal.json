@@ -1,0 +1,143 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Sample": {
+      "Domain": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": ".//sample-obj//Shore//Shoes_02.stl",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.4,
+      0.4,
+      0.4
+    ],
+    "Padding": 5,
+    "onGPU": false,
+    "JsonWorkDir": false,
+    "memorylimit": 16106127360
+  },
+  "WorkFlow": {
+    "1": {
+      "ReadMesh": {
+        "MeshID": "Solid",
+        "meshfile": ".//sample-obj//Shore//Shoes_02.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "2": {
+      "OP_ExprOperation_GridField": {
+        "expression": "12 + 4*sin(2*pi*(y + 187.7188)/140)",
+        "out_gridFieldFile": "CellSize"
+      }
+    },
+    "3": {
+      "Export": {
+        "outfile": ".//Test_results//Shoes_02_SinTet_CellSize.h5",
+        "GridFieldIDs": [
+          "CellSize"
+        ]
+      }
+    },
+    "4": {
+      "Gen_TetMesh_SizeField": {
+        "mesh_file": "Solid",
+        "export_mesh": "TetDomains",
+        "size_field": "CellSize",
+        "sampling_size": 12.0,
+        "hausd": 1000.0,
+        "surface_tolerance": 1000.0,
+        "hgrad": 60.0,
+        "preserve_features": true,
+        "feature_angle": 45.0,
+        "size_iterations": 3,
+        "max_points": 750000,
+        "quality_report": ".//Test_results//Shoes_02_SinTet_quality.json"
+      }
+    },
+    "5": {
+      "ExportMeshID": {
+        "MeshID": "TetDomains",
+        "out_meshfile": ".//Test_results//Shoes_02_SinTet_domains.inp",
+        "elem_type": "Tet"
+      }
+    },
+    "6": {
+      "Define_Lattice": {
+        "la_name": "Shoes02SinTet",
+        "definition": {
+          "type": "ConformalLattice",
+          "definition": {
+            "meshfile": "TetDomains",
+            "la_name": "Icosahedral",
+            "k": 0.0,
+            "ExportFEAMeshFile": ".//Test_results//Shoes_02_SinTet_struts.inp"
+          }
+        }
+      }
+    },
+    "7": {
+      "Add_Lattice": {
+        "la_name": "Shoes02SinTet",
+        "size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "thk": 1.2,
+        "Rot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Trans": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "8": {
+      "Export": {
+        "outfile": ".//Test_results//Shoes_02_SinTet_Conformal.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  },
+  "ArtGUI": {
+    "version": 1,
+    "geometry": [
+      {
+        "id": "result",
+        "path": "\\\\?\\C:\\Users\\wangy\\Documents\\Project-Artisan\\Artisan\\Artisan\\Artisan_Dist\\Test_results\\Shoes_02_SinTet_Conformal.stl"
+      }
+    ],
+    "supportingFiles": []
+  }
+}

@@ -34,10 +34,10 @@ the JSON alone does not copy those files.
 
 #. Launch the **ArtGUI / Artisan Workbench** desktop application supplied with
    your installation.
-#. Before experimenting, copy the example JSON to a new filename, such as
-   ``EngineBracket_trial.json``, using your file manager. Keep it in
-   ``Test_json`` for this walkthrough.
-#. Choose **Open** in ArtGUI and select the copied JSON.
+#. Choose **Open** in ArtGUI and select the supplied example JSON.
+#. Before editing it, choose **Save as** beside Save and use a name such as
+   ``EngineBracket_trial.json``. Keep the new JSON in ``Test_json`` for this
+   walkthrough. Check that the new name appears in the top bar.
 #. Check that the Project panel lists ``EngineBracket.STL`` and that the
    Workflow contains six cards. The source preview loads automatically when
    its path can be found.
@@ -45,8 +45,9 @@ the JSON alone does not copy those files.
 
 .. note::
 
-   **Save** writes to the file you opened. This version has no separate
-   **Save As** command. Working on a copy keeps the original example available.
+   Save as preserves the original example when you choose another filename.
+   Subsequent Save actions write to your copy. The Export output path remains
+   unchanged until you edit it in step 5.
 
 2. Check the source and calculation settings
 ============================================

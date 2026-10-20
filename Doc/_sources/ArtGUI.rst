@@ -8,7 +8,7 @@ and inspecting the resulting meshes. You can open an existing workflow, change
 its parameters, and compare the source geometry with the generated model in
 one window.
 
-This guide covers **ArtGUI 0.1.1, the Artisan Workbench interface**. It describes
+This guide covers **ArtGUI 0.1.2, the Artisan Workbench interface**. It describes
 the workbench with a Project panel, a central 3D Workspace and Workflow, and a
 Properties panel. The older ribbon-style ArtGUI interface has different controls.
 
@@ -27,6 +27,21 @@ in the relevant chapters.
 
    The engine-bracket example open in ArtGUI. Select a project item or workflow
    step to edit its properties on the right.
+
+Recent workbench updates
+========================
+
+* Use **Save as** beside Save to create a project variation; see
+  :doc:`ArtGUI/projects`.
+* Select a geometry, field or point cloud to adjust only its own opacity in
+  Properties. Geometry display colours and opacity settings are saved with
+  the project; see :doc:`ArtGUI/viewer`.
+* Import CSV/TSV data through **Point clouds → + Add**, or drag a point file
+  into the viewer. Point-cloud Properties controls the points, independently
+  of the geometry and HDF5 fields.
+* Large-model previews adapt as you move the camera. **Clean scratch** beside
+  Reset clears temporary preview files from ``ViewScratch``; see
+  :doc:`ArtGUI/viewer`.
 
 What you work with
 ==================

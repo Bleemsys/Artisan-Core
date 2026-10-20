@@ -31,5 +31,35 @@
       "feature_size": 1.0
     },
     "source": "Src/Artisan/command_schemas.py + Src/Artisan/Service.py (starter template; review paths and prior steps)"
+  },
+  "Gen_SlotCutters": {
+    "params": {
+      "A": "H01",
+      "B": "V01",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "open_A": "Negative",
+      "open_B": "Positive",
+      "split_ratio": 0.5,
+      "clearance": 1.6,
+      "Cutters": {
+        "A": "H01_V01_cut_H",
+        "B": "H01_V01_cut_V"
+      }
+    },
+    "source": "Doc/examples/PlateSlicing_TwoPlates.json (starter template; create referenced plate fields first)"
+  },
+  "Clear_LatticeField": {
+    "params": {},
+    "source": "Doc/examples/PlateSlicing_TwoPlates.json (starter template; create referenced plate fields first)"
+  },
+  "Store_LatticeMesh": {
+    "params": {
+      "MeshID": "H01_slotted"
+    },
+    "source": "Doc/examples/PlateSlicing_TwoPlates.json (starter template; create referenced plate fields first)"
   }
 }

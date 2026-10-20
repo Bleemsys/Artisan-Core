@@ -1,7 +1,7 @@
 {
   "name": "artisan-workbench-tauri",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Independent web-based ArtGUI desktop application",
   "scripts": {
     "dev": "node scripts/run-tauri.cjs dev",

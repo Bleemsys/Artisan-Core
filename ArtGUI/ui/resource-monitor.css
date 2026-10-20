@@ -53,3 +53,9 @@
 @container(min-width:350px){.resource-columns{grid-template-columns:minmax(115px,.8fr) minmax(180px,1.2fr)}.resource-history{grid-column:1/-1}}
 @container(min-width:565px){.resource-columns{grid-template-columns:minmax(115px,.85fr) minmax(180px,1.25fr) minmax(220px,1.9fr)}.resource-history{grid-column:auto}}
 @media(max-height:790px){.center-column{grid-template-rows:minmax(170px,1fr) auto auto}.workspace-tabstrip>button{padding:8px}.workspace-panes>[role=tabpanel]{padding:8px 11px}.resource-caption{margin-bottom:6px}}
+
+/* The bottom panel can be folded from every inspector, independently of data type. */
+.workspace-tabstrip>.workspace-pane-toggle{margin-left:auto}
+.workspace-pane-collapsed:not(.workspace-expanded)>.center-column{grid-template-rows:minmax(0,1fr) auto auto}
+.workspace-pane-collapsed .workspace-panes,.workspace-panes[hidden]{display:none}
+.workspace-pane-collapsed .workspace-tabs{min-height:0}

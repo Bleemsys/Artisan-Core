@@ -3,6 +3,12 @@
 mod field_reader;
 use field_reader::{FieldFiles, resolve_export_output, resolve_field_output, choose_result, choose_field_file, open_field_file, read_field_slice, probe_field, cancel_field_request, close_field_file};
 mod resources;
+mod mesh_stream;
+mod mesh_lod;
+use mesh_lod::{LodFiles, read_preview_lod, close_preview_lod};
+mod scratch;
+mod mesh_preview;
+use mesh_preview::{prepare_mesh_preview, check_full_detail, clean_view_scratch};
 use resources::{ResourceMonitor, resource_snapshot};
 mod generation;
 use generation::{generate_workflow, cancel_generation, open_run_log, GenerationState};
@@ -396,13 +402,21 @@ fn packaged_backend(app: tauri::AppHandle) -> Option<String> {
 }
 
 #[tauri::command]
-fn save_workflow(path: Option<String>, contents: String) -> Result<Option<String>, String> {
-    let chosen = match path {
-        Some(value) if !value.is_empty() => Some(PathBuf::from(value)),
-        _ => rfd::FileDialog::new()
+fn save_workflow(path: Option<String>, contents: String, save_as: Option<bool>) -> Result<Option<String>, String> {
+    let current = path.filter(|value| !value.is_empty()).map(PathBuf::from);
+    let chosen = if !save_as.unwrap_or(false) && current.is_some() {
+        current
+    } else {
+        let mut dialog = rfd::FileDialog::new()
             .add_filter("Artisan workflow", &["json"])
-            .set_file_name("Artisan_workflow.json")
-            .save_file(),
+            .set_file_name("Artisan_workflow.json");
+        if let Some(current) = current {
+            if let Some(name) = current.file_name() { dialog = dialog.set_file_name(name.to_string_lossy()); }
+            if let Some(parent) = current.parent().filter(|parent| parent.is_absolute() && parent.is_dir()) {
+                dialog = dialog.set_directory(parent);
+            }
+        }
+        dialog.save_file()
     };
     let Some(chosen) = chosen else { return Ok(None) };
     fs::write(&chosen, contents).map_err(|e| e.to_string())?;
@@ -452,6 +466,7 @@ fn main() {
     tauri::Builder::default()
         .manage(FieldFiles::default())
         .manage(PreviewJobs::default())
+        .manage(LodFiles::default())
         .manage(GenerationState::default())
         .manage(ResourceMonitor::default())
         .setup(|app| { resources::start(app.handle().clone()); Ok(()) })
@@ -475,6 +490,11 @@ fn main() {
             open_about_link,
             choose_supporting_file,
             resolve_geometry,
+            prepare_mesh_preview,
+            read_preview_lod,
+            close_preview_lod,
+            check_full_detail,
+            clean_view_scratch,
             create_geometry_preview,
             cancel_geometry_preview,
             choose_output,

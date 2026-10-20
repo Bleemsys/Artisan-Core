@@ -477,5 +477,120 @@ The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are u
   }
 
 
+.. _tet-mesh-size-field:
 
+Tetrahedral Lattice Layout from a Size Field
+============================================
 
+``Gen_TetMesh_SizeField`` generates tetrahedral cell domains whose sizes follow
+a scalar field. Use these domains to place a conformal lattice. The mesher
+itself produces a volume mesh; the subsequent lattice steps create the struts.
+
+.. code-block:: json
+
+   {
+     "Gen_TetMesh_SizeField": {
+       "mesh_file": "Solid",
+       "export_mesh": "TetDomains",
+       "size_field": "CellSize",
+       "sampling_size": 0.75,
+       "hausd": 0.03,
+       "surface_tolerance": 0.06,
+       "hgrad": 1.3,
+       "size_iterations": 3,
+       "quality_report": ".//Test_results//TetSizeField_quality.json"
+     }
+   }
+
+.. list-table:: Required mesher inputs
+   :header-rows: 1
+   :widths: 25 75
+
+   * - Parameter
+     - Meaning
+   * - ``mesh_file``
+     - Closed triangle-surface file or mesh-container ID, resolved through
+       MeshInterface.
+   * - ``export_mesh``
+     - Output tet-mesh file path or mesh-container ID. An ID such as
+       ``TetDomains`` can be passed directly to ``ConformalLattice``.
+   * - ``size_field``
+     - Existing scalar grid-field ID. Values must be finite, strictly positive
+       target edge lengths in model units.
+   * - ``sampling_size``
+     - Positive initial interior seed size. The scalar field controls the
+       final size targets; boundary edges in the seed may be larger.
+
+Prepare the geometry and field
+-------------------------------
+
+The surface must be a single connected, closed, manifold, non-self-intersecting
+triangle shell. Separate solids and nested cavity shells are not supported.
+
+Create the field with :ref:`scalar-field-combine-geometry`, or load a saved
+HDF5 field using ``ReadGridField``. It must cover the whole solid on a
+rectilinear 3D grid with at least two points per axis. Values are interpolated
+between grid points; there is no fallback outside the field.
+
+``Setup.res`` controls field sampling, not tet size. For this workflow, use
+sufficient ``Setup.memorylimit`` to keep the complete domain in one partition.
+A partial field cannot size the entire solid.
+
+Adjust meshing controls
+------------------------
+
+The example values above suit the accompanying box example. Optional controls
+use the defaults below when omitted.
+
+.. list-table:: Optional mesher controls
+   :header-rows: 1
+   :widths: 25 18 57
+
+   * - Parameter
+     - Default
+     - Meaning
+   * - ``hausd``
+     - 0.01
+     - Positive boundary approximation tolerance for each adaptation pass.
+   * - ``surface_tolerance``
+     - 2 x ``hausd``
+     - Positive final sampled distance limit against the original surface.
+       Exceeding it rejects the output.
+   * - ``hgrad``
+     - 1.3
+     - Size gradation control; must be greater than 1.
+   * - ``preserve_features``
+     - true
+     - Enable sharp-feature detection during adaptation.
+   * - ``feature_angle``
+     - 45
+     - Feature-detection angle, in degrees from 0 to 180.
+   * - ``size_iterations``
+     - 3
+     - Number of adaptation passes, from 2 to 20.
+   * - ``max_points``
+     - 250000
+     - Vertex limit checked around native meshing calls. It is not a hard
+       limit on peak memory use inside those calls.
+   * - ``quality_report``
+     - No file
+     - Optional JSON report path. Its parent directory must exist and the path
+       must differ from the input and output meshes.
+
+Read the result
+----------------
+
+Tet sizes are approximate: boundary shape, element quality and grading also
+affect them. The report compares requested and achieved edge sizes and records
+element counts, volume, shape quality and sampled boundary error. A successful
+check does not prove exact size matching or absence of global overlaps.
+Boundary error is sampled rather than a certified Hausdorff distance.
+
+The implementation uses native C++ Netgen for the initial mesh and MMG3D for
+size adaptation. It does not use TetGen or the Netgen Python package. Source
+builds need the updated Snippetslib and native Netgen runtime; older standalone
+executables must be rebuilt. Build details are in ``SnippetsLib/NETGEN_BUILD.md``.
+
+Run ``Test_json/ConformalLattice/TetSizeField/TetSizeField.json`` from ``Src``
+for a field-and-mesh example. Follow :ref:`graded-tet-lattice` to turn the
+tet domains into a conformal lattice and clean the exported STL.

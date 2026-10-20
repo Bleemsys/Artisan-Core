@@ -12,11 +12,13 @@ from collections import defaultdict
 from pathlib import Path
 
 COMMAND = re.compile(r'^(?:Add_|Subtract_|Substract_|Intersect_|Check_|Define_|Gen_|Proc_Mesh_|OP_|HS_|Lin_|Field_|Inv_)[A-Za-z0-9_]+$')
-STANDALONE = {'Export', 'ExportMeshID', 'ReadMesh', 'RemoveMesh', 'ReadGridField', 'Evaluate_Points', 'GeomBuild', 'GeomFill'}
+STANDALONE = {'Export', 'ExportMeshID', 'ReadMesh', 'RemoveMesh', 'ReadGridField', 'Evaluate_Points', 'GeomBuild', 'GeomFill', 'Clear_LatticeField', 'Store_LatticeMesh'}
 # These commands have partial illustrations in the manuals. Their required
 # fields are verified against Artisan/command_schemas.py; do not offer a partial
 # illustration as an executable preset or invent values for missing fields.
 REQUIRED_PRESET_FIELDS = {
+    'Define_ScalarField_CombineGeometry': {'field_id', 'default_value', 'regions'},
+    'Gen_TetMesh_SizeField': {'mesh_file', 'export_mesh', 'size_field', 'sampling_size'},
     'Add_Lattice': {'Rot', 'Trans'},
     'HS_Interpolate': {'Rot', 'Trans'},
     'Gen_ParametricLineMesh': {'step_size', 'closedcurve'},
@@ -126,7 +128,11 @@ def generate(root, output, keywords=None):
                 params = {**params, 'Rot': [0.0, 0.0, 0.0]}
             candidates[keyword].append({'params': params, 'source': source, 'kind': kind, 'step': step, 'extraction': mode})
 
-    for path in sorted((root / 'Src/Test_json').rglob('*.json')):
+    # Downloadable manual workflows also supply presets (literalinclude is not
+    # an inline RST JSON block). Keep the original JSON tokens for numeric types.
+    workflow_paths = set((root / 'Src/Test_json').rglob('*.json'))
+    workflow_paths.update((root / 'Doc/examples').rglob('*.json'))
+    for path in sorted(workflow_paths):
         source = path.relative_to(root).as_posix()
         example_files.append(source)
         try:
@@ -165,7 +171,8 @@ def generate(root, output, keywords=None):
     catalog, conflicts = [], []
     for keyword, items in sorted(candidates.items()):
         unique, observations = {}, defaultdict(set)
-        for item in sorted(items, key=rank):
+        preferred = metadata.get(keyword, {}).get('preferredSource')
+        for item in sorted(items, key=lambda item: (bool(preferred) and item['source'] != preferred, rank(item))):
             params = item['params']
             encoded = json.dumps(params, ensure_ascii=False, sort_keys=True, allow_nan=False)
             types = numeric_types(params)

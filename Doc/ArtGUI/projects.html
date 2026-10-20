@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Projects, geometry and file paths &#8212; Artisan 0.2.17 documentation</title>
+    <title>Projects, geometry and file paths &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="../_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -158,18 +158,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -356,10 +359,17 @@ document.write(`
 <p>Choose <strong>Open</strong> to load a workflow JSON file. ArtGUI reads <code class="docutils literal notranslate"><span class="pre">Setup</span></code>, numbered
 <code class="docutils literal notranslate"><span class="pre">WorkFlow</span></code> steps and <code class="docutils literal notranslate"><span class="pre">PostProcess</span></code> into the interface. <strong>New</strong> starts an
 empty workflow. New and Open ask before discarding unsaved changes.</p>
-<p><strong>Save</strong> writes the current project. A new project opens a file dialog so you
-can choose its name and folder. An opened project saves back to its existing
-path. To create a variation of an existing design, make a copy in your file
-manager and open that copy before editing.</p>
+<p><strong>Save</strong> writes the current project. A new project opens a file dialog;
+an opened project saves back to its existing path.</p>
+<p>Choose <strong>Save as</strong>, immediately beside Save in the top bar, to choose another
+JSON filename or folder. After a successful save, the project name changes
+and subsequent Save actions write to the chosen file. Cancelling the dialog
+keeps the current path and unsaved changes. Use <strong>Ctrl+S</strong> for Save and
+<strong>Ctrl+Shift+S</strong> for Save as (Cmd on keyboards that use it).</p>
+<p>Save as copies the project JSON; it does not copy attached inputs or rename
+exported meshes and fields. When saving into another folder with JSON working
+directory enabled, check relative paths again. Set a distinct Export output
+filename when an existing result should be preserved.</p>
 <p>Project attachments are saved as file references in an additional <code class="docutils literal notranslate"><span class="pre">ArtGUI</span></code>
 section. ArtGUI excludes that section from the workflow sent to the backend.
 Geometry and supporting files are not embedded in the JSON; keep them with the
@@ -390,9 +400,16 @@ project when sharing or moving it.</p>
 <td><p>Loads an output as a result layer and records it in Geometry.
 It does not change <code class="docutils literal notranslate"><span class="pre">Setup.Geomfile</span></code>.</p></td>
 </tr>
+<tr class="row-odd"><td><p><strong>Point clouds → + Add</strong></p></td>
+<td><p>Imports a CSV/TSV point file with X/Y/Z column mapping and an optional
+scalar column for colouring. This creates a viewer reference.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Fields → Add</strong> or <strong>View field…</strong></p></td>
+<td><p>Opens an exported Artisan HDF5 field for slice inspection.</p></td>
+</tr>
 <tr class="row-odd"><td><p><strong>Supporting files → + Add</strong></p></td>
-<td><p>Attaches field data, point clouds, cell files or other inputs for
-organisation. Set the consuming operation’s file parameter separately.</p></td>
+<td><p>Attaches other inputs for organisation. CSV/TSV files open the point-cloud
+import dialog. Set the consuming operation’s file parameter separately.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Preview mesh</strong></p></td>
 <td><p>Loads or reloads the selected supported mesh in the viewer.</p></td>
@@ -405,8 +422,11 @@ organisation. Set the consuming operation’s file parameter separately.</p></td
 </div>
 <p>Click a geometry entry to inspect it. Properties show its path and, after
 loading, mesh counts and original-coordinate bounds. A loaded mesh also has
-a visibility checkbox. Supported meshes attached as supporting files can be
-previewed too.</p>
+a visibility checkbox. Select <strong>Display → Display colour</strong> for its colour and
+<strong>Display → Opacity</strong> for its transparency. Each source, reference and result
+mesh keeps its own settings, including through preview/full-detail reloads.
+Opacity can also be set before the preview loads. Supported meshes attached as
+supporting files can be previewed and given their own opacity too.</p>
 <p>On reopening a project, the source loads automatically when available. Select
 other attached geometries to load them as needed. A reference mesh does not
 participate in generation simply because it is visible in the scene.</p>
@@ -497,10 +517,15 @@ review the result if the design intentionally contains separate pieces.</p>
 <section id="field-references">
 <h2>Field references<a class="headerlink" href="#field-references" title="Link to this heading">#</a></h2>
 <p>Use <strong>Fields → Add</strong> to open an exported Artisan HDF5 field. Saving the project
-keeps its file path, selected field and block under <code class="docutils literal notranslate"><span class="pre">ArtGUI.fields</span></code>. The field
-data remains in the external file. Reopen it by selecting its project entry;
-slice, palette, opacity and probe settings are not saved in the project.
-See <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a> for the viewing controls.</p>
+keeps its file path, selected field and block under <code class="docutils literal notranslate"><span class="pre">ArtGUI.fields</span></code>. Each
+field ID retains its own opacity for that file. Slice position, palette and
+probe results remain session settings; field data stays in the external file.
+Select its project entry to reopen it.</p>
+<p>Point-cloud references keep the file path, column mapping, display limit and
+display style, including point opacity. Select the entry to reopen the points
+without repeating the mapping dialog. Geometry display colours and opacity are
+also project settings. Choose Save or Save as to retain these changes on disk.</p>
+<p>See <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a> for the viewing controls.</p>
 </section>
 </section>
 

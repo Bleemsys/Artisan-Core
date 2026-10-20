@@ -7,7 +7,7 @@ Users have the flexibility to interact with Artisan using either Python or C++ t
 the existing behavior. An ``outfile`` ending in ``.h5``/``.hdf5`` selects field
 output; an optional ``fieldfile`` adds field output alongside a mesh. Optional
 ``GridFieldIDs`` selects fitted fields from the grid-field container. See
-:ref:`gridfieldcontainer` for the HDF5 format, partition metadata, readback,
+:ref:`HDF5 field snapshots` for the HDF5 format, partition metadata, readback,
 SDK return values and Nuitka packaging requirements.
 
 ==========

@@ -1,7 +1,7 @@
 Inspect models in the 3D Workspace
 **********************************
 
-The viewer loads mesh files for inspection. Camera, display, section and
+The viewer loads meshes, Artisan HDF5 fields and CSV/TSV point clouds for inspection. Camera, display, section and
 measurement controls do not change the workflow geometry or the mesh on disk.
 After changing workflow parameters, generate and reload a result to see the
 new design.
@@ -47,29 +47,86 @@ the structure you are trying to inspect.
 Transparency is useful for an overlay, but complex intersecting surfaces can
 show sorting artefacts. Inspect each layer separately if an overlap is unclear.
 
-Quick Preview and Full Detail
-=============================
+Independent colour and opacity controls
+=======================================
 
-Large STL files open using a sampled **Quick Preview** of up to 120,000
-triangles. This reduces loading and display cost. Sampling can make surfaces
-look incomplete because many triangles are intentionally omitted.
+Select the object in the Project tree, then use its Properties panel:
 
-Select the layer in Visibility and choose **Load full detail** to load its
-complete mesh. The control may show **Show quick preview** afterwards, or
-**Full detail shown** for a mesh that does not need sampling. Read the footer
-below the viewport to confirm the active layer and displayed detail.
+* **Geometry:** use **Display → Display colour** and **Display → Opacity**.
+  Source, reference and result geometries each have their own settings.
+  A supported mesh in Supporting files has its own opacity too.
+* **Field:** use **Display → Field opacity** in the Field inspector. Each field
+  file and field ID retains its own opacity. Changing to another field does
+  not apply the first field's setting to it.
+* **Point cloud:** use **Point opacity** in the selected cloud's Properties.
+  This changes the points, including their transparency when overlaid on a
+  model; it does not dim the geometry.
+
+The selected Properties panel contains only that object's opacity control.
+Opening, editing or removing a field or point cloud leaves other objects'
+opacity and visibility unchanged. To dim a mesh behind a field or points,
+select that mesh and change its own Opacity. The Visibility menu's geometry
+opacity controls edit the same settings as geometry Properties.
+
+Opacity 0 makes the object transparent and 1 (100%) makes it opaque.
+Choose **Save** or **Save as** to retain geometry colours and per-object opacity
+in the project JSON. Geometry settings survive preview/full-detail reloads;
+point settings survive reopening the saved reference. These display changes
+do not modify model coordinates, field values or source files.
+
+Adaptive Preview and Full Detail
+================================
+
+**Preview** follows zoom, pan and orbit, showing more detail near the area you
+are inspecting and less elsewhere. It supports STL, OBJ, ASCII PLY and the
+supported flat INP meshes. Read the viewport footer to check which layer and
+detail mode are active. Allow new detail to finish loading after moving the
+camera.
+
+The first opening prepares reusable display data on disk. It can take time
+and disk space for a large model; progress can be cancelled. Later openings
+reuse the completed cache. Changing the source file requires updated preview
+data. The original mesh and workflow are unchanged.
+
+Select a layer in Project, or use **Make active** in Visibility, then choose
+**Load full detail** when you need the complete mesh. ArtGUI retains the
+previous preview until the new load succeeds. Use **Cancel** beside the
+progress indicator to stop loading. **Show quick preview** returns to Preview.
 
 .. important::
 
-   Quick Preview is a display aid. It does not simplify the original file or
-   reduce the geometry used by Artisan. Measurements are disabled on sampled
-   previews. Use Full Detail before assessing holes or missing surfaces.
+   Preview is an approximate display, not a simplified export or a replacement
+   for the original mesh. Measurements require a visible Full Detail mesh.
+   Use Full Detail before deciding that a surface has holes or missing parts.
 
-Full Detail has no fixed application-imposed file-size or triangle-count cap.
-Practical capacity depends on available memory and graphics resources. Start
-with Quick Preview for large STL files and close unneeded layers before loading
-full detail. Large text meshes can take longer to parse. Use **Cancel** beside
-the loading progress indicator to stop loading.
+Full-detail capacity depends on current RAM, graphics and viewer resources.
+STL loading checks memory during loading. If it pauses, **Continue in preview**
+keeps the existing preview; **Continue loading** resumes with checks still
+active. For other supported mesh formats, a resource warning can offer
+**Continue in preview** or **Load full geometry**. Attempting a full load
+despite a warning can exhaust resources; it is not a promise that it will fit.
+Close unused layers and use Preview when full detail cannot complete.
+
+Clean temporary preview files
+=============================
+
+Preview data is stored in ``ViewScratch`` beside ``ArtGUI.exe``, independently
+of the project folder. Keep the application in a writable folder with enough
+free space. Completed caches from the previous application-cache location
+are moved there when their models are opened.
+
+Choose **Clean scratch**, beside **Reset** in the 3D Workspace header, to delete
+all files and subfolders inside ViewScratch. The ViewScratch folder itself
+remains. Active preview work is cancelled and cached preview layers are closed
+before their files are deleted. Reopen an affected geometry from Project or
+use Preview mesh to prepare its preview again.
+
+Use ViewScratch only for temporary preview data: everything inside it is
+deleted. Project JSON, source models and exported results stored outside that
+folder are kept. Loaded Full Detail meshes, fields and point clouds remain
+displayed. If cleanup reports a file in use, close other ArtGUI
+windows using the cache and retry. **Reset** only changes the camera; it does
+not clean scratch files.
 
 Look inside with a section plane
 ================================
@@ -145,10 +202,11 @@ The INP reader does not support higher-order elements, part/assembly instances,
 include files, generated node/element definitions or unsupported coordinate
 systems. Export a flat, supported mesh before viewing those models.
 
-INP viewing has no fixed application-imposed file-size, node, element or face
-count cap. Available memory and graphics resources still limit practical size.
-Loading is cancellable; there is no sampled INP Quick Preview. The viewer does
-not provide mesh editing, a solver or analysis-result plotting.
+INP meshes can use adaptive Preview as well as Full Detail. Practical loading
+capacity depends on available memory, graphics and supported input structure;
+Full Detail can be limited by resource checks. Loading is cancellable. The
+viewer does not provide mesh editing or a solver. Use the HDF5 field and CSV/TSV
+point-cloud inspectors for supported scalar-data displays.
 
 Inspect an HDF5 field
 =====================
@@ -159,8 +217,13 @@ Inspect an HDF5 field
 #. Select a field and, if needed, a partition block in Properties.
 #. Choose an X, Y or Z slice and move the position slider. The slice snaps to
    an original grid plane. Load a mesh to compare both in model coordinates.
-#. Adjust **Colour**, range and opacity. Use **Probe** to read a nearest stored
-   grid value, and **Copy value** to copy it.
+#. Adjust **Colour**, range and **Field opacity** in that field's Properties.
+   Use **Probe** to read a nearest stored grid value, and **Copy value** to copy it.
+
+Field opacity affects only the selected field; there are no mesh-opacity
+controls in this panel. Select a mesh in Geometry to adjust the mesh itself.
+Choose Save to retain opacity separately for each field ID in each file.
+Slice position, palette and probe results remain session settings.
 
 The display can sample a slice for speed; Probe still reads an original value.
 The inspector shows grid dimensions, precision, available units and value range.
@@ -174,3 +237,33 @@ supported. Use **Remove field file** to close a file.
 
 **Save PNG…** includes the displayed field plane but not its legend or probe
 tooltip. After generating new output, reopen the field to inspect the new data.
+
+Inspect CSV or TSV point data
+=============================
+
+#. Choose **Point clouds → + Add**, or drag a CSV/TSV file into the viewport.
+   Adding a CSV/TSV through Supporting files opens the same importer.
+#. Check the delimiter and whether the first row contains headers. Map three
+   distinct coordinate columns to X, Y and Z.
+#. Choose a scalar column for colouring, or **Solid color**, then choose a
+   display limit and **Import and show**.
+#. Select the cloud in Project to change **Color by**, **Color map**, **Point
+   size**, range, **Point opacity** and **Show points** in its Properties.
+#. Enable **Inspect a point** and click a displayed point to see its original
+   coordinates, value and data-row identifier. Choose the mesh itself in
+   Project if you need to reduce its opacity to see the points behind it.
+
+The importer reads numeric coordinate data. Rows with invalid coordinates are
+skipped and counted; missing scalar values are shown in grey. The viewport
+reports displayed and total point counts. Large clouds are sampled according
+to the display limit (100,000, 250,000 or 1,000,000 points); inspecting a point
+reports the original data for that displayed sample. Point size is in display
+pixels, not model units. Section clipping also applies to the points.
+
+CSV/TSV paths already referenced by the workflow appear under Point clouds
+as **Referenced CSV · open to view points**. Select one to map and load it;
+the file is not read just because it appears in the tree. Saved mappings reopen
+without repeating the import dialog. Save the project to keep the reference,
+mapping, display choices and point opacity. Keep the external data file with
+the project. **Remove from project** closes the cloud without deleting its file
+or changing another object's opacity.

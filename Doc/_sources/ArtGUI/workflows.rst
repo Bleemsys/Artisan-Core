@@ -145,7 +145,7 @@ preview-unavailable message. Choosing an available result loads it in the
 opens the file picker, which also accepts HDF5 fields. With no mesh exports,
 **Load result** opens the picker directly. Both choosers refresh on each click.
 
-See :ref:`gridfieldcontainer` for the field-file layout and readback parameters.
+See :ref:`HDF5 field snapshots` for the field-file layout and readback parameters.
 
 Inspect HDF5 fields
 ===================

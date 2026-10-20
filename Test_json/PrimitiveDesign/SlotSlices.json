@@ -1,0 +1,179 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -10,
+          10
+        ],
+        [
+          -10,
+          10
+        ],
+        [
+          -10,
+          10
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Rot": [
+      0,
+      0,
+      0
+    ],
+    "res": [
+      0.1,
+      0.1,
+      0.1
+    ],
+    "Padding": 2,
+    "onGPU": false,
+    "memorylimit": 2147483648,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Proc_BoxSlices": {
+        "Source": "Geometry",
+        "Target": "FieldContainer",
+        "Boxes": [
+          {
+            "FieldID": "H01",
+            "ori": [
+              0,
+              0,
+              0
+            ],
+            "normal": [
+              0,
+              0,
+              1
+            ],
+            "length": [
+              11,
+              11,
+              1
+            ],
+            "z_angle": 0
+          },
+          {
+            "FieldID": "V01",
+            "ori": [
+              0,
+              0,
+              0
+            ],
+            "normal": [
+              0,
+              1,
+              0
+            ],
+            "length": [
+              11,
+              11,
+              1
+            ],
+            "z_angle": 0
+          }
+        ]
+      }
+    },
+    "2": {
+      "Gen_SlotCutters": {
+        "A": "H01",
+        "B": "V01",
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "open_A": "Negative",
+        "open_B": "Positive",
+        "split_ratio": 0.5,
+        "clearance": 0.4,
+        "Cutters": {
+          "A": "H01_slot_cutter",
+          "B": "V01_slot_cutter"
+        }
+      }
+    },
+    "3": {
+      "Clear_LatticeField": {}
+    },
+    "4": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "5": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "H01_slot_cutter"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "6": {
+      "Store_LatticeMesh": {
+        "MeshID": "H01_slotted"
+      }
+    },
+    "7": {
+      "Clear_LatticeField": {}
+    },
+    "8": {
+      "Add_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "V01"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "9": {
+      "Subtract_Geometry": {
+        "Source": {
+          "Type": "Field",
+          "ID": "V01_slot_cutter"
+        },
+        "k_factor": 0,
+        "push2GeomField": false
+      }
+    },
+    "10": {
+      "Store_LatticeMesh": {
+        "MeshID": "V01_slotted"
+      }
+    },
+    "11": {
+      "ExportMeshID": {
+        "MeshID": "H01_slotted",
+        "out_meshfile": "./H01_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "12": {
+      "ExportMeshID": {
+        "MeshID": "V01_slotted",
+        "out_meshfile": "./V01_slotted.stl",
+        "elem_type": "Triangle"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

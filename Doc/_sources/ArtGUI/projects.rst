@@ -8,10 +8,19 @@ Choose **Open** to load a workflow JSON file. ArtGUI reads ``Setup``, numbered
 ``WorkFlow`` steps and ``PostProcess`` into the interface. **New** starts an
 empty workflow. New and Open ask before discarding unsaved changes.
 
-**Save** writes the current project. A new project opens a file dialog so you
-can choose its name and folder. An opened project saves back to its existing
-path. To create a variation of an existing design, make a copy in your file
-manager and open that copy before editing.
+**Save** writes the current project. A new project opens a file dialog;
+an opened project saves back to its existing path.
+
+Choose **Save as**, immediately beside Save in the top bar, to choose another
+JSON filename or folder. After a successful save, the project name changes
+and subsequent Save actions write to the chosen file. Cancelling the dialog
+keeps the current path and unsaved changes. Use **Ctrl+S** for Save and
+**Ctrl+Shift+S** for Save as (Cmd on keyboards that use it).
+
+Save as copies the project JSON; it does not copy attached inputs or rename
+exported meshes and fields. When saving into another folder with JSON working
+directory enabled, check relative paths again. Set a distinct Export output
+filename when an existing result should be preserved.
 
 Project attachments are saved as file references in an additional ``ArtGUI``
 section. ArtGUI excludes that section from the workflow sent to the backend.
@@ -35,9 +44,14 @@ Choose the right way to add a file
    * - **Load result**
      - Loads an output as a result layer and records it in Geometry.
        It does not change ``Setup.Geomfile``.
+   * - **Point clouds → + Add**
+     - Imports a CSV/TSV point file with X/Y/Z column mapping and an optional
+       scalar column for colouring. This creates a viewer reference.
+   * - **Fields → Add** or **View field…**
+     - Opens an exported Artisan HDF5 field for slice inspection.
    * - **Supporting files → + Add**
-     - Attaches field data, point clouds, cell files or other inputs for
-       organisation. Set the consuming operation's file parameter separately.
+     - Attaches other inputs for organisation. CSV/TSV files open the point-cloud
+       import dialog. Set the consuming operation's file parameter separately.
    * - **Preview mesh**
      - Loads or reloads the selected supported mesh in the viewer.
    * - **Remove from project**
@@ -45,8 +59,11 @@ Choose the right way to add a file
 
 Click a geometry entry to inspect it. Properties show its path and, after
 loading, mesh counts and original-coordinate bounds. A loaded mesh also has
-a visibility checkbox. Supported meshes attached as supporting files can be
-previewed too.
+a visibility checkbox. Select **Display → Display colour** for its colour and
+**Display → Opacity** for its transparency. Each source, reference and result
+mesh keeps its own settings, including through preview/full-detail reloads.
+Opacity can also be set before the preview loads. Supported meshes attached as
+supporting files can be previewed and given their own opacity too.
 
 On reopening a project, the source loads automatically when available. Select
 other attached geometries to load them as needed. A reference mesh does not
@@ -132,7 +149,14 @@ Field references
 ================
 
 Use **Fields → Add** to open an exported Artisan HDF5 field. Saving the project
-keeps its file path, selected field and block under ``ArtGUI.fields``. The field
-data remains in the external file. Reopen it by selecting its project entry;
-slice, palette, opacity and probe settings are not saved in the project.
+keeps its file path, selected field and block under ``ArtGUI.fields``. Each
+field ID retains its own opacity for that file. Slice position, palette and
+probe results remain session settings; field data stays in the external file.
+Select its project entry to reopen it.
+
+Point-cloud references keep the file path, column mapping, display limit and
+display style, including point opacity. Select the entry to reopen the points
+without repeating the mapping dialog. Geometry display colours and opacity are
+also project settings. Choose Save or Save as to retain these changes on disk.
+
 See :doc:`viewer` for the viewing controls.

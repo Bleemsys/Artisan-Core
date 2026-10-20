@@ -612,5 +612,68 @@
       "surface",
       "feature"
     ]
+  },
+  "Define_ScalarField_CombineGeometry": {
+    "icon": "layers",
+    "description": "Combine geometry regions into a scalar field on the project grid.",
+    "searchTerms": [
+      "cell size",
+      "geometry",
+      "regions",
+      "scalar",
+      "transition",
+      "尺寸场",
+      "区域"
+    ],
+    "preferredSource": "Src/Test_json/ConformalLattice/TetSizeField/TetSizeField_Conformal.json"
+  },
+  "Gen_TetMesh_SizeField": {
+    "icon": "box",
+    "description": "Create tetrahedral cell domains with sizes controlled by a scalar field.",
+    "searchTerms": [
+      "tetrahedral",
+      "conformal",
+      "lattice",
+      "grading",
+      "Netgen",
+      "MMG",
+      "四面体",
+      "尺寸场"
+    ],
+    "preferredSource": "Src/Test_json/ConformalLattice/TetSizeField/TetSizeField_Conformal.json"
+  },
+  "Gen_SlotCutters": {
+    "icon": "scissors",
+    "description": "Create paired slot cutter fields for two intersecting plate fields.",
+    "searchTerms": [
+      "plate",
+      "slice",
+      "joint",
+      "slot",
+      "cutter"
+    ],
+    "preferredSource": "Doc/examples/PlateSlicing_TwoPlates.json"
+  },
+  "Clear_LatticeField": {
+    "icon": "layers",
+    "description": "Clear the working lattice field before building the next plate.",
+    "searchTerms": [
+      "clear",
+      "reset",
+      "plate",
+      "field"
+    ],
+    "preferredSource": "Doc/examples/PlateSlicing_TwoPlates.json"
+  },
+  "Store_LatticeMesh": {
+    "icon": "box",
+    "description": "Store the current lattice mesh under a mesh ID for later export.",
+    "searchTerms": [
+      "store",
+      "mesh",
+      "plate",
+      "export"
+    ],
+    "preferredSource": "Doc/examples/PlateSlicing_TwoPlates.json"
   }
 }

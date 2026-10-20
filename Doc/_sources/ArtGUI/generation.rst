@@ -83,7 +83,8 @@ without a supported preview are marked in the list. Use **View field…** for
 HDF5 outputs.
 If you generated to the same filename as an already loaded result, reload it;
 the viewer does not automatically refresh it. Hide the source or adjust
-opacity in **Visibility** to inspect the lattice clearly.
+opacity in the result or source geometry's **Properties → Display**, or in
+**Visibility**, to inspect the lattice clearly.
 
 ArtGUI retains a full run transcript in its application-data ``runs`` folder.
 The log panel shows its path. Artisan's own ``.log`` and ``.prg`` files use

@@ -12,6 +12,19 @@ spec.loader.exec_module(generator)
 
 
 class OperationCatalogTests(unittest.TestCase):
+    def test_field_mesher_presets_use_matching_complete_conformal_example(self):
+        catalog = json.loads((PROJECT / 'ui/operations.js').read_text(encoding='utf-8').split('window.ARTISAN_OPERATIONS = ')[1].strip().removesuffix(';'))
+        commands = {op['keyword']: op for op in catalog}
+        scalar = commands['Define_ScalarField_CombineGeometry']
+        tet = commands['Gen_TetMesh_SizeField']
+        self.assertEqual(scalar['category'], 'Fields')
+        self.assertEqual(tet['category'], 'Volume meshing')
+        self.assertEqual(tet['params']['size_field'], scalar['params']['field_id'])
+        self.assertEqual(tet['params']['export_mesh'], 'TetDomains')
+        for operation in (scalar, tet):
+            self.assertIn('TetSizeField_Conformal.json', operation['template'])
+            self.assertTrue(generator.REQUIRED_PRESET_FIELDS[operation['keyword']] <= operation['params'].keys())
+
     def test_starter_and_incomplete_example_handling(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

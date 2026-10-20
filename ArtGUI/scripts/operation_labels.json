@@ -71,5 +71,10 @@
   "GeomFill": "Trim field to geometry",
   "Inv_Field": "Invert field",
   "OP_GeomSDF_GridField": "Geometry distance grid field",
-  "Proc_Mesh_Smoothing": "Smooth mesh"
+  "Proc_Mesh_Smoothing": "Smooth mesh",
+  "Define_ScalarField_CombineGeometry": "Scalar field from regions",
+  "Gen_TetMesh_SizeField": "Tet mesh from size field",
+  "Gen_SlotCutters": "Generate slot cutters",
+  "Clear_LatticeField": "Clear lattice field",
+  "Store_LatticeMesh": "Store lattice mesh"
 }

@@ -1,0 +1,41 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [[0.0, 10.0], [0.0, 10.0], [0.0, 10.0]],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [0.0, 0.0, 0.0],
+    "res": [0.05, 0.05, 0.05],
+    "Padding": 4,
+    "onGPU": false,
+    "memorylimit": 4294967296,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Add_Lattice": {
+        "la_name": "Cubic",
+        "size": [1.0, 1.0, 1.0],
+        "thk": 0.1,
+        "Rot": [0.0, 0.0, 0.0],
+        "Trans": [0.0, 0.0, 0.0],
+        "Inv": false,
+        "Fill": true,
+        "Cube_Request": {}
+      }
+    },
+    "2": {
+      "Export": {
+        "outfile": "./Cubic_10x10x10.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

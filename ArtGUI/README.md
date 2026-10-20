@@ -5,11 +5,21 @@ Independent desktop GUI prototype. The frontend is local HTML/CSS/JavaScript hos
 ## Features in this build
 
 - Project, geometry, ordered operations, timeline, and parameter panels based on the selected ArtGUI layout.
-- Loads 65 operation keywords and 371 distinct parameter presets generated from 29 source RST manuals under `Doc` and 121 JSON examples under `Src/Test_json`. The properties panel offers an Example preset selector; choosing one replaces that operation’s parameters with the selected source example. Check example file paths before generating.
+- Operation keywords and example presets are generated from the source manuals and workflows. The properties panel offers an Example preset selector; choosing one replaces the operation parameters. Check file paths and preceding steps before generating.
 - Reads, edits, and writes Artisan's `Setup`, numbered `WorkFlow`, and `PostProcess` JSON sections. Numeric types are preserved: `5.0` and `0.0` remain floats, while `5` and `0` remain integers. This includes presets, imported workflows, nested arrays, form edits, JSON edits, cloning, and reordering. Integer fields reject fractional values; change a field’s type explicitly through the JSON editor when needed.
 - Native workflow and geometry file dialogs; a custom JSON editor; operation search; reordering; backend selection; and Artisan generation.
 - Runs the packaged `ArtisanMain.exe -f <workflow.json>` locally. Package resources are copied into the Tauri application's resource directory.
-- WebGL 3D preview with orbit, zoom, and fit-to-model controls. Binary and ASCII STL files are scanned facet-by-facet in Rust; the reduced Quick Preview is written to a small local cache file before it reaches the WebView. Large STLs open in Quick Preview (up to 120,000 triangles sampled across the file); Full Detail is available on demand without application-imposed file-size or triangle-count limits. Actual capacity depends on available memory, browser buffer capacity and graphics resources. ASCII STL, OBJ, and ASCII PLY remain supported, though large text meshes can take longer to parse. The reduced preview is display-only; Artisan generation uses the original geometry path.
+- WebGL 3D Preview follows orbit, pan, and zoom using a reusable disk-backed spatial hierarchy for STL, OBJ, ASCII PLY, and supported flat linear INP meshes. Size-aware surface samples cover the whole object, with coarse regions retained until finer blocks are ready; nearby blocks use original triangles. Full Detail checks live RAM and conservative viewer/graphics budgets before replacing the preview. See [large model viewing](docs/LARGE_MODELS.md).
+
+## Regional cell sizes and mesh cleanup
+
+- In **Add step**, search for **Scalar field from regions** (`Define_ScalarField_CombineGeometry`) under **Fields**. Set the field name, default value and overlap rule. Use **Add region** / **Remove region** to edit region geometry, value and transition width. The field uses the project resolution; no separate grid spacing is needed.
+- Add **Tet mesh from size field** (`Gen_TetMesh_SizeField`) under **Volume meshing**. Reference the field name, a closed solid surface and a tet output ID such as `TetDomains`. The field must cover the whole solid in one partition. The initial seed size is separate from the final edge-size targets. Leave **Final surface tolerance** empty to use twice the boundary tolerance.
+- Use `TetDomains` in a conformal lattice definition with the tet-compatible `Icosahedral` unit. Strut radius is set in the consuming **Add lattice** step.
+- In **Project settings → Post process**, enable **Clean exported mesh** (`CleanExportedMesh`) for exact vertex welding and degenerate-triangle cleanup. It does not fill holes or repair non-manifold edges. It defaults to off in new projects and when omitted from older workflows; an explicit saved value is preserved.
+- Existing **Export → HDF5 field only** supports saving the named field through `GridFieldIDs`. **ReadGridField** can reload it. The complete example is `Src/Test_json/ConformalLattice/TetSizeField/TetSizeField_Conformal.json`; its relative paths use the Artisan `Src` working directory.
+
+These controls require the updated Artisan backend and its native Netgen/MMG support. Updating ArtGUI does not rebuild or replace an older packaged Artisan engine. Select the updated Python backend if the packaged engine has not been rebuilt.
 
 ## Interface language
 
@@ -228,8 +238,9 @@ RAM is resident process memory, summed across the group; shared pages may be cou
 - Switch between perspective and orthographic projection, or between solid, wireframe and solid-with-triangle-edges display. Edges are rendered by a shader without building a second CPU edge mesh. Dense edge displays can still be visually crowded.
 - **Mouse controls** uses the preferred button mapping. Orbit, Pan and Zoom tools temporarily assign that action to the left button. More > Mouse controls configures left/right buttons, sensitivity and scroll direction. Middle drag zooms; touch uses one finger to orbit and two to pan/zoom.
 - **Section** clips the display with an X, Y, Z or custom-normal plane. Move its position slider and optionally reverse the visible side. It is a display cut with no filled cap; it does not modify the mesh or export a cut model.
-- **Visibility** controls source/result visibility, opacity and colour independently. Make active selects the model affected by the Quick Preview / Full Detail switch. Transparency is for visual comparison and may have sorting artifacts on complex intersecting surfaces.
-- **Measure** selects a model and measures distance with two clicks or an angle with three (the second is the vertex). Optional vertex snapping selects triangle vertices near the click. Only a visible full-detail mesh can be measured; sampled Quick Preview is intentionally excluded. Measurements describe the loaded mesh, with its floating-point precision. Very large full-detail meshes may take longer to pick.
+- Select a geometry, field or point cloud in the Project tree to change its own **Opacity** in Properties. Each object keeps its own opacity, saved with the workflow; opening or editing a field or point cloud preserves all other objects’ opacity and visibility.
+- **Visibility** also controls source/result visibility, opacity and colour independently. Make active selects the model affected by the Preview / Full Detail switch. Transparency is for visual comparison and may have sorting artifacts on complex intersecting surfaces.
+- **Measure** selects a model and measures distance with two clicks or an angle with three (the second is the vertex). Optional vertex snapping selects triangle vertices near the click. Only a visible full-detail mesh can be measured; adaptive Preview is intentionally excluded. Measurements describe the loaded mesh, with its floating-point precision. Very large full-detail meshes may take longer to pick.
 - **More** contains grid, axes, bounding box/dimensions, background, unit labels, mouse preferences, named camera views and PNG export. Mesh coordinates are unitless: choose the appropriate label; changing it does not rescale geometry.
 - Named camera views store camera position, target, projection and zoom. Viewer preferences and saved cameras persist locally across sessions, separately from Artisan workflow JSON. Measurement annotations are session-only and are cleared when their model is replaced.
 - **Save PNG** uses a native Save dialog. Choose an opaque or transparent background and whether to include measurement annotations. The image uses the current viewport resolution; screenshots do not change the mesh.
@@ -240,3 +251,26 @@ The native preview service returns original mesh bounds. The STL worker retains 
 
 See [Project files and INP guide](docs/project-files-and-inp.md) for supported meshes, file references, limits, and validation.
 
+## Large model viewing (0.1.5)
+
+Preview now follows zoom, pan, and orbit using a reusable spatial cache on disk. **Load full detail** checks memory and viewer limits before replacing the preview. See [large-model viewing](docs/LARGE_MODELS.md) for cache space, supported meshes, safety budgets, and validation details.
+
+**Save as** beside **Save** opens a Save dialog and makes the chosen JSON the current workflow. Subsequent **Save** actions write to that file. Use Ctrl+Shift+S (or Cmd+Shift+S) for Save as. Cancelling the dialog keeps the current file and unsaved changes.
+
+**Clean scratch** beside **Reset** deletes all files and subfolders inside `ViewScratch`, keeping the folder. Active preview work is cancelled and cached preview layers are closed first; reopen a model to rebuild its preview. Full-detail geometry and workflow files are kept. A cleanup failure is reported so you can close another window using the cache and retry.
+
+Preview caches live in `ViewScratch` beside `ArtGUI.exe`. Existing completed caches in the former AppData location move there automatically when their model is opened. Keep ArtGUI in a writable folder.
+
+
+
+## Geometry display colours
+
+Select a geometry under Project → Geometry, then use Properties → Display →
+Display colour. The colour updates immediately and can be set before loading a
+preview. It is retained through preview/full-detail reloads and saved in the
+project JSON: `ArtGUI.sourceColor` for the source, and `color` on each
+`ArtGUI.geometry` entry for reference/result meshes. Existing projects without
+colour metadata use the viewer's existing defaults. Visibility colour controls
+edit the same project setting. New projects and other opened projects do not
+inherit another project's colour overrides. Supporting files and field colour
+maps keep their existing controls.

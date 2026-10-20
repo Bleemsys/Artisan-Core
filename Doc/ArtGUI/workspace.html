@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Find your way around &#8212; Artisan 0.2.17 documentation</title>
+    <title>Find your way around &#8212; Artisan 0.2.18 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=b99fd0e1"></script>
+    <script src="../_static/documentation_options.js?v=c0bb6f85"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.17 documentation</p>
+    <p class="title logo__title">Artisan 0.2.18 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -158,18 +158,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../Mesh.html">Mesh Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_01.html">Meshing 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GradedTetLattice.html">Meshing 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mesher_99.html">Field Driven Meshing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ProcMesh.html">Mesh Process</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal.html">Conformal Lattice 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Conformal_02.html">Conformal Lattice 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PlateSlicing.html">Plate slicing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../OPField.html">Field Operation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LineStructure_02.html">Line Structure 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../TransLattice.html">Lattice Transition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Export.html">Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../FEAInter.html">FEA Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../API.html">API Interface</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../ArtGUI.html">ArtGUI user guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -374,12 +377,12 @@ then edit its properties.</span><a class="headerlink" href="#id1" title="Link to
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Top bar</p></td>
-<td><p>Create, open and save a project; open the JSON editor; choose a backend;
+<td><p>Create, open, save or Save as a project; open the JSON editor; choose a backend;
 open Help. The project name and saved/unsaved status appear here.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Project</p></td>
 <td><p>Select project settings, source and reference geometry, supporting
-files, mesh/conformal lattice definitions and custom unit cells.</p></td>
+files, point clouds, HDF5 fields, mesh/conformal lattice definitions and custom unit cells.</p></td>
 </tr>
 <tr class="row-even"><td><p>3D Workspace</p></td>
 <td><p>Load source and result files, navigate around models, control layers,
@@ -430,22 +433,29 @@ the definition before selecting a different item; see <a class="reference intern
 <tr class="row-even"><td><p><strong>Ctrl+S</strong></p></td>
 <td><p>Save the current project.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>JSON</strong></p></td>
+<tr class="row-odd"><td><p><strong>Ctrl+Shift+S</strong></p></td>
+<td><p>Save as a new project filename or location.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>JSON</strong></p></td>
 <td><p>Open the complete workflow for text editing.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Esc</strong></p></td>
+<tr class="row-odd"><td><p><strong>Esc</strong></p></td>
 <td><p>Close a modal dialog; the viewer also uses Escape to finish an active
 measurement interaction.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>+ Add step</strong></p></td>
+<tr class="row-even"><td><p><strong>+ Add step</strong></p></td>
 <td><p>Open the searchable operation picker. Within its search/results,
 Up/Down selects an operation and Enter adds it.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Fit view</strong></p></td>
+<tr class="row-odd"><td><p><strong>Fit view</strong></p></td>
 <td><p>Frame the visible model layers.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Reset</strong></p></td>
+<tr class="row-even"><td><p><strong>Reset</strong></p></td>
 <td><p>Return the camera to an isometric view.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Clean scratch</strong></p></td>
+<td><p>Clear files and subfolders inside ViewScratch; cached previews close.
+See <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a> before cleaning.</p></td>
 </tr>
 </tbody>
 </table>
@@ -464,6 +474,13 @@ no dialog or other active interaction needs it.</p>
 <p>The <strong>Resources</strong> tab beside Workflow shows memory and CPU use; see
 <a class="reference internal" href="generation.html"><span class="doc">Generate models and read the log</span></a>. Use <strong>View field…</strong> or the Project panel’s <strong>Fields</strong> section
 to inspect an exported HDF5 field; see <a class="reference internal" href="viewer.html"><span class="doc">Inspect models in the 3D Workspace</span></a>.</p>
+<p>Select a geometry, field or point cloud in Project to show that object’s
+display controls in Properties. Its opacity slider affects only that object;
+another object’s opacity control is not included in the selected Properties.</p>
+<p>The <strong>Expand / Collapse</strong> control on the Workflow/Resources panel shows or
+hides its contents. Selecting either tab reopens the panel. This is separate
+from expanding the 3D Workspace; it preserves the current selection and data.
+In Chinese, <strong>Point clouds → + Add</strong> appears as <strong>点云 → + 添加</strong>.</p>
 </section>
 </section>
 

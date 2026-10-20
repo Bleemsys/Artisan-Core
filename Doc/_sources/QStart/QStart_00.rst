@@ -35,6 +35,13 @@ The JSON contains three sections,
 
  - :code:`PostProcess` implements simple post processes on the resultant geometries. In this example, we would only combine the meshes if the automatic partitions were made. 
 
+.. note::
+
+   ``PostProcess`` also accepts ``CleanExportedMesh: true`` for basic surface
+   cleanup after export. It defaults to ``false`` when omitted, so existing
+   examples remain valid. See :ref:`clean-exported-mesh` for its scope and
+   limitations.
+
 .. list-table::
    :widths: 30 70
    :header-rows: 1
