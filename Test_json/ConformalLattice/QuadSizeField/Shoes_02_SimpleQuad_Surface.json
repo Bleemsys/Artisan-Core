@@ -25,14 +25,14 @@
       0.0
     ],
     "res": [
-      1.0,
-      1.0,
-      1.0
+      0.35,
+      0.35,
+      0.35
     ],
-    "Padding": 5,
+    "Padding": 10,
     "onGPU": false,
     "JsonWorkDir": false,
-    "memorylimit": 16106127360
+    "memorylimit": 35433480192
   },
   "WorkFlow": {
     "1": {
@@ -71,7 +71,7 @@
     "5": {
       "Gen_QuadMesh_SizeField": {
         "mesh_file": "UniformSurface",
-        "export_mesh": "TriangleSurface",
+        "export_mesh": "QuadSurface",
         "size_field": "CellSize",
         "hausd": 10.0,
         "surface_tolerance": 1000.0,
@@ -86,24 +86,116 @@
       }
     },
     "6": {
-      "ExportMeshID": {
-        "MeshID": "TriangleSurface",
-        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.inp",
-        "elem_type": "Triangle"
+      "Define_Lattice": {
+        "la_name": "QuadLattice",
+        "definition": {
+          "type": "strut",
+          "definition": {
+            "pts": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.5,
+                0.0
+              ]
+            ],
+            "cnnt": [
+              [
+                0,
+                3
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                4,
+                1
+              ],
+              [
+                4,
+                2
+              ]
+            ],
+            "ladomain": "Quad"
+          }
+        }
       }
     },
     "7": {
-      "ExportMeshID": {
-        "MeshID": "TriangleSurface",
-        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.vtu",
-        "elem_type": "Triangle"
+      "Define_Lattice": {
+        "la_name": "QuadSurfaceLattice",
+        "definition": {
+          "type": "ConformalLattice",
+          "definition": {
+            "meshfile": "QuadSurface",
+            "la_name": "QuadLattice",
+            "k": 0.0
+          }
+        }
       }
     },
     "8": {
+      "Add_Lattice": {
+        "la_name": "QuadSurfaceLattice",
+        "size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "thk": 0.45,
+        "Rot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Trans": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "9": {
       "ExportMeshID": {
-        "MeshID": "TriangleSurface",
-        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.stl",
-        "elem_type": "Triangle"
+        "MeshID": "QuadSurface",
+        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.inp",
+        "elem_type": "Quad"
+      }
+    },
+    "10": {
+      "Export": {
+        "outfile": ".//Test_results/QuadSurfaceVaryingSize.stl"
       }
     }
   },
@@ -113,5 +205,27 @@
     "RemovePartitionMeshFile": true,
     "RemoveIsolatedParts": false,
     "ExportLazPts": false
+  },
+  "ArtGUI": {
+    "version": 1,
+    "geometry": [
+      {
+        "id": "geometry-165430a3-a92f-433f-b609-ba93255c5a22",
+        "path": "C:\\Users\\wangy\\Documents\\Project-Artisan\\Artisan\\Artisan\\Artisan_Dist\\Test_results\\Shoes_02_SimpleQuad_surface.inp"
+      },
+      {
+        "id": "result",
+        "path": "\\\\?\\C:\\Users\\wangy\\Documents\\Project-Artisan\\Artisan\\Artisan\\Artisan_Dist\\Test_results\\QuadSurfaceVaryingSize.stl"
+      }
+    ],
+    "supportingFiles": [],
+    "fields": [
+      {
+        "id": "field-8c851495-cf61-4c12-b497-309ecf67be0d",
+        "path": "\\\\?\\C:\\Users\\wangy\\Documents\\Project-Artisan\\Artisan\\Artisan\\Artisan_Dist\\Test_results\\Shoes_02_QuadriFlow_SplitTriangles_CellSize.h5",
+        "fieldId": "CellSize",
+        "blockId": 0
+      }
+    ]
   }
 }
