@@ -353,6 +353,24 @@ fn monitor(
     Ok((s.success() && !cancelled, cancelled, s.code()))
 }
 
+// Legacy packaged backends may read JSON using the Windows ANSI code page.
+// Escape Unicode only in the execution copy. JSON decoding restores the exact
+// strings, while copying ASCII verbatim preserves numeric spelling and escapes.
+fn workflow_transport_json(contents: &str) -> String {
+    use std::fmt::Write as _;
+    let mut encoded = String::with_capacity(contents.len());
+    for character in contents.chars() {
+        if character.is_ascii() {
+            encoded.push(character);
+        } else {
+            for unit in character.encode_utf16(&mut [0; 2]) {
+                write!(&mut encoded, "\\u{unit:04x}").expect("writing to a String cannot fail");
+            }
+        }
+    }
+    encoded
+}
+
 fn backend_command(engine: &Path, python: Option<&str>, workflow: &Path) -> Command {
     let is_python = engine.extension().and_then(|e| e.to_str())
         .is_some_and(|e| e.eq_ignore_ascii_case("py"));
@@ -375,6 +393,7 @@ pub async fn generate_workflow(
     backend_path: Option<String>,
     python_path: Option<String>,
     workflow_path: String,
+    preview_path: Option<String>,
     run_id: String,
 ) -> Result<RunResult, String> {
     if run_id.is_empty()
@@ -448,7 +467,15 @@ pub async fn generate_workflow(
         };
         let log = engine_dir.join(format!("artisan_run_{run_id}.log"));
         let progress = log.with_extension("prg");
-        let mut run_files = RunFiles::new(&project)?;
+        let preview = preview_path.as_deref().map(Path::new);
+        let _scratch_access = if let Some(path) = preview {
+            let access = crate::scratch::ACCESS.read().map_err(|_| "Preview cache is unavailable.")?;
+            crate::scratch::workflow_preview_artifact(path)?;
+            Some(access)
+        } else {
+            None
+        };
+        let mut run_files = RunFiles::new(preview.unwrap_or(&project))?;
         let transcript = runs.join(format!("{run_id}.log"));
         File::create(&transcript).map_err(|e| e.to_string())?;
         {
@@ -459,7 +486,8 @@ pub async fn generate_workflow(
             }
             logs.insert(run_id.clone(), transcript.clone());
         }
-        fs::write(&temp, contents).map_err(|e| format!("Could not prepare workflow: {e}"))?;
+        fs::write(&temp, workflow_transport_json(&contents))
+            .map_err(|e| format!("Could not prepare workflow: {e}"))?;
         let result = (|| {
             // Hold the guard through process exit, including failure/cancellation.
             // Closing must finish before Artisan can overwrite any HDF5 output.
@@ -550,6 +578,24 @@ mod tests {
     }
 
     use super::*;
+    #[test]
+    fn workflow_transport_restores_unicode_keys_paths_and_supplementary_characters() {
+        let original = r#"{"中文键":"路径/孔隙–预览”.stl","emoji":"😀𝄞","size":[1.0,2e-7,-0.0],"text":"quote: \" slash: \\ newline: \n","escaped":"\u4e2d"}"#;
+        let encoded = workflow_transport_json(original);
+        assert!(encoded.is_ascii());
+        assert!(encoded.contains(r#"\ud83d\ude00"#));
+        assert!(encoded.contains("[1.0,2e-7,-0.0]"));
+        assert_eq!(serde_json::from_str::<serde_json::Value>(&encoded).unwrap(),
+                   serde_json::from_str::<serde_json::Value>(original).unwrap());
+        assert!(original.contains('中')); // The saved-project input is untouched.
+    }
+
+    #[test]
+    fn workflow_transport_leaves_ascii_numeric_tokens_and_existing_escapes_verbatim() {
+        let original = "{\r\n  \"x\": 1.2300, \"int\": 9007199254740993, \"y\": -0.0, \"z\": 2E+07, \"escaped\": \"\\ud83d\\ude00\\n\\t\"\r\n}";
+        assert_eq!(workflow_transport_json(original), original);
+    }
+
     #[test]
     fn progress_and_duplicates() {
         assert_eq!(percentage("42.5%"), Some(42.5));

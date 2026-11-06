@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArtGUI lattice field mode verification</title>
+  <link rel="stylesheet" href="../ui/styles.css">
+  <link rel="stylesheet" href="../ui/property-header.css">
+  <link rel="stylesheet" href="../ui/lattice-definition-editor.css">
+  <style>body{box-sizing:border-box;width:100%;min-width:0;height:auto;margin:0;background:#f4f6f8;display:flex;justify-content:center;padding:20px}#host{display:block;width:440px;max-width:100%;height:auto;background:#fff;border:1px solid #dce3ed;border-radius:8px;overflow:hidden;position:static}#host .ld-scroll{overflow:visible}#host .ld-editor{display:block;min-height:0}</style>
+</head>
+<body>
+  <main id="host" class="properties-panel"></main>
+  <script type="module">
+    import {createLatticeDefinitionEditor} from '../ui/lattice-definition-editor.js';
+    import {definitionTemplate} from '../ui/lattice-schema.js';
+    import {parseNumericJson,stringifyNumericJson} from '../ui/numeric-json.js';
+    import {localize,setLanguage} from '../ui/i18n.js';
+    const host=document.querySelector('#host');
+    let doc,params,editor;
+    window.loadDefinition=(type,mode='omitted')=>{
+      setLanguage('en');
+      params={la_name:type==='MeshLattice'?'Mesh infill':'Conformal infill',definition:definitionTemplate(type)};
+      params.definition.definition.meshfile='BeamMesh';
+      params.definition.definition.extra={keep:7};
+      if(mode!=='omitted')params.definition.definition.field_mode=mode;
+      doc={WorkFlow:{'1':{Define_Lattice:params},'2':{Add_Lattice:{la_name:params.la_name}}}};
+      editor=createLatticeDefinitionEditor({
+        getContext:()=>({doc,key:'1'}),validateName:()=>'',
+        renderLatticePicker:(_p,value)=>`<select id="lattice-la_name-select" data-lattice-select="lattice-la_name"><option value="BCCubic">BCCubic</option></select><input id="lattice-la_name" data-lattice-field="la_name" value="${value}">`,
+        onApply:(p,draft)=>{p.la_name=draft.name;p.definition=draft.definition;},
+        onUse:()=>{},onExport:p=>{window.exportedDefinition=stringifyNumericJson(p.definition);},onRemove:()=>{},onNavigate:()=>{},notify:()=>{}
+      });
+      editor.show(host,params);
+      host.querySelector('[data-ld-section="advanced"]').open=true;
+      return window.savedDefinition();
+    };
+    window.savedDefinition=()=>parseNumericJson(stringifyNumericJson(params.definition));
+    window.flush=()=>editor.applyAll();
+    window.draft=()=>editor.readDraft();
+    window.refresh=()=>editor.show(host,params);
+    window.language=locale=>{setLanguage(locale);localize(host);};
+    window.loadDefinition('ConformalLattice');
+    window.ready=true;
+  </script>
+</body>
+</html>

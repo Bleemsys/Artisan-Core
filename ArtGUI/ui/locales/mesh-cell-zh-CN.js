@@ -1,0 +1,16 @@
+export default {
+ 'Geometry cell designer':'几何晶胞设计器','Plate cell designer':'板晶胞设计器','Open Geometry cell designer':'打开几何晶胞设计器','Open Plate cell designer':'打开板晶胞设计器',
+ 'Inspect and prepare STL/OBJ cell meshes, or create editable plate surfaces.':'检查和准备 STL/OBJ 晶胞网格，或创建可编辑的板面。',
+ 'Import mesh':'导入网格','Geometry solid':'实体几何','Plate surface':'板面','Cell type':'晶胞类型','Source file':'源文件','Source and checks':'源文件与检查','Replace':'替换','Show issues':'显示问题',
+ 'Align and fit':'对齐与适配','Lock proportions':'锁定比例','Fit inside cell':'适配到晶胞内','Fit inside cell changes mesh coordinates. Fit cell changes only the camera.':'“适配到晶胞内”会更改网格坐标，“适应晶胞”仅更改相机。',
+ 'Transform mesh':'变换网格','Translation':'平移','Rotation (degrees)':'旋转（度）','Apply transform':'应用变换','Reverse all normals':'反转全部法向','Boundary checks passed.':'边界检查已通过。',
+ 'New plate':'新板面','Add plate':'添加板面','Custom polygon':'自定义多边形','Enter ordered X Y Z coordinates, one vertex per line. Vertices must lie in one plane.':'按顺序输入 X Y Z 坐标，每行一个顶点。所有顶点必须共面。','Add polygon':'添加多边形','Selected plate':'所选板面','Reverse normal':'反转法向','Delete plate':'删除板面','Vertex coordinates':'顶点坐标','Vertex':'顶点','Vertex position':'顶点位置','Update vertex':'更新顶点','Plates':'板面','Plane':'平面','Normals':'法向',
+ 'Closed boundary':'封闭边界','Consistent winding':'朝向一致','Inside reference domain':'位于参考域内','No source mesh':'无源网格','Import a mesh to inspect its boundaries.':'导入网格以检查边界。',
+ 'These are reference surfaces. Plate thickness is set in the workflow operation.':'此处为参考板面。板厚在工作流操作中设置。','The imported solid is the reference shape. Shape offset is set in the workflow operation.':'导入的实体为参考形状，形状偏移在工作流操作中设置。','Cell size, thickness and placement are configured in the consuming workflow operation.':'晶胞尺寸、厚度与位置在使用此晶胞的工作流操作中配置。',
+ 'Import a mesh or create a plate.':'导入网格或创建板面。','Import a solid cell':'导入实体晶胞','Add a plate or import a surface':'添加板面或导入曲面','Example frame':'示例框架','No file selected':'未选择文件','STL or OBJ · up to 32 MB':'STL 或 OBJ · 最大 32 MB',
+ 'Reading the complete source mesh…':'正在读取完整源网格…','Mesh loaded. Boundary checks passed.':'网格已加载，边界检查已通过。','Mesh updated.':'网格已更新。','Mesh fitted inside the reference domain.':'网格已适配到参考域内。','Mesh transform applied.':'网格变换已应用。','Plate added.':'板面已添加。','Polygon added.':'多边形已添加。','Plate normal reversed.':'板面法向已反转。','All face normals reversed.':'所有板面法向已反转。','Plate deleted.':'板面已删除。','Vertex updated.':'顶点已更新。','Plate position updated.':'板面位置已更新。','Plate plane updated.':'板面平面已更新。',
+ 'Saving a new prepared mesh…':'正在保存新的晶胞网格…','Saving cancelled. Your draft remains open.':'已取消保存，草稿保持打开。','Wait for the prepared mesh to finish saving.':'请等待晶胞网格保存完成。','Save prepared meshes from the desktop app.':'请在桌面应用中保存晶胞网格。',
+ 'Reference domain changed. Fit or repair outside vertices before applying.':'参考域已更改。请适配或修正域外顶点后再应用。','Boundary checks do not test self-intersections. Verify the generated result in Artisan.':'边界检查不检测自相交，请在 Artisan 中验证生成结果。',
+ 'Drag to orbit · scroll to zoom · click a face to inspect':'拖动以旋转 · 滚动以缩放 · 点击面以检查','Click a plate to select · drag its vertices or the selected plate · drag background to orbit':'点击板面以选择 · 拖动顶点或所选板面 · 拖动背景以旋转',
+ 'Plate edit committed. Undo restores the whole drag.':'板面编辑已提交，撤销可恢复整次拖动。','Example frame loaded. Apply saves a new project mesh.':'示例框架已加载，应用后保存为新的项目网格。'
+};

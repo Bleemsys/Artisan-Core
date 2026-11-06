@@ -1,7 +1,18 @@
+import geometryFieldZh from './locales/geometry-field-zh-CN.js';
+import sizeFieldMesherZh from './locales/size-field-mesher-zh-CN.js';
+import primitiveMeshZh from './locales/primitive-mesh-zh-CN.js';
+import latticeDefinitionZh from './locales/lattice-definition-zh-CN.js';
+import quadZh from './locales/quad-mesher-zh-CN.js';
 import interfaceZh from './locales/zh-CN.js';
 import operationsZh from './locales/operations-zh-CN.js';
+import regionsZh from './locales/regions-zh-CN.js';
+import morphZh from './locales/morph-zh-CN.js';
+import spatialZh from './locales/spatial-zh-CN.js';
+import strutCellZh from './locales/strut-cell-zh-CN.js';
+import tpmsCellZh from './locales/tpms-cell-zh-CN.js';
+import meshCellZh from './locales/mesh-cell-zh-CN.js';
 
-const zh = {...interfaceZh, ...operationsZh};
+const zh = {...geometryFieldZh, ...primitiveMeshZh, ...interfaceZh, ...operationsZh, ...regionsZh, ...morphZh, ...spatialZh, ...quadZh, ...strutCellZh, ...tpmsCellZh, ...meshCellZh, ...latticeDefinitionZh, ...sizeFieldMesherZh};
 export const LANGUAGE_KEY = 'artisan.language';
 export const supportedLanguages = ['en', 'zh-CN'];
 let language = 'en';
@@ -9,6 +20,25 @@ try { const saved = globalThis.localStorage?.getItem(LANGUAGE_KEY); if (supporte
 export const getLanguage = () => language;
 
 const patterns = [
+  [/^(\d+) slices? · preview up to date$/, (_, n) => `${n} 个切片 · 预览已更新`],
+  [/^Region (\d+): (.+)$/, (_, n, message) => `区域 ${n}：${translate(message,'zh-CN')}`],
+  [/^(Position|Full dimensions|Plane normal|Cylinder axis) ([XYZ])$/, (_, label, axis) => `${translate(label,'zh-CN')} ${axis}`],
+  [/^Select (.+)$/, (_, name) => `选择 ${name}`],
+  [/^([XYZ]) ([+−]) face$/, (_, axis, sign) => `${axis} ${sign} 面`],
+  [/^Choose rotation axis ([XYZ])$/, (_, axis) => `选择旋转操作轴 ${axis}`],
+  [/^Move in ([XYZ]{2}) plane$/, (_, axes) => `在 ${axes} 平面内移动`],
+  [/^(Translation|Rotation center|Drag snap) \(([^()]+)\)(?: ([XYZ]))?$/, (_, label, units, axis) => `${({'Translation':'平移','Rotation center':'旋转中心','Drag snap':'拖动吸附'})[label]}（${translate(units,'zh-CN')}）${axis?' '+axis:''}`],
+  [/^Use lattice for the active field and surface export\. Coordinates and translations use (.+)\.$/, (_, units) => `使用 lattice 表示当前场并导出表面。坐标和平移的单位为 ${translate(units,'zh-CN')}。`],
+  [/^(Rotation axis|Move|Rotate) ([+-]?[XYZ])$/, (_, label, axis) => `${translate(label,'zh-CN')} ${axis}`],
+  [/^Movement (\d+)$/, (_, n) => `移动区域 ${n}`],
+  [/^Step (\d+)$/, (_, n) => `步骤 ${n}`],
+  [/^Moving region (\d+): (.+)$/, (_, n, message) => `移动区域 ${n}：${translate(message,'zh-CN')}`],
+  [/^Step (\d+): (.+)$/, (_, n, message) => `步骤 ${n}：${translate(message,'zh-CN')}`],
+  [/^(.+): no earlier geometry-mask definition found\. Artisan must load or compute it before this step\.$/, (_, id) => `${id}：未找到前面步骤中的几何掩码定义。Artisan 必须在此步骤之前加载或计算该掩码。`],
+  [/^(.+): morph masks must contain values between 0 and 1\.$/, (_, id) => `${id}：变形掩码的值必须在 0 至 1 之间。`],
+  [/^(.+): target bounds may extend beyond the sampling box\. Increase the sampling bounds or reduce movement\.$/, (_, id) => `${id}：目标边界可能超出采样长方体。请扩大采样范围或减小移动量。`],
+  [/^(mask_threshold|max_control_points|support_radius|max_gradient|inverse_tolerance|inverse_iterations|stages|max_grid_points) must be (an integer|a number) (greater than|at least) ([\d.e+-]+)(?: and at most ([\d.e+-]+))?\.$/, (_, key, type, lower, min, max) => `${key} 必须为${lower==='greater than'?'大于':'不小于'} ${min}${max?' 且不大于 '+max:''} 的${type==='an integer'?'整数':'数值'}。`],
+  [/^Preview computed, but the quality report could not be read: (.+)$/, (_, message) => `预览已计算，但无法读取质量报告：${message}`],
   [/^(Lower bounds|Upper bounds|Section normal) ([XYZ])$/, (_, label, axis) => `${translate(label)} ${axis}`],
   [/^(Resolution|Rotation|Rot|Trans|size|Size) ([123])$/, (_, label, axis) => `${translate(label)} ${axis}`],
   [/^Add (.+) to favorites$/, (_, label) => `将“${translate(label)}”加入收藏`],

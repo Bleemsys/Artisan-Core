@@ -1,0 +1,47 @@
+.contour-mode .properties-panel>.properties-footer{display:none}
+.contour-mode #properties-content{padding:0;overflow:hidden;display:flex;min-height:0}
+.contour-editor{display:flex;flex-direction:column;width:100%;min-height:0;color:var(--ink);font-size:13px}
+.contour-body{flex:1;min-width:0;min-height:0;margin:0;padding:0 17px;border:0;overflow:auto;scrollbar-gutter:stable}
+.contour-section,.contour-details{padding:15px 0;border-bottom:1px solid var(--line)}
+.contour-section h3,.contour-details summary{margin:0;font-size:13px;font-weight:650}
+.contour-options{display:flex;gap:6px;margin:10px 0 13px}
+.contour-options>.button{flex:1;min-width:0;padding:8px 4px;font-size:12px;text-align:center}
+.contour-options>.button[aria-pressed=true]{border-color:#6d9dea;color:#1859b9;background:#edf4ff}
+.contour-numbers{display:flex;align-items:end;gap:8px;margin:10px 0 0}
+.contour-numbers label{flex:1;min-width:0;color:var(--muted)}
+.contour-editor input{width:100%;min-width:0;border:1px solid #d7e0ea;border-radius:5px;background:#fff;color:var(--ink);font:inherit;padding:6px 7px;box-sizing:border-box}
+.contour-numbers input{margin-top:4px}
+.contour-unit,.contour-kind{white-space:nowrap;color:var(--muted);padding:7px 0}
+.contour-heading{display:flex;align-items:center;gap:8px;margin:17px 0 8px}
+.contour-heading>span{background:#edf1f6;border-radius:10px;color:var(--muted);padding:1px 7px}
+.contour-table-scroll{max-height:273px;overflow:auto;border:1px solid #d6e0eb;border-radius:6px}
+.contour-table{width:100%;border-collapse:separate;border-spacing:0;text-align:left;font-variant-numeric:tabular-nums}
+.contour-table th{background:#eaf0f7;color:#4e627a;position:sticky;top:0;z-index:1;font-weight:600}
+.contour-table th,.contour-table td{padding:8px 8px;border-bottom:1px solid #e1e7ef;white-space:nowrap}
+.contour-table th:first-child,.contour-table td:first-child{width:30px;padding-right:0}
+.contour-table td:last-child,.contour-table th:last-child{padding-right:12px}
+.contour-table tr:last-child td{border-bottom:0}
+.contour-table tr.is-active td{background:#fff1d8;color:#794806}
+.contour-table button{font:inherit;color:inherit;background:transparent;border:0;border-radius:4px;padding:3px 5px;cursor:pointer}
+.contour-table button:hover{background:#dce9f8}
+.contour-table .contour-select{border:1px solid #c8d5e3;font-size:10px;font-weight:650;min-width:21px}
+.contour-table .is-active .contour-select{border-color:#d68a23;color:#7d4a07;background:#ffdfa9}
+.contour-table input{max-width:110px;padding:4px 6px}
+.contour-remove{color:#6b7785!important;font-size:10px!important}
+.contour-add{margin-top:8px}
+.contour-details summary{cursor:pointer}
+.contour-output{display:block;color:var(--muted)}
+.contour-output>span:last-child{display:flex;gap:6px;align-items:center;margin-top:5px}
+.contour-output .button{white-space:nowrap}
+.contour-footer{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-shrink:0;padding:13px 17px;border-top:1px solid var(--line);background:#fff}
+.contour-footer>span{font-size:11px;color:#52677e;overflow-wrap:anywhere}
+.contour-footer>.button{white-space:nowrap;flex-shrink:0;min-height:34px;padding-inline:17px}
+.contour-footer>.contour-error{color:#ae3d37}
+.contour-ruler{position:absolute;z-index:3;right:16px;top:max(36%,139px);height:min(48%,calc(100% - 150px));width:62px;pointer-events:none;color:#f5f9ff;font-size:11px}
+.contour-ruler-label{position:absolute;top:-25px;left:0;white-space:nowrap}
+.contour-ruler-track{position:absolute;inset:0 auto 0 7px;border-left:1px solid #b9d9ed}
+.contour-tick{position:absolute;z-index:1;left:-6px;transform:translateY(-50%);width:12px;height:12px;padding:0;border:1px solid #b6f5ff;border-radius:50%;background:#46cee6;pointer-events:auto;cursor:pointer}
+.contour-tick span{display:none;position:absolute;left:15px;top:50%;transform:translateY(-50%);padding:1px 4px;border-radius:4px;color:#f3f8ff;background:#385a7c;white-space:nowrap;font:600 11px 'Segoe UI',sans-serif}
+.contour-tick[data-label=true] span,.contour-tick[aria-pressed=true] span,.contour-tick:hover span,.contour-tick:focus-visible span{display:block}
+.contour-tick[aria-pressed=true],.contour-tick:focus-visible{z-index:2;background:#ffc35b;border-color:#fff0cf}
+.contour-tick[aria-pressed=true] span{outline:1px solid #ffc35b;color:#ffdb99}

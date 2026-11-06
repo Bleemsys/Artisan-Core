@@ -2,6 +2,14 @@
 export const PREVIEW_BYTES = 64 * 1024 ** 2;
 export const GRAPHICS_BYTES = 512 * 1024 ** 2;
 export const MAX_BUFFER_BYTES = 1024 ** 3;
+export const AUTO_FULL_DETAIL_BYTES = 800 * 1024 ** 2;
+
+// Explicit preview/full-detail choices are handled by the caller. Unknown
+// sizes stay in preview rather than assuming the file is small.
+export function initialGeometryMode(fileSize) {
+  return Number.isSafeInteger(fileSize) && fileSize > 0 && fileSize <= AUTO_FULL_DETAIL_BYTES
+    ? 'full' : 'quick';
+}
 
 // A parent remains resident as the fallback for every not-yet-ready descendant.
 // All branches compete for one point budget; a coarse view is always complete.

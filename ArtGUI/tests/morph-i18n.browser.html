@@ -1,0 +1,45 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Morph localization verification</title>
+<link rel="stylesheet" href="../ui/styles.css"><link rel="stylesheet" href="../ui/region-editor.css"><link rel="stylesheet" href="../ui/morph-editor.css">
+<style>body{display:block;padding:24px}.layout{display:flex;gap:24px}#properties-content{width:390px}#viewport{position:relative;width:700px;height:500px}canvas{width:700px;height:500px}.region-labels button{display:block}</style>
+<button id="language-toggle" translate="no">中文</button><h1 id="result">Running…</h1><div class="layout"><div id="properties-content"></div><div id="viewport"><div id="viewport-empty"></div><canvas></canvas></div></div>
+<script type="module">
+import {initLanguage,setLanguage,localize} from '../ui/i18n.js';
+import {createMorphEditor} from '../ui/morph-editor.js';
+import {newMorph,newMotion} from '../ui/morph-model.js';
+import {createMorphOverlay} from '../ui/morph-overlay.js';
+import * as THREE from '../ui/vendor/three.module.js';
+const checks=[],assert=(v,name)=>{if(!v)throw Error(name);checks.push(name);},flush=()=>new Promise(r=>setTimeout(r,0));
+try{
+ const p={...newMorph(),domain_mask:'Domain',fixed_mask:'Fixed',moving_regions:[newMotion('Save')]};
+ const def=id=>({Define_ScalarField_CombineGeometry:{field_id:id,default_value:0,overlap:'Maximum',regions:[{geometry:{type:'Box',center:[0,0,0],size:[10,10,10]},value:1,transition_width:0}]}});
+ const workflow={'1':def('Domain'),'2':def('Fixed'),'3':def('Save'),'4':{Proc_Field_Morph:p}};
+ const setup={Type:'Sample',Sample:{Domain:[[-50,50],[-50,50],[-50,50]]}};
+ const viewer={scene:new THREE.Scene(),canvas:document.querySelector('canvas'),camera:new THREE.PerspectiveCamera(45,1,1,1000),origin:new THREE.Vector3(),controls:{enabled:true},settings:{units:'mm'},render(){},fit(){}};
+ const overlay=createMorphOverlay(viewer,{onSelect(){},onDrag(){},onCommit(){},onCancel(){},toast(){}});
+ const editor=createMorphEditor({getContext:()=>({workflow,setup,key:'4'}),getViewer:()=>viewer,onChange(){},onEditMask(){},onCreateMask(){},onGrid(){},onPreview:async()=>({success:false}),onViewField(){},loadMaskMeshes:async()=>{},toast(){}});
+ editor.attachOverlay(overlay);initLanguage();setLanguage('en');editor.show(document.querySelector('#properties-content'),p);await flush();
+ const input=document.querySelector('#morph-input');input.value='Unsaved field name';input.focus();input.setSelectionRange(2,5);const before=JSON.stringify(p);
+ setLanguage('zh-CN');await flush();
+ assert(JSON.stringify(p)===before,'workflow data unchanged by language switch');
+ assert(document.querySelector('#morph-input')===input&&input.value==='Unsaved field name'&&document.activeElement===input&&input.selectionStart===2,'draft, focus and cursor preserved');
+ assert(document.querySelector('[data-morph-vector="translation.0"]').getAttribute('aria-label')==='平移（mm） X','translation vector accessibility label translated');
+ assert(document.querySelector('[data-morph-vector="rotation_center.2"]').getAttribute('aria-label')==='旋转中心（mm） Z','rotation center label translated');
+ assert(document.querySelector('label[for="morph-snap"]').textContent==='拖动吸附（mm）','snap label translated');
+ assert(document.querySelector('[data-morph-edit="domain_mask"]').title==='编辑前面步骤中定义的几何掩码','edit tooltip translated');
+ assert(document.querySelector('.morph-legend').textContent.includes('青色：变形域'),'viewport legend translated');
+ assert(document.querySelector('.region-name').textContent==='Save · 目标','user field name preserved while target suffix translates');
+ assert(document.querySelector('.region-name').title==='拖动以调整移动。方向键微调，Esc 取消。','overlay tooltip translated');
+ assert(document.querySelector('.region-name').getAttribute('aria-label')==='移动目标','overlay accessibility label translated');
+ assert(!document.querySelector('#morph-threads'),'CPU thread control removed');document.querySelector('#morph-advanced').open=true;document.querySelector('#morph-rotation').open=true;
+ p.inverse_iterations=1001;editor.refresh();await flush();assert(document.querySelector('#morph-error').textContent.includes('必须为'),'dynamic range error translated');
+ p.inverse_iterations=50;p.domain_mask='Missing Domain';p.fixed_mask='Missing Fixed';editor.refresh();await flush();
+ assert([...document.querySelector('#morph-warnings').childNodes].filter(n=>n.nodeType===3).every(n=>n.data.includes('未找到')),'multiple warnings translate independently');
+ assert(document.querySelector('#morph-warnings').textContent.includes('Missing Domain：'),'user identifier preserved in warning');
+ p.domain_mask='Domain';p.fixed_mask='Fixed';editor.show(document.querySelector('#properties-content'),p);await flush();
+ const languageCheck=()=>{const walker=document.createTreeWalker(document.querySelector('#properties-content'),NodeFilter.SHOW_TEXT);let n;const untranslated=[];while(n=walker.nextNode()){if(n.parentElement.closest('[translate="no"]'))continue;const text=n.data.trim();if(/[A-Za-z]{3,}/.test(text)&&!/[\u3400-\u9fff]/.test(text)&&!['lattice','0','X','Y','Z'].includes(text))untranslated.push(text);}return untranslated;};
+ assert(languageCheck().length===0,'all rendered morph-panel prose translated: '+languageCheck().join(' | '));
+ setLanguage('en');await flush();assert(document.querySelector('label[for="morph-snap"]').textContent==='Drag snap (mm)','English restores dynamic unit label');assert(document.querySelector('.region-name').textContent==='Save · target','English restores target suffix');
+ setLanguage('zh-CN');await flush();assert(document.querySelector('.region-name').textContent==='Save · 目标','second Chinese switch remains correct');
+ document.querySelector('#result').textContent=`PASS: ${checks.length} morph browser checks`;document.querySelector('#result').dataset.status='pass';window.morphI18nChecks=checks;
+}catch(e){document.querySelector('#result').textContent='FAIL: '+e.message;document.querySelector('#result').dataset.status='fail';console.error(e);}
+</script></html>

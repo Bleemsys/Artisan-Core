@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ArtGUI region interpolation verification</title>
+<link rel="stylesheet" href="../ui/styles.css"><link rel="stylesheet" href="../ui/region-editor.css">
+<style>body{min-width:0;height:auto;margin:0;padding:20px;display:flex;justify-content:center;background:#f4f6f8}#host{width:410px;max-width:100%;background:#fff;border:1px solid #dce3ed;padding:16px;box-sizing:border-box;overflow:visible;position:static}.scalar-region-editor{height:auto;overflow:visible}</style>
+</head>
+<body><main id="host"></main>
+<script type="module">
+import {createRegionEditor} from '../ui/region-editor.js';
+import {cloneNumericJson} from '../ui/numeric-json.js';
+import {localize,setLanguage} from '../ui/i18n.js';
+const host=document.getElementById('host');
+const regions=[{name:'Cube A',geometry:{type:'Box',center:[.5,.5,.5],size:[1,1,1]},value:4.,transition_width:0.},
+               {name:'Cube B',geometry:{type:'Box',center:[3.5,.5,.5],size:[1,1,1]},value:8.,transition_width:0.}];
+let params,editor;
+window.loadField=(data={})=>{
+ setLanguage('en');window.changes=0;window.previews=0;window.lastToast='';
+ params={field_id:'CellSize',default_value:6.,overlap:'Linear',regions:cloneNumericJson(regions),...cloneNumericJson(data)};
+ editor=createRegionEditor({getViewer:()=>({settings:{units:'mm'}}),getSetup:()=>({Type:'Sample',Sample:{Domain:[[-1,5],[-1,2],[-1,2]]}}),getGeometries:()=>[],onChange:()=>window.changes++,onGrid:()=>{},onPreview:async p=>{window.previews++;window.previewParams=cloneNumericJson(p);return {success:true};},onViewField:()=>{},browseMesh:async()=>null,loadMesh:async()=>{},toast:message=>window.lastToast=message,onRender:()=>localize(host)});
+ editor.show(host,params);return cloneNumericJson(params);
+};
+window.savedParams=()=>cloneNumericJson(params);
+window.language=locale=>{setLanguage(locale);localize(host);};
+window.refresh=()=>editor.show(host,params);
+window.loadField();window.ready=true;
+</script></body></html>

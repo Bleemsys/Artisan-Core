@@ -61,5 +61,35 @@
       "MeshID": "H01_slotted"
     },
     "source": "Doc/examples/PlateSlicing_TwoPlates.json (starter template; create referenced plate fields first)"
+  },
+  "Proc_Field_Morph": {
+    "params": {
+      "input_field": "lattice",
+      "output_field": "lattice",
+      "domain_mask": "MorphDomain",
+      "fixed_mask": "",
+      "moving_regions": [
+        {
+          "mask": "MovingRegion",
+          "translation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "rotation_degrees": 0.0,
+          "rotation_center": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "source": "Src/Artisan/command_schemas.py (create mask fields before this step)"
   }
 }

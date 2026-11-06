@@ -1,0 +1,15 @@
+.morph-editor h3{font-size:12px;color:#24374d;margin:0 0 10px}
+.morph-mask-row{display:flex;gap:5px}.morph-mask-row input{width:0;min-width:0;flex:1}.morph-mask-row .button{padding:6px 8px;font-size:10px}
+.morph-motion-heading{display:flex;align-items:center;justify-content:space-between;margin:10px 0;font-size:11px}
+.morph-editor summary{font-size:11px;font-weight:600;color:#385570;cursor:pointer;margin:10px 0;display:list-item}.morph-editor summary span{float:right;font-weight:400}
+.morph-axis-buttons{display:flex;gap:6px;margin-bottom:10px}.morph-axis-buttons .button{padding:5px 14px}
+.morph-check{display:flex;align-items:center;gap:7px;margin:10px 0;font-size:11px;color:#465c73}.morph-check input{accent-color:#2867d8}
+.morph-report{border:1px solid #b5d8c5;background:#f1f8f4;border-radius:6px;padding:12px;margin:12px 0;font-size:11px;color:#285a40}.morph-report[hidden]{display:none}
+.morph-report dl{display:grid;grid-template-columns:1fr auto;gap:6px}.morph-report dt,.morph-report dd{margin:0}.morph-report dd{font-variant-numeric:tabular-nums}
+#morph-warnings{white-space:pre-line}.morph-editor #morph-status{font-size:11px;color:#80601e}
+.morph-return{width:100%;margin-bottom:12px;text-align:left}.morph-editor .region-list{max-height:135px}
+.morph-editor .region-actions .morph-check{font-size:10px}.morph-editor .region-actions .button{padding:7px 9px;font-size:11px}
+.morph-labels .region-knob{min-width:25px;min-height:25px;display:grid;place-items:center;padding:3px;font-size:10px;border-radius:50%}
+.morph-editor .region-actions{padding-top:8px}.morph-editor .region-actions>p{margin:5px 0;font-size:10px}
+.morph-editor input[list],.morph-editor input[type=text]{border:1px solid #dce4ed;border-radius:6px;min-width:0;width:100%;box-sizing:border-box;color:#304359}
+.morph-editor .morph-mask-row input{width:0}.morph-editor .region-actions>div:nth-child(2){margin:7px 0}

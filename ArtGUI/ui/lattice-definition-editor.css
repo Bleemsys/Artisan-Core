@@ -1,0 +1,61 @@
+/* The Guided Sections inspector uses the existing ArtGUI palette and controls. */
+.lattice-definition-mode .properties-panel>.panel-heading,
+.lattice-definition-mode .properties-panel>.properties-footer{display:none}
+.lattice-definition-mode #properties-content{padding:0;overflow:hidden;display:flex;min-height:0}
+.ld-editor{display:flex;flex-direction:column;min-height:0;width:100%;color:var(--ink);font-size:13px;line-height:1.45}
+.ld-editor button,.ld-editor input,.ld-editor select,.ld-editor textarea{font:inherit}
+.ld-menu{position:relative;flex-shrink:0;margin-top:2px}
+.ld-menu>summary{list-style:none;border:1px solid var(--line);border-radius:7px;padding:7px 10px;color:#526579;font-size:12px;cursor:pointer}
+.ld-menu>div{position:absolute;top:38px;right:0;z-index:5;min-width:180px;padding:5px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 16px #1725361a}
+.ld-menu button{display:block;border:0;background:#fff;width:100%;padding:9px;text-align:left;color:#35475a;cursor:pointer;font-size:12px;border-radius:4px}
+.ld-menu button:hover{background:#f3f6fb}
+.ld-menu #delete-lattice{color:#a13932}
+.ld-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.ld-section{border-bottom:1px solid var(--line);position:relative}
+.ld-section>summary{display:flex;align-items:center;gap:12px;list-style:none;padding:16px 20px;cursor:pointer}
+.ld-number{display:grid;place-items:center;align-self:flex-start;flex:0 0 28px;height:28px;border-radius:50%;background:#f0f2f5;color:#536477;font-size:13px;font-weight:650}
+.ld-section-heading{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.ld-section-heading strong{font-size:14px;font-weight:650}
+.ld-section-heading small{font-size:12px;line-height:1.4;color:#6d7c91;overflow-wrap:anywhere}
+.ld-section[open]{border-left:3px solid #3478f5}
+.ld-section[open]>summary{padding-left:17px}
+.ld-section[open] .ld-number{color:#2867d8;background:#eaf1ff}
+.ld-section-body{padding:3px 20px 20px 17px}
+.ld-editor .field{margin:0 0 15px}
+.ld-editor .field:last-child{margin-bottom:0}
+.ld-editor .field label{font-size:12px;color:#536477;margin:0 0 6px;font-weight:600}
+.ld-editor .field input,.ld-editor .field select,.ld-editor .field textarea{font-size:13px;line-height:1.45;padding:8px 10px;color:#2c3d4f;border:1px solid #d8e0e9;border-radius:6px;background:#fff;min-width:0;margin:0}
+.ld-editor .field textarea{font-family:ui-monospace,Consolas,monospace;resize:vertical;min-height:100px;line-height:1.65}
+.ld-editor #lattice-expr{min-height:92px}
+.ld-editor .field-help{font-size:11px;color:#748297;line-height:1.5;margin:7px 0 0}
+.ld-editor .path-row{align-items:flex-start}
+.ld-editor .path-row .icon-button{flex-shrink:0;width:35px;height:36px}
+.ld-editor .path-row svg{width:17px;height:17px;margin:0}
+.ld-periods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 32px;gap:9px;align-items:end}
+.ld-periods>.field{margin:0}
+.ld-link{width:32px;height:36px;border-color:transparent;background:#f5f7fa}
+.ld-link svg{width:17px;height:17px;margin:0}
+.ld-link[aria-pressed=true]{color:#2867d8;background:#eaf1ff}
+.ld-designer.button{margin-top:17px;border-color:#3478f5;color:#2867d8;background:#fff;font-size:12px;padding:9px 12px}
+.ld-designer:disabled{opacity:.5;cursor:not-allowed}
+.ld-cell-summary{font-size:13px;color:#536477;margin:0}
+.ld-cell-summary+.ld-designer{margin-top:12px}
+.ld-editor .ld-json{font-size:11px;min-height:150px;background:#fafbfd}
+.ld-hint{margin:0;padding:16px 20px;color:#748297;font-size:11px;line-height:1.6}
+.ld-error{margin:0;padding:0 20px 16px;font-size:12px}
+.ld-usage-list{margin-top:10px}
+.ld-usage-step{display:flex;align-items:center;gap:8px;width:100%;padding:10px 0;border:0;border-bottom:1px solid #edf0f4;color:#2867d8;background:#fff;text-align:left;cursor:pointer;font-size:12px}
+.ld-usage-step>span:nth-child(2){flex:1;color:#536477;overflow-wrap:anywhere}
+.ld-usage-step svg{width:14px;height:14px;transform:rotate(-90deg)}
+.ld-order-warning{font-size:11px;line-height:1.5;color:#a45d0c}
+.ld-footer{padding:13px 20px 16px;border-top:1px solid var(--line);background:#fff;flex-shrink:0}
+.ld-status{font-size:11px;color:#718093;margin:0 0 10px;display:flex;align-items:center;gap:7px}
+.ld-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#b6c0cc;flex-shrink:0}
+.ld-status.ld-pending::before{background:#e89b20}
+.ld-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ld-actions .button{font-size:12px;padding:8px 13px}
+.ld-use{border:0;padding:6px 0;background:none;color:#2867d8;font-size:11px!important;cursor:pointer;text-align:left;margin-left:auto}
+.ld-editor button:disabled{opacity:.48;cursor:default}
+.ld-editor :is(button,summary,input,textarea,select):focus-visible{outline:2px solid #3478f5;outline-offset:2px}
+.ld-editor [hidden]{display:none!important}
+@media(max-width:1250px){.ld-section>summary{padding:14px 17px}.ld-section[open]>summary{padding-left:14px}.ld-section-body{padding:2px 17px 17px 14px}.ld-periods{gap:7px}.ld-editor .field input{padding:8px}.ld-footer{padding:12px 17px}.ld-use{flex-basis:100%;margin-left:0}}

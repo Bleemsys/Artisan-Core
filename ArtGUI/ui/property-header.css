@@ -1,0 +1,21 @@
+/* Shared title treatment for every Properties sidebar, including embedded editors. */
+.properties-panel .property-header{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:17px 15px 12px;flex-shrink:0;border-bottom:1px solid var(--line);
+  background:var(--panel);color:var(--ink)
+}
+.properties-panel .property-header-copy{flex:1;min-width:0}
+.properties-panel .property-header h2{
+  margin:0;color:var(--ink);font-family:inherit;font-size:13px;line-height:1.4;
+  font-weight:700;letter-spacing:.01em;overflow-wrap:anywhere
+}
+.properties-panel .property-header p{
+  margin:5px 0 0;color:var(--muted);font-family:inherit;font-size:10px;
+  line-height:1.5;font-weight:400;letter-spacing:normal;overflow-wrap:anywhere
+}
+.properties-panel .property-header>.icon-button{flex-shrink:0}
+.properties-panel .property-header .ld-menu{margin-top:0}
+.properties-panel .property-header .ld-menu>summary{
+  display:flex;align-items:center;justify-content:center;min-height:30px;
+  padding:5px 9px;font-family:inherit;font-size:11px;font-weight:600;line-height:1.4
+}

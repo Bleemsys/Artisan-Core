@@ -76,5 +76,7 @@
   "Gen_TetMesh_SizeField": "Tet mesh from size field",
   "Gen_SlotCutters": "Generate slot cutters",
   "Clear_LatticeField": "Clear lattice field",
-  "Store_LatticeMesh": "Store lattice mesh"
+  "Store_LatticeMesh": "Store lattice mesh",
+  "Proc_Field_Morph": "Morph implicit field",
+  "Gen_QuadMesh_SizeField": "Quad surface from size field"
 }

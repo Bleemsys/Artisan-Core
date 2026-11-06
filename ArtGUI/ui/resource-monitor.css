@@ -1,17 +1,17 @@
-/* Workflow and monitor share their measured height, keeping the 3D view steady. */
-.center-column{grid-template-rows:minmax(180px,1fr) auto auto}
+/* Every keyword uses the Add_Lattice workspace columns and one stable bottom row. */
+.center-column{grid-template-rows:minmax(0,1fr) 250px auto}
 .workflow-panel.workspace-tabs{padding:0;overflow:hidden}
 .workspace-tabstrip{display:flex;gap:4px;align-items:stretch;padding:0 13px;border-bottom:1px solid var(--line)}
 .workspace-tabstrip>button{display:flex;align-items:center;gap:8px;padding:10px 8px;border:0;border-bottom:2px solid transparent;background:transparent;color:#718093;font:inherit;font-size:11px;cursor:pointer}
 .workspace-tabstrip>button[aria-selected=true]{border-bottom-color:#2867d8;color:#2867d8}
 .workspace-tabstrip>button:focus-visible{outline:2px solid #72a0e7;outline-offset:-3px}
-.workspace-panes{display:grid;min-height:200px;flex:1;min-width:0}
-.workspace-panes>[role=tabpanel]{grid-area:1/1;padding:10px 13px;min-width:0}
+.workspace-panes{display:grid;grid-template-rows:minmax(0,1fr);min-height:0;flex:1;min-width:0;overflow:hidden}
+.workspace-panes>[role=tabpanel]{grid-area:1/1;padding:10px 13px;min-width:0;min-height:0}
 .workspace-panes>[role=tabpanel][hidden]{display:block!important;visibility:hidden;pointer-events:none}
-#workflow-content{display:flex;flex-direction:column;min-height:180px}
+#workflow-content{display:flex;flex-direction:column;min-height:0;overflow:hidden}
 #workflow-content .workflow-head{justify-content:flex-end}
-#workflow-content .timeline{min-height:95px}
-#resources-content{container-type:inline-size;font-size:11px;color:#536477}
+#workflow-content .timeline{min-height:0}
+#resources-content{overflow:auto;container-type:inline-size;font-size:11px;color:#536477}
 .resource-caption{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px;margin-bottom:10px;font-size:10px;color:#7c8a99}
 .resource-caption .resource-unavailable{color:#a35e2b}
 .resource-columns{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
@@ -52,10 +52,19 @@
 .run-resource-brief{font-size:9px;color:#718093;white-space:nowrap;font-variant-numeric:tabular-nums}
 @container(min-width:350px){.resource-columns{grid-template-columns:minmax(115px,.8fr) minmax(180px,1.2fr)}.resource-history{grid-column:1/-1}}
 @container(min-width:565px){.resource-columns{grid-template-columns:minmax(115px,.85fr) minmax(180px,1.25fr) minmax(220px,1.9fr)}.resource-history{grid-column:auto}}
-@media(max-height:790px){.center-column{grid-template-rows:minmax(170px,1fr) auto auto}.workspace-tabstrip>button{padding:8px}.workspace-panes>[role=tabpanel]{padding:8px 11px}.resource-caption{margin-bottom:6px}}
+@media(max-height:790px){.center-column{grid-template-rows:minmax(0,1fr) 155px auto}.workspace-tabstrip>button{padding:8px}.workspace-panes>[role=tabpanel]{padding:8px 11px}.resource-caption{margin-bottom:6px}}
 
 /* The bottom panel can be folded from every inspector, independently of data type. */
 .workspace-tabstrip>.workspace-pane-toggle{margin-left:auto}
 .workspace-pane-collapsed:not(.workspace-expanded)>.center-column{grid-template-rows:minmax(0,1fr) auto auto}
 .workspace-pane-collapsed .workspace-panes,.workspace-panes[hidden]{display:none}
 .workspace-pane-collapsed .workspace-tabs{min-height:0}
+
+.workspace-panes,#workflow-content{scrollbar-width:none}
+.workspace-panes::-webkit-scrollbar,#workflow-content::-webkit-scrollbar{display:none;width:0;height:0}
+
+/* Keep the horizontal scrollbar visible while workflow cards overflow. */
+#workflow-content .timeline::-webkit-scrollbar{height:10px}
+#workflow-content .timeline::-webkit-scrollbar-track{background:#eef2f6;border-radius:5px}
+#workflow-content .timeline::-webkit-scrollbar-thumb{background:#8091a5;border-radius:5px}
+#workflow-content .timeline::-webkit-scrollbar-thumb:hover{background:#5c708a}

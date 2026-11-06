@@ -1,0 +1,53 @@
+
+.guided-setup{font-size:12px;color:#304359}
+.setup-section{border:1px solid #e2e8f0;border-radius:8px;margin:0 0 12px;overflow:hidden}
+.setup-section>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:13px 12px;cursor:pointer}
+.setup-section>summary>span:nth-child(2){flex:1;min-width:0}
+.setup-section>summary strong{display:block;font-size:13px;font-weight:650;color:#20344b}
+.setup-section>summary small{display:block;font-size:11px;color:#6b7f96;margin-top:4px;overflow-wrap:anywhere}
+.setup-number{display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;border-radius:50%;background:#edf1f7;color:#58718b;font-weight:650}
+.setup-section[open] .setup-number{background:#2867d8;color:white}
+.setup-section-body{padding:0 12px 5px}
+.guided-setup .field{margin:0 0 12px}
+.guided-setup .field>label,.setup-spacing-label>label{font-size:11px;color:#40556c;font-weight:600}
+.guided-setup .field input,.guided-setup .field select,.setup-bounds input{font:12px 'Segoe UI',sans-serif;min-height:33px}
+.guided-setup .field-help{font-size:11px;line-height:1.5;color:#687d94;margin:6px 0 10px}
+.guided-setup .button{display:inline-flex;justify-content:center;align-items:center;gap:5px;font-size:11px;min-height:32px}
+.guided-setup .button svg{width:15px;height:15px;flex:0 0 15px}
+.guided-setup .button.selected{color:#185bc8;border-color:#8cb2f1;background:#edf4ff}
+.setup-sources{display:flex;gap:7px}.setup-sources .button{flex:1}
+.setup-bounds{border-collapse:collapse;width:100%;table-layout:fixed;font-size:11px;margin:12px 0 8px}
+.setup-bounds th{font-weight:500;color:#536b86;text-align:left}.setup-bounds th:first-child{width:30px}
+.setup-bounds thead{background:#f3f6fa}.setup-bounds th,.setup-bounds td{padding:5px 4px}
+.setup-bounds tbody tr+tr{border-top:1px solid #edf0f5}
+.setup-bounds input{width:100%;min-width:0;padding:7px 6px;border:1px solid #dfe5eb;border-radius:6px;color:#2c3d4f;background:white}
+.setup-dimensions{font-size:11px;color:#687d94;line-height:1.5;margin:8px 0}
+.setup-vector{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.setup-vector label{min-width:0;margin:0!important;font-weight:400!important}
+.setup-vector span{display:block;color:#708198;font-size:10px;margin-bottom:5px}
+.setup-vector input{min-width:0;padding:8px 5px!important}
+.setup-spacing-label{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:0 0 9px}
+.setup-spacing-label+.field>label{display:none}
+.setup-padding,.setup-memory{display:flex;align-items:center;gap:10px}
+.setup-padding>.field,.setup-memory>.field{flex:1;min-width:0}.setup-padding>span,.setup-memory>span{font-size:11px;color:#687d94}
+.setup-view-controls{font-size:11px;color:#5e7189;margin:8px 0 10px}
+.setup-view-controls>label{display:flex;align-items:center;gap:6px;margin:7px 0}
+.setup-view-controls input[type=number]{width:70px;padding:5px;border:1px solid #dfe5eb;border-radius:5px}
+.setup-view-controls input[type=checkbox],.setup-toggle input{accent-color:#2867d8}
+.setup-rotation>summary{cursor:pointer;font-size:11px;color:#536b86;padding:5px 0 8px}
+.setup-toggle{margin-bottom:13px}.setup-toggle>label{display:flex;gap:7px;align-items:center;font-size:12px}
+.setup-actions{display:flex;justify-content:space-between;align-items:center;position:sticky;bottom:-44px;background:white;border-top:1px solid #e2e8f0;padding:12px 0 8px;z-index:1}
+.setup-actions>.primary{min-width:130px}
+.setup-error{font-size:11px;line-height:1.5;color:#ac3535}.setup-error:empty{display:none}
+.guided-setup :focus-visible{outline:2px solid #2867d8;outline-offset:2px}
+.setup-viewport-tools{position:absolute;z-index:3;top:12px;left:12px;display:flex;gap:3px;background:#203247e8;padding:4px;border:1px solid #718da76b;border-radius:7px}
+.setup-viewport-tools[hidden],.setup-dimension-labels[hidden]{display:none}
+.setup-viewport-tools button{display:inline-flex;align-items:center;gap:5px;background:transparent;color:#e7eff7;border:1px solid transparent;border-radius:5px;padding:7px 9px;font:11px 'Segoe UI',sans-serif;cursor:pointer}
+.setup-viewport-tools button[aria-pressed=true]{background:#2867d8;color:white}.setup-viewport-tools button[hidden]{display:none}
+.setup-viewport-tools button svg{width:15px;height:15px}
+.setup-viewport-tools button:focus-visible{outline:2px solid #e9bf68;outline-offset:2px}
+.setup-dimension-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.setup-dimension-labels span{position:absolute;transform:translate(-50%,-50%);font:11px 'Segoe UI',sans-serif;background:#172536de;color:#e4effc;padding:3px 5px;border:1px solid #8fadd252;border-radius:4px;white-space:nowrap}
+@media(max-width:1250px){.setup-viewport-tools button{padding:6px;font-size:10px}}
+
+

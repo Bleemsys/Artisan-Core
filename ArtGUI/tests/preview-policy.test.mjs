@@ -1,6 +1,13 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {projectedDiameter, selectPreviewTiles, admitFullDetail, resourceBudgets} from '../ui/preview-policy.mjs';
+import {projectedDiameter, selectPreviewTiles, admitFullDetail, resourceBudgets, initialGeometryMode, AUTO_FULL_DETAIL_BYTES} from '../ui/preview-policy.mjs';
+
+test('initial detail selection uses an inclusive 800 MB file-size boundary',()=>{
+ assert.equal(AUTO_FULL_DETAIL_BYTES,800*1024**2);
+ for(const bytes of [1,10*1024**2,AUTO_FULL_DETAIL_BYTES-1,AUTO_FULL_DETAIL_BYTES])assert.equal(initialGeometryMode(bytes),'full');
+ for(const bytes of [AUTO_FULL_DETAIL_BYTES+1,1024**3,20*1024**3])assert.equal(initialGeometryMode(bytes),'quick');
+ for(const bytes of [undefined,null,NaN,Infinity,-1,0,'100',1.5])assert.equal(initialGeometryMode(bytes),'quick');
+});
 
 test('screen size follows zoom and model scale in both camera projections', () => {
   const far = projectedDiameter(2, 100, 800);

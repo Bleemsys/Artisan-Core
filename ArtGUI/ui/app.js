@@ -1,7 +1,33 @@
+import {createFieldMergeEditor} from './field-merge-editor.js';
+import {fieldMergeKeyword,fieldMergeKeys,fieldMergeModeKeys,fieldMergeWorkflowError,fieldMergePreviewWorkflow,fieldMergeFingerprint} from './field-merge-model.js';
+import {createGeometryFieldEditor} from './geometry-field-editor.js';
+import {geometryFieldKeywords,geometryFieldTitles,geometryFieldWorkflowError,geometryFieldPreviewWorkflow,geometryFieldFingerprint,isDistanceField} from './geometry-field-model.js';
+import {workflowPanelSubtitle} from './workflow-panel-subtitle.js';
+import {createContourEditor} from './contour-editor.js';
+import {bindSlotGrid,createSlotEditor} from './slot-editor.js';
+import {slotKeyword,renameSlotFields,slotFingerprint,slotPreviewWorkflow,slotWorkflowError} from './slot-model.js';
+import {readStlStream} from './stl-stream.mjs';
+import {stlByteRanges} from './stl-source.mjs';
+import {contourKeyword,contourFingerprint,contourMeshIds,contourPreviewWorkflow,contourResults,contourWorkflowError} from './contour-model.js';
+import {primitiveMeshKeywords,primitiveMeshInfo,primitiveMeshKeys,primitiveMeshWorkflowError,primitiveMeshPreviewWorkflow,primitiveMeshFingerprint} from './primitive-mesh-model.js';
+import {createPrimitiveMeshEditor} from './primitive-mesh-editor.js';
 import {validateObjectOpacities,geometryOpacity,saveGeometryOpacity,applyGeometryOpacities} from './object-opacity.js';
 import {validateGeometryColours,geometryColour,saveGeometryColour,applyGeometryColours} from './geometry-colours.js';
 import {scalarFieldKeyword, prepareFieldOperation, newScalarRegion, fieldParameterInfo, fieldOperationHelp} from './field-workflow.js';
+import {mesherKeywords,mesherKind,mesherTitle,earlierInputs,meshOutput,sizeFieldView,mesherRunWorkflow,applyMesherDraft,mesherFingerprint as quadFingerprint,mesherWorkflowError as quadWorkflowError,isMeshPath} from './size-field-mesher-model.js';
+import {createSizeFieldMesherEditor} from './size-field-mesher-editor.js';
 import {initLanguage, translate as t} from './i18n.js';
+import {createRegionEditor} from './region-editor.js';
+import {latticeKnown,latticeError,latticeWorkflowError as latticePanelWorkflowError,latticePreviewWorkflow,latticePreviewKey} from './lattice-model.js';
+import {createSpatialEditor} from './spatial-editor.js';
+import {transitionKeywords,transitionKnown,transitionError,transitionWorkflowError,transitionPreviewWorkflow} from './transition-model.js';
+import {createSetupEditor} from './setup-editor.js';
+import {spatialKeywords,replaceSpatialShape} from './spatial-model.js';
+import {geometryKeywords,geometryOperationError,geometryPreviewWorkflow} from './geometry-model.js';
+import {createMorphEditor} from './morph-editor.js';
+import {morphKeyword,newMorph,morphWorkflowError,resolveMask,newMaskDefinition,morphPreviewWorkflow,maskRegions} from './morph-model.js';
+import {meshSource,geometryType} from './region-model.js';
+import {scalarWorkflowError,fieldPreviewWorkflow,newPrimitiveRegion} from './region-model.js';
 import {ARTGUI_VERSION} from './version.js';
 import {createFieldInspector} from './field-inspector.js';
 import {createPointCloudInspector,validatePointReferences} from './point-cloud-inspector.js';
@@ -12,9 +38,16 @@ import {isFieldFile, exportMode, setExportMode, exportError, exportWorkflowError
 import {operationIcon,iconLicense} from './operation-icons.js';
 import {createRunProgress} from './run-progress.js';
 import {createResourceMonitor} from './resource-monitor.js';
-import {admitFullDetail} from './preview-policy.mjs';
+import {admitFullDetail,initialGeometryMode} from './preview-policy.mjs';
 import {loadIndexedGeometry} from './full-detail-load.mjs';
 import {integratedGroups,integratedNames,definitionTypes,isMeshType,definitionTemplate,definitionError,latticeReferences} from './lattice-schema.js';
+import {createLatticeDefinitionEditor} from './lattice-definition-editor.js';
+import {openStrutCellEditor} from './strut-cell-editor.js';
+import {blankStrutDefinition} from './strut-cell-model.js';
+import {openTpmsCellEditor} from './tpms-cell-editor.js';
+import {newTpmsDefinition} from './tpms-cell-model.js';
+import {openMeshCellEditor} from './mesh-cell-editor.js';
+import {blankMeshDefinition,MESH_CELL_TYPES,MESH_CELL_LIMITS} from './mesh-cell-model.js';
 import {parseNumericJson, stringifyNumericJson, cloneNumericJson, assignNumericJson, numberType, numberText, setNumber} from './numeric-json.js';
 
 // Load the viewer after the editor is ready so a graphics dependency failure
@@ -29,19 +62,297 @@ let viewerReady = Promise.resolve();
   const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const clone = cloneNumericJson;
   let applyLatticeDraft=null;
-  let adaptivePreview=null, checkingFullDetail=false, cleaningScratch=false;
+  let adaptivePreview=null, cleaningScratch=false;
   const presetSelections = new WeakMap();
   const exportDrafts = new WeakMap();
   const fileIssues = new Map();
   const defaultSetup = parseNumericJson('{"Type":"Geometry","Sample":{"Domain":[[0.0,0.0],[0.0,0.0],[0.0,0.0]],"Shape":"Box"},"Geomfile":"","Rot":[0.0,0.0,0.0],"res":[5.0,5.0,5.0],"Padding":4,"onGPU":false,"JsonWorkDir":true,"memorylimit":1073741824000}');
   const defaultPost = {CombineMeshes:true,CleanExportedMesh:false,RemovePartitionMeshFile:false,RemoveIsolatedParts:true,ExportLazPts:false};
   let doc = {Setup:clone(defaultSetup),WorkFlow:{},PostProcess:clone(defaultPost)};
-  let currentPath = '', selected = null, dirty = false, toastTimer, previewWorker = null, previewAbort = null, previewCancelReject = null, previewProgressUnlisten = null, activePreviewJob = '', previewRequest = 0, loadedGeometryPath = '', loadedPreviewMode = '', loadedLayerId = 'source', viewer = null, backendPath = localStorage.getItem('artisan.backend') || '';
+  let currentPath = '', selected = null, dirty = false, toastTimer, previewWorker = null, previewAbort = null, previewCancelReject = null, previewProgressUnlisten = null, activePreviewJob = '', previewRequest = 0, previewSelection = 0, loadedGeometryPath = '', loadedPreviewMode = '', loadedLayerId = 'source', viewer = null, backendPath = localStorage.getItem('artisan.backend') || '';
 
-  const fieldInspector=createFieldInspector({invoke,getViewer:()=>viewer,getReferences:()=>doc.ArtGUI?.fields||[],
+  const fieldInspector=createFieldInspector({invoke,isTemporary:isScratchPreview,isDiscarded:isDiscardedPreview,getViewer:()=>viewer,getReferences:()=>doc.ArtGUI?.fields||[],
     addReference:ref=>{const files=ensureFiles();files.fields ||= [];files.fields.push(ref);markDirty();},
     removeReference:id=>{if(doc.ArtGUI?.fields)doc.ArtGUI.fields=doc.ArtGUI.fields.filter(f=>f.id!==id);if(selected==='field:'+id)selected='setup';markDirty();},
     onSelect:id=>{selected='field:'+id;refreshAll();},onChange:()=>{refreshTree();if(selected?.startsWith('field:'))refreshProperties();},onReferenceChanged:markDirty,toast});
+
+  const slotContext=params=>{
+    const key=stepKeys().find(step=>doc.WorkFlow[step]?.[slotKeyword]===params);
+    return key?{doc,key}:null;
+  };
+  const slotEditor=createSlotEditor({
+    getContext:slotContext,onChange:markDirty,onRender:attachPropertyEvents,onPreview:previewSlotJoint,toast,
+    onBrowse:showSlotGrid,
+    onRename:(params,previous,next)=>{const c=slotContext(params);if(c)renameSlotFields(c.doc.WorkFlow,c.key,previous,next);},
+    renderExtras:params=>{
+      const known=['A','B','direction','open_A','open_B','split_ratio','clearance','Cutters'];
+      const extra=Object.entries(params).filter(([key])=>!known.includes(key))
+        .map(([key,value])=>field(key,value,slotKeyword+'.'+key,updateField)).join('');
+      const presets=parameterPresetControl(slotKeyword,params);
+      return extra||presets?'<details class="slot-section"><summary>Additional parameters</summary>'+presets+extra+'</details>':'';
+    },
+    isDiscarded:isDiscardedPreview,units:()=>viewer?.settings.units||'model units',
+    getBounds:()=>doc.Setup.Type==='Sample'?doc.Setup.Sample?.Domain:setupMeshBounds(doc.Setup.Geomfile)
+  });
+  const contourContext=params=>{
+    const key=stepKeys().find(step=>doc.WorkFlow[step]?.[contourKeyword]===params);
+    return key?{doc,key}:null;
+  };
+  const contourEditor=createContourEditor({
+    getContext:contourContext,onChange:markDirty,onRender:attachPropertyEvents,onPreview:previewContours,toast,
+    renderExtras:params=>{
+      const extra=Object.entries(params).filter(([key])=>!['res','PlaneHeights','out_meshfile'].includes(key))
+        .map(([key,value])=>field(key,value,contourKeyword+'.'+key,updateField)).join('');
+      const presets=parameterPresetControl(contourKeyword,params);
+      return extra||presets?'<details class="contour-details"><summary>Additional parameters</summary>'+presets+extra+'</details>':'';
+    },
+    onBrowse:path=>{if(!invoke)throw Error('File browsing is available in the desktop app.');return invoke('choose_output',{kind:'contour',path});},
+    isDiscarded:isDiscardedPreview,units:()=>viewer?.settings.units||'model units',
+    getBounds:()=>doc.Setup.Type==='Sample'?doc.Setup.Sample?.Domain:setupMeshBounds(doc.Setup.Geomfile)
+  });
+  const fieldMergeContext=params=>{for(const key of stepKeys())if(doc.WorkFlow[key]?.[fieldMergeKeyword]===params)return {doc,key,keyword:fieldMergeKeyword};return null;};
+  const fieldMergeEditor=createFieldMergeEditor({getContext:fieldMergeContext,onChange:markDirty,toast,onRender:attachPropertyEvents,inspector:fieldInspector,meshBounds:influenceMeshBounds,
+    onReveal:params=>{const c=fieldMergeContext(params);if(c){selected=c.key;refreshAll();}},
+    latticePicker:(path,value)=>latticePicker('fm-lattice-'+path.replaceAll('.','-'),value,`data-fm-text="${path}"`,`data-fm-lattice-browse="${path}"`).replace('aria-label="Lattice selection"',`aria-label="${path==='la_name'?'Target lattice':'Bridge lattice'}"`),
+    browseLattice:async()=>{if(!invoke)throw Error('Definition import is available in the desktop app.');return invoke('choose_lattice_input',{kind:'la_name'});},
+    browseFile:async()=>{if(!invoke)throw Error('File browsing is available in the desktop app.');return invoke('choose_supporting_file');},
+    fit:()=>viewer?.fit(),onGenerate:generateFieldMerge,
+    sourceVisible:()=>!!viewer?.layers.get('source')?.mesh.visible,sourceAvailable:()=>!!viewer?.layers.has('source'),setSourceVisible:v=>viewer?.setLayerVisible('source',v),
+    renderExtras:params=>{
+      const extra=Object.entries(params).filter(([key])=>!fieldMergeKeys.includes(key)).map(([key,value])=>field(key,value,`${fieldMergeKeyword}.${key}`,updateField)).join('');
+      const op=Object.entries(params.OP_para||{}).filter(([key])=>!fieldMergeModeKeys.includes(key)).map(([key,value])=>field(key,value,`${fieldMergeKeyword}.OP_para.${key}`,updateField)).join('');
+      const bridge=Object.entries(params.OP_para?.Transition||{}).filter(([key])=>!['la_name','size','thk','Weight','f_trans'].includes(key)).map(([key,value])=>field(key,value,`${fieldMergeKeyword}.OP_para.Transition.${key}`,updateField)).join('');
+      return parameterPresetControl(fieldMergeKeyword,params)+extra+op+bridge;
+    }
+  });
+  async function generateFieldMerge(params,c){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const originalDoc=doc,fingerprint=fieldMergeFingerprint(doc,c.key),domainIssue=sampleDomainError();if(domainIssue)throw Error(domainIssue);
+    const output=await scratchPreviewPath(c.key,'field_merge.h5');
+    const isCurrent=()=>doc===originalDoc&&fieldMergeContext(params)&&fieldMergeFingerprint(doc,c.key)===fingerprint;
+    if(!output||!isCurrent())return;
+    const preview=fieldMergePreviewWorkflow(doc,c.key,output);
+    const result=await runPanelWorkflow(preview,isCurrent,output);
+    if(!result?.success)return result;
+    if(!isCurrent()||isDiscardedPreview(output))return;
+    const info=await fieldInspector.load(output,null,'lattice',{strictField:true,select:false});
+    if(!info)throw Error('The preview was generated but its field could not be opened.');
+    if(doc!==originalDoc||!fieldMergeContext(params)||fieldMergeFingerprint(doc,c.key)!==fingerprint)return;
+    fieldInspector.setVisible(true);selected=c.key;refreshAll();return {...result,fieldPath:output,field:'lattice'};
+  }
+
+  const geometryFieldContext=params=>{for(const key of stepKeys())for(const keyword of geometryFieldKeywords)if(doc.WorkFlow[key]?.[keyword]===params)return {doc,key,keyword};return null;};
+  function influenceMeshBounds(path){const norm=s=>String(s||'').replaceAll('\\','/').toLowerCase(),layer=[...(viewer?.layers.values()||[])].find(l=>norm(l.path)===norm(path));if(!layer||layer.box.isEmpty())return null;const b=layer.box.clone().translate(viewer.origin);return [b.min.toArray(),b.max.toArray()];}
+  const geometryFieldEditor=createGeometryFieldEditor({getContext:geometryFieldContext,onChange:markDirty,toast,onRender:attachPropertyEvents,inspector:fieldInspector,meshBounds:influenceMeshBounds,
+    onReveal:params=>{const c=geometryFieldContext(params);if(c){selected=c.key;refreshAll();}},
+    browse:async()=>{if(!invoke)throw Error('File browsing is available in the desktop app.');return invoke('choose_geometry');},
+    selectedSource:()=>viewer?.layers.get(viewer.activeLayer)?.path||loadedGeometryPath||doc.Setup.Geomfile||projectFiles()[0]?.path,
+    loadSource:async path=>{if(!invoke)throw Error('Mesh preview is available in the desktop app.');if(!path||!/[.](stl|obj|ply|inp)$/i.test(path))throw Error('Preview needs an STL, OBJ, PLY or INP file. Computed mesh IDs are evaluated by Artisan.');await loadPreview(path,'auto','source');viewer?.setLayerVisible('source',true);},
+    sourceVisible:()=>!!viewer?.layers.get('source')?.mesh.visible,sourceAvailable:()=>!!viewer?.layers.has('source'),setSourceVisible:v=>viewer?.setLayerVisible('source',v),
+    units:()=>viewer?.settings.units||'model units',fit:()=>viewer?.fit(),onGrid:()=>{selected='setup';refreshAll();},onGenerate:generateGeometryField,
+    renderExtras:(keyword,params)=>{const known=isDistanceField(keyword)?['inp_meshfile','out_gridfieldFile']:['Name','Paras','min','max','min_val','max_val','min_max_opt'];const keys={Box:['ori','normal','length','z_angle'],Sphere:['ori','r'],Cylinder:['pa','pb','r']}[params.Name]||[];
+      const extra=Object.entries(params).filter(([key])=>!known.includes(key)).map(([key,value])=>field(key,value,`${keyword}.${key}`,updateField)).join('');
+      const paras=!isDistanceField(keyword)&&params.Paras?Object.entries(params.Paras).filter(([key])=>!keys.includes(key)).map(([key,value])=>field(key,value,`${keyword}.Paras.${key}`,updateField)).join(''):'';
+      const flags=!isDistanceField(keyword)?field('min_max_opt',params.min_max_opt,`${keyword}.min_max_opt`,updateField):'';
+      return extra||paras||flags?`<details class="pm-viewport-tools"><summary>Advanced</summary>${extra}${paras}${flags}</details>`:'';}
+  });
+  async function generateGeometryField(params,c){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const originalDoc=doc,original=geometryFieldFingerprint(doc,c.key),domainIssue=sampleDomainError();if(domainIssue)throw Error(domainIssue);
+    const output=await scratchPreviewPath(c.key,isDistanceField(c.keyword)?'distance_field.h5':'offset_field.h5');
+    const isCurrent=()=>doc===originalDoc&&geometryFieldFingerprint(doc,c.key)===original;
+    if(!output||!isCurrent())return;
+    const preview=geometryFieldPreviewWorkflow(doc,c.key,output);
+    const result=await runPanelWorkflow(preview.workflow,isCurrent,output);
+    if(!result?.success)return result;
+    if(!isCurrent()||isDiscardedPreview(output))return;
+    const info=await fieldInspector.load(output,null,preview.field,{strictField:true,select:false,distance:isDistanceField(c.keyword)});
+    if(!info)throw Error('The preview was generated but its field could not be opened.');
+    if(doc!==originalDoc||geometryFieldFingerprint(doc,c.key)!==original)return;
+    fieldInspector.setVisible(true);selected=c.key;refreshAll();return {...result,fieldPath:output,field:preview.field};
+  }
+
+  const primitiveMeshPaths=new WeakMap();
+  const primitiveMeshContext=params=>{
+    for(const key of stepKeys())for(const keyword of primitiveMeshKeywords)if(doc.WorkFlow[key]?.[keyword]===params)return {doc,key,keyword};
+    return null;
+  };
+  const primitiveMeshEditor=createPrimitiveMeshEditor({getContext:primitiveMeshContext,onChange:markDirty,toast,onRender:attachPropertyEvents,
+    onViewDisplay:mode=>{if(viewer&&viewer.display!==mode)viewer.setDisplay(mode);if(viewer)$('display-select').value=mode;},
+    onKeywordChange:(previous,next,params)=>{
+      const key=stepKeys().find(key=>doc.WorkFlow[key]?.[previous]===params);if(!key)return;
+      doc.WorkFlow[key]=Object.fromEntries(Object.entries(doc.WorkFlow[key]).map(([k,p])=>k===previous?[next,params]:[k,p]));
+      $('properties-title').textContent=primitiveMeshInfo[next].name;$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,key);
+    },
+    onReveal:params=>{const c=primitiveMeshContext(params);if(c){selected=c.key;refreshAll();}},
+    onBrowse:async path=>{if(!invoke)throw Error('File browsing is available in the desktop app.');return invoke('choose_output',{kind:'primitive_mesh',path:/[.](inp|med|vtk|msh)$/i.test(path)?path:'PrimitiveMesh.inp'});},
+    onGenerate:generatePrimitiveMesh,isDiscardedPreview,
+    renderExtras:(keyword,params)=>{
+      const extra=Object.entries(params).filter(([key])=>!primitiveMeshKeys.includes(key)).map(([key,value])=>field(key,value,`${keyword}.${key}`,updateField)).join('');
+      const presets=parameterPresetControl(keyword,params);return extra||presets?`<details class="transition-other"><summary>Additional parameters</summary>${presets}${extra}</details>`:'';
+    }
+  });
+  async function generatePrimitiveMesh(params,c,temporary=false){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const originalDoc=doc,fingerprint=primitiveMeshFingerprint(c.keyword,params);
+    const filePath=/[.](inp|med|vtk|msh)$/i.test(params.Mesh_file)?params.Mesh_file:null;
+    const output=temporary?await scratchPreviewPath(c.key,'mesh.inp'):
+      await invoke('choose_output',{kind:'primitive_mesh',path:primitiveMeshPaths.get(params)||filePath||primitiveMeshInfo[c.keyword].shape+'Mesh.inp'});
+    const isCurrent=()=>doc===originalDoc&&primitiveMeshContext(params)?.key===c.key&&primitiveMeshContext(params)?.keyword===c.keyword&&primitiveMeshFingerprint(c.keyword,params)===fingerprint;
+    if(!output||!isCurrent())return;
+    const preview=primitiveMeshPreviewWorkflow(doc,c.key,output);
+    const result=await runPanelWorkflow(preview,isCurrent,temporary?output:null);
+    if(!result?.success)return result;
+    if(!isCurrent()||isDiscardedPreview(output))return;
+    if(!temporary)primitiveMeshPaths.set(params,output);
+    if(/[.](inp|stl|obj|ply)$/i.test(output)){
+      try{fieldInspector.setVisible(false);viewer?.setLayerVisible('source',false);await openResult(output);viewer?.setDisplay('edges');if(viewer)$('display-select').value='edges';}
+      catch(error){toast('Mesh generated. Preview could not be opened: '+String(error.message||error));}
+    }
+    selected=c.key;refreshAll();return {...result,meshPath:output};
+  }
+
+  let mesherReturn=null;
+  const mesherPreviewPaths=new WeakMap(),mesherFieldViews=new WeakMap();
+  const mesherContext=params=>{
+    for(const key of stepKeys())for(const keyword of mesherKeywords)if(doc.WorkFlow[key]?.[keyword]===params)return {doc,key,keyword};
+    return null;
+  };
+  const mesherEditor=createSizeFieldMesherEditor({getContext:mesherContext,onRender:attachPropertyEvents,toast,
+    onCommit:(params,draft)=>{const c=mesherContext(params);if(!c)throw Error('This meshing step is no longer in the workflow.');applyMesherDraft(params,draft,doc.WorkFlow,c.key,c.keyword);markDirty();},
+    renderPresets:(params,keyword)=>parameterPresetControl(keyword,params),
+    onBrowse:async(name,params,keyword,raw)=>{
+      if(!invoke)throw Error('File browsing is available in the desktop app.');
+      const tet=mesherKind(keyword)==='tet';
+      return name==='mesh_file'?invoke('choose_geometry'):invoke('choose_output',{
+        kind:name==='quality_report'?(tet?'tet_report':'quad_report'):tet?'tet_mesh':raw.split_to_triangles?'triangle_mesh':'quad_mesh',
+        path:raw[name]||(name==='quality_report'?(tet?'TetDomains_quality.json':'QuadSurface_quality.json'):(tet?'TetDomains.inp':'QuadSurface.inp'))});
+    },
+    onEditField:(field,params)=>{mesherReturn=params;selected=field.key;refreshAll();},
+    onReveal:params=>{const c=mesherContext(params);if(c){selected=c.key;refreshAll();}},
+    onView:viewSizeFieldMesh,isDiscardedPreview,onBeforeGenerate:()=>!applyLatticeDraft||applyLatticeDraft(),onGenerate:generateSizeFieldMesh,
+    getFieldInfo:(params,id)=>{const view=mesherFieldViews.get(params);return view?.doc===doc&&view.fieldId===id?fieldInspector.describe(view.path,view.storedId):null;},
+    onReport:readSizeFieldReport,
+    onOpenReport:(entry,keyword)=>showModal(`<div class="modal-head"><div><h2>${mesherKind(keyword)==='tet'?'Tet volume quality report':'Quad surface quality report'}</h2><p translate="no">${esc(entry.path)}</p></div><button class="icon-button" data-close aria-label="Close">×</button></div><div class="modal-body"><pre class="log-output">${esc(JSON.stringify(entry.report,null,2))}</pre></div><div class="modal-foot"><button class="button primary" data-close>Close</button></div>`)
+  });
+  async function readSizeFieldReport(params,context=mesherContext(params),path=params.quality_report){
+    if(!invoke)throw Error('Quality reports are available in the desktop app.');
+    if(!context)throw Error('This meshing step is no longer in the workflow.');
+    const value=await invoke(mesherKind(context.keyword)==='tet'?'read_tet_report':'read_quad_report',{path,workflowPath:currentPath||null,backendPath:backendPath||null,jsonWorkDir:doc.Setup.JsonWorkDir??null});
+    return {...value,meshPath:mesherPreviewPaths.get(params)||meshOutput(doc.WorkFlow,context.key,params)};
+  }
+  async function viewSizeFieldMesh(mode,params,record,view={}){
+    if(!invoke)throw Error('Field and mesh viewing are available in the desktop app.');
+    if(runProgress.busy||preparingGeneration)throw Error('Wait for Artisan to finish exporting.');
+    const c=mesherContext(params);if(!c)return;
+    const originalDoc=doc,outputContext={workflowPath:currentPath||null,backendPath:backendPath||null,jsonWorkDir:doc.Setup.JsonWorkDir??null};
+    if(mode==='field'){
+      const descriptor=sizeFieldView(doc.WorkFlow,c.key,view.size_field??params.size_field,doc.ArtGUI?.fields||[]);
+      if(!descriptor?.path)throw Error('No saved HDF5 data is available for this size field. Export or load the selected field before viewing it.');
+      const path=await invoke('resolve_field_output',{path:descriptor.path,...outputContext});
+      if(doc!==originalDoc||!mesherContext(params))return;
+      mesherReturn=params;
+      const info=await fieldInspector.load(path,null,descriptor.storedId,{strictField:true});
+      if(info&&doc===originalDoc){mesherFieldViews.set(params,{...descriptor,path,doc});fieldInspector.setVisible(true);}
+      return info;
+    }
+    if(mode==='source'){
+      const source=view.mesh_file??params.mesh_file,producer=earlierInputs(doc.WorkFlow,c.key).meshes.find(mesh=>mesh.id===source);
+      const path=isMeshPath(source)?source:producer?.path;
+      if(!path)throw Error('This source mesh is computed by Artisan. Export it before previewing it.');
+      fieldInspector.setVisible(false);viewer?.setLayerVisible('result',false);await loadPreview(path,'auto','source');viewer?.setLayerVisible('source',true);return;
+    }
+    const path=record?.meshPath||mesherPreviewPaths.get(params)||meshOutput(doc.WorkFlow,c.key,params);
+    if(!path)throw Error('Generate this mesh or add an INP mesh export before viewing it.');
+    if(!/[.](inp|stl|obj|ply)$/i.test(path))throw Error('Preview supports INP, STL, OBJ and PLY. Export an INP copy to inspect element edges.');
+    const resolved=await invoke('resolve_export_output',{path,...outputContext});
+    if(doc!==originalDoc||!mesherContext(params))return;
+    fieldInspector.setVisible(false);viewer?.setLayerVisible('source',false);await openResult(resolved);viewer?.setLayerVisible('result',true);viewer?.setDisplay('edges');if(viewer)$('display-select').value='edges';selected=c.key;refreshAll();
+  }
+  async function generateSizeFieldMesh(params,c,temporary=false){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const originalDoc=doc,original=quadFingerprint(doc,c.key),tet=mesherKind(c.keyword)==='tet';
+    let meshPath=temporary?await scratchPreviewPath(c.key,'mesh.inp'):
+      isMeshPath(params.export_mesh)?params.export_mesh:mesherPreviewPaths.get(params)||meshOutput(doc.WorkFlow,c.key,params);
+    if(!temporary&&!meshPath)meshPath=await invoke('choose_output',{kind:tet?'tet_mesh':params.split_to_triangles?'triangle_mesh':'quad_mesh',path:tet?'TetDomains.inp':'QuadSurface.inp'});
+    const isCurrent=()=>doc===originalDoc&&mesherContext(params)?.key===c.key&&quadFingerprint(doc,c.key)===original;
+    if(!meshPath||!isCurrent())return;
+    const reportPath=(!temporary&&params.quality_report)||meshPath.replace(/[.][^./\\]+$/,'')+'_quality.json';
+    const preview=mesherRunWorkflow(doc,c.key,c.keyword,meshPath,reportPath);
+    const result=await runPanelWorkflow(preview,isCurrent,temporary?meshPath:null);
+    if(!result?.success)return result;
+    if(!isCurrent()||isDiscardedPreview(meshPath))return;
+    if(!temporary)mesherPreviewPaths.set(params,meshPath);
+    let record=null,reportError='';
+    try{record=await readSizeFieldReport(params,c,reportPath);record.meshPath=meshPath;}catch(error){reportError='Mesh generated, but its quality report could not be loaded: '+String(error.message||error);}
+    if(/[.](inp|stl|obj|ply)$/i.test(meshPath))try{await viewSizeFieldMesh('mesh',params,{meshPath});}catch(error){toast(String(error.message||error));}
+    selected=c.key;refreshAll();return {...result,meshPath,record,reportError};
+  }
+
+  function setupMeshBounds(path){
+    const layer=viewer?.layers.get('source'),norm=s=>String(s||'').replaceAll('\\','/').toLowerCase();
+    if(!layer||!path||norm(layer.path)!==norm(path)||layer.box.isEmpty())return null;
+    const box=layer.box.clone().translate(viewer.origin);return [0,1,2].map(i=>[box.min.getComponent(i),box.max.getComponent(i)]);
+  }
+  const setupEditor=createSetupEditor({getViewer:()=>viewer,getMeshBounds:setupMeshBounds,
+    onChange:()=>{markDirty();updateGeometryLabel();},toast,
+    browseMesh:async()=>{if(!invoke)throw Error('Mesh browsing is available in the desktop app.');return invoke('choose_geometry');},
+    loadMesh:async path=>{if(!invoke)throw Error('Mesh preview is available in the desktop app.');await loadPreview(path);},
+    renderExtra:(s,p)=>{
+      const knownSetup=['Type','Sample','Geomfile','Rot','res','Padding','onGPU','JsonWorkDir','memorylimit'],knownPost=['CombineMeshes','CleanExportedMesh','RemovePartitionMeshFile','RemoveIsolatedParts','ExportLazPts'];
+      return Object.entries(s).filter(([k])=>!knownSetup.includes(k)).map(([k,v])=>field(k,v,'Setup.'+k,updateField)).join('')+Object.entries(p).filter(([k])=>!knownPost.includes(k)).map(([k,v])=>field(k,v,'PostProcess.'+k,updateField)).join('');
+    },bindExtra:attachPropertyEvents});
+
+  const regionEditor=createRegionEditor({getViewer:()=>viewer,getSetup:()=>doc.Setup,
+    getGeometries:()=>[{path:doc.Setup.Geomfile},...(doc.ArtGUI?.geometry||[])].filter(f=>f.path),
+    onChange:markDirty,onRender:renderMorphReturn,onGrid:()=>{selected='setup';refreshAll();},onViewField:viewField,toast,
+    browseMesh:async()=>{if(!invoke)throw Error('Mesh browsing is available in the desktop app.');return invoke('choose_geometry');},
+    loadMesh:async path=>{if(!invoke)throw Error('Mesh preview is available in the desktop app.');if(!path||!/[.](stl|obj|ply|inp)$/i.test(path))throw Error('Preview needs an STL, OBJ, PLY or INP file. Computed mesh IDs are evaluated by Artisan.');
+      let ref=projectFiles().find(f=>f.path===path);
+      if(!ref){ref={id:'geometry-'+crypto.randomUUID(),path};ensureFiles().geometry.push(ref);markDirty();}
+      await loadPreview(path,'auto',ref.id);
+    },onPreview:previewScalarField});
+
+  const spatialEditor=createSpatialEditor({getViewer:()=>viewer,getSetup:()=>doc.Setup,onChange:markDirty,onRefresh:refreshProperties,toast,
+    getGeometries:()=>[{path:doc.Setup.Geomfile},...projectFiles()].filter(f=>f.path),
+    onOperationChange:(old,next,params)=>{const step=selectedStep();if(!geometryKeywords.includes(next)||step?.[old]!==params)return;if(Object.hasOwn(step,next)){toast('This step already contains that operation.');return;}doc.WorkFlow[selected]=Object.fromEntries(Object.entries(step).map(([k,v])=>[k===old?next:k,v]));markDirty();refreshProperties();},
+    onPreview:previewGeometry,
+    getLatticeType:p=>latticeDefinitions().find(d=>d.params.la_name===p.la_name)?.params.definition?.type,
+    getLatticePreviewKey:p=>latticePreviewKey(doc,stepKeys().find(k=>doc.WorkFlow[k]?.Add_Lattice===p)),
+    latticePicker:p=>latticePicker('transition-lattice',p.la_name,'data-transition-name','data-transition-browse'),
+    browseLattice:async()=>{if(!invoke)throw Error('Definition import is available in the desktop app.');return invoke('choose_lattice_input',{kind:'la_name'});},
+    browseMesh:async()=>{if(!invoke)throw Error('Mesh browsing is available in the desktop app.');return invoke('choose_geometry');},
+    getUsedFieldIds:()=>{const ids=[];const visit=o=>{if(o&&typeof o==='object')for(const [k,v] of Object.entries(o)){if(['FieldID','field_id'].includes(k)&&typeof v==='string')ids.push(v);else if(v&&typeof v==='object')visit(v);}};visit(doc.WorkFlow);return ids;},
+    loadMesh:async path=>{if(!invoke)throw Error('Mesh preview is available in the desktop app.');if(!/[.](stl|obj|ply|inp)$/i.test(path))throw Error('Preview needs an STL, OBJ, PLY or INP file. Computed mesh IDs are evaluated by Artisan.');await loadPreview(path,'auto','spatial-source');}});
+
+  let morphReturn=null;
+  const morphContext=params=>({workflow:doc.WorkFlow,key:stepKeys().find(k=>doc.WorkFlow[k]?.[morphKeyword]===params),setup:doc.Setup});
+  const morphEditor=createMorphEditor({getContext:morphContext,getViewer:()=>viewer,onChange:markDirty,
+    onGrid:()=>{selected='setup';refreshAll();},onViewField:viewField,onPreview:previewMorph,toast,
+    onEditMask:(id,params)=>{const context=morphContext(params),mask=resolveMask(doc.WorkFlow,context.key,id);if(mask?.regions){morphReturn=params;selected=mask.key;refreshAll();}},
+    onCreateMask:(role,params,index)=>{
+      const context=morphContext(params);if(!context.key)return;
+      const mask=newMaskDefinition(role,doc.Setup,doc.WorkFlow),entries=stepKeys().map(k=>doc.WorkFlow[k]),at=stepKeys().indexOf(context.key);
+      if(role==='moving')params.moving_regions[index].mask=mask.field_id;else params[role]=mask.field_id;
+      entries.splice(at,0,{[scalarFieldKeyword]:mask});doc.WorkFlow=Object.fromEntries(entries.map((s,i)=>[String(i+1),s]));
+      morphReturn=params;selected=String(at+1);markDirty();refreshProperties();toast('Mask inserted before morph. Set its shape, then return to morph.');
+    },loadMaskMeshes:async params=>{
+      if(!invoke)throw Error('Mesh loading is available in the desktop app.');
+      const context=morphContext(params),ids=[params.domain_mask,params.fixed_mask,...(params.moving_regions||[]).map(r=>r.mask)].filter(Boolean);
+      const paths=[...new Set(ids.flatMap(id=>maskRegions(doc.WorkFlow,context.key,id)).filter(r=>geometryType(r.geometry)==='Mesh').map(r=>meshSource(r.geometry)))];
+      if(!paths.length){toast('These masks use primitive regions, or their geometry is computed by Artisan.');return;}
+      for(const path of paths){if(!/[.](stl|obj|ply|inp)$/i.test(path))continue;let ref=projectFiles().find(f=>f.path===path);if(!ref){ref={id:'geometry-'+crypto.randomUUID(),path};ensureFiles().geometry.push(ref);markDirty();}await loadPreview(path,'auto',ref.id);}
+    }});
+
+  function renderMorphReturn(){
+    if(morphReturn&&stepKeys().some(k=>doc.WorkFlow[k]?.[morphKeyword]===morphReturn)){
+      const button=document.createElement('button');button.className='button morph-return';button.textContent='← Return to morph';button.onclick=()=>{selected=morphContext(morphReturn).key;morphReturn=null;refreshAll();};$('properties-content').prepend(button);
+    }
+  }
 
   // Resize the existing viewer in place; its camera, layers and field session stay alive.
   const workspace=document.querySelector('.workspace'),expandWorkspace=$('expand-workspace');
@@ -73,6 +384,8 @@ let viewerReady = Promise.resolve();
   let preparingGeneration=false;
   const runProgress=createRunProgress({invoke,labelFor:titleFor,listen:window.__TAURI__?.event?.listen,toast,onBusy:busy=>{
     document.querySelectorAll('.project-panel,.properties-panel,.workflow-controls').forEach(el=>el.inert=busy);
+    primitiveMeshEditor.suspend(busy);geometryFieldEditor.suspend(busy);fieldMergeEditor.suspend(busy);setupEditor.suspend(busy);
+    if(busy){viewer?.regionOverlay?.hide();viewer?.morphOverlay?.hide();viewer?.spatialOverlay?.hide();}else{regionEditor.refresh();morphEditor.refresh();spatialEditor.refresh();setupEditor.refresh();mesherEditor.refresh();}
     for(const id of ['new-project','open-project','save-project','save-project-as','json-button','choose-backend','load-geometry','empty-load','load-result','view-generated-field'])$(id).disabled=busy;
   }});
 
@@ -155,10 +468,40 @@ let viewerReady = Promise.resolve();
   function uniqueLatticeName(base){let name=base,index=1;while(latticeNameError(name))name=base+'_'+index++;return name;}
   function insertLatticeStep(step,index){const items=stepKeys().map(k=>doc.WorkFlow[k]);items.splice(index,0,step);doc.WorkFlow=Object.fromEntries(items.map((s,i)=>[String(i+1),s]));selected=String(index+1);markDirty();refreshAll();}
   function latticeInsertIndex(){const keys=stepKeys(),i=keys.findIndex(k=>doc.WorkFlow[k].Export);return i<0?keys.length:i;}
+  function editCellDefinition(params=null,initial=null){
+    if(runProgress.busy||preparingGeneration){toast('Wait for generation to finish before editing the cell.');return;}
+    const originalDoc=doc,original=params?stringifyNumericJson(params):null;
+    const name=initial?.name??params?.la_name??uniqueLatticeName('CustomCell');
+    const definition=initial?.definition??params?.definition??blankStrutDefinition();
+    const openEditor=MESH_CELL_TYPES.includes(definition.type)?openMeshCellEditor:definition.type==='TPMS'?openTpmsCellEditor:openStrutCellEditor;
+    const validateContext=()=>{if(doc!==originalDoc||params&&(!latticeDefinitions().some(d=>d.params===params)||stringifyNumericJson(params)!==original))throw Error('The project definition changed while this draft was open. Reopen the cell before applying.');if(runProgress.busy||preparingGeneration)throw Error('Wait for generation to finish before applying the cell.');};
+    const loadCellMesh=async(path,signal)=>{const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});if(file.size>MESH_CELL_LIMITS.fileBytes)throw Error('Mesh files are limited to 32 MB.');const response=await fetch(window.__TAURI__.core.convertFileSrc(file.path),{signal});if(!response.ok)throw Error('Could not read the selected mesh.');return{path:file.path,name:nameForPath(file.path),buffer:await response.arrayBuffer()};};
+    try{return openEditor({name,definition,
+      consumers:params?latticeReferences(doc).filter(r=>r.value===params.la_name).map(r=>'Step '+r.step):[],
+      validateName:value=>latticeNameError(value,params),validateContext,
+      onLoadMesh:invoke?loadCellMesh:undefined,
+      onImportMesh:invoke?async()=>{const path=await invoke('choose_cell_mesh');return path?{path}:null;}:undefined,
+      onSaveAsset:invoke?async payload=>{validateContext();return invoke('save_cell_mesh',{...payload,workflowPath:currentPath||null});}:undefined,
+      onImport:async()=>{if(!invoke)throw Error('File import is available in the desktop app. Paste a definition into the JSON field here.');const file=await invoke('open_lattice_definition',{path:null,workflowPath:currentPath||null,group:'cell'});return file?.contents;},
+      onApply:draft=>{
+        if(doc!==originalDoc||params&&(!latticeDefinitions().some(d=>d.params===params)||stringifyNumericJson(params)!==original))throw Error('The project definition changed while this draft was open. Reopen the cell before applying.');
+        const error=latticeNameError(draft.name,params)||definitionError(draft.definition);if(error)throw Error(error);
+        if(!params){insertLatticeStep({Define_Lattice:{la_name:draft.name,definition:draft.definition}},latticeInsertIndex());}
+        else{
+          const previous=params.la_name,changed=previous!==draft.name||stringifyNumericJson(params.definition)!==stringifyNumericJson(draft.definition);
+          for(const ref of latticeReferences(doc))if(ref.value===previous)ref.object[ref.key]=draft.name;
+          params.la_name=draft.name;params.definition=draft.definition;
+          if(changed)markDirty();
+          refreshAll();
+        }
+        toast('Cell definition applied. Generate and reload affected results to update them.');
+      }});
+    }catch(error){toast(error.message||String(error));}
+  }
   function newLatticeDialog(mesh){
     const options=Object.entries(definitionTypes).filter(([type])=>isMeshType(type)===mesh);
     showModal(`<div class="modal-head"><div><h2>${mesh?'Define mesh / conformal lattice':'Define custom unit cell'}</h2><p>The definition is stored in your workflow.</p></div><button class="icon-button" data-close>×</button></div><div class="modal-body"><div class="field"><label for="new-lattice-type">Definition type</label><select id="new-lattice-type">${options.map(([t,label])=>`<option value="${t}">${label}</option>`).join('')}</select></div><div class="field"><label for="new-lattice-name">Lattice name</label><input id="new-lattice-name" type="text" value="${uniqueLatticeName(mesh?'MeshLattice':'CustomCell')}"></div><p id="new-lattice-error" class="lattice-error" role="status"></p></div><div class="modal-foot"><button class="button" data-close>Cancel</button><button class="button primary" id="create-lattice">Create definition</button></div>`);
-    $('create-lattice').onclick=()=>{const name=$('new-lattice-name').value.trim(),error=latticeNameError(name);if(error){$('new-lattice-error').textContent=error;return;}const definition=definitionTemplate($('new-lattice-type').value);closeModal();insertLatticeStep({Define_Lattice:{la_name:name,definition}},latticeInsertIndex());};
+    $('create-lattice').onclick=()=>{const name=$('new-lattice-name').value.trim(),error=latticeNameError(name);if(error){$('new-lattice-error').textContent=error;return;}const type=$('new-lattice-type').value;closeModal();if(type==='strut'||type==='TPMS'||MESH_CELL_TYPES.includes(type)){editCellDefinition(null,{name,definition:type==='strut'?blankStrutDefinition():type==='TPMS'?newTpmsDefinition():blankMeshDefinition(type)});return;}const definition=definitionTemplate(type);insertLatticeStep({Define_Lattice:{la_name:name,definition}},latticeInsertIndex());};
   }
   async function importLattice(reference=null,group=null){
     if(!invoke){toast('Definition import is available in the desktop app.');return;}
@@ -171,6 +514,7 @@ let viewerReady = Promise.resolve();
       for(const ref of refs)ref.object[ref.key]=name;
       insertLatticeStep({Define_Lattice:{la_name:name,definition}},index);
       toast(refs.length?'Definition imported; workflow references now use its project name.':'Definition imported. Relative paths retain their original workflow meaning.');
+      if((definition.type==='strut'||MESH_CELL_TYPES.includes(definition.type))&&['Hex','Tet'].includes(definition.definition.ladomain)||definition.type==='TPMS'&&definition.definition.ladomain==='Hex')editCellDefinition(selectedStep().Define_Lattice);
     }catch(e){toast(`Could not import definition: ${e.message||e}`);}
   }
   function latticePicker(id,value,attributes,browseAttributes,unitOnly=false,exclude=''){
@@ -191,40 +535,42 @@ let viewerReady = Promise.resolve();
     });
   }
 
+  const latticeDefinitionEditor=createLatticeDefinitionEditor({
+    getContext:params=>{const key=stepKeys().find(k=>doc.WorkFlow[k]?.Define_Lattice===params);return key?{doc,key}:null;},
+    validateName:latticeNameError,
+    renderLatticePicker:(params,value)=>latticePicker('lattice-la_name',value,'data-lattice-field="la_name" data-kind="text"','data-lattice-browse="la_name"',true,params.la_name),
+    onApply:(params,draft)=>{
+      const previous=params.la_name;
+      for(const ref of latticeReferences(doc))if(ref.value===previous)ref.object[ref.key]=draft.name;
+      params.la_name=draft.name;params.definition=draft.definition;markDirty();
+      if(selectedStep()?.Define_Lattice===params)$('properties-title').textContent=draft.name;
+      if(latticeReferences(doc).some(ref=>ref.value===draft.name))toast('Cell definition changed · generate and reload affected results.');
+    },
+    onEdit:(params,draft)=>editCellDefinition(params,draft),
+    onUse:params=>{
+      const template=parseNumericJson('{"la_name":"","size":[4.0,4.0,4.0],"thk":0.3,"Rot":[0.0,0.0,0.0],"Trans":[0.0,0.0,0.0],"Inv":false,"Fill":true,"Cube_Request":{}}');
+      template.la_name=params.la_name;template.Fill=!isMeshType(params.definition.type);
+      const index=stepKeys().findIndex(k=>doc.WorkFlow[k].Define_Lattice===params);insertLatticeStep({Add_Lattice:template},index+1);
+    },
+    onExport:async params=>{
+      if(!invoke){toast('Definition export is available in the desktop app.');return;}
+      const path=await invoke('export_lattice_definition',{contents:stringifyNumericJson(params.definition)+'\n',name:params.la_name,mesh:isMeshType(params.definition.type)});
+      if(path)toast('Definition exported. The project keeps its inline definition.');
+    },
+    onRemove:()=>removeStep(),
+    onNavigate:key=>{selected=key;refreshAll();},
+    onReveal:params=>{const key=stepKeys().find(k=>doc.WorkFlow[k]?.Define_Lattice===params);if(key){selected=key;refreshAll();}},
+    onBrowse:async kind=>{if(!invoke){toast('File browsing is available in the desktop app.');return null;}return invoke('choose_lattice_input',{kind});},
+    notify:toast
+  });
+  applyLatticeDraft=()=>latticeDefinitionEditor.applyAll()&&mesherEditor.applyAll()&&primitiveMeshEditor.applyAll()&&geometryFieldEditor.applyAll()&&fieldMergeEditor.applyAll()&&contourEditor.applyAll()&&slotEditor.applyAll();
   function renderLatticeProperties(params){
-    const value=params.definition||{},d=value.definition||{},type=value.type;
-    if(!definitionTypes[type])return false;
-    $('properties-title').translate=!params.la_name;$('properties-title').textContent=params.la_name||'Lattice definition';$('properties-subtitle').textContent=definitionTypes[type];
-    const input=(key,label,help='',kind='text')=>key==='la_name'?`<div class="field"><label for="lattice-la_name-select">${label}</label>${latticePicker('lattice-la_name',d.la_name,'data-lattice-field="la_name" data-kind="text"','data-lattice-browse="la_name"',true,params.la_name)}<p class="field-help">${help}</p></div>`:`<div class="field"><label for="lattice-${key}">${label}</label>${kind==='json'?`<textarea id="lattice-${key}" data-lattice-field="${key}" data-kind="json" class="lattice-array">${esc(stringifyNumericJson(d[key]||[]))}</textarea>`:`<div class="${['meshfile','file','la_name'].includes(key)?'path-row':''}"><input id="lattice-${key}" data-lattice-field="${key}" data-kind="${kind}" type="${kind==='number'?'number':'text'}" ${kind==='number'?'step="any" min="0"':''} ${key==='la_name'?'list="lattice-choices"':''} value="${esc(d[key]??'')}">${['meshfile','file','la_name'].includes(key)?`<button class="icon-button" data-lattice-browse="${key}" aria-label="Browse ${label}">…</button>`:''}</div>`}${help?`<p class="field-help">${help}</p>`:''}</div>`;
-
-    let fields='';
-    if(isMeshType(type)){fields=input('meshfile','Mesh file or mesh variable','Use a file (.med, .inp, .bdf, .msh, STL/OBJ/PLY) or a mesh variable created earlier in the workflow.');if(type==='ConformalLattice')fields+=input('la_name','Unit lattice','Choose an integrated name, a custom unit-cell name, or a .txt definition. Match its Hex/Tet domain to the mesh.');fields+=input('k','Joint smoothing (k)','0 means no smoothing. Higher values blend joints and add material.','number');}
-    else{
-      fields=`<div class="field"><label for="lattice-domain">Reference domain</label><select id="lattice-domain" data-lattice-field="ladomain" data-kind="text">${['Hex','Tet','Quad','Triangle'].map(domain=>`<option ${d.ladomain===domain?'selected':''}>${domain}</option>`).join('')}</select><p class="field-help">Hex: unit cube. Tet: standard tetrahedron. Quad: quadrilateral surface unit cell. Triangle: triangular surface unit cell.</p></div>`;
-      if(type==='strut')fields+=input('pts','Node coordinates','Normalized [X, Y, Z] coordinates. Tet nodes also require X + Y + Z ≤ 1.','json')+input('cnnt','Strut connections','Each pair contains two zero-based node indices.','json');
-      else if(type.startsWith('TPMS'))fields+=input('unit_x_len','X period')+input('unit_y_len','Y period')+input('unit_z_len','Z period')+input('expr','Implicit expression',type==='TPMS-Field'?'Create referenced grid fields earlier with OP_Fit_GridField. Expressions are evaluated by Artisan.':'For example: cos(x)+cos(y)+cos(z). Expressions are evaluated by Artisan.');
-      else fields+=input('file','Geometry file',type==='Geom'?'Use a closed, watertight unit-cell mesh.':'Use a surface mesh to define the plate unit cell.');
-    }
-    $('properties-content').innerHTML=section('Definition',`<div class="field"><label for="lattice-name">Lattice name</label><input id="lattice-name" type="text" value="${esc(params.la_name)}"></div><p class="field-help">Saved as a Define_Lattice workflow step. Keep required meshes, fields and unit-cell definitions before this step.</p>`)+section('Parameters',fields)+`<p id="lattice-error" class="lattice-error" role="status">${esc(definitionError(value))}</p><div class="lattice-actions"><button class="button primary" id="apply-lattice">Apply definition</button><button class="button" id="use-lattice">Add lattice step</button><button class="button" id="export-lattice">Export definition…</button><button class="button" id="delete-lattice">Remove definition</button></div><p class="field-help">Size, thickness, rotation, translation and Fill are set in the consuming Add_Lattice step. For mesh/conformal definitions, size controls the search scale; start near the mesh element size.</p>`;
-    function apply(){
-      const next=clone(params.definition),name=$('lattice-name').value.trim();
-      try{const nameError=latticeNameError(name,params);if(nameError)throw Error(nameError);
-        for(const el of $('properties-content').querySelectorAll('[data-lattice-field]')){const key=el.dataset.latticeField;if(el.dataset.kind==='json')next.definition[key]=parseNumericJson(el.value);else if(el.dataset.kind==='number'){setNumber(next.definition,key,el.value,'float');}else next.definition[key]=el.value.trim();}
-        const error=definitionError(next);if(error)throw Error(error);
-        if(next.type==='ConformalLattice'&&(next.definition.la_name===name||latticeDefinitions().some(x=>x.params.la_name===next.definition.la_name&&isMeshType(x.params.definition?.type))))throw Error('A conformal definition must reference a separate unit cell, not a mesh or conformal lattice.');
-        const previous=params.la_name;for(const ref of latticeReferences(doc))if(ref.value===previous)ref.object[ref.key]=name;
-        params.la_name=name;params.definition=next;markDirty();$('lattice-error').classList.add('success');$('lattice-error').textContent='Definition applied.';return true;
-      }catch(e){$('lattice-error').classList.remove('success');$('lattice-error').textContent=e.message;return false;}
-    }
-    bindLatticePickers();
-    applyLatticeDraft=apply;
-    $('apply-lattice').onclick=()=>{if(apply())refreshProperties();};
-    $('use-lattice').onclick=()=>{if(!apply())return;const template=parseNumericJson('{"la_name":"","size":[4.0,4.0,4.0],"thk":0.3,"Rot":[0.0,0.0,0.0],"Trans":[0.0,0.0,0.0],"Inv":false,"Fill":true,"Cube_Request":{}}');template.la_name=params.la_name;template.Fill=!isMeshType(params.definition.type);const index=stepKeys().findIndex(k=>doc.WorkFlow[k].Define_Lattice===params);insertLatticeStep({Add_Lattice:template},index+1);};
-    $('export-lattice').onclick=async()=>{if(!apply()||!invoke)return;try{const path=await invoke('export_lattice_definition',{contents:stringifyNumericJson(params.definition)+'\n',name:params.la_name,mesh:isMeshType(params.definition.type)});if(path)toast('Definition exported. The project keeps its inline definition.');}catch(e){toast(`Could not export: ${e.message||e}`);}};
-    $('delete-lattice').onclick=()=>removeStep();
-    $('properties-content').querySelectorAll('[data-lattice-browse]').forEach(b=>b.onclick=async()=>{if(!invoke)return;try{const input=$('lattice-'+b.dataset.latticeBrowse),path=await invoke('choose_lattice_input',{kind:b.dataset.latticeBrowse});if(path&&input.isConnected){input.value=path;if(b.dataset.latticeBrowse==='la_name'){input.style.display='';$('lattice-la_name-select').value='';}}}catch(e){toast(String(e));}});
-    return true;
+    if(!definitionTypes[params.definition?.type])return false;
+    $('properties-title').translate=!params.la_name;$('properties-title').textContent=params.la_name||'Lattice definition';
+    $('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);
+    latticeDefinitionEditor.show($('properties-content'),params);return true;
   }
+
   function latticeWorkflowError(){
     const definitions=latticeDefinitions(),names=new Map();
     for(const {key,params} of definitions){if(names.has(params.la_name))return `Duplicate lattice name: ${params.la_name}.`;names.set(params.la_name,key);const error=definitionTypes[params.definition?.type]?definitionError(params.definition):'';if(error)return `${params.la_name}: ${error}`;}
@@ -249,7 +595,7 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     $('project-tree').querySelector('[data-select]').onclick=()=>{selected='setup';refreshAll();};
     $('project-tree').querySelectorAll('[data-file]').forEach(button=>button.onclick=()=>{
       const id=button.dataset.file;selected=id==='source'?'geometry':'file:'+id;refreshTree();refreshProperties();refreshTimeline();
-      const file=fileRecord(id);if(!supportingFiles().some(f=>f.id===id)&&file?.path){const layer=viewer?.layers.get(id);if(layer?.path===file.path)viewer.setActiveLayer(id);else loadPreview(file.path,'quick',id);}
+      const file=fileRecord(id);if(!supportingFiles().some(f=>f.id===id)&&file?.path){const layer=viewer?.layers.get(id);if(layer?.path===file.path)viewer.setActiveLayer(id);else loadPreview(file.path,'auto',id);}
     });
     pointCloudInspector.bindTree();fieldInspector.bindTree();$('add-project-geometry').onclick=()=>addProjectFile(false);$('add-supporting-file').onclick=()=>addProjectFile(true);bindLatticeTree();
   }
@@ -259,7 +605,7 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
       if(support&&/\.(csv|tsv)$/i.test(path)){await pointCloudInspector.importSource(path);return;}
       const state=ensureFiles(),list=support?state.supportingFiles:state.geometry;
       let file=list.find(f=>f.path===path);if(!file){file={id:(support?'support-':'geometry-')+crypto.randomUUID(),path};list.push(file);markDirty();}
-      selected='file:'+file.id;refreshAll();if(!support)await loadPreview(path,'quick',file.id);
+      selected='file:'+file.id;refreshAll();if(!support)await loadPreview(path,'auto',file.id);
     }catch(e){toast(`Could not add file: ${e.message||e}`);}
   }
   function geometryBounds(layer){
@@ -282,7 +628,7 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
       section('Actions',`${/\.(stl|obj|ply|inp)$/i.test(file.path)?'<button class="button" id="preview-project-file">Preview mesh</button> ':''}${source?`<button class="button" id="choose-source-geometry">${file.path?'Replace source geometry':'Load source geometry'}</button>`:'<button class="button" id="remove-project-file">Remove from project</button><p class="field-help">The file on disk is kept.</p>'}`);
     if($('file-colour'))$('file-colour').oninput=e=>{if(viewer)viewer.setLayerColor(file.id,e.target.value);else{if(saveGeometryColour(doc,file.id,e.target.value))markDirty();$('file-colour-value').textContent=e.target.value;}};
     if($('file-opacity'))$('file-opacity').oninput=e=>{const opacity=Number(e.target.value)/100;if(viewer)viewer.setOpacity(file.id,opacity);else{if(saveGeometryOpacity(doc,file.id,opacity))markDirty();$('file-opacity-value').textContent=Math.round(opacity*100)+'%';}};
-    if($('preview-project-file'))$('preview-project-file').onclick=()=>loadPreview(file.path,'quick',file.id);
+    if($('preview-project-file'))$('preview-project-file').onclick=()=>loadPreview(file.path,'auto',file.id);
     if($('file-visible'))$('file-visible').onchange=e=>{layer.mesh.visible=e.target.checked;viewer.pending=[];viewer.refreshHelpers();viewer.updateSection();viewer.redrawMeasurements();viewer.refreshLayers();};
     if(source){$('choose-source-geometry').onclick=loadGeometry;return;}
     $('remove-project-file').onclick=()=>{cancelPreview();const files=ensureFiles();files.geometry=files.geometry.filter(f=>f.id!==file.id);files.supportingFiles=files.supportingFiles.filter(f=>f.id!==file.id);viewer?.removeLayer(file.id);selected='setup';markDirty();refreshAll();if(!viewer?.layers.size){$('viewport-empty').classList.remove('hidden');$('mesh-info').textContent='No model loaded';loadedGeometryPath='';$('preview-mode').disabled=true;}else if(loadedLayerId===file.id){const id=viewer.layers.keys().next().value;viewer.setActiveLayer(id);}};
@@ -321,6 +667,10 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
       return `<div class="nested-group"><div class="nested-title">${label}</div>${inner}</div>`;
     }
     if(key==='la_name'&&path!=='Define_Lattice.la_name')return `<div class="field"><label for="${id}-select">Lattice name</label>${latticePicker(id,value,`data-value="${esc(path)}"`,`data-lattice-ref-browse="${esc(path)}"`)}<p class="field-help">Choose an integrated lattice, a project definition, or Other name / file.</p></div>`;
+    if(path==='ExportMeshID.MeshID'){
+      const ids=contourMeshIds(doc.WorkFlow,selected);
+      if(ids.length)return `<div class="field"><label for="${id}">Mesh ID</label><input id="${id}" type="text" list="${id}-contours" translate="no" value="${esc(value??'')}" data-value="${path}"><datalist id="${id}-contours">${ids.map(mesh=>`<option value="${esc(mesh)}"></option>`).join('')}</datalist></div>`;
+    }
     const pathLike=/file|path|outfile|geom|mesh|output|dir/i.test(key);
     if(typeof value==='number')return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="number" ${numberInputForPath(path)} data-value="${esc(path)}"></div>`;
     if(pathLike)return `<div class="field"><label for="${id}">${label}</label><div class="path-row"><input id="${id}" type="text" value="${esc(value??'')}" data-value="${esc(path)}"><button class="icon-button" title="Browse" data-browse="${esc(path)}">…</button></div></div>`;
@@ -329,7 +679,10 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
   }
   function readAt(root,path){return path.split('.').reduce((o,k)=>o?.[k],root);}
   function writeAt(root,path,value){const parts=path.split('.');let o=root;for(const p of parts.slice(0,-1))o=o[p];o[parts.at(-1)]=value;}
-  function updateField(path,value){const parts=path.split('.');let root,rest;if(parts[0]==='Setup'){root=doc.Setup;rest=parts.slice(1).join('.');}else if(parts[0]==='PostProcess'){root=doc.PostProcess;rest=parts.slice(1).join('.');}else{root=selectedStep()?.[parts[0]];rest=parts.slice(1).join('.');}if(root)writeAt(root,rest,value);markDirty();refreshProperties();}
+  function updateField(path,value){const parts=path.split('.');let root,rest;if(parts[0]==='Setup'){root=doc.Setup;rest=parts.slice(1).join('.');}else if(parts[0]==='PostProcess'){root=doc.PostProcess;rest=parts.slice(1).join('.');}else{root=selectedStep()?.[parts[0]];rest=parts.slice(1).join('.');}if(root){
+      writeAt(root,rest,value);
+      if(path==='ExportMeshID.MeshID'&&contourMeshIds(doc.WorkFlow,selected).includes(value))root.elem_type='Line';
+    }markDirty();refreshProperties();}
   function propertyRoot(path){const parts=path.split('.');if(parts[0]==='Setup')return [doc.Setup,parts.slice(1).join('.')];if(parts[0]==='PostProcess')return [doc.PostProcess,parts.slice(1).join('.')];return [selectedStep()?.[parts[0]],parts.slice(1).join('.')];}
   function numberParent(path){const [root,rest]=propertyRoot(path),parts=rest.split('.'),key=parts.pop();return {parent:parts.length?readAt(root,parts.join('.')):root,key};}
   function numberInput(parent,key){const type=numberType(parent,key);return `step="${type==='integer'?'1':'any'}" data-number-type="${type}" value="${esc(numberText(parent,key))}"`;}
@@ -386,41 +739,118 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     $('properties-content').querySelectorAll('[data-json-value]').forEach(el=>el.addEventListener('change',()=>{try{updateField(el.dataset.jsonValue,parseNumericJson(el.value));}catch(e){toast(`Invalid JSON value: ${e.message}`);}}));
     $('properties-content').querySelectorAll('[data-domain]').forEach(el=>el.addEventListener('change',()=>{const axis=Number(el.dataset.domain),side=Number(el.dataset.side);doc.Setup.Sample ||= clone(defaultSetup.Sample);doc.Setup.Sample.Domain ||= clone(defaultSetup.Sample.Domain);const bounds=doc.Setup.Sample.Domain[axis];try{setNumber(bounds,side,el.value,el.dataset.numberType);markDirty();}catch(e){toast(e.message);}el.value=numberText(bounds,side);refreshProperties();}));
     $('properties-content').querySelectorAll('[data-preset]').forEach(el=>el.addEventListener('change',()=>{const index=Number(el.value);if(index<0)return;const op=window.ARTISAN_OPERATIONS.find(o=>o.keyword===el.dataset.preset),params=parseNumericJson(op.presets[index].paramsJson);prepareFieldOperation(op.keyword,params);selectedStep()[op.keyword]=params;presetSelections.set(params,index);markDirty();refreshProperties();}));
-    $('properties-content').querySelectorAll('[data-browse]').forEach(el=>el.onclick=async()=>{if(!invoke){toast('File browsing is available in the installed desktop app.');return;}const output=fieldParameterInfo(el.dataset.browse).output||/outfile|output/i.test(el.dataset.browse);const path=await invoke(output?'choose_output':'choose_geometry',output&&el.dataset.browse==='Gen_TetMesh_SizeField.export_mesh'?{kind:'mesh',path:'TetDomains.inp'}:undefined);if(path){updateField(el.dataset.browse,path);if(el.dataset.browse==='Setup.Geomfile')loadPreview(path);}});
+    $('properties-content').querySelectorAll('[data-browse]').forEach(el=>el.onclick=async()=>{if(!invoke){toast('File browsing is available in the installed desktop app.');return;}const output=fieldParameterInfo(el.dataset.browse).output||/outfile|output/i.test(el.dataset.browse);const args=el.dataset.browse==='ExportMeshID.out_meshfile'&&selectedStep()?.ExportMeshID?.elem_type==='Line'
+      ?{kind:'line_mesh',path:selectedStep().ExportMeshID.out_meshfile}
+      :output&&el.dataset.browse==='Gen_TetMesh_SizeField.export_mesh'?{kind:'mesh',path:'TetDomains.inp'}:undefined;
+      const path=await invoke(output||args?'choose_output':'choose_geometry',args);if(path){updateField(el.dataset.browse,path);if(el.dataset.browse==='Setup.Geomfile')loadPreview(path);}});
   }
   function refreshProperties(){
+    workspace.classList.toggle('lattice-definition-mode',!!definitionTypes[selectedStep()?.Define_Lattice?.definition?.type]);
+    $('properties-content').classList.remove('ld-host');
+    let returnButton=$('quad-return');if(!returnButton){returnButton=document.createElement('button');returnButton.id='quad-return';returnButton.className='button subtle quad-return';returnButton.textContent='Return to meshing';document.querySelector('.properties-panel').insertBefore(returnButton,$('properties-content'));}
+    const returnKey=mesherReturn&&mesherContext(mesherReturn)?.key;returnButton.hidden=!returnKey||selected===returnKey;returnButton.onclick=()=>{if(returnKey){selected=returnKey;mesherReturn=null;refreshAll();}};
+    const singleOperation=Object.keys(selectedStep()||{}).length===1;
+    const slotParams=singleOperation&&selectedStep()?.[slotKeyword];
+    if(!slotParams)slotEditor.hide();
+    workspace.classList.toggle('slot-mode',!!slotParams);
+    const contourParams=singleOperation&&selectedStep()?.[contourKeyword];
+    if(!contourParams)contourEditor.hide();
+    workspace.classList.toggle('contour-mode',!!contourParams);
+    const fieldMergeParams=selectedStep()?.[fieldMergeKeyword];
+    if(!fieldMergeParams)fieldMergeEditor.hide();
+    workspace.classList.toggle('field-merge-mode',!!fieldMergeParams);
+    const geometryFieldEntry=Object.entries(selectedStep()||{}).find(([keyword])=>geometryFieldKeywords.includes(keyword));
+    if(!geometryFieldEntry)geometryFieldEditor.hide();
+    workspace.classList.toggle('geometry-field-mode',!!geometryFieldEntry);
+    const primitiveEntry=Object.entries(selectedStep()||{}).find(([keyword])=>primitiveMeshKeywords.includes(keyword));
+    if(!primitiveEntry)primitiveMeshEditor.hide();
+    workspace.classList.toggle('primitive-mesh-mode',!!primitiveEntry);
+    const mesherEntry=Object.entries(selectedStep()||{}).find(([keyword])=>mesherKeywords.includes(keyword));
+    const mesherParams=mesherEntry?.[1];if(!mesherParams)mesherEditor.hide();
+    workspace.classList.toggle('size-mesher-mode',!!mesherParams);
+    if(selected!=='setup')setupEditor.showGuides(doc.Setup,doc.PostProcess);
+    workspace.classList.toggle('setup-editor-mode',selected==='setup');
+    // Reset filename/lattice-name protection before the region and morph fast paths.
+    $('properties-title').translate=true;$('properties-subtitle').translate=!selectedStep();
+    const scalarParams=selectedStep()?.[scalarFieldKeyword];
+    const morphParams=selectedStep()?.[morphKeyword];
+    const spatialEntry=Object.entries(selectedStep()||{}).find(([k])=>spatialKeywords.includes(k));
+    if(!spatialEntry)spatialEditor.hide();
+    workspace.classList.toggle('scalar-region-mode',!!scalarParams||!!morphParams||!!spatialEntry);
+    workspace.classList.toggle('geometry-operation-mode',!!spatialEntry&&geometryKeywords.includes(spatialEntry[0]));
+    workspace.classList.toggle('transition-operation-mode',!!spatialEntry&&(transitionKeywords.includes(spatialEntry[0])||spatialEntry[0]==='Add_Lattice'));
+    if(!morphParams)morphEditor.hide();
+    if(!scalarParams)regionEditor.hide();
+    else{
+      workspace.classList.remove('point-cloud-mode');
+
+      $('properties-title').textContent='Scalar field from regions';
+      $('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);
+      const footer=document.querySelector('.properties-footer');if(footer?.lastChild)footer.lastChild.textContent=' Shapes define regions; the body is unchanged';
+      regionEditor.show($('properties-content'),scalarParams);
+      return;
+    }
+    if(morphParams){
+      workspace.classList.remove('point-cloud-mode');
+      $('properties-title').textContent='Morph implicit field';$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);
+      const footer=document.querySelector('.properties-footer');if(footer?.lastChild)footer.lastChild.textContent=' Guides show requested movement; compute the deformation to check it';
+      morphEditor.show($('properties-content'),morphParams);return;
+    }
     workspace.classList.toggle('point-cloud-mode',!!selected?.startsWith('points:'));
     if(selected?.startsWith('points:')){pointCloudInspector.renderProperties(selected.slice(7));return;}
-    $('properties-title').translate=true;$('properties-subtitle').translate=true;
-    applyLatticeDraft=null;
+
     const host=$('properties-content');
     const footer=document.querySelector('.properties-footer');if(footer?.lastChild)footer.lastChild.textContent=selected?.startsWith('field:')?' Field display settings; exported values stay unchanged':' Changes update the workflow JSON';
     if(selected?.startsWith('field:')){fieldInspector.renderProperties(selected.slice(6));return;}
+
+    if(slotParams){$('properties-title').textContent=titleFor(slotKeyword);$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);slotEditor.show(host,slotParams);return;}
+    if(contourParams){$('properties-title').textContent=titleFor(contourKeyword);$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);contourEditor.show(host,contourParams);return;}
+    if(fieldMergeParams){$('properties-title').textContent=titleFor(fieldMergeKeyword);$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);fieldMergeEditor.show(host,fieldMergeParams);return;}
+    if(geometryFieldEntry){$('properties-title').textContent=geometryFieldTitles[geometryFieldEntry[0]];$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);geometryFieldEditor.show(host,...geometryFieldEntry);return;}
+    if(primitiveEntry){
+      $('properties-title').textContent=primitiveMeshInfo[primitiveEntry[0]].name;$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);
+      primitiveMeshEditor.show(host,...primitiveEntry);return;
+    }
+    if(mesherParams){
+      $('properties-title').textContent=mesherTitle(mesherEntry[0]);$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);
+      mesherEditor.show(host,mesherParams);attachPropertyEvents();return;
+    }
 
     if(selectedStep()?.Define_Lattice&&renderLatticeProperties(selectedStep().Define_Lattice))return;
     if(selected?.startsWith('file:')){const file=fileRecord(selected.slice(5));if(file){showFileProperties(file,supportingFiles().some(f=>f.id===file.id));return;}}
     if(selected==='geometry'){showFileProperties(fileRecord('source'));return;}
     if(selected==='setup'){
-      $('properties-title').textContent='Project settings';$('properties-subtitle').textContent='Setup · domain and resolution';
-      const s=doc.Setup, dom=s.Sample?.Domain||defaultSetup.Sample.Domain, isSample=s.Type==='Sample';
-      const bounds=(label,side)=>`<div class="field"><label>${label}</label><div class="vector-fields">${[0,1,2].map(axis=>`<input type="number" ${numberInput(dom[axis],side)} aria-label="${label} ${'XYZ'[axis]}" data-domain="${axis}" data-side="${side}" ${isSample?'required':'disabled'}>`).join('')}</div></div>`;
-      host.innerHTML=section('Source geometry',`<div class="field"><label for="setup-type">Type</label><select id="setup-type" data-value="Setup.Type"><option value="Sample" ${isSample?'selected':''}>Sample</option><option value="Geometry" ${s.Type==='Geometry'?'selected':''}>Geometry</option></select></div>`+(isSample?'':field('Geomfile',s.Geomfile,'Setup.Geomfile',updateField)))+
-        section('Domain bounds',`<p class="field-help">${isSample?'Define lower and upper bounds for X, Y, and Z. Each upper bound must be greater than its lower bound.':'Artisan reads the bounding box from Geomfile and expands it using padding. These sample bounds are inactive in Geometry mode.'}</p>`+bounds('Lower bounds',0)+bounds('Upper bounds',1))+
-        (isSample&&sampleDomainError()?`<p class="field-help" role="status">${esc(sampleDomainError())}</p>`:'')+
-        section('Resolution & transform',field('Resolution',s.res,'Setup.res',updateField)+field('Rotation',s.Rot,'Setup.Rot',updateField)+field('Padding',s.Padding,'Setup.Padding',updateField))+
-        section('Compute',field('Use GPU',s.onGPU,'Setup.onGPU',updateField)+field('JSON working directory',s.JsonWorkDir,'Setup.JsonWorkDir',updateField)+field('Memory limit (bytes)',s.memorylimit,'Setup.memorylimit',updateField))+
-        section('Post process',Object.entries(doc.PostProcess).map(([k,v])=>field(k,v,`PostProcess.${k}`,updateField)).join(''));
+      $('properties-title').textContent='Project settings';$('properties-subtitle').textContent='Domain, sampling and generation';
+      setupEditor.show(host,doc.Setup,doc.PostProcess);return;
     }else if(selectedStep()){
-      const step=selectedStep(), commands=Object.entries(step);$('properties-title').textContent=titleFor(commands[0]?.[0]||'Operation');$('properties-subtitle').textContent=`Workflow step ${String(stepKeys().indexOf(selected)+1).padStart(2,'0')} · ${commands.map(([keyword])=>keyword).join(' / ')}`;
-      host.innerHTML=commands.map(([keyword,params])=>section(titleFor(keyword),parameterPresetControl(keyword,params)+(fieldOperationHelp(keyword)?`<p class="field-help">${esc(fieldOperationHelp(keyword))}</p>`:'')+(keyword==='Export'?renderExportProperties(params):Object.entries(params).map(([k,v])=>field(k,v,`${keyword}.${k}`,updateField)).join('')))).join('');
+      const step=selectedStep(), commands=Object.entries(step);$('properties-title').textContent=titleFor(commands[0]?.[0]||'Operation');$('properties-subtitle').textContent=workflowPanelSubtitle(doc.WorkFlow,selected);
+      host.innerHTML=commands.map(([keyword,params])=>keyword==='Proc_BoxSlices'?'':keyword==='Add_Lattice'&&spatialEntry?.[0]===keyword?latticeOtherProperties(params):transitionKeywords.includes(keyword)&&spatialEntry?.[0]===keyword?transitionOtherProperties(keyword,params):geometryKeywords.includes(keyword)&&spatialEntry?.[0]===keyword?geometryOtherProperties(keyword,params):section(titleFor(keyword),parameterPresetControl(keyword,params)+(fieldOperationHelp(keyword)?`<p class="field-help">${esc(fieldOperationHelp(keyword))}</p>`:'')+(keyword==='Proc_BoxSlices'?'':keyword==='Export'?renderExportProperties(params):Object.entries(params).map(([k,v])=>field(k,v,`${keyword}.${k}`,updateField)).join('')))).join('');
     }else{$('properties-title').textContent='Properties';$('properties-subtitle').textContent='Select a project or workflow step';host.innerHTML='<div class="empty-properties">Select project settings or a workflow step to view and edit its parameters.</div>';}
     attachPropertyEvents();
+    if(spatialEntry)spatialEditor.show(host,...spatialEntry);
+  }
+  function latticeOtherProperties(params){
+    const extra=Object.entries(params).filter(([k])=>!latticeKnown.includes(k)).map(([k,v])=>field(k,v,`Add_Lattice.${k}`,updateField)).join('');
+    const presets=parameterPresetControl('Add_Lattice',params);return extra||presets?`<details class="transition-other"><summary>Additional parameters</summary>${presets}${extra}</details>`:'';
+  }
+  function transitionOtherProperties(keyword,params){
+    const extra=Object.entries(params).filter(([k])=>!transitionKnown.includes(k)).map(([k,v])=>field(k,v,`${keyword}.${k}`,updateField)).join('');
+    const presets=parameterPresetControl(keyword,params);
+    return extra||presets?`<details class="transition-other"><summary>Additional parameters</summary>${presets}${extra}</details>`:'';
+  }
+  function geometryOtherProperties(keyword,params){
+    const known={Box:['ori','normal','length','z_angle'],Sphere:['ori','r'],Cylinder:['pa','pb','r']}[params.Name]||['Scale','Trans','Rot'];
+    const invalid=geometryOperationError(params),extras=Object.entries(params).filter(([k])=>!['Name','Paras','k_factor','push2GeomField'].includes(k));
+    let html=parameterPresetControl(keyword,params);
+    if(params.Paras&&typeof params.Paras==='object')html+=Object.entries(params.Paras).filter(([k])=>invalid||!known.includes(k)).map(([k,v])=>field(k,v,`${keyword}.Paras.${k}`,updateField)).join('');
+    html+=extras.map(([k,v])=>field(k,v,`${keyword}.${k}`,updateField)).join('');
+    return html?section('Operation settings',html):'';
   }
   function reindex(){const entries=stepKeys().map(k=>doc.WorkFlow[k]);doc.WorkFlow=Object.fromEntries(entries.map((s,i)=>[String(i+1),s]));if(selected&&!doc.WorkFlow[selected])selected=null;}
   function addOperation(keyword,index){
     const op=(window.ARTISAN_OPERATIONS||[]).find(o=>o.keyword===keyword);if(!op)return;
     const entries=stepKeys().map(k=>doc.WorkFlow[k]),params=parseNumericJson(op.paramsJson);
-    prepareFieldOperation(keyword,params);presetSelections.set(params,0);index=Math.max(0,Math.min(entries.length,index));entries.splice(index,0,{[keyword]:params});
+    prepareFieldOperation(keyword,params);if(geometryKeywords.includes(keyword)){for(const k of Object.keys(params))delete params[k];replaceSpatialShape(params,'Box',doc.Setup.Sample?.Domain);setNumber(params,'k_factor',0,'float');params.push2GeomField=false;}if(keyword===morphKeyword){for(const k of Object.keys(params))delete params[k];assignNumericJson(params,newMorph());}if(keyword===scalarFieldKeyword){params.field_id='SelectionMask';params.default_value=0.0;params.overlap='Maximum';params.regions=[newPrimitiveRegion('Box',doc.Setup.Sample?.Domain)];}presetSelections.set(params,0);index=Math.max(0,Math.min(entries.length,index));entries.splice(index,0,{[keyword]:params});
     doc.WorkFlow=Object.fromEntries(entries.map((step,i)=>[String(i+1),step]));selected=String(index+1);
     markDirty();refreshProperties();toast(`${titleFor(keyword)} added to workflow`);closeModal();
   }
@@ -432,6 +862,32 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
   let modalCleanup=null;
   function showModal(html){modalCleanup?.();$('modal').innerHTML=html;$('modal-backdrop').classList.remove('hidden');$('modal').querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModal);$('modal-backdrop').onclick=e=>{if(e.target===$('modal-backdrop'))closeModal();};}
   function closeModal(){modalCleanup?.();$('modal-backdrop').classList.add('hidden');$('modal').innerHTML='';}
+  function showSlotGrid(plates,selection,onSelect){
+    const pagination=side=>'<div><strong>'+side.toUpperCase()+'</strong><button type="button" class="button" data-slot-prev-'+side+
+      ' aria-label="Previous page '+side.toUpperCase()+'">Previous</button><span data-slot-page-'+side+
+      ' translate="no"></span><button type="button" class="button" data-slot-next-'+side+' aria-label="Next page '+side.toUpperCase()+'">Next</button></div>';
+    showModal('<div class="modal-head"><div><h2 id="slot-grid-title">Choose plate pair</h2><p>Select a pair on perpendicular slice planes.</p></div>'+
+      '<button class="icon-button" data-close aria-label="Close">×</button></div><div class="modal-body slot-grid-modal">'+
+      '<div class="slot-grid-filters"><label>Filter Plate A<input type="search" data-slot-filter-a></label>'+
+      '<label>Filter Plate B<input type="search" data-slot-filter-b></label></div>'+
+      '<div class="slot-grid-pagination">'+pagination('a')+pagination('b')+'</div>'+
+      '<div class="slot-grid-scroll" data-slot-grid-table></div></div>');
+    const trigger=document.activeElement,modal=$('modal');
+    modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','slot-grid-title');
+    const trap=event=>{
+      if(event.key!=='Tab')return;
+      const controls=[...modal.querySelectorAll('button:not(:disabled),input')],first=controls[0],last=controls.at(-1);
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    };
+    modal.addEventListener('keydown',trap);
+    bindSlotGrid(modal,plates,selection,(a,b)=>{closeModal();onSelect(a,b);$('properties-content').querySelector('[data-slot-grid]')?.focus();});
+    modalCleanup=()=>{
+      modalCleanup=null;modal.removeEventListener('keydown',trap);
+      for(const attr of ['role','aria-modal','aria-labelledby'])modal.removeAttribute(attr);
+      if(trigger?.isConnected)trigger.focus();
+    };
+  }
   function showAbout(){
     showModal(`<div class="modal-head"><div><h2 id="about-title">About ArtGUI</h2><p>Artisan Workbench · Version ${esc(ARTGUI_VERSION)}</p></div><button class="icon-button" data-close aria-label="Close About">×</button></div>
       <div class="modal-body about-body"><p><strong>Developed by Yikun Wang</strong></p><p>ArtGUI is distributed under the MIT License.</p><p>Artisan-core is distributed under CC BY-NC-ND 3.0 for non-commercial applications, or refer to your license file.</p><p class="about-credit">Legacy icon credit: Freepik from www.flaticon.com</p>
@@ -448,20 +904,22 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
   function openJson(){if(applyLatticeDraft&&!applyLatticeDraft())return;showModal(`<div class="modal-head"><div><h2>Workflow JSON</h2><p>Artisan's original Setup / WorkFlow / PostProcess structure is preserved.</p></div><button class="icon-button" data-close>×</button></div><div class="modal-body"><textarea id="json-editor" class="json-editor" spellcheck="false">${esc(workflowJson().trimEnd())}</textarea></div><div class="modal-foot"><button class="button" data-close>Cancel</button><button class="button primary" id="apply-json">Apply JSON</button></div>`);$('apply-json').onclick=()=>{try{const next=parseNumericJson($('json-editor').value);const normalized=normalizeWorkflow(next);resetViewer();doc=normalized;applyGeometryColours(viewer,doc);applyGeometryOpacities(viewer,doc);selected=null;markDirty();refreshAll();closeModal();toast('Workflow JSON applied');}catch(e){toast(`Invalid workflow JSON: ${e.message}`);};};}
   function refreshAll(){$('project-name').translate=!currentPath;refreshTree();refreshTimeline();refreshProperties();$('project-name').textContent=currentPath?nameForPath(currentPath).replace(/\.json$/i,''):'Untitled workflow';updateGeometryLabel();}
   function updateGeometryLabel(){const p=doc.Setup.Geomfile||'';$('geometry-label').translate=!p;$('geometry-label').textContent=p?nameForPath(p):'Load a model to preview your design';}
-  function guardUnsaved(){return !dirty||confirm(t('Discard unsaved changes?'));}
-  function resetViewer(){pointCloudInspector.reset();fieldInspector.reset();fileIssues.clear();cancelPreview();viewer?.clear();loadedGeometryPath='';loadedPreviewMode='';loadedLayerId='source';$('preview-mode').disabled=true;$('mesh-info').textContent='No model loaded';$('viewport-empty').classList.remove('hidden');}
+  function guardUnsaved(){return (!dirty&&!latticeDefinitionEditor.hasPending()&&!mesherEditor.hasPending()&&!primitiveMeshEditor.hasPending()&&!geometryFieldEditor.hasPending()&&!fieldMergeEditor.hasPending())||confirm(t('Discard unsaved changes?'));}
+  function resetViewer(){slotEditor.reset();contourEditor.hide();fieldMergeEditor.hide();geometryFieldEditor.hide();primitiveMeshEditor.hide();setupEditor.hide();regionEditor.hide();morphEditor.hide();spatialEditor.hide();mesherEditor.hide();mesherReturn=null;morphReturn=null;pointCloudInspector.reset();fieldInspector.reset();fileIssues.clear();cancelPreview();viewer?.clear();loadedGeometryPath='';loadedPreviewMode='';loadedLayerId='source';$('preview-mode').disabled=true;$('mesh-info').textContent='No model loaded';$('viewport-empty').classList.remove('hidden');}
   function newProject(){if(runProgress.busy||!guardUnsaved())return;runProgress.reset();resetViewer();doc={Setup:clone(defaultSetup),WorkFlow:{},PostProcess:clone(defaultPost)};currentPath='';selected='setup';dirty=false;$('dirty-state').textContent='All changes saved';$('project-name').textContent='Untitled workflow';refreshAll();}
   async function openProject(){if(!guardUnsaved())return;if(invoke){try{const f=await invoke('open_workflow');if(!f)return;loadWorkflow(f.contents,f.path);}catch(e){toast(`Could not open workflow: ${e}`);}}else{$('fallback-file').click();}}
   function loadWorkflow(text,path){try{const parsed=parseNumericJson(text);if(!parsed.Setup||!parsed.WorkFlow)throw Error('Expected Setup and WorkFlow sections.');const nextDoc=normalizeWorkflow(parsed);resetViewer();doc=nextDoc;applyGeometryColours(viewer,doc);applyGeometryOpacities(viewer,doc);runProgress.reset();currentPath=path||'';selected='setup';dirty=false;$('dirty-state').textContent='All changes saved';refreshAll();if(doc.Setup.Type==='Geometry'&&doc.Setup.Geomfile)loadPreview(doc.Setup.Geomfile);toast('Workflow opened');}catch(e){toast(`Could not read workflow: ${e.message}`);}}
-  async function saveProject(saveAs=false){if(runProgress.busy)return false;const exportIssue=exportWorkflowError(doc.WorkFlow,exportDrafts);if(exportIssue){toast(exportIssue);return false;}if(applyLatticeDraft&&!applyLatticeDraft())return false;const contents=workflowJson().trimEnd()+'\n';if(invoke){try{const p=await invoke('save_workflow',{path:currentPath||null,contents,saveAs});if(p){currentPath=p;$('project-name').translate=false;dirty=false;$('dirty-state').textContent='All changes saved';$('project-name').textContent=nameForPath(p).replace(/\.json$/i,'');toast('Workflow saved');}return !!p;}catch(e){toast(`Could not save: ${e}`);return false;}}const blob=new Blob([contents],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nameForPath(currentPath||'Artisan_workflow.json');a.click();URL.revokeObjectURL(a.href);dirty=false;$('dirty-state').textContent='Downloaded JSON';return true;}
+  async function saveProject(saveAs=false,validationWorkflow=doc.WorkFlow){if(runProgress.busy)return false;if(applyLatticeDraft&&!applyLatticeDraft())return false;const scalarIssue=scalarWorkflowError(validationWorkflow)||morphWorkflowError(validationWorkflow)||transitionWorkflowError(validationWorkflow)||latticePanelWorkflowError(validationWorkflow)||quadWorkflowError(validationWorkflow)||primitiveMeshWorkflowError(validationWorkflow)||geometryFieldWorkflowError(validationWorkflow)||fieldMergeWorkflowError(validationWorkflow)||contourWorkflowError(validationWorkflow)||slotWorkflowError(validationWorkflow);if(scalarIssue){toast(scalarIssue);return false;}const exportIssue=exportWorkflowError(validationWorkflow,exportDrafts);if(exportIssue){toast(exportIssue);return false;}const contents=workflowJson().trimEnd()+'\n';if(invoke){try{const p=await invoke('save_workflow',{path:currentPath||null,contents,saveAs});if(p){currentPath=p;$('project-name').translate=false;dirty=false;$('dirty-state').textContent='All changes saved';$('project-name').textContent=nameForPath(p).replace(/\.json$/i,'');toast('Workflow saved');}return !!p;}catch(e){toast(`Could not save: ${e}`);return false;}}const blob=new Blob([contents],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nameForPath(currentPath||'Artisan_workflow.json');a.click();URL.revokeObjectURL(a.href);dirty=false;$('dirty-state').textContent='Downloaded JSON';return true;}
   async function cleanScratch(){
     if(cleaningScratch)return;
+    if(runProgress.busy||preparingGeneration){toast('Wait for Artisan to finish exporting.');return;}
     if(!invoke){toast('Scratch cleanup is available in the installed desktop app.');return;}
     cleaningScratch=true;$('clean-scratch').disabled=true;
     try{
       cancelPreview();
       // Cached previews stream from ViewScratch. Close them before deleting their files.
-      for(const [id,layer] of [...(viewer?.layers||[])])if(layer.preview)viewer.removeLayer(id);
+      await fieldInspector.closeTemporary();
+      for(const [id,layer] of [...(viewer?.layers||[])])if(layer.preview||isScratchPreview(layer.path))viewer.removeLayer(id);
       adaptivePreview?.clear();
       if(!viewer?.layers.has(loadedLayerId)){
         loadedGeometryPath='';loadedPreviewMode='';$('preview-mode').disabled=true;
@@ -472,6 +930,10 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
       viewer?.render();
       toast('Cleaning scratch…');
       await invoke('clean_view_scratch');
+      scratchPreviewFolders.forEach((_,folder)=>scratchPreviewFolders.set(folder,false));
+      if(selected?.startsWith('field:')&&!fieldInspector.has(selected.slice(6))
+        &&!doc.ArtGUI?.fields?.some(field=>field.id===selected.slice(6)))selected='setup';
+      refreshAll();
       toast('Scratch cleaned.');
     }catch(e){toast(`${t('Could not clean scratch:')} ${e.message||e}`);}
     finally{cleaningScratch=false;$('clean-scratch').disabled=false;}
@@ -505,10 +967,15 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     try{const path=await invoke('choose_result');if(path)await openResult(path);}
     catch(error){toast(`Could not load result: ${error.message||error}`);}
   }
-  async function openResult(path){
+  async function openResult(path,mode='auto'){
     if(runProgress.busy||preparingGeneration){toast('Wait for Artisan to finish exporting.');return;}
     if(isFieldFile(path)){await fieldInspector.load(path);return;}
-    const state=ensureFiles(),previous=state.geometry.find(f=>f.id==='result');state.geometry=state.geometry.filter(f=>f.id!=='result');state.geometry.push({...previous,id:'result',path});markDirty();await loadPreview(path,'quick','result');
+    if(!isScratchPreview(path)){
+      const state=ensureFiles(),previous=state.geometry.find(f=>f.id==='result');
+      state.geometry=state.geometry.filter(f=>f.id!=='result');
+      state.geometry.push({...previous,id:'result',path});markDirty();
+    }
+    await loadPreview(path,mode,'result');
   }
   async function chooseExportedOutput(kind){
     if(!invoke){toast('Use the desktop app to open exported files.');return;}
@@ -585,20 +1052,27 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     pointCloudInspector.cancel();previewRequest++;if(activePreviewJob){invoke?.('cancel_geometry_preview',{jobId:activePreviewJob}).catch(()=>{});activePreviewJob='';}if(previewProgressUnlisten){previewProgressUnlisten();previewProgressUnlisten=null;}if(previewCancelReject){previewCancelReject(new DOMException('Preview cancelled','AbortError'));previewCancelReject=null;}if(previewWorker){previewWorker.terminate();previewWorker=null;}if(previewAbort){previewAbort.abort();previewAbort=null;}
     setPreviewProgress(false);$('mesh-info').textContent='Preview loading cancelled';
   }
-  async function loadPreview(path,mode='quick',layerId='source',{skipResourceCheck=false}={}){
+  async function loadPreview(path,mode='auto',layerId='source',{skipResourceCheck=false}={}){
     if(!path||!invoke||cleaningScratch)return;
-    const beforeCheck=previewRequest;
+    const beforeCheck=previewRequest,selection=++previewSelection;
+    const automatic=mode==='auto';let geometryFile=null;
+    const currentSelection=()=>beforeCheck===previewRequest&&selection===previewSelection;
     await viewerReady;
-    if(beforeCheck!==previewRequest)return;
+    if(!currentSelection())return;
     if(!viewer){toast('This computer could not start the WebGL viewer. Workflow editing is still available.');return;}
-    // Admission runs before changing progress, cancelling preview work, or touching the scene.
+    if(automatic){
+      try{geometryFile=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});}catch{}
+      if(!currentSelection())return;
+      mode=initialGeometryMode(geometryFile?.size);
+    }
+    // Admission precedes changes to the current preview or scene. Automatic
+    // loading falls back to preview if full detail cannot be admitted.
     if(mode==='full'&&!skipResourceCheck&&!/\.stl$/i.test(path)){
-      if(checkingFullDetail)return;
-      checkingFullDetail=true;
-      let admitted=false;
-      try{admitted=await admitFullDetail({invoke,viewer,path,workflowPath:currentPath||null,warn:message=>{if(beforeCheck===previewRequest)fullDetailWarning(message,()=>{if(beforeCheck===previewRequest)loadPreview(path,'full',layerId,{skipResourceCheck:true});});}});}
-      finally{checkingFullDetail=false;}
-      if(!admitted||beforeCheck!==previewRequest)return;
+      const admitted=await admitFullDetail({invoke,viewer,path,workflowPath:currentPath||null,warn:message=>{
+        if(!automatic&&currentSelection())fullDetailWarning(message,()=>{if(currentSelection())loadPreview(path,'full',layerId,{skipResourceCheck:true});});
+      }});
+      if(!currentSelection())return;
+      if(!admitted){if(automatic)mode='quick';else return;}
     }
     const request=++previewRequest;
     if(activePreviewJob){invoke('cancel_geometry_preview',{jobId:activePreviewJob}).catch(()=>{});activePreviewJob='';}
@@ -629,11 +1103,11 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
         previewAbort=null;refreshTree();refreshProperties();return;
       }
       if(ext==='inp'){
-        const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});if(request!==previewRequest)return;
+        const file=geometryFile||await invoke('resolve_geometry',{path,workflowPath:currentPath||null});if(request!==previewRequest)return;
         inp=await loadStlWorker(window.__TAURI__.core.convertFileSrc(file.path),'full',file.size,request,true);
         positions=inp.positions;center=inp.center;bounds=inp.bounds;totalTriangles=shownTriangles=positions.length/9;
       }else if(ext==='stl'){
-        const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});
+        const file=geometryFile||await invoke('resolve_geometry',{path,workflowPath:currentPath||null});
         if(request!==previewRequest)return;
         const url=window.__TAURI__.core.convertFileSrc(file.path);
         const result=await loadStlWorker(url,'full',file.size,request,false,layerId,path);
@@ -641,7 +1115,7 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
         if(request!==previewRequest)return;
         chunks=result.chunks||null;positions=chunks?new Float32Array():new Float32Array(result.positions);center=result.center;bounds=result.bounds;totalTriangles=result.totalTriangles;shownTriangles=result.triangles;
       }else{
-        const file=await invoke('resolve_geometry',{path,workflowPath:currentPath||null});
+        const file=geometryFile||await invoke('resolve_geometry',{path,workflowPath:currentPath||null});
         if(request!==previewRequest)return;
         const url=window.__TAURI__.core.convertFileSrc(file.path);previewAbort=new AbortController();
         const response=await fetch(url,{signal:previewAbort.signal});if(!response.ok)throw Error(`Could not read geometry (${response.status}).`);
@@ -660,9 +1134,9 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     }catch(e){
       thisProgressUnlisten?.();if(previewProgressUnlisten===thisProgressUnlisten)previewProgressUnlisten=null;if(activePreviewJob===thisJobId)activePreviewJob='';
       if(request!==previewRequest)return;
-      if(e?.name==='AbortError'){setPreviewProgress(false);$('mesh-info').textContent='Full-detail loading cancelled';return;}
+      if(e?.name==='AbortError'){setPreviewProgress(false);if(automatic&&mode==='full'&&selection===previewSelection){await loadPreview(path,'quick',layerId);return;}$('mesh-info').textContent='Full-detail loading cancelled';return;}
       if(previewWorker){previewWorker.terminate();previewWorker=null;}previewAbort=null;setPreviewProgress(false);
-      if(mode==='full'){fullDetailWarning(String(e?.message||e));return;}
+      if(mode==='full'){if(automatic){if(selection===previewSelection)await loadPreview(path,'quick',layerId);return;}fullDetailWarning(String(e?.message||e));return;}
       fileIssues.set(layerId,String(e?.message||e));refreshTree();refreshProperties();$('mesh-info').textContent='Could not preview this geometry';toast(`Preview failed: ${e?.message||e}`);
     }
   }
@@ -705,9 +1179,130 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     const invalid=domain.map((pair,i)=>pair[1]<=pair[0]?'XYZ'[i]:null).filter(Boolean);
     return invalid.length?`Set upper bounds greater than lower bounds for ${invalid.join(', ')} before generating.`:'';
   }
+  const scratchPreviewFolders=new Map();
+  const scratchFolder=path=>String(path||'').replaceAll('\\','/').replace(/^\/\/\?\//,'').replace(/\/[^/]*$/,'').toLowerCase();
+  function isScratchPreview(path){return scratchPreviewFolders.has(scratchFolder(path));}
+  function isDiscardedPreview(path){return scratchPreviewFolders.get(scratchFolder(path))===false;}
+  async function scratchPreviewPath(key,resultName){
+    if(cleaningScratch)throw Error('Wait for scratch cleanup to finish.');
+    const path=await invoke('prepare_workflow_preview',{workflowPath:currentPath,step:stepKeys().indexOf(key)+1,resultName});
+    if(cleaningScratch)throw Error('Wait for scratch cleanup to finish.');
+    scratchPreviewFolders.set(scratchFolder(path),true);
+    return path;
+  }
+  async function runPanelWorkflow(preview,isCurrent,previewPath){
+    if(runProgress.busy||preparingGeneration||cleaningScratch||!isCurrent())return;
+    preparingGeneration=true;
+    let fieldsReleased=false;
+    try{
+      if(!(await saveProject(false,preview.WorkFlow))||!isCurrent())return;
+      fieldsReleased=true;fieldInspector.releaseForGeneration();
+      return await runProgress.run({contents:workflowJson(preview).trimEnd(),backendPath,pythonPath:pythonPath||null,workflowPath:currentPath,previewPath},preview.WorkFlow);
+    }finally{
+      if(fieldsReleased)fieldInspector.resumeAfterGeneration();
+      preparingGeneration=false;
+    }
+  }
+  async function previewSlotJoint(params,context){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const domainIssue=sampleDomainError();
+    if(domainIssue)throw Error(domainIssue);
+    const original=doc,key=context.key,fingerprint=slotFingerprint(doc,key);
+    const isCurrent=()=>doc===original&&slotContext(params)?.key===key&&slotFingerprint(doc,key)===fingerprint;
+    const path=await scratchPreviewPath(key,'plate_a.stl');
+    if(!isCurrent())return;
+    const {workflow,outputs}=slotPreviewWorkflow(doc,key,path);
+    const run=await runPanelWorkflow(workflow,isCurrent,path);
+    if(!run?.success)return run;
+    const stillAvailable=()=>isCurrent()&&!cleaningScratch&&!isDiscardedPreview(path);
+    if(!stillAvailable())return;
+    const meshes={};
+    for(const side of ['A','B']){
+      const file=await invoke('resolve_geometry',{path:outputs[side],workflowPath:currentPath});
+      if(!stillAvailable())return;
+      if(file.size>64*1024*1024)throw Error('The joint preview is too large. Use coarser project sampling.');
+      const url=window.__TAURI__.core.convertFileSrc(file.path),batches=[];
+      await readStlStream(stlByteRanges(url,file.size),{fileSize:file.size,onChunk:chunk=>batches.push(chunk),
+        isCancelled:()=>!stillAvailable()});
+      if(!stillAvailable())return;
+      if(!batches.length)throw Error('One preview plate contains no surface.');
+      meshes[side]=batches;
+    }
+    return {...run,path,fingerprint,meshes};
+  }
+  async function previewContours(params,context){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const domainIssue=sampleDomainError();
+    if(domainIssue)throw Error(domainIssue);
+    const original=doc,key=context.key,fingerprint=contourFingerprint(doc,key);
+    const isCurrent=()=>doc===original&&contourContext(params)?.key===key&&contourFingerprint(doc,key)===fingerprint;
+    const path=await scratchPreviewPath(key,'contours.contour');
+    if(!isCurrent())return;
+    const result=await runPanelWorkflow(contourPreviewWorkflow(doc,key,path),isCurrent,path);
+    if(!result?.success)return result;
+    if(!isCurrent()||isDiscardedPreview(path))return;
+    const contents=await invoke('read_workflow_contours',{path});
+    if(!isCurrent()||isDiscardedPreview(path))return;
+    return {...result,path,fingerprint,slices:contourResults(contents,params.PlaneHeights)};
+  }
+  async function previewGeometry(keyword,params){
+    const transition=transitionKeywords.includes(keyword),lattice=keyword==='Add_Lattice';
+    if(runProgress.busy||preparingGeneration)return;
+    if(!transition&&!lattice&&params.push2GeomField)return generate();
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Backend… first.');
+    const originalDoc=doc,key=stepKeys().find(k=>doc.WorkFlow[k]?.[keyword]===params);
+    if(!key)throw Error('This geometry operation is no longer in the workflow.');
+    const issue=(lattice?latticeError(params):transition?transitionError(keyword,params):geometryOperationError(params))||sampleDomainError();if(issue)throw Error(issue);
+    const previewKey=lattice?latticePreviewKey(doc,key):'';
+    const output=await scratchPreviewPath(key,lattice?'lattice_preview.stl':transition?'transition_preview.stl':'geometry_preview.stl');
+    const isCurrent=()=>doc===originalDoc&&doc.WorkFlow[key]?.[keyword]===params&&(!lattice||latticePreviewKey(doc,key)===previewKey);
+    if(!isCurrent())return;
+    const preview=lattice?latticePreviewWorkflow(doc,key,output):transition?transitionPreviewWorkflow(doc,key,keyword,output):geometryPreviewWorkflow(doc,key,keyword,output);
+    let result=await runPanelWorkflow(preview,isCurrent,output);
+    if(result?.success&&isCurrent()&&!isDiscardedPreview(output)){await openResult(output);if(doc===originalDoc){selected=key;refreshAll();}toast(lattice?'Lattice preview saved.':transition?'Transition preview saved.':'Geometry preview saved.');
+      if(lattice&&doc===originalDoc)result={...result,latticePreviewKey:previewKey};
+    }
+    return result;
+  }
+  async function previewScalarField(params){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose the updated ArtisanMain.py or a rebuilt Artisan backend with Backend… first.');
+    const key=stepKeys().find(k=>doc.WorkFlow[k]?.[scalarFieldKeyword]===params);
+    if(!key)throw Error('This field is no longer in the workflow.');
+    const domainIssue=sampleDomainError();if(domainIssue)throw Error(domainIssue);
+    const originalDoc=doc,isCurrent=()=>doc===originalDoc&&doc.WorkFlow[key]?.[scalarFieldKeyword]===params;
+    const output=await scratchPreviewPath(key,'scalar_field.h5');
+    if(!isCurrent())return;
+    const preview=fieldPreviewWorkflow(doc,key,output);
+    const result=await runPanelWorkflow(preview,isCurrent,output);
+    if(result?.success&&isCurrent()&&!isDiscardedPreview(output)){toast('Field preview saved.');await fieldInspector.load(output,null,params.field_id);}
+    return result;
+  }
+  async function previewMorph(params,options){
+    if(runProgress.busy||preparingGeneration)return;
+    if(!invoke||!backendPath)throw Error('Choose an Artisan backend with Proc_Field_Morph support using Backend… first.');
+    const context=morphContext(params);if(!context.key)throw Error('This morph is no longer in the workflow.');
+    const domainIssue=sampleDomainError();if(domainIssue)throw Error(domainIssue);
+    const originalDoc=doc,isCurrent=()=>doc===originalDoc&&morphContext(params).key===context.key;
+    const output=await scratchPreviewPath(context.key,'morph_field.h5');
+    if(!isCurrent())return;
+    const preview=morphPreviewWorkflow(doc,context.key,output,options);
+    const result=await runPanelWorkflow(preview.workflow,isCurrent,output);
+    if(result?.success&&isCurrent()&&!isDiscardedPreview(output)){
+      try{result.report=await invoke('read_morph_report',{path:preview.report});}catch(e){toast('Preview computed, but the quality report could not be read: '+String(e));}
+      if(preview.mesh)await openResult(preview.mesh);else await fieldInspector.load(output,null,preview.field);
+      // Keep movement controls available after loading the computed result.
+      const key=morphContext(params).key;if(key){selected=key;refreshAll();}
+      toast('Morph preview saved with quality report.');
+    }
+    return result;
+  }
   async function generate(){
     if(runProgress.busy||preparingGeneration)return;
     if(applyLatticeDraft&&!applyLatticeDraft())return;
+    const scalarIssue=scalarWorkflowError(doc.WorkFlow)||morphWorkflowError(doc.WorkFlow)||transitionWorkflowError(doc.WorkFlow)||latticePanelWorkflowError(doc.WorkFlow)||quadWorkflowError(doc.WorkFlow)||primitiveMeshWorkflowError(doc.WorkFlow)||geometryFieldWorkflowError(doc.WorkFlow)||fieldMergeWorkflowError(doc.WorkFlow)||contourWorkflowError(doc.WorkFlow)||slotWorkflowError(doc.WorkFlow);if(scalarIssue){toast(scalarIssue);return;}
     const exportIssue=exportWorkflowError(doc.WorkFlow,exportDrafts);if(exportIssue){toast(exportIssue);return;}
     const latticeError=latticeWorkflowError();if(latticeError){toast(latticeError);return;}
     const domainError=sampleDomainError();if(domainError){selected='setup';refreshAll();toast(domainError);return;}
@@ -717,7 +1312,14 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
     let fieldsReleased=false;
     try{if(!(await saveProject()))return;
       fieldInspector.releaseForGeneration();fieldsReleased=true;
-      await runProgress.run({contents:workflowJson(Object.fromEntries(Object.entries(doc).filter(([key])=>key!=='ArtGUI'))).trimEnd(),backendPath,pythonPath:pythonPath||null,workflowPath:currentPath},doc.WorkFlow);
+      const originalDoc=doc,snapshots=stepKeys().flatMap(key=>mesherKeywords.filter(keyword=>doc.WorkFlow[key]?.[keyword]).map(keyword=>({key,params:doc.WorkFlow[key][keyword],fingerprint:quadFingerprint(doc,key)})));
+      const result=await runProgress.run({contents:workflowJson(Object.fromEntries(Object.entries(doc).filter(([key])=>key!=='ArtGUI'))).trimEnd(),backendPath,pythonPath:pythonPath||null,workflowPath:currentPath},doc.WorkFlow);
+      // The run has exited and HDF5 handles are closed; read only reports for
+      // steps whose exact input snapshot remains in this document.
+      if(fieldsReleased){fieldInspector.resumeAfterGeneration();fieldsReleased=false;}
+      preparingGeneration=false;
+      if(result?.success&&doc===originalDoc)for(const snapshot of snapshots){if(mesherContext(snapshot.params)?.key===snapshot.key&&quadFingerprint(doc,snapshot.key)===snapshot.fingerprint){mesherPreviewPaths.delete(snapshot.params);await mesherEditor.loadReport(snapshot.params,false,snapshot.fingerprint);}}
+      return result;
     }finally{if(fieldsReleased)fieldInspector.resumeAfterGeneration();preparingGeneration=false;$('generate').disabled=false;}
   }
   async function init(){
@@ -742,13 +1344,37 @@ ${pointCloudInspector.treeHtml()}<div class="tree-group"><div class="project-gro
             const selectedId=selected==='geometry'?'source':selected?.startsWith('file:')?selected.slice(5):null;
             if(selectedId===id&&$('file-colour')){$('file-colour').value=colour;$('file-colour-value').textContent=colour;}
           },
-          onLayersChanged:()=>{refreshTree();if(selected==='geometry'||selected?.startsWith('file:'))refreshProperties();},
+          onLayersChanged:()=>{slotEditor.syncOverlay();contourEditor.syncOverlay();setupEditor.refresh();viewer?.regionOverlay?.refresh();viewer?.morphOverlay?.refresh();refreshTree();if(selected==='geometry'||selected?.startsWith('file:'))refreshProperties();},
           onLayerSelected:(id,layer)=>{if(!layer)return;loadedLayerId=id;loadedGeometryPath=layer.path;loadedPreviewMode=layer.mode;updatePreviewMode(layer.mode,layer.total,layer.shown,/\.stl$/i.test(layer.path));$('mesh-info').textContent=`${id==='source'?'Source':id==='result'?'Result':nameForPath(layer.path)} · ${layer.mode==='quick'?'Preview · Detail follows zoom':'Full detail'} · ${layer.metadata?fileStats(layer):layer.shown.toLocaleString()+' of '+layer.total.toLocaleString()+' triangles'}`;refreshTree();},
           exportImage:invoke?async blob=>{const path=await invoke('save_view_image',{pngData:Array.from(new Uint8Array(await blob.arrayBuffer()))});if(path)toast('Viewport image saved.');}:null
         });
         applyGeometryColours(viewer,doc);applyGeometryOpacities(viewer,doc);
         adaptivePreview=createAdaptivePreview({viewer,invoke,fileUrl:p=>window.__TAURI__.core.convertFileSrc(p),toast,
           onStats:(id,stats)=>{if(loadedLayerId===id&&loadedPreviewMode==='quick')$('mesh-info').textContent=`Preview · ${stats.loadedTiles} detailed blocks · ${stats.total.toLocaleString()} source triangles · Detail follows zoom`;}});
+        const {createRegionOverlay}=await import('./region-overlay.js');
+        viewer.regionOverlay=createRegionOverlay(viewer,{onSelect:i=>regionEditor.select(i),onDrag:g=>regionEditor.drag(g),onCommit:g=>regionEditor.commit(g),onCancel:g=>regionEditor.cancel(g),toast});
+        regionEditor.attachOverlay(viewer.regionOverlay);
+        const {createMorphOverlay}=await import('./morph-overlay.js');
+        viewer.morphOverlay=createMorphOverlay(viewer,{onSelect:i=>morphEditor.select(i),onDrag:r=>morphEditor.drag(r),onCommit:r=>morphEditor.commit(r),onCancel:r=>morphEditor.cancel(r),toast});
+        morphEditor.attachOverlay(viewer.morphOverlay);
+        viewer.spatialOverlay=createRegionOverlay(viewer,{onSelect:i=>spatialEditor.select(i),onDrag:g=>spatialEditor.drag(g),onCommit:g=>spatialEditor.commit(g),onCancel:g=>spatialEditor.cancel(g),toast});
+        spatialEditor.attachOverlay(viewer.spatialOverlay);
+        const {createSetupOverlay}=await import('./setup-overlay.js');
+        viewer.setupOverlay=createSetupOverlay(viewer,{onDrag:g=>setupEditor.drag(g),onCommit:()=>setupEditor.commit(),onCancel:()=>setupEditor.cancel(),onTool:mode=>setupEditor.tool(mode),toast});
+        setupEditor.attachOverlay(viewer.setupOverlay);
+        const {createPrimitiveMeshOverlay}=await import('./primitive-mesh-overlay.js');
+        viewer.primitiveMeshOverlay=createPrimitiveMeshOverlay(viewer,{onSelect:path=>primitiveMeshEditor.select(path),onBegin:()=>primitiveMeshEditor.begin(),onDrag:(path,value)=>primitiveMeshEditor.drag(path,value),onCommit:()=>primitiveMeshEditor.commit(),onCancel:()=>primitiveMeshEditor.cancel(),onDisplay:mode=>primitiveMeshEditor.setDisplay(mode),toast});
+        primitiveMeshEditor.attachOverlay(viewer.primitiveMeshOverlay);
+        viewer.geometryFieldOverlay=createRegionOverlay(viewer,{onSelect:()=>{},onDrag:g=>geometryFieldEditor.drag(g),onCommit:g=>geometryFieldEditor.commitDrag(g),onCancel:g=>geometryFieldEditor.cancelDrag(g),toast,legendLabel:'Influence geometry'});
+        geometryFieldEditor.attachOverlay(viewer.geometryFieldOverlay);
+        viewer.fieldMergeOverlay=createRegionOverlay(viewer,{onSelect:i=>fieldMergeEditor.select(i),onDrag:g=>fieldMergeEditor.drag(g),onCommit:()=>fieldMergeEditor.commitDrag(),onCancel:()=>fieldMergeEditor.cancelDrag(),toast,legendLabel:'Transition region'});
+        fieldMergeEditor.attachOverlay(viewer.fieldMergeOverlay);
+        const {createContourOverlay}=await import('./contour-overlay.js');
+        viewer.contourOverlay=createContourOverlay(viewer,index=>contourEditor.select(index));
+        contourEditor.attachOverlay(viewer.contourOverlay);
+        const {createSlotOverlay}=await import('./slot-overlay.js');
+        viewer.slotOverlay=createSlotOverlay(viewer,()=>slotEditor.isolate());
+        slotEditor.attachOverlay(viewer.slotOverlay);
         fieldInspector.attachViewer();pointCloudInspector.attachViewer();
       }catch(e){
         console.error('ArtGUI 3D viewer startup failed:',e);

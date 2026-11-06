@@ -615,7 +615,7 @@
   },
   "Define_ScalarField_CombineGeometry": {
     "icon": "layers",
-    "description": "Combine geometry regions into a scalar field on the project grid.",
+    "description": "Combine or interpolate geometry-region values into a scalar field on the project grid.",
     "searchTerms": [
       "cell size",
       "geometry",
@@ -623,7 +623,14 @@
       "scalar",
       "transition",
       "尺寸场",
-      "区域"
+      "区域",
+      "interpolation",
+      "linear",
+      "smoothstep",
+      "inverse distance",
+      "插值",
+      "线性",
+      "平滑过渡"
     ],
     "preferredSource": "Src/Test_json/ConformalLattice/TetSizeField/TetSizeField_Conformal.json"
   },
@@ -675,5 +682,35 @@
       "export"
     ],
     "preferredSource": "Doc/examples/PlateSlicing_TwoPlates.json"
+  },
+  "Proc_Field_Morph": {
+    "icon": "move",
+    "description": "Deform an implicit field with fixed and moving masks, translation and rotation.",
+    "searchTerms": [
+      "RBF",
+      "bend",
+      "twist",
+      "stretch",
+      "compress",
+      "morph",
+      "mask",
+      "rotation"
+    ]
+  },
+  "Gen_QuadMesh_SizeField": {
+    "icon": "box",
+    "description": "Create an all-quad surface mesh with sizes controlled by a scalar field; optionally split each quad into two triangles.",
+    "searchTerms": [
+      "quad",
+      "quadrilateral",
+      "size field",
+      "grading",
+      "triangle split",
+      "四边形",
+      "尺寸场",
+      "SimpleQuad",
+      "Subdivision"
+    ],
+    "preferredSource": "Src/Test_json/ConformalLattice/QuadSizeField/Shoes_02_QuadriFlow_Surface.json"
   }
 }

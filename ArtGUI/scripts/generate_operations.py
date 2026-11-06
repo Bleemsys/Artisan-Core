@@ -11,12 +11,13 @@ import textwrap
 from collections import defaultdict
 from pathlib import Path
 
-COMMAND = re.compile(r'^(?:Add_|Subtract_|Substract_|Intersect_|Check_|Define_|Gen_|Proc_Mesh_|OP_|HS_|Lin_|Field_|Inv_)[A-Za-z0-9_]+$')
+COMMAND = re.compile(r'^(?:Add_|Subtract_|Substract_|Intersect_|Check_|Define_|Gen_|Proc_Mesh_|Proc_Field_|OP_|HS_|Lin_|Field_|Inv_)[A-Za-z0-9_]+$')
 STANDALONE = {'Export', 'ExportMeshID', 'ReadMesh', 'RemoveMesh', 'ReadGridField', 'Evaluate_Points', 'GeomBuild', 'GeomFill', 'Clear_LatticeField', 'Store_LatticeMesh'}
 # These commands have partial illustrations in the manuals. Their required
 # fields are verified against Artisan/command_schemas.py; do not offer a partial
 # illustration as an executable preset or invent values for missing fields.
 REQUIRED_PRESET_FIELDS = {
+    'Gen_QuadMesh_SizeField': {'mesh_file', 'size_field', 'export_mesh'},
     'Define_ScalarField_CombineGeometry': {'field_id', 'default_value', 'regions'},
     'Gen_TetMesh_SizeField': {'mesh_file', 'export_mesh', 'size_field', 'sampling_size'},
     'Add_Lattice': {'Rot', 'Trans'},

@@ -1,7 +1,7 @@
 import {translate as t} from './i18n.js';
 import {operationIcon} from './operation-icons.js';
 
-const common = ['Add_Lattice','Add_Shell','Boundary_Inflation','Proc_Mesh_Trim','Gen_BasicCartesianHexMesh','Export'];
+const common = ['Add_Lattice','Add_Shell','Boundary_Inflation','Proc_Mesh_Trim','Proc_Field_Morph','Define_ScalarField_CombineGeometry','Gen_BasicCartesianHexMesh','Export'];
 const esc = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const storeKey = kind => `artisan.operation-picker.${kind}`;
 function readSaved(kind, known){

@@ -1,0 +1,61 @@
+
+.scalar-region-editor{font-size:12px;color:#304359}
+.scalar-region-editor .field{margin-bottom:12px}
+.scalar-region-editor .field label{font-size:11px;color:#40556c}
+.scalar-region-editor .field input,.scalar-region-editor .field select{font:12px 'Segoe UI',sans-serif;padding:8px}
+.scalar-region-editor .field-help{color:#64768b;font-size:11px;line-height:1.5}
+.region-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.region-section{border-top:1px solid #e3e9ef;margin-top:16px;padding-top:14px}
+.region-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.region-heading h3{font-size:12px;margin:0;color:#24374d}
+.region-heading h3 span{margin-left:5px;color:#74879a;font-weight:400}
+.region-list{border:1px solid #dce4ed;border-radius:7px;overflow:hidden;max-height:210px;overflow-y:auto}
+.region-list>p{padding:10px}
+.region-row{display:flex;align-items:center;padding-right:12px;border-bottom:1px solid #e5ebf1}
+.region-row:last-child{border-bottom:0}.region-row.active{background:#edf4ff;box-shadow:inset 3px 0 #2867d8}
+.region-select{border:0;background:none;display:flex;gap:10px;padding:10px 12px;align-items:center;text-align:left;cursor:pointer;flex:1;min-width:0;color:inherit}
+.region-select>span:last-child{min-width:0}.region-select strong{display:block;font-size:12px;overflow-wrap:anywhere;font-weight:600}.region-select small{display:block;font-size:10px;color:#657a90;margin-top:3px}
+.region-swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.region-row input{accent-color:#2867d8}.region-shapes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-bottom:15px}
+.region-shapes .button{padding:9px 2px;font-size:11px}.region-shapes .selected,.region-tools .selected{color:#185bc8;border-color:#8cb2f1;background:#edf4ff}
+.region-vector{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.region-vector label{display:flex!important;align-items:center;gap:4px;margin:0!important}.region-vector input{min-width:0;width:100%;text-align:right;padding:7px 4px!important}.region-vector span{font-size:10px;color:#7b8999}
+.region-orientation{margin-bottom:12px}.region-orientation summary{font-size:11px;color:#526c89;cursor:pointer;margin-bottom:10px}
+.region-tools{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.region-tools .button{font-size:10px;padding:7px 9px}
+.region-snap{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:10px;color:#65788e}.region-snap input{width:64px;border:1px solid #dce4ed;border-radius:5px;padding:5px;font:11px inherit}
+.region-coverage{font-size:11px;color:#886018;line-height:1.5}.region-coverage:empty,.region-error:empty{display:none}.region-error{color:#b33832;font-size:11px;line-height:1.5}
+.region-actions{position:sticky;bottom:-56px;background:#fff;padding:14px 0 0;border-top:1px solid #dce4ed;margin-top:14px}
+.region-actions>div:nth-child(2){display:flex;gap:6px;margin:10px 0}.region-actions .primary{margin-left:auto}.region-actions>p{font-size:10px;line-height:1.5;color:#708198}.region-actions #region-status{font-size:11px;color:#98641a}.region-actions #region-status.current{color:#247449}
+.region-labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}.region-labels[hidden]{display:none}
+.region-handle{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;touch-action:none;border:1px solid var(--region-colour);background:#fff;color:#213951;box-shadow:0 2px 7px #192b3e33;font:10px 'Segoe UI',sans-serif;cursor:grab;white-space:nowrap;padding:5px 7px;border-radius:5px;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.region-handle:focus-visible{outline:3px solid #ffce52;outline-offset:2px}.region-handle:active{cursor:grabbing}.region-name{font-weight:600;border-left:4px solid var(--region-colour)}.region-knob{font-size:9px;padding:4px 6px;border-radius:8px}
+
+.scalar-region-editor button:focus-visible{outline:2px solid #2867d8;outline-offset:2px}.scalar-region-editor input[aria-invalid=true]{border-color:#b33832}
+.region-help{margin:8px 0 12px}.region-help summary{font-size:10px;color:#5b718b;cursor:pointer}
+.region-select{padding-top:7px;padding-bottom:7px}.region-section{margin-top:12px;padding-top:11px}
+.region-actions{bottom:0;padding-top:10px}.region-actions>p{margin:8px 0}
+.region-selected-heading{gap:10px}.region-selected-heading input{font:600 12px 'Segoe UI',sans-serif;min-width:0;flex:1;border:1px solid #dde5ee;border-radius:6px;padding:8px;color:#304359}
+.scalar-region-editor .field{margin-bottom:9px}.scalar-region-editor .field-help{margin-bottom:9px}
+
+
+/* Precision handles are screen-sized; coloured scene geometry supplies the arrows and dial. */
+.region-handle.precision-handle{--precision-colour:#326ed3;display:grid;place-items:center;box-sizing:border-box;max-width:none;min-width:28px;min-height:28px;padding:0;border:0;border-radius:50%;box-shadow:none;background:transparent;color:var(--precision-colour);font:600 12px 'Segoe UI',sans-serif;overflow:visible}
+.precision-handle .precision-handle-label{position:absolute;left:50%;top:50%;transform:translate(calc(-50% + var(--label-x,0px)),calc(-50% + var(--label-y,0px)));pointer-events:none;text-shadow:0 1px 2px #fff,0 0 4px #fff}
+.region-handle.precision-plane{min-width:24px;min-height:24px;border:1px solid var(--precision-colour);border-radius:3px;background:#ffffffe6;font-size:9px}
+.region-handle.precision-axis-selector{min-width:26px;min-height:24px;border:1px solid #d4dfed;border-radius:5px;background:#fffffff0;cursor:pointer}
+.region-handle.precision-axis-selector[aria-pressed=true]{border-color:var(--precision-colour);box-shadow:0 0 0 1px var(--precision-colour);background:#edf3fc}
+.region-handle.precision-readout{pointer-events:none;min-height:24px;min-width:62px;padding:3px 8px;background:#fffffff0;border:1px solid #d7e1ee;border-radius:5px;color:#334b68;font:11px 'Segoe UI',sans-serif;font-variant-numeric:tabular-nums}
+.region-handle.precision-dial-label{min-width:0;min-height:0;pointer-events:none;color:#536a85;font:10px 'Segoe UI',sans-serif;text-shadow:0 1px 2px #fff,0 0 4px #fff}
+.region-handle.precision-pivot-handle{width:24px;height:24px;padding:0;border:0;border-radius:50%;box-shadow:none;background:transparent;font-size:0!important;max-width:24px;color:transparent}
+.region-handle.precision-pivot-handle span{font-size:0!important}
+.region-handle.precision-resize{width:25px;height:25px;padding:0;border:1px solid #6c8aad;border-radius:3px;display:grid;place-items:center;background:#fffffff0;font-size:10px;box-shadow:none}
+.precision-handle:focus-visible,.precision-pivot-handle:focus-visible,.precision-resize:focus-visible{outline:3px solid #e3a735;outline-offset:3px}
+@media(pointer:coarse){.region-handle.precision-move,.region-handle.precision-rotate,.region-handle.precision-pivot-handle{min-width:36px;min-height:36px}.region-handle.precision-axis-selector{min-width:28px;min-height:30px}}
+
+.spatial-editor{border-bottom:1px solid #dce5ef;padding-bottom:16px;margin-bottom:16px}.spatial-editor h3{font-size:14px;margin-top:0}.spatial-editor .region-tools{flex-wrap:wrap}.spatial-editor details{margin:10px 0}.spatial-editor select{max-width:100%}
+
+/* Slice manager: compact named list and thickness-first editing. */
+.slice-editor h4{margin:16px 0 8px;font-size:13px}.slice-io{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.slice-io input,.slice-io select{width:100%;min-width:0}.slice-selected{border-top:1px solid #dce3ed;margin-top:12px;padding-top:10px}.slice-parallel{border:1px solid #b8cef4;border-radius:8px;background:#f5f9ff;padding:12px;margin:10px 0}.slice-footer{position:sticky;bottom:-16px;background:var(--panel,#fff);border-top:1px solid #dce3ed;padding:10px 0;margin-top:14px}.slice-editor details>summary{cursor:pointer}.slice-editor [data-slice-size]{margin:12px 0}.slice-editor [data-slice-size]>summary{padding:8px 0}.slice-editor .region-tools{flex-wrap:wrap}
+#properties-content .slice-editor>h3{display:none}.slice-editor.region-section{border:0;padding:0;margin:0}.slice-editor .field{margin-bottom:9px}.slice-editor h4{margin-top:10px}.slice-editor .field-help{margin:5px 0 9px}.slice-editor .slice-selected{margin-top:8px;padding-top:8px}
+
+.slice-editor .slice-list-section{margin:12px 0}.slice-editor .region-heading h3{margin:0}.slice-editor .region-select:focus-visible{outline:2px solid #2867d8;outline-offset:-2px}.slice-editor .slice-add-choices{margin-top:0}

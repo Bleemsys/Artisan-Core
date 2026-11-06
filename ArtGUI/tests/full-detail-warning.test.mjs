@@ -12,7 +12,7 @@ const loader=source.slice(source.indexOf('  async function loadPreview('),source
 function setup(){
   const elements=new Map();let checks=0,closed=0,html='';
   const context=vm.createContext({admitFullDetail,viewerReady:Promise.resolve(),viewer:{geometryBytes:()=>0},
-    previewRequest:7,checkingFullDetail:false,cleaningScratch:false,currentPath:null,started:[],
+    previewRequest:7,previewSelection:0,checkingFullDetail:false,cleaningScratch:false,currentPath:null,started:[],
     invoke:async()=>{checks++;return {allowed:false,reason:'Graphics budget exceeded. Continue using Preview.'};},
     esc:s=>String(s).replaceAll('<','&lt;'),
     $:id=>{if(!elements.has(id))elements.set(id,{focus(){this.focused=true;}});return elements.get(id);},

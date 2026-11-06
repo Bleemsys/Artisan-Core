@@ -1,6 +1,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod tet_report;
+use tet_report::read_tet_report;
+
 mod field_reader;
+mod cell_assets;
+use cell_assets::{choose_cell_mesh,save_cell_mesh};
+mod quad_report;
+use quad_report::read_quad_report;
+mod morph_report;
+use morph_report::read_morph_report;
 use field_reader::{FieldFiles, resolve_export_output, resolve_field_output, choose_result, choose_field_file, open_field_file, read_field_slice, probe_field, cancel_field_request, close_field_file};
 mod resources;
 mod mesh_stream;
@@ -119,6 +128,22 @@ fn choose_output(kind: Option<String>, path: Option<String>) -> Option<String> {
         rfd::FileDialog::new()
             .add_filter("HDF5 field", &["h5", "hdf5"])
             .set_file_name("Artisan_output.h5")
+    } else if kind.as_deref()==Some("contour") {
+        rfd::FileDialog::new().add_filter("Contour data or Line mesh", &["contour","inp","vtk","vtu","msh","med"]).set_file_name("contours.contour")
+    } else if kind.as_deref()==Some("line_mesh") {
+        rfd::FileDialog::new().add_filter("Line mesh", &["inp","vtk","vtu","msh","med"]).set_file_name("contours.inp")
+    } else if kind.as_deref()==Some("tet_report") {
+        rfd::FileDialog::new().add_filter("Tet quality report", &["json"]).set_file_name("TetDomains_quality.json")
+    } else if kind.as_deref()==Some("primitive_mesh") {
+        rfd::FileDialog::new().add_filter("Structured volume mesh", &["inp","vtk","vtu","msh","mesh","med"]).set_file_name("PrimitiveMesh.inp")
+    } else if kind.as_deref()==Some("tet_mesh") {
+        rfd::FileDialog::new().add_filter("Tet volume mesh", &["inp","vtk","vtu","msh","mesh","med"]).set_file_name("TetDomains.inp")
+    } else if kind.as_deref()==Some("quad_report") {
+        rfd::FileDialog::new().add_filter("Quad quality report", &["json"]).set_file_name("QuadSurface_quality.json")
+    } else if kind.as_deref()==Some("quad_mesh") {
+        rfd::FileDialog::new().add_filter("Quad surface mesh", &["inp","vtk","vtu","msh","med"]).set_file_name("QuadSurface.inp")
+    } else if kind.as_deref()==Some("triangle_mesh") {
+        rfd::FileDialog::new().add_filter("Triangle surface mesh", &["inp","vtk","vtu","msh","med","stl"]).set_file_name("TriangleSurface.inp")
     } else {
         rfd::FileDialog::new()
             .add_filter("3D model", &["stl", "obj", "ply", "off", "vtk", "vtu", "inp", "msh", "mesh", "med"])
@@ -480,11 +505,16 @@ fn main() {
             resolve_field_output,
             resolve_export_output,
             open_field_file,
+            read_morph_report,
+            read_quad_report,
+            read_tet_report,
             read_field_slice,
             probe_field,
             cancel_field_request,
             close_field_file,
             choose_lattice_input,
+            choose_cell_mesh,
+            save_cell_mesh,
             open_lattice_definition,
             export_lattice_definition,
             open_about_link,
@@ -495,6 +525,8 @@ fn main() {
             close_preview_lod,
             check_full_detail,
             clean_view_scratch,
+            scratch::prepare_workflow_preview,
+            scratch::read_workflow_contours,
             create_geometry_preview,
             cancel_geometry_preview,
             choose_output,

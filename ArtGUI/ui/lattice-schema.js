@@ -24,6 +24,7 @@ export function definitionError(value){
   const d=value.definition,required=key=>typeof d[key]==='string'&&d[key].trim();
   if(isMeshType(value.type)){
     if(!required('meshfile'))return 'Select a mesh file or enter an existing mesh variable name.';
+    if(d.field_mode!==undefined&&!['band','full'].includes(d.field_mode))return 'Field mode must be band or full.';
     if(d.k!==undefined&&(!Number.isFinite(d.k)||d.k<0))return 'Smoothing factor k must be a finite, non-negative number.';
     if(value.type==='ConformalLattice'&&!required('la_name'))return 'Choose an integrated lattice or enter a custom unit-cell name / .txt file.';
   }else{

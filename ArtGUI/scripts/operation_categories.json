@@ -78,7 +78,8 @@
       "keywords": [
         "Gen_BasicQuadMesh",
         "Gen_SimpleQuadMesh",
-        "Gen_SurfaceReMesh"
+        "Gen_SurfaceReMesh",
+        "Gen_QuadMesh_SizeField"
       ]
     },
     {
@@ -146,7 +147,8 @@
         "OP_GeomSDF_GridField",
         "Define_ScalarField_CombineGeometry",
         "Gen_SlotCutters",
-        "Clear_LatticeField"
+        "Clear_LatticeField",
+        "Proc_Field_Morph"
       ]
     },
     {

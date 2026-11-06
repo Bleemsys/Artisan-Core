@@ -1,0 +1,40 @@
+
+.spatial-editor.geometry-editor{padding:0;margin:0 0 14px;border:0}
+.guided-geometry{font-size:12px;color:#304359}
+.guided-geometry .geometry-section{margin:0 0 12px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
+.geometry-section>summary{list-style:none;display:flex;align-items:center;gap:10px;padding:14px 12px;cursor:pointer}
+.geometry-section>summary>span:nth-child(2){min-width:0;flex:1}
+.geometry-section>summary strong{display:block;font-size:13px;color:#20344b;font-weight:650}
+.geometry-section>summary small{display:block;font-size:11px;color:#6b7f96;margin-top:4px;overflow-wrap:anywhere}
+.geometry-number{display:grid;place-items:center;width:28px;height:28px;flex:0 0 28px;border-radius:50%;color:#58718b;background:#edf1f7;font-weight:650}
+.geometry-section[open] .geometry-number{background:#2867d8;color:white}
+.geometry-section-body{padding:0 12px 4px}
+.guided-geometry .field{margin-bottom:13px}
+.guided-geometry .field label{font-size:11px;color:#40556c}
+.guided-geometry .field input,.guided-geometry .field select{font-size:12px;min-height:34px}
+.guided-geometry .field-help{font-size:11px;line-height:1.5;color:#687d94;margin:6px 0 12px}
+.geometry-operation-choices,.geometry-transition{display:flex;gap:6px;margin:0 0 12px}
+.guided-geometry .button{font-size:11px;min-height:32px;display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.geometry-operation-choices .button{flex:1;padding:8px 3px}
+.guided-geometry .button svg{width:15px;height:15px;flex:0 0 15px}
+.guided-geometry .button.selected{background:#edf4ff;border-color:#8cb2f1;color:#185bc8}
+.geometry-tabs{display:flex;border-bottom:1px solid #dde5ef;gap:16px;margin:0 0 16px}
+.geometry-tabs button{border:0;background:none;padding:10px 2px;color:#647b96;font:600 12px 'Segoe UI',sans-serif;cursor:pointer;border-bottom:2px solid transparent}
+.geometry-tabs button[aria-selected=true]{color:#185bc8;border-bottom-color:#2867d8}
+.guided-geometry .region-vector{gap:7px}
+.guided-geometry .region-vector label{display:block!important}
+.guided-geometry .region-vector span{display:block;margin-bottom:5px}
+.guided-geometry .region-vector input{font-size:12px;text-align:left;padding:8px 5px!important}
+.geometry-guide-toggle{display:flex;gap:6px;align-items:center;color:#576e88;font-size:11px;margin:12px 0}
+.geometry-guide-toggle input{accent-color:#2867d8}
+.geometry-viewport-tools>summary{cursor:pointer;color:#526b85;padding:3px 0 8px;font-size:11px}
+.guided-geometry .region-snap{flex-wrap:wrap;margin-bottom:12px}
+.geometry-summary{color:#526b85;line-height:1.6;padding:4px 2px;margin:6px 0}
+.geometry-error{font-size:11px;line-height:1.5;color:#ac3535;margin:5px 0}
+.geometry-error:empty{display:none}
+.geometry-actions{position:sticky;bottom:-44px;background:white;border-top:1px solid #e2e8f0;padding:12px 0 5px;z-index:1}
+.geometry-actions>.primary{width:100%;margin-top:9px}
+.geometry-history{display:flex;gap:6px}
+.geometry-section :focus-visible{outline:2px solid #2867d8;outline-offset:2px}
+
+

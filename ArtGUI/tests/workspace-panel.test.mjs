@@ -8,8 +8,9 @@ const skip=!JSDOM?'Install jsdom or set ARTGUI_TEST_DOM to run DOM integration c
 function fixture(){
  // Match the stylesheet order in index.html, including the rule that previously
  // exposed the point-only button in regular views.
- const css=['styles.css','details.css','viewer.css','field.css','point-cloud.css','resource-monitor.css','operation-picker.css'].map(file=>readFileSync(new URL('../ui/'+file,import.meta.url),'utf8')).join('\n');
- const dom=new JSDOM(`<style>${css}</style><div class="workspace"><section class="center-column"><section class="viewport-panel"></section><section class="workspace-tabs"><div class="workspace-tabstrip"><button id="workflow-tab" role="tab">Workflow</button><button id="resources-tab" role="tab">Resources</button></div><div class="workspace-panes"><div id="workflow-content">Steps</div><div id="resources-content">RAM</div></div></section><section class="run-panel">Generate</section></section></div>`);
+ const html=readFileSync(new URL('../ui/index.html',import.meta.url),'utf8');
+ const css=[...html.matchAll(/<link[^>]+href="\.\/([^"]+\.css)"/g)].map(([,file])=>readFileSync(new URL('../ui/'+file,import.meta.url),'utf8')).join('\n');
+ const dom=new JSDOM(`<style>${css}</style><div class="workspace"><section class="center-column"><section class="viewport-panel"></section><section class="workspace-tabs"><div class="workspace-tabstrip"><button id="workflow-tab" role="tab">Workflow</button><button id="resources-tab" role="tab">Resources</button></div><div class="workspace-panes"><div id="workflow-content"><div class="timeline"><button class="step-card">Steps</button></div></div><div id="resources-content">RAM</div></div></section><section class="run-panel">Generate</section></section></div>`);
  const previous={document:globalThis.document,CustomEvent:globalThis.CustomEvent};globalThis.document=dom.window.document;globalThis.CustomEvent=dom.window.CustomEvent;setLanguage('en');
  const workspace=document.querySelector('.workspace'),panel=createWorkspacePanel(workspace),button=document.getElementById('toggle-workspace-panel'),panes=document.querySelector('.workspace-panes');
  return {dom,workspace,panel,button,panes,display:()=>dom.window.getComputedStyle(panes).display,restore(){setLanguage('en');Object.assign(globalThis,previous);dom.window.close();}};
@@ -62,5 +63,21 @@ test('panel actions and language switching retain translated labels and working 
   setLanguage('en');assert.equal(f.button.textContent,'Expand');
   setLanguage('zh-CN');f.button.click();assert.equal(f.button.textContent,'收起');assert.equal(f.display(),'grid');
   setLanguage('en');assert.equal(f.button.textContent,'Collapse');assert.equal(f.button.title,'Collapse workflow and resources');
+ }finally{f.restore();}
+});
+
+test('every keyword retains the Add_Lattice workspace grid and a scrollable workflow row',{skip},()=>{
+ const f=fixture();try{f.workspace.classList.add('geometry-field-mode');const style=f.dom.window.getComputedStyle(f.workspace.querySelector('.center-column')),panes=f.dom.window.getComputedStyle(f.panes),timeline=f.dom.window.getComputedStyle(f.workspace.querySelector('.timeline'));
+ assert.match(style.gridTemplateRows,/250px auto$/);
+ const reference=f.dom.window.getComputedStyle(f.workspace);
+ for(const mode of ['transition-operation-mode','primitive-mesh-mode','geometry-field-mode','geometry-operation-mode','scalar-region-mode','setup-editor-mode','size-mesher-mode','lattice-definition-mode','point-cloud-mode','']){f.workspace.className='workspace '+mode;const c=f.dom.window.getComputedStyle(f.workspace);assert.equal(c.gridTemplateColumns,reference.gridTemplateColumns,mode);assert.equal(c.getPropertyValue('--properties-panel-width'),reference.getPropertyValue('--properties-panel-width'),mode);assert.equal(f.dom.window.getComputedStyle(f.workspace.querySelector('.center-column')).gridTemplateRows,style.gridTemplateRows,mode);}
+assert.equal(panes.minHeight,'0px');assert.equal(panes.overflow,'hidden');assert.equal(panes.getPropertyValue('scrollbar-width'),'none');assert.equal(timeline.getPropertyValue('scrollbar-width'),'auto');assert.equal(timeline.overflowX,'auto');
+ f.panel.setExpanded(false);assert.equal(f.display(),'none');f.panel.setExpanded(true);assert.equal(f.display(),'grid');
+ }finally{f.restore();}
+});
+test('ordinary mouse-wheel movement navigates long workflows',{skip},()=>{
+ const f=fixture();try{const timeline=f.workspace.querySelector('.timeline');Object.defineProperties(timeline,{scrollWidth:{value:1500},clientWidth:{value:500}});
+ const wheel=new f.dom.window.WheelEvent('wheel',{deltaY:120,bubbles:true,cancelable:true});timeline.dispatchEvent(wheel);assert.equal(timeline.scrollLeft,120);assert.equal(wheel.defaultPrevented,true);
+ const zoom=new f.dom.window.WheelEvent('wheel',{deltaY:120,ctrlKey:true,bubbles:true,cancelable:true});timeline.dispatchEvent(zoom);assert.equal(timeline.scrollLeft,120);assert.equal(zoom.defaultPrevented,false);
  }finally{f.restore();}
 });

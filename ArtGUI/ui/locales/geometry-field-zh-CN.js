@@ -1,0 +1,12 @@
+export default {
+ 'Open saved preview':'打开已保存的预览',
+ 'Geometry distance field':'几何距离场','Geometry-driven offset':'几何驱动偏移','Influence geometry':'影响几何体','Applies to current lattice field':'应用于当前点阵场',
+ 'Input mesh file':'输入网格文件','Field name / destination':'场名称 / 目标','Uses project grid':'使用项目采样网格','Edit project grid…':'编辑项目采样网格…','Use selected geometry':'使用已选几何体','View source':'查看源几何体',
+ 'Move center':'移动中心','Rotate axis':'旋转轴向','Resize shape':'调整形状尺寸','Pick a handle or enter a precise value.':'拖动控制柄，或输入精确数值。','Offset mapping':'偏移映射','Manual range':'手动范围','Use field range':'使用场范围',
+ 'Distance A':'距离 A','Distance B':'距离 B','Offset A':'偏移 A','Offset B':'偏移 B','Drag either point to adjust the linear mapping.':'拖动任一端点，调整线性映射。','Automatic distance limits are computed by Artisan. The graph shows the entered range.':'自动距离边界由 Artisan 计算；图表显示输入的范围。',
+ 'Show influence geometry':'显示影响几何体','Inspect field':'检查场','Generate a preview to inspect real field values.':'生成预览后可检查实际场值。','Editing guides · compute to inspect field values':'正在编辑辅助形状 · 计算后可检查场值','Preview up to date':'预览已更新','Settings changed · update preview':'设置已更改 · 请更新预览',
+ 'Generate field':'生成场','Update preview':'更新预览','Computing field…':'正在计算场…','Previous preview · settings have changed':'旧预览 · 设置已更改','Preview closed · generate again to inspect values':'预览已关闭 · 请重新生成以检查场值','Stored field preview':'已保存场的预览',
+ 'Slice position':'切片位置','Slice position slider':'切片位置滑块','Slice plane':'切片平面','Field display':'场显示','Drag the slice handle; position snaps to the stored grid.':'拖动切片控制柄；位置将对齐已保存的网格。','Isosurface':'等值面','Isovalue':'等值','Isovalue slider':'等值滑块','Surface quality':'曲面质量','Quick (up to 32³)':'快速（最多 32³）','Detailed (up to 64³)':'详细（最多 64³）','Sampled inspection surface; exports use the original grid.':'用于检查的采样曲面；导出使用原始网格。','Probe point':'探测点','Show source mesh':'显示源网格','Full field inspector':'完整场检查器','Reading original value…':'正在读取原始场值…',
+ 'Choose a source mesh.':'请选择源网格。','Enter a field name / destination.':'请输入场名称 / 目标。','Enter finite distance and offset values.':'请输入有限的距离和偏移数值。','Range options require two finite numbers.':'范围选项需要两个有限数值。','Distance A must be smaller than distance B.':'距离 A 必须小于距离 B。','Enter a finite isovalue.':'请输入有限的等值。','Choose an Artisan backend with Backend… first.':'请先通过“后端…”选择 Artisan 后端。',
+ 'Mapping point A: use arrow keys to adjust':'映射端点 A：使用方向键调整','Mapping point B: use arrow keys to adjust':'映射端点 B：使用方向键调整','Linear distance to offset mapping':'距离至偏移的线性映射'
+};

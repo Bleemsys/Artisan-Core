@@ -12,6 +12,27 @@ spec.loader.exec_module(generator)
 
 
 class OperationCatalogTests(unittest.TestCase):
+    def test_quad_surface_presets_use_complete_shoe_example(self):
+        catalog = json.loads((PROJECT / 'ui/operations.js').read_text(encoding='utf-8').split('window.ARTISAN_OPERATIONS = ')[1].strip().removesuffix(';'))
+        quad = next(op for op in catalog if op['keyword'] == 'Gen_QuadMesh_SizeField')
+        self.assertEqual(quad['category'], 'Surface meshing')
+        self.assertIn('Shoes_02_QuadriFlow_Surface.json', quad['template'])
+        self.assertEqual(quad['params']['method'],'SimpleQuad')
+        self.assertTrue(any(preset['params'].get('method')=='Subdivision' for preset in quad['presets']))
+        self.assertNotIn('sampling_size', quad['params'])
+        self.assertTrue(any(preset['params'].get('split_to_triangles') is True for preset in quad['presets']))
+        for preset in [quad, *quad['presets']]:
+            self.assertTrue(generator.REQUIRED_PRESET_FIELDS[quad['keyword']] <= preset['params'].keys())
+            self.assertEqual(json.loads(preset['paramsJson']),preset['params'])
+
+    def test_morph_presets_use_automatic_thread_selection(self):
+        catalog = json.loads((PROJECT / 'ui/operations.js').read_text(encoding='utf-8').split('window.ARTISAN_OPERATIONS = ')[1].strip().removesuffix(';'))
+        morph = next(op for op in catalog if op['keyword'] == 'Proc_Field_Morph')
+        for preset in [morph, *morph['presets']]:
+            self.assertNotIn('threads', preset['params'])
+            self.assertNotIn('threads', json.loads(preset['paramsJson']))
+            self.assertNotIn('/threads', preset['numberTypes'])
+
     def test_field_mesher_presets_use_matching_complete_conformal_example(self):
         catalog = json.loads((PROJECT / 'ui/operations.js').read_text(encoding='utf-8').split('window.ARTISAN_OPERATIONS = ')[1].strip().removesuffix(';'))
         commands = {op['keyword']: op for op in catalog}

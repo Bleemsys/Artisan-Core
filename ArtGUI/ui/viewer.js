@@ -3,7 +3,7 @@ import {isGeometryColour} from './geometry-colours.js';
 import {translate as t} from './i18n.js';
 import * as THREE from './vendor/three.module.js';
 import {indexedGroup,indexedDisplay,geometryMemoryBytes} from './indexed-geometry.mjs';
-import {OrbitControls} from './vendor/addons/controls/OrbitControls.js';
+import {FreeOrbitControls} from './free-orbit-controls.js';
 
 const DIRECTIONS={Front:[0,-1,0],Back:[0,1,0],Left:[-1,0,0],Right:[1,0,0],Top:[0,0,1],Bottom:[0,0,-1],Isometric:[1,-1,1]};
 const DEFAULTS={background:'#567a9f',sourceColor:'#ededed',resultColor:'#ebbb68',right:'pan',sensitivity:1,invertZoom:false,units:'mm'};
@@ -23,7 +23,7 @@ export class GeometryViewer{
     this.camera.up.set(0,0,1);this.camera.position.set(6,-6,6);
     this.renderer=new THREE.WebGLRenderer({canvas,antialias:false,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
-    this.controls=new OrbitControls(this.camera,canvas);this.controls.enableDamping=false;
+    this.controls=new FreeOrbitControls(this.camera,canvas);this.controls.enableDamping=false;
     this.controls.addEventListener('change',()=>this.render());
     this.controls.addEventListener('start',()=>{if(this.$('standard-view'))this.$('standard-view').value='';});
     this.display='solid';this.section={enabled:false,normal:[1,0,0],fraction:0,flip:false};this.plane=new THREE.Vector4(1,0,0,0);
@@ -41,7 +41,7 @@ export class GeometryViewer{
   $(id){return document.getElementById(id);}
   persist(){try{localStorage.setItem('artisan.viewer.preferences',JSON.stringify(this.settings));}catch{this.toast('Viewer preferences could not be saved.');}}
   rebindControls(target=this.controls.target.clone()){
-    this.controls.dispose();this.controls=new OrbitControls(this.camera,this.canvas);
+    this.controls.dispose();this.controls=new FreeOrbitControls(this.camera,this.canvas);
     this.controls.target.copy(target);this.controls.enableDamping=false;
     this.controls.addEventListener('change',()=>this.render());
     this.controls.addEventListener('start',()=>{this.$('standard-view').value='';});
@@ -112,9 +112,9 @@ export class GeometryViewer{
   material(color){return new THREE.ShaderMaterial({side:THREE.DoubleSide,transparent:false,uniforms:{tint:{value:new THREE.Color(color)},opacity:{value:1},displayMode:{value:0},sectionOn:{value:false},sectionPlane:{value:this.plane}},
     vertexShader:`varying vec3 vView;varying vec3 vWorld;varying vec3 vBary;void main(){int corner=gl_VertexID%3;vBary=corner==0?vec3(1.,0.,0.):corner==1?vec3(0.,1.,0.):vec3(0.,0.,1.);vec4 mv=modelViewMatrix*vec4(position,1.);vView=mv.xyz;vWorld=(modelMatrix*vec4(position,1.)).xyz;gl_Position=projectionMatrix*mv;}`,
     fragmentShader:`uniform vec3 tint;uniform float opacity;uniform int displayMode;uniform bool sectionOn;uniform vec4 sectionPlane;varying vec3 vView;varying vec3 vWorld;varying vec3 vBary;void main(){if(sectionOn&&dot(vec4(vWorld,1.),sectionPlane)<0.)discard;vec3 n=normalize(cross(dFdx(vView),dFdy(vView)));float light=.3+.7*abs(dot(n,normalize(vec3(.4,.8,.6))));vec3 c=tint*light;if(displayMode!=0){vec3 e=smoothstep(vec3(0.),fwidth(vBary)*1.2,vBary);float edge=1.-min(min(e.x,e.y),e.z);if(displayMode==1){if(edge<.2)discard;c=tint;}else c=mix(c,vec3(.07,.1,.13),edge*.85);}gl_FragColor=vec4(c,opacity);}`});}
-  lineMaterial(material,alpha=1){return new THREE.ShaderMaterial({uniforms:material.uniforms,transparent:alpha<1,depthWrite:alpha>=1,
+  lineMaterial(material,alpha=1,contrastEdges=false){return new THREE.ShaderMaterial({uniforms:material.uniforms,transparent:alpha<1,depthWrite:alpha>=1,
     vertexShader:`varying vec3 vWorld;void main(){vec4 p=modelMatrix*vec4(position,1.);vWorld=p.xyz;gl_Position=projectionMatrix*viewMatrix*p;}`,
-    fragmentShader:`uniform vec3 tint;uniform float opacity;uniform bool sectionOn;uniform vec4 sectionPlane;varying vec3 vWorld;void main(){if(sectionOn&&dot(vec4(vWorld,1.),sectionPlane)<0.)discard;gl_FragColor=vec4(tint,opacity);}`});}
+    fragmentShader:`uniform vec3 tint;uniform float opacity;uniform int displayMode;uniform bool sectionOn;uniform vec4 sectionPlane;varying vec3 vWorld;void main(){if(sectionOn&&dot(vec4(vWorld,1.),sectionPlane)<0.)discard;gl_FragColor=vec4(${contrastEdges?"displayMode==2?vec3(.07,.1,.13):tint":"tint"},opacity);}`});}
   setLayer(id,positions,{center=null,bounds=null,path='',mode='full',total=positions.length/9,lines=null,edges=null,metadata=null,topology=null,previewFactory=null,chunks=null,uploadValidated=false}={}){
     if(chunks){
       if(!chunks.length||!bounds||!center)throw Error('No complete indexed geometry in this model.');
@@ -139,7 +139,7 @@ export class GeometryViewer{
       for(const [role,values] of [['beams',lines],['edges',edges]]){
         if(!values?.length)continue;
         const lineGeometry=new THREE.BufferGeometry();lineGeometry.setAttribute('position',new THREE.BufferAttribute(values,3));
-        const lineMaterial=this.lineMaterial(material,alpha);
+        const lineMaterial=this.lineMaterial(material,alpha,role==='edges');
         const child=new THREE.LineSegments(lineGeometry,lineMaterial);child.userData.role=role;mesh.add(child);
       }
     }
@@ -207,7 +207,7 @@ export class GeometryViewer{
 
   removeLayer(id){const layer=this.layers.get(id);if(!layer)return;this.onLayerDisposed?.(id);this.scene.remove(layer.mesh);this.disposeLayer(layer);this.layers.delete(id);this.measurements=this.measurements.filter(m=>m.layer!==id);this.pending=[];if(this.activeLayer===id)this.activeLayer=this.layers.keys().next().value||'source';if(!this.layers.size&&!this.fieldLayers.size){this.hasOrigin=false;this.origin.set(0,0,0);}this.refreshLayers();this.refreshHelpers();this.updateSection();this.redrawMeasurements();}
   clear(){this.layerColors?.clear();this.layerOpacities?.clear();for(const layer of [...this.fieldLayers.values()])layer.dispose();for(const [id,layer] of this.layers){this.onLayerDisposed?.(id);this.scene.remove(layer.mesh);this.disposeLayer(layer);}this.layers.clear();this.hasOrigin=false;this.origin.set(0,0,0);this.measurements=[];this.pending=[];this.activeLayer='source';this.section.enabled=false;this.$('section-enabled').checked=false;this.setMeasureMode('off');this.refreshLayers();this.refreshHelpers();this.updateSection();this.render();}
-  bounds(visible=true){const box=new THREE.Box3();for(const l of this.layers.values())if(!visible||l.mesh.visible)box.union(l.box);for(const l of this.fieldLayers.values())if(!visible||l.group.visible)box.union(l.box);return box;}
+  bounds(visible=true){const box=new THREE.Box3();for(const l of this.layers.values())if(!visible||l.mesh.visible)box.union(l.box);for(const l of this.fieldLayers.values())if(!visible||l.group.visible)box.union(l.box);if(this.regionOverlay)box.union(this.regionOverlay.getBounds());if(this.morphOverlay)box.union(this.morphOverlay.getBounds());if(this.spatialOverlay)box.union(this.spatialOverlay.getBounds());if(this.setupOverlay)box.union(this.setupOverlay.getBounds());if(this.primitiveMeshOverlay)box.union(this.primitiveMeshOverlay.getBounds());if(this.geometryFieldOverlay)box.union(this.geometryFieldOverlay.getBounds());if(this.fieldMergeOverlay)box.union(this.fieldMergeOverlay.getBounds());if(this.contourOverlay)box.union(this.contourOverlay.getBounds());if(this.slotOverlay)box.union(this.slotOverlay.getBounds());return box;}
   radius(){const box=this.bounds();return box.isEmpty()?1:Math.max(box.getSize(new THREE.Vector3()).length()/2,1e-6);}
   refreshHelpers(){
     for(const child of [...this.helpers.children]){child.traverse(obj=>{obj.geometry?.dispose();if(Array.isArray(obj.material))obj.material.forEach(m=>m.dispose());else obj.material?.dispose();});this.helpers.remove(child);}
@@ -231,13 +231,14 @@ export class GeometryViewer{
   resize(){const b=this.canvas.parentElement.getBoundingClientRect();if(!b.width||!b.height)return;this.aspect=b.width/b.height;this.renderer.setSize(b.width,b.height,false);this.updateCamera();this.render();}
   updateCamera(){if(this.camera.isPerspectiveCamera)this.camera.aspect=this.aspect||1;else{this.camera.left=-this.span*(this.aspect||1)/2;this.camera.right=-this.camera.left;this.camera.top=this.span/2;this.camera.bottom=-this.camera.top;}this.camera.updateProjectionMatrix();}
   updateDepthRange(){const box=this.bounds();if(box.isEmpty())return;const radius=box.getSize(new THREE.Vector3()).length()/2,center=box.getCenter(new THREE.Vector3());const near=Math.max(radius/100000,box.distanceToPoint(this.camera.position)*.05,1e-7),far=Math.max(this.camera.position.distanceTo(center)+radius*2,near*100);if(near!==this.camera.near||far!==this.camera.far){this.camera.near=near;this.camera.far=far;this.camera.updateProjectionMatrix();}}
-  render(){if(!this.renderer)return;this.updateDepthRange();this.onBeforePreviewRender?.();this.onBeforePointCloudRender?.();this.renderer.render(this.scene,this.camera);this.renderCube();this.positionLabels();const box=this.bounds();this.$('viewer-dimensions').textContent=this.guides.box&&!box.isEmpty()?`X ${fmt(box.max.x-box.min.x)} × Y ${fmt(box.max.y-box.min.y)} × Z ${fmt(box.max.z-box.min.z)} ${this.settings.units}`:'';this.$('projection-label').textContent=`${this.projection.toUpperCase()} · ${this.settings.units}`;this.onFieldRender?.();this.onPointCloudRender?.();this.onPreviewRender?.();}
-  fit(){const box=this.bounds();if(box.isEmpty())return;const target=box.getCenter(new THREE.Vector3()),radius=this.radius();let dir=this.camera.position.clone().sub(this.controls.target).normalize();if(!dir.lengthSq())dir.set(1,-1,1).normalize();const halfFov=THREE.MathUtils.degToRad(21),angle=Math.min(halfFov,Math.atan(Math.tan(halfFov)*(this.aspect||1))),distance=radius/Math.sin(angle)*1.15;this.span=radius*2.3/Math.min(1,this.aspect||1);this.camera.zoom=1;this.camera.near=Math.max(radius/100000,1e-7);this.camera.far=Math.max(distance*100,radius*100);this.camera.position.copy(target).addScaledVector(dir,distance);this.controls.target.copy(target);this.updateCamera();this.controls.update();this.render();}
+  render(){if(!this.renderer)return;this.regionOverlay?.beforeRender();this.morphOverlay?.beforeRender();this.spatialOverlay?.beforeRender();this.setupOverlay?.beforeRender();this.primitiveMeshOverlay?.beforeRender();this.geometryFieldOverlay?.beforeRender();this.fieldMergeOverlay?.beforeRender();this.contourOverlay?.beforeRender();this.updateDepthRange();this.onBeforePreviewRender?.();this.onBeforePointCloudRender?.();this.slotOverlay?.beforeRender();try{this.renderer.render(this.scene,this.camera);}finally{this.slotOverlay?.afterRender();}this.renderCube();this.positionLabels();const box=this.bounds();this.$('viewer-dimensions').textContent=this.guides.box&&!box.isEmpty()?`X ${fmt(box.max.x-box.min.x)} × Y ${fmt(box.max.y-box.min.y)} × Z ${fmt(box.max.z-box.min.z)} ${this.settings.units}`:'';this.$('projection-label').textContent=`${this.projection.toUpperCase()} · ${this.settings.units}`;this.onFieldRender?.();this.onPointCloudRender?.();this.onPreviewRender?.();this.regionOverlay?.afterRender();this.morphOverlay?.afterRender();this.spatialOverlay?.afterRender();this.setupOverlay?.afterRender();this.primitiveMeshOverlay?.afterRender();this.geometryFieldOverlay?.afterRender();this.fieldMergeOverlay?.afterRender();}
+  fit(requestedBox){const box=requestedBox||this.bounds();if(box.isEmpty())return;const target=box.getCenter(new THREE.Vector3()),radius=requestedBox?Math.max(box.getSize(new THREE.Vector3()).length()/2,1e-6):this.radius();let dir=this.camera.position.clone().sub(this.controls.target).normalize();if(!dir.lengthSq())dir.set(1,-1,1).normalize();const halfFov=THREE.MathUtils.degToRad(21),angle=Math.min(halfFov,Math.atan(Math.tan(halfFov)*(this.aspect||1))),distance=radius/Math.sin(angle)*1.15;this.span=radius*2.3/Math.min(1,this.aspect||1);this.camera.zoom=1;this.camera.near=Math.max(radius/100000,1e-7);this.camera.far=Math.max(distance*100,radius*100);this.camera.position.copy(target).addScaledVector(dir,distance);this.controls.target.copy(target);this.updateCamera();this.controls.update();this.render();}
   standardView(name){const dir=DIRECTIONS[name];if(dir)this.setDirection(new THREE.Vector3(...dir));this.$('standard-view').value=name;}
   setDirection(dir){dir.normalize();this.camera.up.set(0,0,1);if(Math.abs(dir.z)>.999)this.camera.up.set(0,1,0);const target=this.controls.target.clone(),distance=Math.max(this.camera.position.distanceTo(target),this.radius()*2);this.camera.position.copy(target).addScaledVector(dir,distance);this.rebindControls(target);this.fit();this.render();}
   reset(){this.standardView('Isometric');}
   setProjection(mode){if(mode===this.projection)return;const old=this.camera,direction=old.position.clone().sub(this.controls.target).normalize(),distance=old.position.distanceTo(this.controls.target);if(mode==='orthographic'){this.span=2*distance*Math.tan(THREE.MathUtils.degToRad(21));this.camera=new THREE.OrthographicCamera(-1,1,1,-1,old.near,old.far);this.camera.position.copy(old.position);}else{const d=this.span/old.zoom/(2*Math.tan(THREE.MathUtils.degToRad(21)));this.camera=new THREE.PerspectiveCamera(42,this.aspect,old.near,Math.max(old.far,d*100));this.camera.position.copy(this.controls.target).addScaledVector(direction,d);}this.camera.up.copy(old.up);this.projection=mode;this.$('projection-select').value=mode;this.updateCamera();this.rebindControls();this.render();}
-  setDisplay(mode){this.display=mode;for(const l of this.layers.values()){l.material.uniforms.displayMode.value=['solid','wireframe','edges'].indexOf(mode);for(const child of l.mesh.children)if(child.userData.role==='edges')child.visible=mode!=='solid';indexedDisplay(l.mesh,mode);}this.render();}
+  setLayerVisible(id,visible){const layer=this.layers.get(id);if(!layer)return;layer.mesh.visible=visible;this.pending=[];this.refreshLayers();this.refreshHelpers();this.updateSection();this.redrawMeasurements();this.measureStatus();this.render();this.onLayersChanged();}
+  setDisplay(mode){this.display=mode;this.primitiveMeshOverlay?.setDisplay(mode);for(const l of this.layers.values()){l.material.uniforms.displayMode.value=['solid','wireframe','edges'].indexOf(mode);for(const child of l.mesh.children)if(child.userData.role==='edges')child.visible=mode!=='solid';indexedDisplay(l.mesh,mode);}this.render();}
   layerColor(id){return this.layerColors?.get(id)||this.settings[id+'Color']||this.settings.sourceColor;}
   setLayerColor(id,colour,{notify=true}={}){
     if(!isGeometryColour(colour))throw Error('Invalid geometry display colour.');

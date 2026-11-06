@@ -1,3 +1,18 @@
+/* Use the same disclosure marker in every native details control. */
+details > summary:first-of-type{list-style:none}
+details > summary:first-of-type::-webkit-details-marker{display:none}
+details > summary:first-of-type::before{
+  content:"";display:inline-block;flex:none;width:7px;height:8px;margin-inline-end:6px;
+  vertical-align:middle;background:#6b7f96;clip-path:polygon(0 0,100% 50%,0 100%);
+}
+details[open] > summary:first-of-type::before{transform:rotate(90deg)}
+:is(.geometry-section,.setup-section,.fm-section,.ld-section,.sm-details) > summary:first-of-type::before{
+  margin-inline-end:0;align-self:center;
+}
+@media (forced-colors:active){
+  details > summary:first-of-type::before{forced-color-adjust:none;background:ButtonText}
+}
+
 .nested-group{margin:7px 0 14px 5px;padding:9px 9px 1px;border-left:2px solid #e5ebf2;background:#fafbfc}.nested-title{font-size:9px;font-weight:700;color:#7c8b9a;margin-bottom:8px}
 .field select{display:block;width:100%;min-width:0;padding:8px;border:1px solid #dce2e8;border-radius:6px;background:#fff;color:#35475a;font:inherit;font-size:10px;margin-bottom:6px}.field select:focus{outline:2px solid #4e87e255;border-color:#4e87e2}
 .category-description{font-size:11px;line-height:1.5;color:#718093;margin:0 0 12px}.category-count{margin-left:4px;font-variant-numeric:tabular-nums;opacity:.8}

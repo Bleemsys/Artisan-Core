@@ -15,13 +15,30 @@
   <link rel="stylesheet" href="./styles.css">
 
   <link rel="stylesheet" href="./details.css">
+  <link rel="stylesheet" href="./lattice-definition-editor.css">
 
   <link rel="stylesheet" href="./viewer.css">
   <link rel="stylesheet" href="./field.css">
+  <link rel="stylesheet" href="./region-editor.css">
+  <link rel="stylesheet" href="./geometry-editor.css">
+  <link rel="stylesheet" href="./strut-cell-editor.css">
+  <link rel="stylesheet" href="./mesh-cell-editor.css">
+  <link rel="stylesheet" href="./tpms-cell-editor.css">
+  <link rel="stylesheet" href="./setup-editor.css">
+  <link rel="stylesheet" href="./transition-editor.css">
+  <link rel="stylesheet" href="./morph-editor.css">
+  <link rel="stylesheet" href="./quad-mesher.css">
+  <link rel="stylesheet" href="./size-field-mesher.css">
+  <link rel="stylesheet" href="./primitive-mesh.css">
+  <link rel="stylesheet" href="./geometry-field.css">
+  <link rel="stylesheet" href="./contour.css">
+  <link rel="stylesheet" href="./slot-cutters.css">
+  <link rel="stylesheet" href="./field-merge.css">
   <link rel="stylesheet" href="./point-cloud.css">
   <link rel="stylesheet" href="./resource-monitor.css">
 
   <link rel="stylesheet" href="./operation-picker.css">
+  <link rel="stylesheet" href="./property-header.css">
 </head>
 
 <body>
@@ -77,7 +94,7 @@
 
         <div class="viewport" id="viewport"><canvas id="model-canvas"></canvas><div class="viewport-empty" id="viewport-empty"><div class="cube-icon">◇</div><strong>Start with a geometry</strong><span>Open an STL, OBJ, PLY, or INP file to preview the model here.</span><button class="button light" id="empty-load">Open geometry</button></div><div class="view-corner" id="projection-label">PERSPECTIVE · mm</div><canvas id="orientation-cube" aria-label="Orientation cube: click a face, edge or corner"></canvas><div id="viewer-dimensions" class="viewer-dimensions"></div><div class="axis-legend">X <i></i> Y <b></b> Z <em></em></div></div>
 
-        <div class="viewport-progress hidden" id="preview-progress"><progress id="preview-progress-bar" max="1" value="0"></progress><span id="preview-progress-text">Preparing geometry…</span><button class="text-button" id="cancel-preview">Cancel</button></div><div class="viewport-foot"><span id="mesh-info">No model loaded</span><span>Orbit / pan / zoom <b>·</b> More: mouse settings</span></div>
+        <div class="viewport-progress hidden" id="preview-progress"><progress id="preview-progress-bar" max="1" value="0"></progress><span id="preview-progress-text">Preparing geometry…</span><button class="text-button" id="cancel-preview">Cancel</button></div><div class="viewport-foot"><div class="viewport-model-status"><span id="mesh-info">No model loaded</span><div class="viewport-messages"></div></div><span class="viewport-navigation-hint">Orbit / pan / zoom <b>·</b> More: mouse settings</span></div>
 
       </section>
 
@@ -132,7 +149,7 @@
 
     <aside class="panel properties-panel">
 
-      <div class="panel-heading"><div><h2 id="properties-title">Properties</h2><p id="properties-subtitle">Project configuration</p></div><button class="icon-button" id="reset-properties" title="Project settings">⚙</button></div>
+      <div class="panel-heading property-header"><div class="property-header-copy"><h2 id="properties-title">Properties</h2><p id="properties-subtitle">Project configuration</p></div><button class="icon-button" id="reset-properties" title="Project settings">⚙</button></div>
 
       <div class="properties-content" id="properties-content"></div>
 

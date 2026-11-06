@@ -1,0 +1,92 @@
+{
+  "method": "Native Netgen geometry seed + MMG3D size-field solid adaptation",
+  "valid": true,
+  "surface_tolerance": 0.06,
+  "final": {
+    "vertices": 1017,
+    "tetrahedra": 4727,
+    "volume": 54.00000000000002,
+    "minimum_signed_volume": 0.0017765196921419393,
+    "percentile_order": [
+      0,
+      5,
+      50,
+      95,
+      100
+    ],
+    "edge_length_percentiles": [
+      0.17154437438295644,
+      0.290021720401303,
+      0.41435848627197086,
+      0.8304293758084222,
+      1.3416460748741772
+    ],
+    "target_edge_length_percentiles": [
+      0.40000000596046437,
+      0.4000000059604644,
+      0.4000000059604646,
+      0.9999999999999999,
+      1.0000000000000002
+    ],
+    "edge_to_target_percentiles": [
+      0.4288609295668653,
+      0.6689606467794081,
+      0.9433129586273148,
+      1.2702933261285483,
+      1.8656781044985173
+    ],
+    "mean_ratio_quality_percentiles": [
+      0.5287329103144766,
+      0.7117665614317564,
+      0.8570018837519461,
+      0.9600163825414069,
+      0.9953555278055882
+    ],
+    "fraction_edges_below_half_target": 0.0019521717911176184,
+    "fraction_edges_above_twice_target": 0.0,
+    "target_size_bins": [
+      {
+        "target_range": [
+          0.40000000596046437,
+          0.4000000059604645
+        ],
+        "edges": 657,
+        "median_edge_length": 0.38618969706853323,
+        "median_edge_to_target": 0.9654742282846461
+      },
+      {
+        "target_range": [
+          0.4000000059604645,
+          0.4000000059604646
+        ],
+        "edges": 2409,
+        "median_edge_length": 0.38655137067379625,
+        "median_edge_to_target": 0.9663784122843301
+      },
+      {
+        "target_range": [
+          0.4000000059604646,
+          0.4350833258417861
+        ],
+        "edges": 1544,
+        "median_edge_length": 0.39588494806452845,
+        "median_edge_to_target": 0.9734672769797063
+      },
+      {
+        "target_range": [
+          0.4350833258417861,
+          1.0000000000000002
+        ],
+        "edges": 1537,
+        "median_edge_length": 0.6082837034835256,
+        "median_edge_to_target": 0.8693325000000005
+      }
+    ],
+    "boundary_error": {
+      "mesh_to_source": 4.970030894746323e-15,
+      "source_to_mesh": 2.220446049250313e-15,
+      "maximum": 4.970030894746323e-15,
+      "sampling": "vertices, edge midpoints and triangle centres; not a Hausdorff bound"
+    }
+  }
+}

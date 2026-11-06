@@ -1,6 +1,8 @@
 # Viewing large models in ArtGUI 0.1.5
 
-Open source, result, and reference meshes normally. Preview prepares a reusable disk cache, then automatically loads more detail as you zoom in and releases it as you zoom out. Pan and orbit also update the visible regions. This works with both perspective and orthographic cameras.
+Open source, result, and reference meshes normally. Files up to and including **800 MB** (800 × 1024² bytes) automatically request **Full detail**. Larger files start in **Preview**. The rule uses the file's on-disk size; explicit **Load full detail** and **Show preview** choices override it. Unknown file sizes use Preview. Existing memory checks remain active, and an automatic full-detail load falls back to Preview if it cannot be loaded.
+
+Preview prepares a reusable disk cache, then automatically loads more detail as you zoom in and releases it as you zoom out. Pan and orbit also update the visible regions. This works with both perspective and orthographic cameras.
 
 The distant overview uses a spatial hierarchy with five levels of surface samples. Samples cover occupied regions of the whole model, and their displayed size follows the camera distance and model scale. A coarse region remains visible until its finer replacements have loaded. This uses the same general idea as an octree point-cloud viewer; Potree is not an application dependency.
 
@@ -10,7 +12,7 @@ Preview supports binary/ASCII STL, OBJ surfaces and lines, ASCII PLY surfaces, a
 
 ## First opening and cache storage
 
-The first opening scans the source and prepares small spatial blocks on disk. Progress can be cancelled. Subsequent openings reuse the completed cache; changing the source file invalidates it. The original model and workflow are unchanged.
+The first opening in Preview scans the source and prepares small spatial blocks on disk. Progress can be cancelled. Subsequent Preview openings reuse the completed cache; changing the source file invalidates it. The original model and workflow are unchanged. Automatic full-detail loading does not prepare this preview cache first.
 
 The cache is stored in **`ViewScratch` beside `ArtGUI.exe`**, with one model-ID subfolder per cache. It follows the application folder, independently of the workflow folder or the folder from which ArtGUI was launched. Keep the application in a writable location. If preparation cannot write there, ArtGUI reports the folder and asks you to move the application to a writable location.
 
