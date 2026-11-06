@@ -1,0 +1,129 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -20.0,
+          20.0
+        ],
+        [
+          -20.0,
+          20.0
+        ],
+        [
+          -10.0,
+          70.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "JsonWorkDir": true,
+    "memorylimit": 1073741824
+  },
+  "WorkFlow": {
+    "1": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "CellSize",
+        "default_value": 8.0,
+        "overlap": "Minimum",
+        "regions": [
+          {
+            "name": "Rotated box",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                -8.0,
+                0.0,
+                15.0
+              ],
+              "size": [
+                16.0,
+                12.0,
+                20.0
+              ],
+              "rotation_axis": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "rotation_degrees": 25.0
+            },
+            "value": 4.0,
+            "transition_width": 3.0
+          },
+          {
+            "name": "Sphere",
+            "geometry": {
+              "type": "Sphere",
+              "center": [
+                5.0,
+                0.0,
+                35.0
+              ],
+              "radius": 10.0
+            },
+            "value": 2.0,
+            "transition_width": 4.0
+          },
+          {
+            "name": "Tilted cylinder",
+            "geometry": {
+              "type": "Cylinder",
+              "center": [
+                0.0,
+                0.0,
+                52.0
+              ],
+              "axis": [
+                1.0,
+                1.0,
+                2.0
+              ],
+              "radius": 8.0,
+              "height": 20.0
+            },
+            "value": 6.0,
+            "transition_width": 2.0
+          },
+          {
+            "name": "Body mesh",
+            "geometry": {
+              "type": "Mesh",
+              "source": "body.inp"
+            },
+            "value": 7.0,
+            "transition_width": 1.0
+          }
+        ]
+      }
+    },
+    "2": {
+      "Export": {
+        "outfile": "primitive-fields.h5",
+        "GridFieldIDs": [
+          "CellSize"
+        ]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

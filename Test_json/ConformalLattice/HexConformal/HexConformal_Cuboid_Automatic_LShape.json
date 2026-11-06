@@ -1,0 +1,65 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Rot": [
+      0,
+      0,
+      0
+    ],
+    "res": [
+      0.2,
+      0.2,
+      0.2
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 1073741824,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Gen_MultiBlockHexMesh": {
+        "inp_meshfile": "./LShape_Cuboid_input.inp",
+        "out_meshfile": "./LShape_Cuboid_hex.inp",
+        "method": "CuboidUnion",
+        "cell_size": [
+          0.25,
+          0.25,
+          0.25
+        ],
+        "decomposition_resolution": 12,
+        "max_blocks": 16,
+        "cuboid_iterations": 20,
+        "padding_fraction": 0.15,
+        "quality_iterations": 0,
+        "surface_tolerance": 0.01,
+        "min_scaled_jacobian": 0.1,
+        "max_cells": 10000,
+        "quality_report": "./LShape_Cuboid_quality.json"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": false,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

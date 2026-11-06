@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Field Operation &#8212; Artisan 0.2.18 documentation</title>
+    <title>Field Operation 01 &#8212; Artisan 0.2.19 documentation</title>
   
   
   
@@ -36,14 +36,14 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/documentation_options.js?v=377e7130"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'OPField';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Grid Field Container" href="FieldContainer.html" />
+    <link rel="next" title="Field Operation 02" href="OPField_02.html" />
     <link rel="prev" title="Slicing geometry with plates" href="PlateSlicing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+    <p class="title logo__title">Artisan 0.2.19 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -166,7 +166,8 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Field Operation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Field Operation 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField_02.html">Field Operation 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
@@ -325,7 +326,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Field Operation</h1>
+    <h1>Field Operation 01</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -354,8 +355,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="field-operation">
-<span id="chapter-fieldopt"></span><h1>Field Operation<a class="headerlink" href="#field-operation" title="Link to this heading">#</a></h1>
+  <section id="field-operation-01">
+<span id="chapter-fieldopt"></span><h1>Field Operation 01<a class="headerlink" href="#field-operation-01" title="Link to this heading">#</a></h1>
 <p>User may use field, defined externally or with geometric features, to enhance the lattice infill. In the field operation, the concept refers to use external data or spatial field to enhance (e.g. thickening) to lattice thickness, or to detect geometry features and therefore enhance the lattice infill using the geometry feature lines.</p>
 <section id="external-field-enhancement">
 <h2>External Field Enhancement<a class="headerlink" href="#external-field-enhancement" title="Link to this heading">#</a></h2>
@@ -752,7 +753,7 @@ document.write(`
 <td><p>the minimum offset value that remapped to the <code class="code docutils literal notranslate"><span class="pre">min</span></code>;</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">min_max_opt</span></code></p></td>
-<td><p>A list of two numbers controlling the maximum and minimum values. If either number is greater than 0, it overrides the corresponding input and is taken directly from the SDF (Signed Distance Field).</p></td>
+<td><p>A list <code class="code docutils literal notranslate"><span class="pre">[auto_min,</span> <span class="pre">auto_max]</span></code>. A first value greater than 0 replaces <code class="code docutils literal notranslate"><span class="pre">min</span></code> with the minimum sampled geometry SDF; a second value greater than 0 replaces <code class="code docutils literal notranslate"><span class="pre">max</span></code> with the maximum sampled geometry SDF. A value less than or equal to 0 keeps the corresponding supplied limit. The effective limits must be finite and satisfy <code class="code docutils literal notranslate"><span class="pre">min</span> <span class="pre">&lt;</span> <span class="pre">max</span></code>; otherwise the operation raises an error before changing the model field. Offset endpoints may increase, decrease, or be equal. Automatic limits are sampled within the current processing block.</p></td>
 </tr>
 </tbody>
 </table>
@@ -783,11 +784,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="FieldContainer.html"
+       href="OPField_02.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Grid Field Container</p>
+        <p class="prev-next-title">Field Operation 02</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

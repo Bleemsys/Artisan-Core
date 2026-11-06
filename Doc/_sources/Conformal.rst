@@ -228,6 +228,17 @@ The twisted bar shall be filled by a series of :code:`boxframe.obj` shape. Due t
 
 .. image:: ./pictures/Twisted_Bar_Custom_Geom_Conformal.png
 
+=======================
+Strut Field Calculation
+=======================
+
+The optional :code:`field_mode` parameter inside :code:`definition` controls strut-field calculation:
+
+* :code:`"band"` (default): fast local calculation, with capped values outside the strut regions.
+* :code:`"full"`: completes the field across the sampled grid for later offsets; may take longer.
+
+To enable full mode, add :code:`"field_mode": "full"` inside :code:`definition`. Omit the parameter to keep band mode.
+
 =====================
 Joint Smooth Blending
 =====================

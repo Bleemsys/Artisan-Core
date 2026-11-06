@@ -68,6 +68,13 @@ As stated above, the mesh file points to :code:`.//sample-obj//Parts01//Parts01.
 
 The parameter :code:`k` is the smooth factor that defines how beams blended together. The higher value shall lead to more material adding and more smooth transition. Here :code:`"k" : 0.0` meant no such blending required. 
 
+The optional :code:`field_mode` parameter inside :code:`definition` controls strut-field calculation:
+
+* :code:`"band"` (default): fast local calculation, with capped values outside the strut regions.
+* :code:`"full"`: completes the field across the sampled grid for later offsets; may take longer.
+
+To enable full mode, add :code:`"field_mode": "full"` inside :code:`definition`. Omit the parameter to keep band mode.
+
 The result is shown below. 
 
 .. image:: ./pictures/MeshLattice.png

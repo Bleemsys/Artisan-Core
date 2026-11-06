@@ -1,0 +1,251 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -35,
+          215
+        ],
+        [
+          -45,
+          120
+        ],
+        [
+          -40,
+          175
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      1.5,
+      1.5,
+      1.5
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "JsonWorkDir": false,
+    "memorylimit": 2147483648
+  },
+  "WorkFlow": {
+    "1": {
+      "OP_GeomSDF_GridField": {
+        "inp_meshfile": "./sample-obj/EngineBracket.STL",
+        "out_gridfieldFile": "Body"
+      }
+    },
+    "2": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "MorphDomain",
+        "default_value": 0.0,
+        "overlap": "Maximum",
+        "regions": [
+          {
+            "name": "Deformation envelope",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                90,
+                37.5,
+                67.5
+              ],
+              "size": [
+                350.0,
+                350.0,
+                350.0
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 5.0
+          }
+        ]
+      }
+    },
+    "3": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "FixedMounts",
+        "default_value": 0.0,
+        "overlap": "Maximum",
+        "regions": [
+          {
+            "name": "Left lower bolt",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                13.5,
+                12.5,
+                15.0
+              ],
+              "size": [
+                37,
+                35,
+                40
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          },
+          {
+            "name": "Left upper bolt",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                13.5,
+                12.5,
+                72.5
+              ],
+              "size": [
+                37,
+                35,
+                45
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          },
+          {
+            "name": "Right lower bolt",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                165.0,
+                12.5,
+                32.5
+              ],
+              "size": [
+                40,
+                35,
+                45
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          },
+          {
+            "name": "Right upper bolt",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                165.0,
+                12.5,
+                77.5
+              ],
+              "size": [
+                40,
+                35,
+                45
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          }
+        ]
+      }
+    },
+    "4": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "MovingLugs",
+        "default_value": 0.0,
+        "overlap": "Maximum",
+        "regions": [
+          {
+            "name": "Both upper attachment lugs",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                90.0,
+                50.0,
+                96.5
+              ],
+              "size": [
+                50,
+                40,
+                37
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          }
+        ]
+      }
+    },
+    "5": {
+      "Proc_Field_Morph": {
+        "input_field": "Body",
+        "output_field": "lattice",
+        "domain_mask": "MorphDomain",
+        "fixed_mask": "FixedMounts",
+        "moving_regions": [
+          {
+            "mask": "MovingLugs",
+            "translation": [
+              0,
+              7.383801607955377,
+              8.805297474983092
+            ],
+            "rotation_axis": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "rotation_degrees": 0.0,
+            "rotation_center": [
+              90,
+              50,
+              96.5
+            ]
+          }
+        ],
+        "max_control_points": 1024,
+        "quality_report": "engine-bracket-quality.json",
+        "support_radius": 40,
+        "max_gradient": 0.99
+      }
+    },
+    "6": {
+      "Export": {
+        "outfile": "./Test_results/engine-bracket-morphed.stl",
+        "fieldfile": "./Test_results/engine-bracket-morphed.h5",
+        "GridFieldIDs": [
+          "Body",
+          "MorphDomain",
+          "FixedMounts",
+          "MovingLugs"
+        ]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": false,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  },
+  "ArtGUI": {
+    "version": 1,
+    "geometry": [
+      {
+        "id": "geometry-engine-bracket-source",
+        "path": "EngineBracket.STL",
+        "opacity": 1,
+        "color": "#18b8d8"
+      },
+      {
+        "id": "result",
+        "path": "\\\\?\\C:\\Users\\wangy\\.codex\\.chatgpt-projects\\g-p-6abd6c52242c8191b8d1830f34b703b7\\engine-bracket-morph\\EngineBracket_BoxMorph\\engine-bracket-morphed.stl",
+        "opacity": 1
+      }
+    ],
+    "supportingFiles": [],
+    "sourceOpacity": 0.44,
+    "sourceColor": "#7890a6"
+  }
+}

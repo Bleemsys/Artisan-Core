@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Conformal Lattice 01 &#8212; Artisan 0.2.18 documentation</title>
+    <title>Conformal Lattice 01 &#8212; Artisan 0.2.19 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/documentation_options.js?v=377e7130"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+    <p class="title logo__title">Artisan 0.2.19 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -166,7 +166,8 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField_02.html">Field Operation 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
@@ -338,6 +339,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-hexahedron-domain">Lattice in hexahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-tetrahedron-domain">Lattice in tetrahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conformal-geometric-shape-lattice">Conformal Geometric Shape Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strut-field-calculation">Strut Field Calculation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-smooth-blending">Joint Smooth Blending</a></li>
 </ul>
             </nav>
@@ -540,6 +542,15 @@ It combines a geometry-based scalar field, <code class="docutils literal notrans
 <p>The twisted bar shall be filled by a series of <code class="code docutils literal notranslate"><span class="pre">boxframe.obj</span></code> shape. Due to current algorithm limitation, user are required to give the input of thickness parameter <code class="code docutils literal notranslate"><span class="pre">thk</span></code> (in this case, <code class="code docutils literal notranslate"><span class="pre">&quot;thk&quot;:3.8</span></code>). User may try different thickness level at the low resolution model before moving to the high resolution model generation.</p>
 <img alt="_images/Twisted_Bar_Custom_Geom_Conformal.png" src="_images/Twisted_Bar_Custom_Geom_Conformal.png" />
 </section>
+<section id="strut-field-calculation">
+<h2>Strut Field Calculation<a class="headerlink" href="#strut-field-calculation" title="Link to this heading">#</a></h2>
+<p>The optional <code class="code docutils literal notranslate"><span class="pre">field_mode</span></code> parameter inside <code class="code docutils literal notranslate"><span class="pre">definition</span></code> controls strut-field calculation:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">&quot;band&quot;</span></code> (default): fast local calculation, with capped values outside the strut regions.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">&quot;full&quot;</span></code>: completes the field across the sampled grid for later offsets; may take longer.</p></li>
+</ul>
+<p>To enable full mode, add <code class="code docutils literal notranslate"><span class="pre">&quot;field_mode&quot;:</span> <span class="pre">&quot;full&quot;</span></code> inside <code class="code docutils literal notranslate"><span class="pre">definition</span></code>. Omit the parameter to keep band mode.</p>
+</section>
 <section id="joint-smooth-blending">
 <h2>Joint Smooth Blending<a class="headerlink" href="#joint-smooth-blending" title="Link to this heading">#</a></h2>
 <p>Additional parameter <code class="code docutils literal notranslate"><span class="pre">k</span></code> in the conformal lattice defintion can help to define the smooth blending of the multiple beams in strut lattice. User may redefine the <code class="code docutils literal notranslate"><span class="pre">.//Test_json//Parts02_Strut_Infill_LR_conformal.mld</span></code> with <code class="code docutils literal notranslate"><span class="pre">k</span></code>, which the higher value of <code class="code docutils literal notranslate"><span class="pre">k</span></code> leads to more smooth and more material around joint.</p>
@@ -630,6 +641,7 @@ It combines a geometry-based scalar field, <code class="docutils literal notrans
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-hexahedron-domain">Lattice in hexahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lattice-in-tetrahedron-domain">Lattice in tetrahedron domain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conformal-geometric-shape-lattice">Conformal Geometric Shape Lattice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strut-field-calculation">Strut Field Calculation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-smooth-blending">Joint Smooth Blending</a></li>
 </ul>
   </nav></div>

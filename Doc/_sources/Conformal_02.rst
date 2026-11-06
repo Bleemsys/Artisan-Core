@@ -453,6 +453,175 @@ As mentioned, the algorithm may produce some imperfections of the element layout
 .. image:: ./pictures/Conformal_02_crank_handle_imperfection.png
 
 
+=========================================
+Automatic cuboid decomposition hex meshing
+=========================================
+
+:code:`Gen_MultiBlockHexMesh` now reads the tetrahedral mesh produced by
+:code:`Proc_Mesh_PolyCube` and automatically constructs an all-hex mesh. No
+surface quad mesh or manually supplied block layout is required. Use the
+default :code:`method: "CuboidUnion"` with :code:`inp_meshfile` and a positive
+:code:`cell_size`. Existing surface quads are not preserved.
+
+The implementation adapts the cuboid placement, fitting and discretization in
+Li et al., `Interactive all-hex meshing via cuboid decomposition (2021)
+<https://doi.org/10.1145/3478513.3480568>`_. The paper describes an interactive
+system. Artisan runs these stages automatically:
+
+1. Sample the input volume and repeatedly add the largest uncovered interior
+   cuboid, using the volume heuristic in Appendix A.1.
+2. Fit all cuboid bounds to sampled signed distances. The objective penalizes
+   exterior distance discrepancies and positive interior gaps (equations 6-7).
+   Cuboids may overlap during fitting.
+3. Snap cuboid corners to one common grid and mesh their union, sharing node
+   IDs at every interface. Partial-face contacts and overlapping cuboids are
+   supported; each occupied grid cell is emitted once.
+4. Insert one inward padding layer around the entire boundary, then fit the
+   padded hex mesh to the input near-polycube using Artisan's guarded
+   :code:`CartesianFit` surface and quality optimization.
+
+Cuboid placement, projected-gradient fitting, union meshing and padding run in
+C++; Python supplies distance queries and calls the native functions
+:code:`Snippetslib.decompose_cuboids` and
+:code:`Snippetslib.generate_cuboid_union_hex`. This is an independent CPU
+adaptation, not a reproduction of the paper's interactive tools, exact
+deformation optimizer or optimized pullback.
+
+Replace the Cartesian hex-generation step in the crank-handle workflow with:
+
+.. code-block:: json
+
+   {
+     "Gen_MultiBlockHexMesh": {
+       "inp_meshfile": "./Test_results/crank_handle_polycube.inp",
+       "out_meshfile": "./Test_results/crank_handle_polycube_mesh.med",
+       "method": "CuboidUnion",
+       "cell_size": [2.0, 2.0, 2.0],
+       "decomposition_resolution": 32,
+       "max_blocks": 64,
+       "cuboid_iterations": 60,
+       "padding_fraction": 0.15,
+       "max_cells": 250000,
+       "min_scaled_jacobian": 0.1,
+       "surface_tolerance": 6.5,
+       "quality_report": "./Test_results/crank_handle_polycube_hex_quality.json"
+     }
+   }
+
+The mapping step can continue to read the same output path. Recheck element
+validity after :code:`Proc_Mesh_MappingHexElem`: this operation is separate and
+the validity of the near-polycube mesh does not guarantee a valid pulled-back
+mesh. A previously packaged executable must be rebuilt with both the changed
+Python modules and the updated native library.
+
+.. list-table:: CuboidUnion controls
+   :widths: 25 75
+   :header-rows: 1
+
+   * - Parameter
+     - Meaning
+   * - :code:`inp_meshfile`
+     - Input Tet mesh path or mesh-container ID. Supply exactly one of this
+       parameter and :code:`blocks`.
+   * - :code:`blocks`
+     - Optional explicit cuboids instead of automatic decomposition. Each has
+       :code:`bounds: [[xmin,xmax],[ymin,ymax],[zmin,zmax]]` and an optional
+       unique string :code:`id`. This mode meshes the union without a target
+       surface fit. Per-block :code:`num_elem` is exclusive to :code:`Mapped`.
+   * - :code:`out_meshfile`
+     - Required volume mesh path or container ID. Examples: :code:`.inp`,
+       :code:`.vtk`, :code:`.vtu`, :code:`.med`.
+   * - :code:`cell_size`
+     - Required positive scalar or three-vector, in input geometry units.
+       All cuboids use this pitch. Anisotropic spacing is an Artisan extension
+       to the paper's regular cubic grid.
+   * - :code:`grid_origin`
+     - Optional three-vector controlling the snapping grid. Defaults to the
+       input bounding-box minimum (or the minimum explicit cuboid bounds).
+   * - :code:`decomposition_resolution`
+     - Integer 4-64, default 32. Maximum grid count along the longest input
+       axis, with proportionate counts on the others. This controls cuboid
+       discovery, independently of output :code:`cell_size`.
+   * - :code:`max_blocks`
+     - Integer 1-512, default 64. Fail with a report if interior samples remain
+       uncovered after this many automatically placed cuboids.
+   * - :code:`cuboid_iterations`
+     - Integer 0-1000, default 60. Maximum projected-descent fitting iterations;
+       zero retains the automatically placed cuboid bounds.
+   * - :code:`outside_weight`, :code:`inside_weight`
+     - Positive cuboid objective weights, default 1 and 10. Coordinates are
+       normalized for this stage; reported energy is in normalized units.
+   * - :code:`padding_fraction`
+     - Number in [0,0.5), default 0.15. Initial inward displacement relative
+       to the grid pitch on a flat face. Backtracking reduces displacement if
+       needed to certify positive elements. Zero disables padding.
+   * - :code:`max_cells`
+     - Positive integer, default 250000. Includes both union cells and padding.
+   * - :code:`max_iteration`, :code:`quality_iterations`
+     - Surface fitting and quality optimization budgets, default 100 and 40.
+   * - :code:`surface_tolerance`, :code:`min_scaled_jacobian`
+     - Required fit/quality thresholds. Defaults are 0.25 times the smallest
+       cell size and 0.1. Failure to reach these prevents mesh export.
+   * - :code:`smoothness`, :code:`preserve_features`, :code:`feature_angle`, :code:`size_weight`
+     - Existing Artisan surface/quality controls: defaults 0.05, true, 45 and
+       0.1. They apply to mesh input, after cuboid discretization and padding.
+   * - :code:`quality_report`
+     - Optional JSON path with an existing parent directory. Saves fitted
+       cuboids, fitting energy history, snapping and padding statistics,
+       topology signatures, final quality and sampled surface errors. On
+       automatic meshing failure, saves available diagnostics without
+       replacing an existing output mesh.
+
+Sub-grid cuboids can disappear during automatic snapping; their zero-based
+indices appear in :code:`discretization.collapsed_block_indices`. Explicit
+block input rejects collapsed cuboids. Non-manifold unions and changes in the
+boundary component/Euler signature are rejected. Reduce :code:`cell_size` for
+lost narrow features, or increase :code:`decomposition_resolution` when the
+discovery grid misses them. These checks do not prove topology equivalence or
+absence of global self-intersection. Positivity is certified throughout each
+trilinear element using a sufficient Bernstein determinant bound; quality and
+surface-distance measures are sampled.
+
+Runnable examples in :code:`Src/Test_json/ConformalLattice/HexConformal`:
+
+* :code:`HexConformal_Cuboid_Automatic_LShape.json` reads the adjacent
+  :code:`LShape_Cuboid_input.inp` (18 tets), discovers two cuboids and exports
+  416 hexes and 551 nodes, including 224 padding cells. It needs no external
+  geometry and runs beside its JSON with :code:`JsonWorkDir: true`.
+* :code:`HexConformal_AdaptiveTet_Cuboid_AllSteps.json` is the complete
+  crank-handle workflow with step 4 changed to automatic cuboid meshing. It
+  retains :code:`JsonWorkDir: false`; run from the Artisan data directory
+  containing :code:`sample-obj`, :code:`Test_json` and :code:`Test_results`.
+
+For Python callers:
+
+.. code-block:: python
+
+   from Artisan.gmesh.cuboidhex import CuboidHexMesher
+
+   mesher = CuboidHexMesher(tet_nodes, tets, cell_size=[2., 2., 2.])
+   nodes, hexes = mesher.GenMesh()
+   report = mesher.report
+
+:code:`WorkFlow.Gen_MultiBlockHexMesh` returns nodes and connectivity and stores
+its report in :code:`LastMultiBlockHexMeshReport`.
+
+Legacy explicit mapped blocks
+-----------------------------
+
+Select :code:`method: "Mapped"` to retain the original structured-block
+algorithm and per-block :code:`num_elem: [nx,ny,nz]`. Blocks must be axis
+aligned, non-overlapping and meet along complete matching faces/edges.
+With :code:`match_intervals: true` (default), shared tangential counts increase
+to the maximum in each equality group; false rejects mismatched counts.
+Blocks without counts use :code:`ceil(length / cell_size)` per axis. No cuboid
+discovery, common-grid snapping, padding or surface fitting runs in this mode.
+
+:code:`HexConformal_MultiBlock_LShape.json` explicitly selects :code:`Mapped`
+and retains its 52-hex, 117-node result. Existing explicit-block workflows that
+use :code:`num_elem` should add this method field when upgrading.
+
+
 ==============
 Recommendation
 ==============

@@ -1,7 +1,7 @@
 .. _chapter-FieldOpt:
 
-Field Operation
-***************
+Field Operation 01
+******************
 
 User may use field, defined externally or with geometric features, to enhance the lattice infill. In the field operation, the concept refers to use external data or spatial field to enhance (e.g. thickening) to lattice thickness, or to detect geometry features and therefore enhance the lattice infill using the geometry feature lines. 
 
@@ -427,7 +427,7 @@ The keyword :code:`OP_FieldOffset_GeomField` controls the field operation by def
    * - :code:`min_val`
      - the minimum offset value that remapped to the :code:`min`; 
    * - :code:`min_max_opt`
-     - A list of two numbers controlling the maximum and minimum values. If either number is greater than 0, it overrides the corresponding input and is taken directly from the SDF (Signed Distance Field).
+     - A list :code:`[auto_min, auto_max]`. A first value greater than 0 replaces :code:`min` with the minimum sampled geometry SDF; a second value greater than 0 replaces :code:`max` with the maximum sampled geometry SDF. A value less than or equal to 0 keeps the corresponding supplied limit. The effective limits must be finite and satisfy :code:`min < max`; otherwise the operation raises an error before changing the model field. Offset endpoints may increase, decrease, or be equal. Automatic limits are sampled within the current processing block.
 
 
 .. image:: ./pictures/GeomField_Cylinder.png

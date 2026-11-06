@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mesh Lattice &#8212; Artisan 0.2.18 documentation</title>
+    <title>Mesh Lattice &#8212; Artisan 0.2.19 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/documentation_options.js?v=377e7130"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -132,7 +132,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+    <p class="title logo__title">Artisan 0.2.19 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -166,7 +166,8 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField_02.html">Field Operation 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
@@ -413,6 +414,12 @@ document.write(`
 </table>
 </div>
 <p>The parameter <code class="code docutils literal notranslate"><span class="pre">k</span></code> is the smooth factor that defines how beams blended together. The higher value shall lead to more material adding and more smooth transition. Here <code class="code docutils literal notranslate"><span class="pre">&quot;k&quot;</span> <span class="pre">:</span> <span class="pre">0.0</span></code> meant no such blending required.</p>
+<p>The optional <code class="code docutils literal notranslate"><span class="pre">field_mode</span></code> parameter inside <code class="code docutils literal notranslate"><span class="pre">definition</span></code> controls strut-field calculation:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">&quot;band&quot;</span></code> (default): fast local calculation, with capped values outside the strut regions.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">&quot;full&quot;</span></code>: completes the field across the sampled grid for later offsets; may take longer.</p></li>
+</ul>
+<p>To enable full mode, add <code class="code docutils literal notranslate"><span class="pre">&quot;field_mode&quot;:</span> <span class="pre">&quot;full&quot;</span></code> inside <code class="code docutils literal notranslate"><span class="pre">definition</span></code>. Omit the parameter to keep band mode.</p>
 <p>The result is shown below.</p>
 <img alt="_images/MeshLattice.png" src="_images/MeshLattice.png" />
 <p>One notes that, the parameter of <code class="code docutils literal notranslate"><span class="pre">size</span></code> in the keywords <code class="code docutils literal notranslate"><span class="pre">Add_Lattice</span></code> influences the computing performance. Ideally, this parameter shall define approximated size of a single tetrahedron element. In the some cases of mixed size of elements, user may consider use the smallest element size. Bigger or smaller size definition could yield longer computational time.</p>

@@ -1,0 +1,94 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [[0.0, 60.0], [0.0, 60.0], [0.0, 60.0]],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [0.0, 0.0, 0.0],
+    "res": [0.5, 0.5, 0.5],
+    "Padding": 2,
+    "onGPU": false,
+    "memorylimit": 2147483648,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "BlendControl",
+        "default_value": 0.5,
+        "overlap": "Linear",
+        "regions": [
+          {
+            "name": "BC region",
+            "geometry": {
+              "type": "Box",
+              "center": [12.0, 12.0, 12.0],
+              "size": [12.0, 12.0, 12.0]
+            },
+            "value": 0.0,
+            "transition_width": 0.0
+          },
+          {
+            "name": "BCCubic region",
+            "geometry": {
+              "type": "Box",
+              "center": [48.0, 48.0, 48.0],
+              "size": [12.0, 12.0, 12.0]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          }
+        ]
+      }
+    },
+    "2": {
+      "Add_Lattice": {
+        "la_name": "BC",
+        "size": [12.0, 12.0, 12.0],
+        "thk": 1.2,
+        "Rot": [0.0, 0.0, 0.0],
+        "Trans": [0.0, 0.0, 0.0],
+        "Inv": false,
+        "Fill": false,
+        "Cube_Request": {}
+      }
+    },
+    "3": {
+      "OP_FieldMerge": {
+        "la_name": "BCCubic",
+        "size": [12.0, 12.0, 12.0],
+        "thk": 1.2,
+        "Rot": [0.0, 0.0, 0.0],
+        "Trans": [0.0, 0.0, 0.0],
+        "OP_para": {
+          "InterpType": "Field",
+          "FieldFile": "BlendControl",
+          "min_cap": 0.0,
+          "max_cap": 1.0,
+          "Transition": {}
+        },
+        "Fill": true,
+        "Cube_Request": {}
+      }
+    },
+    "4": {
+      "Field_Boundary": {"Boundary": "Box"}
+    },
+    "5": {
+      "Export": {
+        "outfile": "./BigCube_LinearGeometry_LatticeMerge.stl",
+        "fieldfile": "./BigCube_LinearGeometry_LatticeMerge.h5",
+        "GridFieldIDs": ["BlendControl"]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

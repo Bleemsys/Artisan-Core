@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Artisan’s documentation &#8212; Artisan 0.2.18 documentation</title>
+    <title>Artisan’s documentation &#8212; Artisan 0.2.19 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/documentation_options.js?v=377e7130"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -134,7 +134,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+    <p class="title logo__title">Artisan 0.2.19 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -168,7 +168,8 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField_02.html">Field Operation 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
@@ -393,6 +394,8 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#adaptive-tetrahedron-mesher">Adaptive Tetrahedron Mesher</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#all-quad-surface-mesh-from-a-size-field">All-Quad Surface Mesh from a Size Field</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Mesher_02.html#mesh-container">Mesh Container</a></li>
 </ul>
 </li>
@@ -423,6 +426,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Conformal.html#lattice-in-hexahedron-domain">Lattice in hexahedron domain</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal.html#lattice-in-tetrahedron-domain">Lattice in tetrahedron domain</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal.html#conformal-geometric-shape-lattice">Conformal Geometric Shape Lattice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Conformal.html#strut-field-calculation">Strut Field Calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal.html#joint-smooth-blending">Joint Smooth Blending</a></li>
 </ul>
 </li>
@@ -432,6 +436,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="Conformal_02.html#polycube-hex-meshing-cartesianfit">Polycube Hex Meshing: CartesianFit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal_02.html#cartesian-meshing">Cartesian Meshing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal_02.html#pull-back-transformation">Pull back Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Conformal_02.html#automatic-cuboid-decomposition-hex-meshing">Automatic cuboid decomposition hex meshing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Conformal_02.html#recommendation">Recommendation</a></li>
 </ul>
 </li>
@@ -457,17 +462,19 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="PlateSlicing.html#extending-the-example">Extending the example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation 01</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#external-field-enhancement">External Field Enhancement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#geometry-feature-enhancement">Geometry Feature Enhancement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#mathematical-expression">Mathematical Expression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="OPField.html#geometry-field">Geometry Field</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="FieldContainer.html#scalar-fields-from-geometry-regions">Scalar Fields from Geometry Regions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField_02.html">Field Operation 02</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="OPField_02.html#morph-implicit-field">Morph implicit field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OPField_02.html#scalar-fields-from-geometry-regions">Scalar Fields from Geometry Regions</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="LineStructure.html#minimum-spanning-tree">Minimum Spanning Tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="LineStructure.html#streamlines-over-field">Streamlines over Field</a></li>

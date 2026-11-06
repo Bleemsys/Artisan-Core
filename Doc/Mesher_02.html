@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Meshing 02 &#8212; Artisan 0.2.18 documentation</title>
+    <title>Meshing 02 &#8212; Artisan 0.2.19 documentation</title>
   
   
   
@@ -36,7 +36,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c0bb6f85"></script>
+    <script src="_static/documentation_options.js?v=377e7130"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -133,7 +133,7 @@
   
   
   
-    <p class="title logo__title">Artisan 0.2.18 documentation</p>
+    <p class="title logo__title">Artisan 0.2.19 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -167,7 +167,8 @@
 <li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField_02.html">Field Operation 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
@@ -339,15 +340,19 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-tetrahedron-mesher">Adaptive Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-geometry-and-field">Prepare the geometry and field</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adjust-meshing-controls">Adjust meshing controls</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-result">Read the result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-geometry-and-field">Prepare the geometry and field</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adjust-meshing-controls">Adjust meshing controls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-result">Read the result</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-quad-surface-mesh-from-a-size-field">All-Quad Surface Mesh from a Size Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-controls">Optional controls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-quad-construction-and-validation">All-quad construction and validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-triangle-output">Optional triangle output</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a></li>
 </ul>
             </nav>
         </div>
@@ -699,6 +704,350 @@ document.write(`
 <img alt="_images/ImpTetMesher_03.png" src="_images/ImpTetMesher_03.png" />
 <p>Note that, the keyword <code class="code docutils literal notranslate"><span class="pre">Gen_TetBasicMesh_wFeature</span></code> does not support the varying size of the elements in the current version, but it shall be supported in future development.</p>
 </section>
+<section id="tetrahedral-lattice-layout-from-a-size-field">
+<span id="tet-mesh-size-field"></span><h2>Tetrahedral Lattice Layout from a Size Field<a class="headerlink" href="#tetrahedral-lattice-layout-from-a-size-field" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Gen_TetMesh_SizeField</span></code> generates tetrahedral cell domains whose sizes follow
+a scalar field. Use these domains to place a conformal lattice. The mesher
+itself produces a volume mesh; the subsequent lattice steps create the struts.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_TetMesh_SizeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TetDomains&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;sampling_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hausd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;surface_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.06</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hgrad&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//TetSizeField_quality.json&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Required mesher inputs</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mesh_file</span></code></p></td>
+<td><p>Closed triangle-surface file or mesh-container ID, resolved through
+MeshInterface.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">export_mesh</span></code></p></td>
+<td><p>Output tet-mesh file path or mesh-container ID. An ID such as
+<code class="docutils literal notranslate"><span class="pre">TetDomains</span></code> can be passed directly to <code class="docutils literal notranslate"><span class="pre">ConformalLattice</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size_field</span></code></p></td>
+<td><p>Existing scalar grid-field ID. Values must be finite, strictly positive
+target edge lengths in model units.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_size</span></code></p></td>
+<td><p>Positive initial interior seed size. The scalar field controls the
+final size targets; boundary edges in the seed may be larger.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="prepare-the-geometry-and-field">
+<h3>Prepare the geometry and field<a class="headerlink" href="#prepare-the-geometry-and-field" title="Link to this heading">#</a></h3>
+<p>The surface must be a single connected, closed, manifold, non-self-intersecting
+triangle shell. Separate solids and nested cavity shells are not supported.</p>
+<p>Create the field with <a class="reference internal" href="OPField_02.html#scalar-field-combine-geometry"><span class="std std-ref">Scalar Fields from Geometry Regions</span></a>, or load a saved
+HDF5 field using <code class="docutils literal notranslate"><span class="pre">ReadGridField</span></code>. It must cover the whole solid on a
+rectilinear 3D grid with at least two points per axis. Values are interpolated
+between grid points; there is no fallback outside the field.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Setup.res</span></code> controls field sampling, not tet size. For this workflow, use
+sufficient <code class="docutils literal notranslate"><span class="pre">Setup.memorylimit</span></code> to keep the complete domain in one partition.
+A partial field cannot size the entire solid.</p>
+</section>
+<section id="adjust-meshing-controls">
+<h3>Adjust meshing controls<a class="headerlink" href="#adjust-meshing-controls" title="Link to this heading">#</a></h3>
+<p>The example values above suit the accompanying box example. Optional controls
+use the defaults below when omitted.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Optional mesher controls</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 18.0%" />
+<col style="width: 57.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>0.01</p></td>
+<td><p>Positive boundary approximation tolerance for each adaptation pass.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">surface_tolerance</span></code></p></td>
+<td><p>2 x <code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>Positive final sampled distance limit against the original surface.
+Exceeding it rejects the output.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hgrad</span></code></p></td>
+<td><p>1.3</p></td>
+<td><p>Size gradation control; must be greater than 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">preserve_features</span></code></p></td>
+<td><p>true</p></td>
+<td><p>Enable sharp-feature detection during adaptation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">feature_angle</span></code></p></td>
+<td><p>45</p></td>
+<td><p>Feature-detection angle, in degrees from 0 to 180.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size_iterations</span></code></p></td>
+<td><p>3</p></td>
+<td><p>Number of adaptation passes, from 2 to 20.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_points</span></code></p></td>
+<td><p>250000</p></td>
+<td><p>Vertex limit checked around native meshing calls. It is not a hard
+limit on peak memory use inside those calls.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
+<td><p>No file</p></td>
+<td><p>Optional JSON report path. Its parent directory must exist and the path
+must differ from the input and output meshes.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="read-the-result">
+<h3>Read the result<a class="headerlink" href="#read-the-result" title="Link to this heading">#</a></h3>
+<p>Tet sizes are approximate: boundary shape, element quality and grading also
+affect them. The report compares requested and achieved edge sizes and records
+element counts, volume, shape quality and sampled boundary error. A successful
+check does not prove exact size matching or absence of global overlaps.
+Boundary error is sampled rather than a certified Hausdorff distance.</p>
+<p>The implementation uses native C++ Netgen for the initial mesh and MMG3D for
+size adaptation. It does not use TetGen or the Netgen Python package. Source
+builds need the updated Snippetslib and native Netgen runtime; older standalone
+executables must be rebuilt. Build details are in <code class="docutils literal notranslate"><span class="pre">SnippetsLib/NETGEN_BUILD.md</span></code>.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">Test_json/ConformalLattice/TetSizeField/TetSizeField.json</span></code> from <code class="docutils literal notranslate"><span class="pre">Src</span></code>
+for a field-and-mesh example. Follow <a class="reference internal" href="GradedTetLattice.html#graded-tet-lattice"><span class="std std-ref">Meshing 03</span></a> to turn the
+tet domains into a conformal lattice and clean the exported STL.</p>
+</section>
+</section>
+<section id="all-quad-surface-mesh-from-a-size-field">
+<span id="quad-mesh-size-field"></span><h2>All-Quad Surface Mesh from a Size Field<a class="headerlink" href="#all-quad-surface-mesh-from-a-size-field" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Gen_QuadMesh_SizeField</span></code> remeshes an open or closed triangle surface into
+four-node quadrilaterals, optionally splitting each quad into two surface
+triangles with <code class="docutils literal notranslate"><span class="pre">split_to_triangles:</span> <span class="pre">true</span></code>. An existing scalar grid field controls the target
+local quad edge length, in model units. It creates a surface mesh, not a
+tetrahedral or hexahedral volume mesh.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_QuadMesh_SizeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;QuadSurface&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hausd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;surface_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hgrad&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;preserve_features&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;feature_angle&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">45.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">750000</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//Shoes_02_SinQuad_quality.json&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Choose <code class="docutils literal notranslate"><span class="pre">method:</span> <span class="pre">&quot;SimpleQuad&quot;</span></code> (the default) for a QuadriFlow layout with
+field-controlled conforming quad refinement. It prepares a uniform triangle
+cover and usually produces more square-like elements. Choose
+<code class="docutils literal notranslate"><span class="pre">method:</span> <span class="pre">&quot;Subdivision&quot;</span></code> for MMGS triangle adaptation followed by conforming
+triangle-to-quad subdivision. The two names are case-sensitive. Both accept
+open or closed triangle inputs, size fields, and optional triangle splitting.
+Netgen remains available through the separate <code class="docutils literal notranslate"><span class="pre">Gen_TetMesh_SizeField</span></code> keyword.</p>
+<p>The method is also available in ArtGUI’s <strong>Meshing method</strong> selector. Changing
+it preserves input/output IDs, the field and other settings. Saved reports are
+marked stale after a change and include a <code class="docutils literal notranslate"><span class="pre">meshing_method</span></code> identifying the
+algorithm that actually produced the result. Older reports remain readable.</p>
+<p>The three required parameters are <code class="docutils literal notranslate"><span class="pre">mesh_file</span></code>, <code class="docutils literal notranslate"><span class="pre">export_mesh</span></code> and
+<code class="docutils literal notranslate"><span class="pre">size_field</span></code>. Input and output meshes use the same file/container convention
+as <code class="docutils literal notranslate"><span class="pre">Gen_TetMesh_SizeField</span></code>. The input must contain one connected, consistently
+oriented, nondegenerate, vertex- and edge-manifold triangle surface without
+self-intersections. Open surfaces and surfaces with boundary holes are allowed.</p>
+<p>Create <code class="docutils literal notranslate"><span class="pre">CellSize</span></code> using <code class="docutils literal notranslate"><span class="pre">OP_ExprOperation_GridField</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Define_ScalarField_CombineGeometry</span></code>, or load it through <code class="docutils literal notranslate"><span class="pre">ReadGridField</span></code>.
+The field must be a rectilinear 3D scalar grid with at least two points per
+axis, finite strictly positive values, and coverage of the entire surface and
+all meshing queries. There is no out-of-field fallback. Keep this complete
+surface workflow in one partition. Provide enough field padding for geometric
+adaptation. <code class="docutils literal notranslate"><span class="pre">Setup.res</span></code> controls field sampling; the field values control
+quad sizes. There is no <code class="docutils literal notranslate"><span class="pre">sampling_size</span></code> or uniform <code class="docutils literal notranslate"><span class="pre">size</span></code> parameter.</p>
+<section id="optional-controls">
+<h3>Optional controls<a class="headerlink" href="#optional-controls" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Quad surface mesher options</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 18.0%" />
+<col style="width: 57.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">method</span></code></p></td>
+<td><p>SimpleQuad</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SimpleQuad</span></code> or <code class="docutils literal notranslate"><span class="pre">Subdivision</span></code>. Omission retains the SimpleQuad default.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">split_to_triangles</span></code></p></td>
+<td><p>false</p></td>
+<td><p>Split every final quad into two surface triangles. Vertices and
+geometry are unchanged. Output is stored as <code class="docutils literal notranslate"><span class="pre">Triangle</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">Quad</span></code>; this does not create tetrahedral volume elements.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>0.01</p></td>
+<td><p>Positive MMGS surface-approximation tolerance, in model units.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">surface_tolerance</span></code></p></td>
+<td><p>2 x <code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
+<td><p>Positive acceptance limit for final sampled surface, boundary and
+preserved-feature distances against the original input.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hgrad</span></code></p></td>
+<td><p>1.3</p></td>
+<td><p>Size gradation control, greater than 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">preserve_features</span></code></p></td>
+<td><p>true</p></td>
+<td><p>Detect and preserve sharp feature curves. Surface boundaries are
+checked even when feature detection is disabled.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">feature_angle</span></code></p></td>
+<td><p>45</p></td>
+<td><p>Sharp-feature detection angle in degrees, from 0 to 180.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size_iterations</span></code></p></td>
+<td><p>3</p></td>
+<td><p>Adaptation passes, from 2 to 20. The original field is resampled
+after each pass, rather than merely transferring an initial metric.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_points</span></code></p></td>
+<td><p>250000</p></td>
+<td><p>Vertex-count limit covering the input, intermediate meshes and final
+all-quad mesh. Checked around MMGS calls and before subdivision
+allocation; it is not a peak-memory limit or an interrupt inside MMGS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
+<td><p>No file</p></td>
+<td><p>Optional JSON report path with an existing parent directory. Must
+differ from both mesh paths.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="all-quad-construction-and-validation">
+<h3>All-quad construction and validation<a class="headerlink" href="#all-quad-construction-and-validation" title="Link to this heading">#</a></h3>
+<p>For <code class="docutils literal notranslate"><span class="pre">Subdivision</span></code>, the native C++ implementation uses MMGS with positive per-vertex sizes, then
+splits each adapted triangle into three planar convex quads. Adjacent parents
+share one edge-midpoint vertex, so there are no hanging nodes at shared edges.
+This creates an unstructured all-quad mesh with valence-three vertices at
+triangle centres; it is not a structured or cross-field-aligned quad layout.
+It does not rely on Netgen’s quad-dominated option or a Python meshing package.</p>
+<p>For Subdivision, the intermediate triangle metric is calibrated for the shorter edges created
+by subdivision. The field is an approximate final edge-length target, not an
+exact constraint. Curvature, features, grading and element quality can force
+finer elements. The first pass conservatively discovers fine field regions
+even when no original triangle vertex lies in them.</p>
+<p>Before publishing output, the operation checks four distinct nodes per quad,
+positive corner scaled Jacobians, consistent winding, manifold connectivity,
+self-intersections of the adapted parent triangles, connectedness, boundary-loop
+count and Euler characteristic. Intersection detection uses a native AABB tree
+and floating-point tests on non-adjacent triangles. Conforming subdivision
+partitions those checked triangles without changing their surface.
+It checks sampled distances in both directions to the original surface and
+boundary curves. With feature preservation enabled it checks nine points per
+original sharp segment against final mesh edges. Original feature polyline
+vertices are retained through adaptation; ridge edges can still split.
+These sampled distances are not certified Hausdorff bounds. Checks do not prove
+exact target sizing or provide a certified geometry-validity guarantee.</p>
+<p>For the default quad output, the final report includes element counts (zero triangles), scaled-Jacobian
+percentiles, edge-length and edge-to-field ratios, target-size bins, topology,
+sampled geometric errors and adaptation-pass counts. The latest report is also
+available as <code class="docutils literal notranslate"><span class="pre">task.LastQuadSizeFieldReport</span></code>. Failed generation preserves an
+existing output mesh; a requested report records <code class="docutils literal notranslate"><span class="pre">valid:</span> <span class="pre">false</span></code>.</p>
+<p>Store the result as a mesh-container ID or export to a quad-preserving
+<code class="docutils literal notranslate"><span class="pre">.inp</span></code>, <code class="docutils literal notranslate"><span class="pre">.vtk</span></code>, <code class="docutils literal notranslate"><span class="pre">.vtu</span></code>, <code class="docutils literal notranslate"><span class="pre">.msh</span></code> or <code class="docutils literal notranslate"><span class="pre">.med</span></code> file. STL is rejected because
+it cannot preserve quadrilaterals; STL is allowed when <code class="docutils literal notranslate"><span class="pre">split_to_triangles</span></code>
+is true. For example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ExportMeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;MeshID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;QuadSurface&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;out_meshfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//Shoes_02_SinQuad_surface.inp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;elem_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quad&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">Test_json/ConformalLattice/QuadSizeField/Shoes_02_SinQuad_Surface.json</span></code>
+from <code class="docutils literal notranslate"><span class="pre">Src</span></code>. This mesh-only example reuses the surface and sine phase/period
+from <code class="docutils literal notranslate"><span class="pre">Shoes_02_SinTet_Conformal.json</span></code> and exports the field, quad mesh and
+quality report. It uses <code class="docutils literal notranslate"><span class="pre">1.0</span> <span class="pre">+</span> <span class="pre">0.75*sin(2*pi*(y</span> <span class="pre">+</span> <span class="pre">187.7188)/140)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">hgrad:</span> <span class="pre">2.0</span></code> to demonstrate finer surface sizing: the original tet example’s
+8..16 targets are too coarse for this surface’s small geometric details.
+It deliberately ends with a surface mesh; the tet-domain
+<code class="docutils literal notranslate"><span class="pre">Icosahedral</span></code> conformal definition is not applicable to quad surfaces.</p>
+</section>
+<section id="optional-triangle-output">
+<h3>Optional triangle output<a class="headerlink" href="#optional-triangle-output" title="Link to this heading">#</a></h3>
+<p>Set <code class="docutils literal notranslate"><span class="pre">split_to_triangles</span></code> to true to generate the same field-sized quad
+layout and then divide each quad along its local 0–2 diagonal:
+<code class="docutils literal notranslate"><span class="pre">[0,1,2]</span></code> and <code class="docutils literal notranslate"><span class="pre">[0,2,3]</span></code>. This produces exactly two consistently oriented
+triangles per quad, without adding or moving vertices. The validated planar
+quad surface and its boundary curves are preserved.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Gen_QuadMesh_SizeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TriangleSurface&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;split_to_triangles&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The field still controls the underlying quad-perimeter target lengths.
+The new triangle diagonals can be longer than those targets. There is no
+additional triangle remeshing or rescaling after the split. A direct SDK call
+returns the same vertices and three-column triangle connectivity. Use
+<code class="docutils literal notranslate"><span class="pre">elem_type:</span> <span class="pre">&quot;Triangle&quot;</span></code> in subsequent mesh operations and <code class="docutils literal notranslate"><span class="pre">ExportMeshID</span></code>.
+Direct triangle output supports the quad-preserving formats above plus STL.</p>
+<p>With splitting enabled, the report sets <code class="docutils literal notranslate"><span class="pre">output_element_type:</span> <span class="pre">&quot;Triangle&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">split_to_triangles:</span> <span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">all_quads:</span> <span class="pre">false</span></code>. <code class="docutils literal notranslate"><span class="pre">quad_layout</span></code> retains
+the original quad metrics; <code class="docutils literal notranslate"><span class="pre">final</span></code> describes the actual triangle output,
+with zero quadrilaterals, triangle counts, mean-ratio triangle quality,
+surface area, and edge-to-field statistics including the new diagonals.
+Geometry checks are inherited from the identical triangle partition used to
+validate the quad layout. Existing reports and counts for default quad output
+remain compatible, with additional output-mode metadata.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">Test_json/ConformalLattice/QuadSizeField/Shoes_02_SinQuad_SplitTriangles.json</span></code>
+for a separate triangle-output example with the same geometry, field and mesh
+settings. It exports INP, VTU and STL files, an HDF5 field, and a quality report
+under distinct filenames, preserving the original quad-output example.</p>
+<p>Source builds must rebuild <code class="docutils literal notranslate"><span class="pre">Snippetslib</span></code> with <code class="docutils literal notranslate"><span class="pre">QuadSurface.cpp</span></code> and
+<code class="docutils literal notranslate"><span class="pre">QuadSurfaceBindings.cpp</span></code>. Existing standalone executables must also be
+rebuilt before they can recognize this keyword.</p>
+</section>
+</section>
 <section id="mesh-container">
 <h2>Mesh Container<a class="headerlink" href="#mesh-container" title="Link to this heading">#</a></h2>
 <p>The mesh can be stored in container variables for further processing. Exporting the mesh to a file is not necessary; it only needs to be kept in memory and associated with an ID. Users can find various examples at <code class="code docutils literal notranslate"><span class="pre">.\Test_json\MeshLattice\MeshContainer\</span></code>. Below is a simple example, <code class="code docutils literal notranslate"><span class="pre">ExtractMeshSurf.json</span></code>, demonstrating the use of the mesh container.</p>
@@ -805,142 +1154,6 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="tetrahedral-lattice-layout-from-a-size-field">
-<span id="tet-mesh-size-field"></span><h3>Tetrahedral Lattice Layout from a Size Field<a class="headerlink" href="#tetrahedral-lattice-layout-from-a-size-field" title="Link to this heading">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Gen_TetMesh_SizeField</span></code> generates tetrahedral cell domains whose sizes follow
-a scalar field. Use these domains to place a conformal lattice. The mesher
-itself produces a volume mesh; the subsequent lattice steps create the struts.</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;Gen_TetMesh_SizeField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;mesh_file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solid&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;export_mesh&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TetDomains&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;size_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;sampling_size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;hausd&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.03</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;surface_tolerance&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.06</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;hgrad&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;size_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//TetSizeField_quality.json&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="pst-scrollable-table-container"><table class="table" id="id2">
-<caption><span class="caption-text">Required mesher inputs</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
-<colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mesh_file</span></code></p></td>
-<td><p>Closed triangle-surface file or mesh-container ID, resolved through
-MeshInterface.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">export_mesh</span></code></p></td>
-<td><p>Output tet-mesh file path or mesh-container ID. An ID such as
-<code class="docutils literal notranslate"><span class="pre">TetDomains</span></code> can be passed directly to <code class="docutils literal notranslate"><span class="pre">ConformalLattice</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size_field</span></code></p></td>
-<td><p>Existing scalar grid-field ID. Values must be finite, strictly positive
-target edge lengths in model units.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_size</span></code></p></td>
-<td><p>Positive initial interior seed size. The scalar field controls the
-final size targets; boundary edges in the seed may be larger.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<section id="prepare-the-geometry-and-field">
-<h4>Prepare the geometry and field<a class="headerlink" href="#prepare-the-geometry-and-field" title="Link to this heading">#</a></h4>
-<p>The surface must be a single connected, closed, manifold, non-self-intersecting
-triangle shell. Separate solids and nested cavity shells are not supported.</p>
-<p>Create the field with <a class="reference internal" href="FieldContainer.html#scalar-field-combine-geometry"><span class="std std-ref">Scalar Fields from Geometry Regions</span></a>, or load a saved
-HDF5 field using <code class="docutils literal notranslate"><span class="pre">ReadGridField</span></code>. It must cover the whole solid on a
-rectilinear 3D grid with at least two points per axis. Values are interpolated
-between grid points; there is no fallback outside the field.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Setup.res</span></code> controls field sampling, not tet size. For this workflow, use
-sufficient <code class="docutils literal notranslate"><span class="pre">Setup.memorylimit</span></code> to keep the complete domain in one partition.
-A partial field cannot size the entire solid.</p>
-</section>
-<section id="adjust-meshing-controls">
-<h4>Adjust meshing controls<a class="headerlink" href="#adjust-meshing-controls" title="Link to this heading">#</a></h4>
-<p>The example values above suit the accompanying box example. Optional controls
-use the defaults below when omitted.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-text">Optional mesher controls</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
-<colgroup>
-<col style="width: 25.0%" />
-<col style="width: 18.0%" />
-<col style="width: 57.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head"><p>Default</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
-<td><p>0.01</p></td>
-<td><p>Positive boundary approximation tolerance for each adaptation pass.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">surface_tolerance</span></code></p></td>
-<td><p>2 x <code class="docutils literal notranslate"><span class="pre">hausd</span></code></p></td>
-<td><p>Positive final sampled distance limit against the original surface.
-Exceeding it rejects the output.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hgrad</span></code></p></td>
-<td><p>1.3</p></td>
-<td><p>Size gradation control; must be greater than 1.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">preserve_features</span></code></p></td>
-<td><p>true</p></td>
-<td><p>Enable sharp-feature detection during adaptation.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">feature_angle</span></code></p></td>
-<td><p>45</p></td>
-<td><p>Feature-detection angle, in degrees from 0 to 180.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size_iterations</span></code></p></td>
-<td><p>3</p></td>
-<td><p>Number of adaptation passes, from 2 to 20.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_points</span></code></p></td>
-<td><p>250000</p></td>
-<td><p>Vertex limit checked around native meshing calls. It is not a hard
-limit on peak memory use inside those calls.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
-<td><p>No file</p></td>
-<td><p>Optional JSON report path. Its parent directory must exist and the path
-must differ from the input and output meshes.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="read-the-result">
-<h4>Read the result<a class="headerlink" href="#read-the-result" title="Link to this heading">#</a></h4>
-<p>Tet sizes are approximate: boundary shape, element quality and grading also
-affect them. The report compares requested and achieved edge sizes and records
-element counts, volume, shape quality and sampled boundary error. A successful
-check does not prove exact size matching or absence of global overlaps.
-Boundary error is sampled rather than a certified Hausdorff distance.</p>
-<p>The implementation uses native C++ Netgen for the initial mesh and MMG3D for
-size adaptation. It does not use TetGen or the Netgen Python package. Source
-builds need the updated Snippetslib and native Netgen runtime; older standalone
-executables must be rebuilt. Build details are in <code class="docutils literal notranslate"><span class="pre">SnippetsLib/NETGEN_BUILD.md</span></code>.</p>
-<p>Run <code class="docutils literal notranslate"><span class="pre">Test_json/ConformalLattice/TetSizeField/TetSizeField.json</span></code> from <code class="docutils literal notranslate"><span class="pre">Src</span></code>
-for a field-and-mesh example. Follow <a class="reference internal" href="GradedTetLattice.html#graded-tet-lattice"><span class="std std-ref">Meshing 03</span></a> to turn the
-tet domains into a conformal lattice and clean the exported STL.</p>
-</section>
-</section>
 </section>
 </section>
 
@@ -992,15 +1205,19 @@ tet domains into a conformal lattice and clean the exported STL.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedron-mesher">Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adaptive-tetrahedron-mesher">Adaptive Tetrahedron Mesher</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-tetrahedron-mesher">Implicit Tetrahedron Mesher</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-geometry-and-field">Prepare the geometry and field</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adjust-meshing-controls">Adjust meshing controls</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-result">Read the result</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetrahedral-lattice-layout-from-a-size-field">Tetrahedral Lattice Layout from a Size Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-geometry-and-field">Prepare the geometry and field</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adjust-meshing-controls">Adjust meshing controls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#read-the-result">Read the result</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-quad-surface-mesh-from-a-size-field">All-Quad Surface Mesh from a Size Field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-controls">Optional controls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-quad-construction-and-validation">All-quad construction and validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-triangle-output">Optional triangle output</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-container">Mesh Container</a></li>
 </ul>
   </nav></div>
 

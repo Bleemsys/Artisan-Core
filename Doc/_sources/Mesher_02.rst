@@ -361,124 +361,10 @@ Above example produces a tetrahedron mesh based infill.
 .. image:: ./pictures/ImpTetMesher_03.png
 
 Note that, the keyword :code:`Gen_TetBasicMesh_wFeature` does not support the varying size of the elements in the current version, but it shall be supported in future development.
-   
-==============
-Mesh Container
-==============
-
-The mesh can be stored in container variables for further processing. Exporting the mesh to a file is not necessary; it only needs to be kept in memory and associated with an ID. Users can find various examples at :code:`.\\Test_json\\MeshLattice\\MeshContainer\\`. Below is a simple example, :code:`ExtractMeshSurf.json`, demonstrating the use of the mesh container.
-
-.. code-block:: json 
-
-   {
-    "Setup": {
-        "Type": "Sample",
-        "Sample": {
-            "Domain": [[-10.0, 10.0], [-10.0, 10.0], [-10.0, 10.0]],
-            "Shape": "Box"
-        },
-        "Geomfile": "",
-        "Rot": [0.0, 0.0, 0.0],
-        "res": [0.1, 0.1, 0.1],
-        "Padding": 1,
-        "onGPU": false,
-        "memorylimit": 1073741824000
-    },
-    "WorkFlow": {
-        "1": {
-            "Gen_CylindricalMesh": {
-                "num_elem": [3, 10, 3],
-                "r_range": [2.0, 8.0],
-                "phi_range": [0.0, 1.0],
-                "ori": [0.0, 0.0, -2.0],
-                "Height": 10.0,
-                "Normal": [0.0, 0.0, 1.0],
-                "Mesh_file": "CylindricalMesh"
-            }
-        },
-        "2": {
-            "Proc_Mesh_ExtractSurf": {
-                "Elem_Type": "Hex",
-                "inp_meshfile": "CylindricalMesh",
-                "out_meshfile": "CylindricalMeshExterior",
-                "isSplitTris": true
-            }
-        },
-        "3": {
-            "Add_Lattice": {
-                "la_name": ".//Test_json//MeshContainer//GenCylindricalSurfMesh.mld",
-                "size": [3.0, 3.0, 3.0],
-                "thk": 0.25,
-                "Rot": [0.0, 0.0, 0.0],
-                "Trans": [0.0, 0.0, 0.0],
-                "Inv": false,
-                "Fill": false,
-                "Cube_Request": {}
-            }
-        },
-        "4": {
-            "ExportMeshID": {
-                "MeshID": "CylindricalMeshExterior",
-                "out_meshfile": ".//Test_results/CylindricalMeshExterior.stl",
-                "elem_type": "Triangle"
-            }
-        },
-        "9999": {
-            "Export": {
-                "outfile": ".//Test_results/CylindricalMesh_ConformalLattice.stl"
-            }
-        }
-    },
-    "PostProcess": {
-        "CombineMeshes": true,
-        "RemovePartitionMeshFile": false,
-        "RemoveIsolatedParts": true,
-        "ExportLazPts": true
-    }
-  }
-
-And the mesh lattice definition file :code:`.//Test_json//MeshContainer//GenCylindricalSurfMesh.mld` is shown below.
-
-.. code-block:: json 
-  
-  {
-    "type": "MeshLattice",
-    "definition": {
-        "meshfile": "CylindricalMeshExterior"
-    }
-  }
-
-The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are used to generate the mesh and extract the surface mesh respectively. The keyword :code:`ExportMeshID` is used to export the mesh data stored in the container. In the example above, the mesh data stored in the container with the mesh ID :code:`CylindricalMeshExterior` is exported to the file :code:`CylindricalMeshExterior.stl`, and the container also was used to provide the mesh data for the mesh lattice generation. User may also use the keyword :code:`ReadMesh` to read the mesh file and store the data associated with the mesh ID in the container, as shown by the example :code:`Parts01_Mesh_Infill_LR.json` below. At the end of the workflow, the keyword :code:`RemoveMesh` delete the mesh from container for releasing memory. 
-
-.. code-block:: json 
-
-  {"Setup":{    "Type" : "Geometry",
-                "Geomfile": ".//sample-obj//Parts01//Parts01.stl",
-                "Rot" : [0.0,0.0,0.0],
-                "res":[0.25,0.25,0.25],
-                "Padding": 2,
-                "onGPU": false,
-                "memorylimit": 16106127360
-                },
-   "WorkFlow":{
-          "1": {"ReadMesh":{"MeshID":"TestMesh", "meshfile":".//sample-obj//Parts01//Parts01.med", "elem_type":"Tet"}},
-          "2": {"Add_Lattice":{
-                    "la_name": ".//Test_json//MeshContainer//Parts01_Mesh_Infill_LR.mld", "size": [4.0,4.0,4.0], "thk":0.3, "Rot":[0.75,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
-                    "Cube_Request": {}
-                    }
-               },
-          "3":{"RemoveMesh":{"MeshID":"TestMesh"}},
-          "999":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
-           },
-   "PostProcess":{"CombineMeshes": true,
-                "RemovePartitionMeshFile": false,
-                "RemoveIsolatedParts": false, 
-                "ExportLazPts": false}
-  }
-
 
 .. _tet-mesh-size-field:
 
+============================================
 Tetrahedral Lattice Layout from a Size Field
 ============================================
 
@@ -594,3 +480,330 @@ executables must be rebuilt. Build details are in ``SnippetsLib/NETGEN_BUILD.md`
 Run ``Test_json/ConformalLattice/TetSizeField/TetSizeField.json`` from ``Src``
 for a field-and-mesh example. Follow :ref:`graded-tet-lattice` to turn the
 tet domains into a conformal lattice and clean the exported STL.
+
+.. _quad-mesh-size-field:
+
+=======================================
+All-Quad Surface Mesh from a Size Field
+=======================================
+
+``Gen_QuadMesh_SizeField`` remeshes an open or closed triangle surface into
+four-node quadrilaterals, optionally splitting each quad into two surface
+triangles with ``split_to_triangles: true``. An existing scalar grid field controls the target
+local quad edge length, in model units. It creates a surface mesh, not a
+tetrahedral or hexahedral volume mesh.
+
+.. code-block:: json
+
+   {
+     "Gen_QuadMesh_SizeField": {
+       "mesh_file": "Solid",
+       "export_mesh": "QuadSurface",
+       "size_field": "CellSize",
+       "hausd": 0.2,
+       "surface_tolerance": 2.0,
+       "hgrad": 2.0,
+       "preserve_features": true,
+       "feature_angle": 45.0,
+       "size_iterations": 2,
+       "max_points": 750000,
+       "quality_report": ".//Test_results//Shoes_02_SinQuad_quality.json"
+     }
+   }
+
+Choose ``method: "SimpleQuad"`` (the default) for a QuadriFlow layout with
+field-controlled conforming quad refinement. It prepares a uniform triangle
+cover and usually produces more square-like elements. Choose
+``method: "Subdivision"`` for MMGS triangle adaptation followed by conforming
+triangle-to-quad subdivision. The two names are case-sensitive. Both accept
+open or closed triangle inputs, size fields, and optional triangle splitting.
+Netgen remains available through the separate ``Gen_TetMesh_SizeField`` keyword.
+
+The method is also available in ArtGUI's **Meshing method** selector. Changing
+it preserves input/output IDs, the field and other settings. Saved reports are
+marked stale after a change and include a ``meshing_method`` identifying the
+algorithm that actually produced the result. Older reports remain readable.
+
+The three required parameters are ``mesh_file``, ``export_mesh`` and
+``size_field``. Input and output meshes use the same file/container convention
+as ``Gen_TetMesh_SizeField``. The input must contain one connected, consistently
+oriented, nondegenerate, vertex- and edge-manifold triangle surface without
+self-intersections. Open surfaces and surfaces with boundary holes are allowed.
+
+Create ``CellSize`` using ``OP_ExprOperation_GridField`` or
+``Define_ScalarField_CombineGeometry``, or load it through ``ReadGridField``.
+The field must be a rectilinear 3D scalar grid with at least two points per
+axis, finite strictly positive values, and coverage of the entire surface and
+all meshing queries. There is no out-of-field fallback. Keep this complete
+surface workflow in one partition. Provide enough field padding for geometric
+adaptation. ``Setup.res`` controls field sampling; the field values control
+quad sizes. There is no ``sampling_size`` or uniform ``size`` parameter.
+
+Optional controls
+-----------------
+
+.. list-table:: Quad surface mesher options
+   :header-rows: 1
+   :widths: 25 18 57
+
+   * - Parameter
+     - Default
+     - Meaning
+   * - ``method``
+     - SimpleQuad
+     - ``SimpleQuad`` or ``Subdivision``. Omission retains the SimpleQuad default.
+   * - ``split_to_triangles``
+     - false
+     - Split every final quad into two surface triangles. Vertices and
+       geometry are unchanged. Output is stored as ``Triangle`` instead of
+       ``Quad``; this does not create tetrahedral volume elements.
+   * - ``hausd``
+     - 0.01
+     - Positive MMGS surface-approximation tolerance, in model units.
+   * - ``surface_tolerance``
+     - 2 x ``hausd``
+     - Positive acceptance limit for final sampled surface, boundary and
+       preserved-feature distances against the original input.
+   * - ``hgrad``
+     - 1.3
+     - Size gradation control, greater than 1.
+   * - ``preserve_features``
+     - true
+     - Detect and preserve sharp feature curves. Surface boundaries are
+       checked even when feature detection is disabled.
+   * - ``feature_angle``
+     - 45
+     - Sharp-feature detection angle in degrees, from 0 to 180.
+   * - ``size_iterations``
+     - 3
+     - Adaptation passes, from 2 to 20. The original field is resampled
+       after each pass, rather than merely transferring an initial metric.
+   * - ``max_points``
+     - 250000
+     - Vertex-count limit covering the input, intermediate meshes and final
+       all-quad mesh. Checked around MMGS calls and before subdivision
+       allocation; it is not a peak-memory limit or an interrupt inside MMGS.
+   * - ``quality_report``
+     - No file
+     - Optional JSON report path with an existing parent directory. Must
+       differ from both mesh paths.
+
+All-quad construction and validation
+------------------------------------
+
+For ``Subdivision``, the native C++ implementation uses MMGS with positive per-vertex sizes, then
+splits each adapted triangle into three planar convex quads. Adjacent parents
+share one edge-midpoint vertex, so there are no hanging nodes at shared edges.
+This creates an unstructured all-quad mesh with valence-three vertices at
+triangle centres; it is not a structured or cross-field-aligned quad layout.
+It does not rely on Netgen's quad-dominated option or a Python meshing package.
+
+For Subdivision, the intermediate triangle metric is calibrated for the shorter edges created
+by subdivision. The field is an approximate final edge-length target, not an
+exact constraint. Curvature, features, grading and element quality can force
+finer elements. The first pass conservatively discovers fine field regions
+even when no original triangle vertex lies in them.
+
+Before publishing output, the operation checks four distinct nodes per quad,
+positive corner scaled Jacobians, consistent winding, manifold connectivity,
+self-intersections of the adapted parent triangles, connectedness, boundary-loop
+count and Euler characteristic. Intersection detection uses a native AABB tree
+and floating-point tests on non-adjacent triangles. Conforming subdivision
+partitions those checked triangles without changing their surface.
+It checks sampled distances in both directions to the original surface and
+boundary curves. With feature preservation enabled it checks nine points per
+original sharp segment against final mesh edges. Original feature polyline
+vertices are retained through adaptation; ridge edges can still split.
+These sampled distances are not certified Hausdorff bounds. Checks do not prove
+exact target sizing or provide a certified geometry-validity guarantee.
+
+For the default quad output, the final report includes element counts (zero triangles), scaled-Jacobian
+percentiles, edge-length and edge-to-field ratios, target-size bins, topology,
+sampled geometric errors and adaptation-pass counts. The latest report is also
+available as ``task.LastQuadSizeFieldReport``. Failed generation preserves an
+existing output mesh; a requested report records ``valid: false``.
+
+Store the result as a mesh-container ID or export to a quad-preserving
+``.inp``, ``.vtk``, ``.vtu``, ``.msh`` or ``.med`` file. STL is rejected because
+it cannot preserve quadrilaterals; STL is allowed when ``split_to_triangles``
+is true. For example:
+
+.. code-block:: json
+
+   {
+     "ExportMeshID": {
+       "MeshID": "QuadSurface",
+       "out_meshfile": ".//Test_results//Shoes_02_SinQuad_surface.inp",
+       "elem_type": "Quad"
+     }
+   }
+
+Run ``Test_json/ConformalLattice/QuadSizeField/Shoes_02_SinQuad_Surface.json``
+from ``Src``. This mesh-only example reuses the surface and sine phase/period
+from ``Shoes_02_SinTet_Conformal.json`` and exports the field, quad mesh and
+quality report. It uses ``1.0 + 0.75*sin(2*pi*(y + 187.7188)/140)`` and
+``hgrad: 2.0`` to demonstrate finer surface sizing: the original tet example's
+8..16 targets are too coarse for this surface's small geometric details.
+It deliberately ends with a surface mesh; the tet-domain
+``Icosahedral`` conformal definition is not applicable to quad surfaces.
+
+Optional triangle output
+-------------------------
+
+Set ``split_to_triangles`` to true to generate the same field-sized quad
+layout and then divide each quad along its local 0--2 diagonal:
+``[0,1,2]`` and ``[0,2,3]``. This produces exactly two consistently oriented
+triangles per quad, without adding or moving vertices. The validated planar
+quad surface and its boundary curves are preserved.
+
+.. code-block:: json
+
+   {
+     "Gen_QuadMesh_SizeField": {
+       "mesh_file": "Solid",
+       "export_mesh": "TriangleSurface",
+       "size_field": "CellSize",
+       "split_to_triangles": true
+     }
+   }
+
+The field still controls the underlying quad-perimeter target lengths.
+The new triangle diagonals can be longer than those targets. There is no
+additional triangle remeshing or rescaling after the split. A direct SDK call
+returns the same vertices and three-column triangle connectivity. Use
+``elem_type: "Triangle"`` in subsequent mesh operations and ``ExportMeshID``.
+Direct triangle output supports the quad-preserving formats above plus STL.
+
+With splitting enabled, the report sets ``output_element_type: "Triangle"``,
+``split_to_triangles: true`` and ``all_quads: false``. ``quad_layout`` retains
+the original quad metrics; ``final`` describes the actual triangle output,
+with zero quadrilaterals, triangle counts, mean-ratio triangle quality,
+surface area, and edge-to-field statistics including the new diagonals.
+Geometry checks are inherited from the identical triangle partition used to
+validate the quad layout. Existing reports and counts for default quad output
+remain compatible, with additional output-mode metadata.
+
+Run ``Test_json/ConformalLattice/QuadSizeField/Shoes_02_SinQuad_SplitTriangles.json``
+for a separate triangle-output example with the same geometry, field and mesh
+settings. It exports INP, VTU and STL files, an HDF5 field, and a quality report
+under distinct filenames, preserving the original quad-output example.
+
+Source builds must rebuild ``Snippetslib`` with ``QuadSurface.cpp`` and
+``QuadSurfaceBindings.cpp``. Existing standalone executables must also be
+rebuilt before they can recognize this keyword.
+
+==============
+Mesh Container
+==============
+
+The mesh can be stored in container variables for further processing. Exporting the mesh to a file is not necessary; it only needs to be kept in memory and associated with an ID. Users can find various examples at :code:`.\\Test_json\\MeshLattice\\MeshContainer\\`. Below is a simple example, :code:`ExtractMeshSurf.json`, demonstrating the use of the mesh container.
+
+.. code-block:: json 
+
+   {
+    "Setup": {
+        "Type": "Sample",
+        "Sample": {
+            "Domain": [[-10.0, 10.0], [-10.0, 10.0], [-10.0, 10.0]],
+            "Shape": "Box"
+        },
+        "Geomfile": "",
+        "Rot": [0.0, 0.0, 0.0],
+        "res": [0.1, 0.1, 0.1],
+        "Padding": 1,
+        "onGPU": false,
+        "memorylimit": 1073741824000
+    },
+    "WorkFlow": {
+        "1": {
+            "Gen_CylindricalMesh": {
+                "num_elem": [3, 10, 3],
+                "r_range": [2.0, 8.0],
+                "phi_range": [0.0, 1.0],
+                "ori": [0.0, 0.0, -2.0],
+                "Height": 10.0,
+                "Normal": [0.0, 0.0, 1.0],
+                "Mesh_file": "CylindricalMesh"
+            }
+        },
+        "2": {
+            "Proc_Mesh_ExtractSurf": {
+                "Elem_Type": "Hex",
+                "inp_meshfile": "CylindricalMesh",
+                "out_meshfile": "CylindricalMeshExterior",
+                "isSplitTris": true
+            }
+        },
+        "3": {
+            "Add_Lattice": {
+                "la_name": ".//Test_json//MeshContainer//GenCylindricalSurfMesh.mld",
+                "size": [3.0, 3.0, 3.0],
+                "thk": 0.25,
+                "Rot": [0.0, 0.0, 0.0],
+                "Trans": [0.0, 0.0, 0.0],
+                "Inv": false,
+                "Fill": false,
+                "Cube_Request": {}
+            }
+        },
+        "4": {
+            "ExportMeshID": {
+                "MeshID": "CylindricalMeshExterior",
+                "out_meshfile": ".//Test_results/CylindricalMeshExterior.stl",
+                "elem_type": "Triangle"
+            }
+        },
+        "9999": {
+            "Export": {
+                "outfile": ".//Test_results/CylindricalMesh_ConformalLattice.stl"
+            }
+        }
+    },
+    "PostProcess": {
+        "CombineMeshes": true,
+        "RemovePartitionMeshFile": false,
+        "RemoveIsolatedParts": true,
+        "ExportLazPts": true
+    }
+  }
+
+And the mesh lattice definition file :code:`.//Test_json//MeshContainer//GenCylindricalSurfMesh.mld` is shown below.
+
+.. code-block:: json 
+  
+  {
+    "type": "MeshLattice",
+    "definition": {
+        "meshfile": "CylindricalMeshExterior"
+    }
+  }
+
+The keywords :code:`Gen_CylindricalMesh` and :code:`Proc_Mesh_ExtractSurf` are used to generate the mesh and extract the surface mesh respectively. The keyword :code:`ExportMeshID` is used to export the mesh data stored in the container. In the example above, the mesh data stored in the container with the mesh ID :code:`CylindricalMeshExterior` is exported to the file :code:`CylindricalMeshExterior.stl`, and the container also was used to provide the mesh data for the mesh lattice generation. User may also use the keyword :code:`ReadMesh` to read the mesh file and store the data associated with the mesh ID in the container, as shown by the example :code:`Parts01_Mesh_Infill_LR.json` below. At the end of the workflow, the keyword :code:`RemoveMesh` delete the mesh from container for releasing memory. 
+
+.. code-block:: json 
+
+  {"Setup":{    "Type" : "Geometry",
+                "Geomfile": ".//sample-obj//Parts01//Parts01.stl",
+                "Rot" : [0.0,0.0,0.0],
+                "res":[0.25,0.25,0.25],
+                "Padding": 2,
+                "onGPU": false,
+                "memorylimit": 16106127360
+                },
+   "WorkFlow":{
+          "1": {"ReadMesh":{"MeshID":"TestMesh", "meshfile":".//sample-obj//Parts01//Parts01.med", "elem_type":"Tet"}},
+          "2": {"Add_Lattice":{
+                    "la_name": ".//Test_json//MeshContainer//Parts01_Mesh_Infill_LR.mld", "size": [4.0,4.0,4.0], "thk":0.3, "Rot":[0.75,0.0,0.0], "Trans":[0.0,0.0,0.0], "Inv": false, "Fill": false, 
+                    "Cube_Request": {}
+                    }
+               },
+          "3":{"RemoveMesh":{"MeshID":"TestMesh"}},
+          "999":{"Export": {"outfile": ".//Test_results/Parts01_Mesh_Infill.stl"}}
+           },
+   "PostProcess":{"CombineMeshes": true,
+                "RemovePartitionMeshFile": false,
+                "RemoveIsolatedParts": false, 
+                "ExportLazPts": false}
+  }
+
+

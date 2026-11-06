@@ -1,0 +1,96 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -1.0,
+          5.0
+        ],
+        [
+          -1.0,
+          5.0
+        ],
+        [
+          -1.0,
+          2.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      0.25,
+      0.25,
+      0.25
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "memorylimit": 1073741824,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "CellSize",
+        "default_value": 6.0,
+        "overlap": "Smoothstep",
+        "regions": [
+          {
+            "name": "CubeA",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                0.5,
+                0.5,
+                0.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ]
+            },
+            "value": 4.0
+          },
+          {
+            "name": "CubeB",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                3.5,
+                0.5,
+                0.5
+              ],
+              "size": [
+                1,
+                1,
+                1
+              ]
+            },
+            "value": 8.0
+          }
+        ]
+      }
+    },
+    "2": {
+      "Export": {
+        "outfile": "CombineGeometry_Smoothstep.h5",
+        "GridFieldIDs": [
+          "CellSize"
+        ]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

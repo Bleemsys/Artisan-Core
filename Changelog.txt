@@ -181,6 +181,11 @@ This is simple change log recording the major and minor updates
 - ArtGUI 0.1.2
 - Doc updates
 
+0.2.19
+- Bug fix
+- Add new keywords for the morphing
+- ArtGUI 0.1.3
+- Doc updates
 
 
 

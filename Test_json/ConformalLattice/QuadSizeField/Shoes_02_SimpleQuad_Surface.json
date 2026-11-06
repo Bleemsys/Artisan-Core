@@ -1,0 +1,117 @@
+{
+  "Setup": {
+    "Type": "Geometry",
+    "Sample": {
+      "Domain": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": ".//sample-obj//Shore//Shoes_02.stl",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Padding": 5,
+    "onGPU": false,
+    "JsonWorkDir": false,
+    "memorylimit": 16106127360
+  },
+  "WorkFlow": {
+    "1": {
+      "ReadMesh": {
+        "MeshID": "Solid",
+        "meshfile": ".//sample-obj//Shore//Shoes_02.stl",
+        "elem_type": "Triangle"
+      }
+    },
+    "2": {
+      "Gen_SurfaceReMesh": {
+        "mesh_file": "Solid",
+        "export_mesh": "UniformSurface",
+        "hsiz": 10.0,
+        "hmax": 10.0,
+        "hausd": 10.0,
+        "hgrad": 1.3,
+        "angle": 45.0,
+        "detect_sharp_edges": false
+      }
+    },
+    "3": {
+      "OP_ExprOperation_GridField": {
+        "expression": "5.0 + 2.0*sin(2*pi*(y + 187.7188)/140)",
+        "out_gridFieldFile": "CellSize"
+      }
+    },
+    "4": {
+      "Export": {
+        "outfile": ".//Test_results//Shoes_02_QuadriFlow_SplitTriangles_CellSize.h5",
+        "GridFieldIDs": [
+          "CellSize"
+        ]
+      }
+    },
+    "5": {
+      "Gen_QuadMesh_SizeField": {
+        "mesh_file": "UniformSurface",
+        "export_mesh": "TriangleSurface",
+        "size_field": "CellSize",
+        "hausd": 10.0,
+        "surface_tolerance": 1000.0,
+        "hgrad": 2.0,
+        "preserve_features": false,
+        "feature_angle": 45.0,
+        "size_iterations": 2,
+        "max_points": 750000,
+        "quality_report": ".//Test_results//Shoes_02_SimpleQuad_quality.json",
+        "split_to_triangles": false,
+        "method": "SimpleQuad"
+      }
+    },
+    "6": {
+      "ExportMeshID": {
+        "MeshID": "TriangleSurface",
+        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.inp",
+        "elem_type": "Triangle"
+      }
+    },
+    "7": {
+      "ExportMeshID": {
+        "MeshID": "TriangleSurface",
+        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.vtu",
+        "elem_type": "Triangle"
+      }
+    },
+    "8": {
+      "ExportMeshID": {
+        "MeshID": "TriangleSurface",
+        "out_meshfile": ".//Test_results//Shoes_02_SimpleQuad_surface.stl",
+        "elem_type": "Triangle"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "CleanExportedMesh": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

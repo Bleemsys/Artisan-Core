@@ -1,0 +1,163 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [
+        [
+          -48.0,
+          48.0
+        ],
+        [
+          -48.0,
+          48.0
+        ],
+        [
+          -24.0,
+          104.0
+        ]
+      ],
+      "Shape": "Box"
+    },
+    "Geomfile": "",
+    "Rot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "res": [
+      2.0,
+      2.0,
+      2.0
+    ],
+    "Padding": 1,
+    "onGPU": false,
+    "JsonWorkDir": true,
+    "memorylimit": 1073741824
+  },
+  "WorkFlow": {
+    "1": {
+      "OP_GeomSDF_GridField": {
+        "inp_meshfile": "body.inp",
+        "out_gridfieldFile": "Body"
+      }
+    },
+    "2": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "MorphDomain",
+        "default_value": 0.0,
+        "overlap": "Maximum",
+        "regions": [
+          {
+            "name": "MorphDomain",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                0.0,
+                0.0,
+                40.0
+              ],
+              "size": [
+                80.0,
+                80.0,
+                112.0
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          }
+        ]
+      }
+    },
+    "3": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "FixedRegion",
+        "default_value": 0.0,
+        "overlap": "Maximum",
+        "regions": [
+          {
+            "name": "FixedRegion",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                0.0,
+                0.0,
+                4.0
+              ],
+              "size": [
+                16.0,
+                16.0,
+                12.0
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          }
+        ]
+      }
+    },
+    "4": {
+      "Define_ScalarField_CombineGeometry": {
+        "field_id": "MovingRegion",
+        "default_value": 0.0,
+        "overlap": "Maximum",
+        "regions": [
+          {
+            "name": "MovingRegion",
+            "geometry": {
+              "type": "Box",
+              "center": [
+                0.0,
+                0.0,
+                54.0
+              ],
+              "size": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            "value": 1.0,
+            "transition_width": 0.0
+          }
+        ]
+      }
+    },
+    "5": {
+      "Proc_Field_Morph": {
+        "input_field": "Body",
+        "output_field": "lattice",
+        "domain_mask": "MorphDomain",
+        "fixed_mask": "FixedRegion",
+        "moving_regions": [
+          {
+            "mask": "MovingRegion",
+            "translation": [
+              10.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "max_control_points": 256,
+        "quality_report": "morph-quality.json"
+      }
+    },
+    "6": {
+      "Export": {
+        "outfile": "morphed-bar.stl",
+        "fieldfile": "morphed-bar.h5",
+        "GridFieldIDs": [
+          "MorphDomain",
+          "FixedRegion",
+          "MovingRegion"
+        ]
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

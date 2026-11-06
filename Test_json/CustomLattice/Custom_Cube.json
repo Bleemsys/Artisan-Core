@@ -1,0 +1,52 @@
+{
+  "Setup": {
+    "Type": "Sample",
+    "Sample": {
+      "Domain": [[0, 20], [0, 20], [0, 20]],
+      "Shape": "Box"
+    },
+    "Rot": [0, 0, 0],
+    "res": [0.2, 0.2, 0.2],
+    "Padding": 2,
+    "onGPU": false,
+    "memorylimit": 1073741824,
+    "JsonWorkDir": true
+  },
+  "WorkFlow": {
+    "1": {
+      "Define_Lattice": {
+        "la_name": "MyCrossPlate",
+        "definition": {
+          "type": "Geom-Plate",
+          "definition": {
+            "file": "./cells/cross-plate.obj",
+            "ladomain": "Hex"
+          }
+        }
+      }
+    },
+    "2": {
+      "Add_Lattice": {
+        "la_name": "MyCrossPlate",
+        "size": [5, 5, 5],
+        "thk": 0.4,
+        "Rot": [0, 0, 0],
+        "Trans": [0, 0, 0],
+        "Inv": false,
+        "Fill": true,
+        "Cube_Request": {}
+      }
+    },
+    "3": {
+      "Export": {
+        "outfile": "./custom-plate-cube.stl"
+      }
+    }
+  },
+  "PostProcess": {
+    "CombineMeshes": true,
+    "RemovePartitionMeshFile": true,
+    "RemoveIsolatedParts": false,
+    "ExportLazPts": false
+  }
+}

@@ -1,0 +1,1084 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Field Operation 02 &#8212; Artisan 0.2.19 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=377e7130"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'OPField_02';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Grid Field Container" href="FieldContainer.html" />
+    <link rel="prev" title="Field Operation 01" href="OPField.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Artisan 0.2.19 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OtherTools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QStart/QStart.html">Basics 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeomOPT/GeomOPT.html">Basics 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Customization/Customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesh.html">Mesh Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_01.html">Meshing 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_02.html">Meshing 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GradedTetLattice.html">Meshing 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Mesher_99.html">Field Driven Meshing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ProcMesh.html">Mesh Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal.html">Conformal Lattice 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Conformal_02.html">Conformal Lattice 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SurfaceLattice.html">Surface Lattice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primitive.html">Primitive Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PlateSlicing.html">Plate slicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OPField.html">Field Operation 01</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Field Operation 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FieldContainer.html">Grid Field Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure.html">Line Structure 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LineStructure_02.html">Line Structure 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransLattice.html">Lattice Transition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Compression.html">Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Export.html">Export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FEAInter.html">FEA Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="API.html">API Interface</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ArtGUI.html">ArtGUI user guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/quickstart.html">Your first model: engine bracket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workspace.html">Find your way around</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/projects.html">Projects, geometry and file paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/workflows.html">Build and edit workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/lattices.html">Define and reuse lattices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/generation.html">Generate models and read the log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/viewer.html">Inspect models in the 3D Workspace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ArtGUI/troubleshooting.html">Troubleshooting and common questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="Supports.html">Supports</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/OPField_02.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Field Operation 02</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morph-implicit-field">Morph implicit field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#engine-bracket-example">Engine bracket example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fields-and-masks">Fields and masks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#whole-region-protection-and-transition-space">Whole-region protection and transition space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#movement-parameters">Movement parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#staged-movement">Staged movement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-controls">Numerical controls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limits-and-subsequent-operations">Limits and subsequent operations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scalar-fields-from-geometry-regions">Scalar Fields from Geometry Regions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-between-separate-regions">Interpolate between separate regions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primitive-and-mesh-region-definitions">Primitive and mesh region definitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blend-two-lattice-topologies">Blend two lattice topologies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-and-reuse-the-field">Save and reuse the field</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="field-operation-02">
+<span id="chapter-fieldopt-02"></span><h1>Field Operation 02<a class="headerlink" href="#field-operation-02" title="Link to this heading">#</a></h1>
+<section id="morph-implicit-field">
+<span id="field-morph"></span><h2>Morph implicit field<a class="headerlink" href="#morph-implicit-field" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Proc_Field_Morph</span></code> warps a scalar geometry or lattice field using selected
+fixed and moving volumes. Python resolves the named fields and workflow settings.
+The compiled <code class="docutils literal notranslate"><span class="pre">Artisan.FieldMorph</span></code> extension performs the RBF fit, deformation
+evaluation, inverse mapping and trilinear resampling in C++ with OpenMP. This is
+a CPU operation, independent of <code class="docutils literal notranslate"><span class="pre">Setup.onGPU</span></code>. The solver automatically selects
+the CPU thread count from the OpenMP runtime budget and available processors;
+there is no workflow parameter for thread selection. The quality report records
+<code class="docutils literal notranslate"><span class="pre">thread_selection</span></code> as <code class="docutils literal notranslate"><span class="pre">automatic</span></code> and the budget as <code class="docutils literal notranslate"><span class="pre">threads_selected</span></code>.
+Existing workflows containing <code class="docutils literal notranslate"><span class="pre">threads</span></code> must remove that key.</p>
+<p>The complete example is <code class="docutils literal notranslate"><span class="pre">Src/Test_json/FieldContainer/Morph/FieldMorph_MaskedBar.json</span></code>.
+It converts a closed bar surface to a geometry field, makes three masks with
+<code class="docutils literal notranslate"><span class="pre">Define_ScalarField_CombineGeometry</span></code>, holds the base fixed, moves the upper
+region 3 model units along X, and exports STL and HDF5 results.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Proc_Field_Morph&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;input_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Body&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;output_field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lattice&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;domain_mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MorphDomain&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;fixed_mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FixedRegion&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;moving_regions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MovingRegion&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;translation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;quality_report&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;morph-quality.json&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="engine-bracket-example">
+<h3>Engine bracket example<a class="headerlink" href="#engine-bracket-example" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Test_json/FieldContainer/Morph/EngineBracket_BoxMorph.json</span></code> morphs the
+engine bracket’s geometry field. The <code class="docutils literal notranslate"><span class="pre">MovingLugs</span></code> mask selects both upper
+attachment lugs for a rigid translation of +7.38 along Y and +8.81 along Z,
+in model units, with no rotation. The four regions in <code class="docutils literal notranslate"><span class="pre">FixedMounts</span></code> hold
+the bolt mounts in place. The surrounding geometry deforms between those regions.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/EngineBracket_BoxMorph_LugOverlay.png"><img alt="Y-Z side view showing the translucent original engine bracket overlapped with the teal morphed result." src="_images/EngineBracket_BoxMorph_LugOverlay.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Full side view along X compares the translucent original form with the
+teal morphed result. The upper lugs translate together while the four
+bolt mounts stay fixed.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_images/EngineBracket_BoxMorph_Regions.png"><img alt="The original engine bracket with four blue boxes around the fixed bolt mounts and a teal box around both moving lugs." src="_images/EngineBracket_BoxMorph_Regions.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Four boxes select the fixed bolt mounts. One box selects both upper lugs.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="fields-and-masks">
+<h3>Fields and masks<a class="headerlink" href="#fields-and-masks" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">input_field</span></code> and <code class="docutils literal notranslate"><span class="pre">output_field</span></code> are named grid-field IDs. The reserved name
+<code class="docutils literal notranslate"><span class="pre">lattice</span></code> means the active lattice field; both default to <code class="docutils literal notranslate"><span class="pre">lattice</span></code>. A named
+output preserves the input. An output to <code class="docutils literal notranslate"><span class="pre">lattice</span></code> requires matching active
+sampling coordinates. Export a named result with <code class="docutils literal notranslate"><span class="pre">Export.GridFieldIDs</span></code>.
+File paths are not accepted in these two parameters: load files with
+<code class="docutils literal notranslate"><span class="pre">ReadGridField</span></code> first. All fields must use the same strictly increasing,
+rectilinear axes in model coordinates, with at least three samples per axis.
+Nonuniform axis spacing is supported. Automatic mask resampling is not performed.</p>
+<p>Make masks with <code class="docutils literal notranslate"><span class="pre">default_value:</span> <span class="pre">0</span></code>, regional <code class="docutils literal notranslate"><span class="pre">value:</span> <span class="pre">1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">overlap:</span> <span class="pre">&quot;Maximum&quot;</span></code>. Mask values must be finite and in [0, 1].
+Values greater than or equal to <code class="docutils literal notranslate"><span class="pre">mask_threshold</span></code> select a region. Its default
+is 0.5; the accepted interval is (0, 1]. Masks describe ORIGINAL coordinates at
+the beginning of this operation; moving masks are not re-evaluated at the output
+positions. With <code class="docutils literal notranslate"><span class="pre">stages</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>, the command internally transports moving
+selections to each stage’s starting configuration; the original named masks
+are preserved. A later, separate morph operation must explicitly provide masks
+appropriate to its own input configuration.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">domain_mask</span></code> is required. Outside it the deformation is zero.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fixed_mask</span></code> optionally names a protected region. An empty string (default)
+omits this additional region; the outside and grid boundary remain fixed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">moving_regions</span></code> is a nonempty list of up to 32 independent rigid movements.
+Each entry requires a <code class="docutils literal notranslate"><span class="pre">mask</span></code>. A mask must select at least one grid point.</p></li>
+<li><p>The remaining space inside the domain supplies the deformable transition.</p></li>
+</ul>
+<p>Use <code class="docutils literal notranslate"><span class="pre">transition_width:</span> <span class="pre">0</span></code> for selection masks. Intermediate mask values are
+thresholded, not multiplied into the displacement as soft influence weights.
+The masks are dimensionless; lengths use the model coordinate units.</p>
+</section>
+<section id="whole-region-protection-and-transition-space">
+<h3>Whole-region protection and transition space<a class="headerlink" href="#whole-region-protection-and-transition-space" title="Link to this heading">#</a></h3>
+<p>The implementation protects every cell incident to a selected grid vertex. It
+does this by adding one grid-cell halo to the fixed, outside and moving vertex
+sets before constructing the displacement grid. This conservative rule protects
+the entire volume selected by the thresholded, trilinearly interpolated mask,
+including points between grid vertices. It can extend protection slightly beyond
+the selected region. The outermost grid layer and its adjacent cells are fixed.</p>
+<p>Protected halos must not overlap between moving groups or between moving and
+fixed space. Leave at least a few free cells for the transition, and enough
+sampling padding for the intended motion. Conflicts, empty masks and missing
+transition space produce errors rather than applying an implicit priority rule.
+Refine <code class="docutils literal notranslate"><span class="pre">Setup.res</span></code> when this one-cell protection is too coarse. Geometry already
+lost in the sampled input cannot be recovered by morphing.</p>
+</section>
+<section id="movement-parameters">
+<h3>Movement parameters<a class="headerlink" href="#movement-parameters" title="Link to this heading">#</a></h3>
+<p>Each moving entry accepts:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Rigid movement</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 24.0%" />
+<col style="width: 48.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">translation</span></code></p></td>
+<td><p>[0, 0, 0]</p></td>
+<td><p>XYZ translation in model units, applied after rotation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rotation_axis</span></code></p></td>
+<td><p>[0, 0, 1]</p></td>
+<td><p>Finite nonzero axis, normalized internally.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rotation_degrees</span></code></p></td>
+<td><p>0</p></td>
+<td><p>Right-hand rotation angle in degrees.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rotation_center</span></code></p></td>
+<td><p>[0, 0, 0]</p></td>
+<td><p>Rotation pivot in original model coordinates.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Unknown parameter names are rejected, including misspellings inside moving
+entries. Scaling and other non-rigid prescribed transformations are not exposed
+in this version.</p>
+</section>
+<section id="staged-movement">
+<h3>Staged movement<a class="headerlink" href="#staged-movement" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stages</span></code> is a positive integer, default 1. Use a larger count to divide the
+total translation and rotation of every moving region into equal increments
+within this same <code class="docutils literal notranslate"><span class="pre">Proc_Field_Morph</span></code> operation. For example, a translation of
+20 units and rotation of 60 degrees with <code class="docutils literal notranslate"><span class="pre">stages:</span> <span class="pre">10</span></code> uses increments of
+2 units and 6 degrees. Each stage deforms the preceding stage’s solved field,
+not the original field. The rotation centre follows the accumulated translation
+so the final rigid pose matches the requested rotation followed by translation.</p>
+<p>The masks supplied by the user describe the original configuration. Moving
+selections are regenerated internally from their original mask values and
+accumulated rigid poses, using trilinear sampling and <code class="docutils literal notranslate"><span class="pre">mask_threshold</span></code> on the
+same grid. They are not repeatedly resampled from earlier mask results. Fixed
+and domain selections stay fixed. The user’s mask fields are never overwritten.
+Moving selections must remain resolved by the sampling grid and must leave
+space for the one-cell protective halos throughout the motion, including the
+final pose. Enlarge the sampling box and domain explicitly when needed.</p>
+<p>The stage count is fixed by the user: there are no automatic retries or changes
+to the requested movement. Every stage must pass the existing deformation and
+inverse checks. A failure identifies the stage and leaves the prior output field
+and prior quality report unchanged. Intermediate solved fields are not published.
+Default <code class="docutils literal notranslate"><span class="pre">stages:</span> <span class="pre">1</span></code> retains the single-stage numerical calculation.</p>
+<p>The quality report adds <code class="docutils literal notranslate"><span class="pre">stages</span></code>, <code class="docutils literal notranslate"><span class="pre">stages_completed</span></code> and <code class="docutils literal notranslate"><span class="pre">stage_reports</span></code>.
+Each stage records its progress, incremental movement and quality metrics.
+For multiple stages, top-level gradient, inverse residual, inverse iteration,
+fit residual and control-count metrics are maxima over individual stages.
+The Jacobian determinant lower bound is the product of the stage bounds;
+the maximum stage gradient is not a bound on the composed displacement.
+<code class="docutils literal notranslate"><span class="pre">inverse_tolerance</span></code> applies to each stage, not to the complete accumulated
+coordinate error. Repeated field resampling can blur thin features; staging
+does not remove the need for sufficient transition space or a feasible target.</p>
+</section>
+<section id="numerical-controls">
+<h3>Numerical controls<a class="headerlink" href="#numerical-controls" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Solver options</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 18.0%" />
+<col style="width: 54.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_control_points</span></code></p></td>
+<td><p>256</p></td>
+<td><p>Total RBF control budget, 16 to 2048 and at least four per constraint group.
+Actual count may be smaller; the fixed group and moving groups share the budget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">support_radius</span></code></p></td>
+<td><p>0</p></td>
+<td><p>Wendland C2 radius in model units. Zero chooses half the grid diagonal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_gradient</span></code></p></td>
+<td><p>0.95</p></td>
+<td><p>Maximum permitted bound on the displacement gradient, greater than zero
+and at most 0.99. Cannot disable the invertibility check.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">inverse_tolerance</span></code></p></td>
+<td><p>0.000001</p></td>
+<td><p>Positive bound on inverse-coordinate error in model units, in exact
+arithmetic. Resampling and floating-point errors are additional.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">inverse_iterations</span></code></p></td>
+<td><p>50</p></td>
+<td><p>Per-query inverse iteration limit, 1 to 1000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stages</span></code></p></td>
+<td><p>1</p></td>
+<td><p>Positive integer number of equal translation/rotation increments.
+Each stage starts from the preceding solved field.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_grid_points</span></code></p></td>
+<td><p>10000000</p></td>
+<td><p>Explicit upper limit on input samples; minimum 27. This is not a total
+memory guarantee. Native working arrays require roughly 50 bytes per
+sample, in addition to existing fields, masks, Python temporaries and
+the dense control system.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quality_report</span></code></p></td>
+<td><p>empty string</p></td>
+<td><p>Optional JSON report path. Parent directory must already exist.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Control samples are selected deterministically from constraint interfaces.
+The native engine fits all three displacement components using one RBF matrix
+factorization. It evaluates the free grid vertices and enforces the prescribed
+rigid/zero displacement at every protected vertex. The final forward map uses
+this continuous trilinear displacement grid.</p>
+<p>Every cell receives a bound on the displacement gradient throughout its interior,
+not only at its corners. A global bound below one and the identity outside the
+grid provide a sufficient injectivity condition. This conservative check may
+reject a valid but large deformation. Reduce the movement, enlarge the free
+transition, or improve control coverage. A lower <code class="docutils literal notranslate"><span class="pre">max_gradient</span></code> is more
+restrictive. Near-one bounds can give a very small determinant lower bound and
+do not imply good manufacturing or mesh quality.</p>
+<p>For each output position, inverse mapping finds its original coordinate and
+samples the original scalar field there. Failure to meet the inverse tolerance,
+non-finite input, invalid masks, or failed invertibility checks leaves the output
+field unchanged. The report is written before the result is published, so report
+write failures also preserve the previous field. <code class="docutils literal notranslate"><span class="pre">task.GenContainer[&quot;FieldMorphReport&quot;]</span></code>
+contains the most recent successful report in SDK use.</p>
+</section>
+<section id="limits-and-subsequent-operations">
+<h3>Limits and subsequent operations<a class="headerlink" href="#limits-and-subsequent-operations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A JSON workflow must fit in one calculation partition. Increase
+<code class="docutils literal notranslate"><span class="pre">Setup.memorylimit</span></code> or use a coarser grid. Independent partitions would not
+share a consistent deformation and are explicitly rejected.</p></li>
+<li><p>The output is an implicit scalar field; it is <strong>not automatically a signed
+distance field</strong>. Re-distance separately before physical-distance offsets.
+Re-distancing does not undo stretched cells or struts.</p></li>
+<li><p>The original setup geometry, mesh containers and mask fields are not changed.
+Subsequent operations that clip to the original setup geometry still use that
+geometry. Use explicit field operations when continuing with the new envelope.</p></li>
+<li><p>Grid sampling and trilinear interpolation can change small geometric features.
+Keep the original input and compose edits carefully; repeated resampling can
+accumulate error. Existing FE mesh connectivity is not preserved.</p></li>
+<li><p>The gradient bound checks the coordinate map. It is not a check of final wall
+thickness, manufacturability, or an extracted surface mesh’s quality.</p></li>
+</ul>
+</section>
+</section>
+<section id="scalar-fields-from-geometry-regions">
+<span id="scalar-field-combine-geometry"></span><h2>Scalar Fields from Geometry Regions<a class="headerlink" href="#scalar-fields-from-geometry-regions" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Define_ScalarField_CombineGeometry</span></code> creates a named scalar field using
+geometry regions. It samples the current lattice grid defined by <code class="docutils literal notranslate"><span class="pre">Setup</span></code>;
+there is no separate <code class="docutils literal notranslate"><span class="pre">grid_spacing</span></code>. It does not change the lattice surface
+field.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Define_ScalarField_CombineGeometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;field_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;default_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;regions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Heel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HeelRegion&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;transition_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Minimum&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here the field is 4 inside <code class="docutils literal notranslate"><span class="pre">HeelRegion</span></code>. Outside the region it smoothly
+returns to 8 over a distance of 12, in the model’s units. <code class="docutils literal notranslate"><span class="pre">HeelRegion</span></code> must
+already be loaded as a mesh-container ID, or be replaced with a mesh-file path.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id5">
+<caption><span class="caption-text">Scalar-field parameters</span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">field_id</span></code></p></td>
+<td><p>Required name for the stored field, such as <code class="docutils literal notranslate"><span class="pre">CellSize</span></code>. A successful
+operation replaces any field with the same name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">default_value</span></code></p></td>
+<td><p>Required finite background for Minimum/Maximum. Interpolation modes
+use only regional values throughout the sampling domain.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">regions</span></code></p></td>
+<td><p>Required list of regions. Minimum/Maximum accept an empty list to create
+a constant field. Interpolation requires at least two regions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">geometry</span></code> / <code class="docutils literal notranslate"><span class="pre">value</span></code></p></td>
+<td><p>Required for each region: a mesh reference or primitive definition, and
+the finite value inside it.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<td><p>Optional region label used in messages.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">transition_width</span></code></p></td>
+<td><p>Outward transition distance. Default 0 gives a sharp change at grid
+points; interpolation can spread that change across a grid cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">overlap</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Minimum</span></code> (default), <code class="docutils literal notranslate"><span class="pre">Maximum</span></code>, <code class="docutils literal notranslate"><span class="pre">Linear</span></code>, <code class="docutils literal notranslate"><span class="pre">Smoothstep</span></code> or
+<code class="docutils literal notranslate"><span class="pre">InverseDistance</span></code>. See the interpolation rules below.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">distance_power</span></code></p></td>
+<td><p>Positive finite exponent for InverseDistance; default 1. Other modes
+require the default value.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Minimum</span></code> can only reduce the default; <code class="docutils literal notranslate"><span class="pre">Maximum</span></code> can only increase it.
+Each positive-width transition uses a smoothstep blend. Choose <code class="docutils literal notranslate"><span class="pre">Setup.res</span></code>
+fine enough to resolve the regions and transitions.</p>
+<section id="interpolate-between-separate-regions">
+<h3>Interpolate between separate regions<a class="headerlink" href="#interpolate-between-separate-regions" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Linear</span></code>, <code class="docutils literal notranslate"><span class="pre">Smoothstep</span></code> and <code class="docutils literal notranslate"><span class="pre">InverseDistance</span></code> preserve each region’s value
+inside and on its boundary, then fill every exterior grid point using distances
+to the region surfaces. This includes points beside, above and behind the regions.
+There is no background falloff: <code class="docutils literal notranslate"><span class="pre">default_value</span></code> remains required for command
+compatibility but does not participate. Set regional <code class="docutils literal notranslate"><span class="pre">transition_width</span></code> to 0
+or omit it; nonzero widths are rejected in these modes.</p>
+<p>For two regions A and B, let dA and dB be their positive exterior distances.
+<code class="docutils literal notranslate"><span class="pre">Linear</span></code> uses t = dA/(dA+dB), with value (1-t)*valueA + t*valueB.
+<code class="docutils literal notranslate"><span class="pre">Smoothstep</span></code> instead uses s = 3*t*t - 2*t*t*t, with value
+(1-s)*valueA + s*valueB. Smoothstep requires exactly two regions and gives a
+gentler join to constant regional values. This profile does not guarantee global
+spatial smoothness around every edge of an arbitrary geometry.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Linear</span></code> also accepts more than two regions and uses normalized inverse-distance
+weights 1/d. <code class="docutils literal notranslate"><span class="pre">InverseDistance</span></code> uses weights 1/(d**distance_power), normalized to
+sum to one. A larger power increases the influence of nearby regions. With power
+1 it is identical to Linear. The field stays between the smallest and largest
+regional values; very far from all finite regions it approaches their average.</p>
+<p>Interpolation rejects overlapping regions, even when their assigned values match.
+Touching boundaries also conflict and are rejected. The error identifies both
+regions; separate them or select Minimum/Maximum. Separation is checked using
+geometry distances independently of the sampling grid and current partition.
+Near-contact geometry that cannot be certified as separate is rejected rather
+than silently interpolated. Mesh checks account for float32 distance precision;
+keep a clear gap, especially with large absolute model coordinates. A failed
+operation preserves an existing field with the same ID.</p>
+<p>For example, two unit cubes occupying [0,1] and [3,4] along X, both with Y/Z in
+[0,1], can define values 4 and 8:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Define_ScalarField_CombineGeometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;field_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;default_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;regions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CubeA&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]},</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0</span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CubeB&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]},</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">8.0</span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>At (1.5,0.5,0.5), Linear gives 5; Smoothstep gives 4.625. At (2,0.5,0.5), both
+give 6. Complete workflows in <code class="docutils literal notranslate"><span class="pre">Test_json/FieldContainer/CombineGeometry</span></code> are
+<code class="docutils literal notranslate"><span class="pre">CombineGeometry_Linear.json</span></code>, <code class="docutils literal notranslate"><span class="pre">CombineGeometry_Smoothstep.json</span></code> and
+<code class="docutils literal notranslate"><span class="pre">CombineGeometry_InverseDistance.json</span></code>. Each exports its named field to HDF5.
+The last example includes a third region and uses distance power 2.</p>
+<p>Mesh geometry is handled by MeshInterface. Supply a mesh-file path or a named
+mesh container containing a closed, manifold, non-self-intersecting triangle surface.
+Exact duplicate vertices are welded; open surfaces and degenerate triangles
+are rejected. Volume elements are not automatically converted to surfaces.</p>
+<p>This is a generic scalar field, so zero and negative values are allowed.
+For <a class="reference internal" href="Mesher_02.html#tet-mesh-size-field"><span class="std std-ref">Tetrahedral Lattice Layout from a Size Field</span></a>, every value must be strictly positive and
+represents a target edge length. Connect it explicitly with
+<code class="docutils literal notranslate"><span class="pre">&quot;size_field&quot;:</span> <span class="pre">&quot;CellSize&quot;</span></code>. The field name alone does not select its use.</p>
+</section>
+<section id="primitive-and-mesh-region-definitions">
+<h3>Primitive and mesh region definitions<a class="headerlink" href="#primitive-and-mesh-region-definitions" title="Link to this heading">#</a></h3>
+<p>Each <code class="docutils literal notranslate"><span class="pre">regions[].geometry</span></code> accepts an existing mesh-file path or mesh-container
+ID, or an object with <code class="docutils literal notranslate"><span class="pre">type</span></code> equal to <code class="docutils literal notranslate"><span class="pre">Box</span></code>, <code class="docutils literal notranslate"><span class="pre">Cylinder</span></code>, <code class="docutils literal notranslate"><span class="pre">Sphere</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Mesh</span></code>. Type names are case-sensitive. Existing string-based workflows remain
+valid. The SDK also accepts <code class="docutils literal notranslate"><span class="pre">PathLike</span></code> mesh references.</p>
+<p>Primitive distances are evaluated analytically on the existing sampling grid;
+no tessellation or intermediate mesh file is needed. All lengths use the model
+coordinate units. Thus a radius of 8 means 8 mm when the model is in mm.
+The resulting field contains the specified regional/background values, not
+the primitive’s signed distances.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id6">
+<caption><span class="caption-text">Geometry objects</span><a class="headerlink" href="#id6" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 42.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Required parameters</p></th>
+<th class="head"><p>Optional parameters</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Box</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">center</span></code> (XYZ), <code class="docutils literal notranslate"><span class="pre">size</span></code> (full XYZ dimensions)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rotation_axis</span></code> (default [0, 0, 1]), <code class="docutils literal notranslate"><span class="pre">rotation_degrees</span></code> (default 0)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Cylinder</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">center</span></code> (XYZ), <code class="docutils literal notranslate"><span class="pre">radius</span></code>, <code class="docutils literal notranslate"><span class="pre">height</span></code> (full height)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">axis</span></code> (default [0, 0, 1])</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Sphere</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">center</span></code> (XYZ), <code class="docutils literal notranslate"><span class="pre">radius</span></code></p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Mesh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">source</span></code> (mesh-file path or existing mesh ID)</p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dimensions, radius and height must be strictly positive. Coordinates and angles
+must be finite. Axis vectors must be finite and nonzero; their magnitude is
+ignored. Unknown parameters inside a geometry object are rejected, so a typo
+or a parameter belonging to a different shape cannot silently change a region.</p>
+<p>A box starts aligned with the model axes. Its optional right-hand axis-angle
+rotation is applied about its center. <code class="docutils literal notranslate"><span class="pre">size</span></code> always describes the full lengths
+along the box’s own axes. These controls place the selection volume; they do not
+move the input body or replace <code class="docutils literal notranslate"><span class="pre">Proc_Field_Morph</span></code> movement parameters.</p>
+<p>A cylinder is finite and capped. Its center is halfway between its end caps;
+the caps lie at plus/minus half the height along the normalized axis. A sphere
+has no orientation parameter.</p>
+<p>For example, this box replaces the fixed-region mesh in the bar morph example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Define_ScalarField_CombineGeometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;field_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FixedRegion&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;default_value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;overlap&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Maximum&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;regions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fixed base&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">4.0</span><span class="p">],</span>
+<span class="w">          </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">16.0</span><span class="p">,</span><span class="w"> </span><span class="mf">16.0</span><span class="p">,</span><span class="w"> </span><span class="mf">12.0</span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;transition_width&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It spans X/Y = -8 to 8 and Z = -2 to 10. Other geometry objects include:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Box&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">],</span>
+<span class="w"> </span><span class="nt">&quot;rotation_axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;rotation_degrees&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cylinder&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">],</span>
+<span class="w"> </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;height&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sphere&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">54</span><span class="p">],</span><span class="w"> </span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">}</span>
+
+<span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Mesh&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fixed.inp&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The last object is equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;geometry&quot;:</span> <span class="pre">&quot;fixed.inp&quot;</span></code> when assigned to
+a region’s <code class="docutils literal notranslate"><span class="pre">geometry</span></code> key. <code class="docutils literal notranslate"><span class="pre">source</span></code> may instead be a loaded mesh ID.
+Mesh surface validity requirements are unchanged.</p>
+<p>All four types can coexist in one <code class="docutils literal notranslate"><span class="pre">regions</span></code> list. With <code class="docutils literal notranslate"><span class="pre">Minimum</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Maximum</span></code>, regions can have different values and transition widths and combine
+with the background value. A zero
+transition width includes sampled boundary points and changes sharply outside;
+a positive width blends outwards over the specified model distance. Curved or
+rotated boundaries are still represented at the sampling grid’s resolution.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Linear</span></code>, <code class="docutils literal notranslate"><span class="pre">Smoothstep</span></code> and <code class="docutils literal notranslate"><span class="pre">InverseDistance</span></code> also accept these geometry
+types. They require separate, non-touching regions and transition width 0.
+They fill the entire exterior from regional distances without a background
+falloff; see the interpolation rules in <a class="reference internal" href="#scalar-field-combine-geometry"><span class="std std-ref">Scalar Fields from Geometry Regions</span></a>.</p>
+<p>For morphing masks use background 0, regional values 1, overlap <code class="docutils literal notranslate"><span class="pre">Maximum</span></code>
+and transition width 0. Creating a larger primitive does not enlarge
+<code class="docutils literal notranslate"><span class="pre">Setup.Sample.Domain</span></code>; ensure the sampling grid covers it. A later morph still
+requires compatible mask grids and enough space between fixed/moving regions.</p>
+<p>Complete runnable examples are in <code class="docutils literal notranslate"><span class="pre">Test_json/FieldContainer/PrimitiveRegions</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ScalarField_Primitives.json</span></code> combines a rotated box, tilted cylinder,
+sphere and mesh into a generic scalar field, exported as HDF5.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FieldMorph_PrimitiveMasks.json</span></code> creates the deformation, fixed and moving
+masks from boxes and moves the bar’s upper region 10 model units along X.
+Only the body’s <code class="docutils literal notranslate"><span class="pre">body.inp</span></code> is required; there are no mask mesh files.</p></li>
+</ul>
+</section>
+<section id="blend-two-lattice-topologies">
+<h3>Blend two lattice topologies<a class="headerlink" href="#blend-two-lattice-topologies" title="Link to this heading">#</a></h3>
+<p>The workflow <code class="docutils literal notranslate"><span class="pre">Test_json/LatticeMerge/BigCube_LinearGeometry_LatticeMerge.json</span></code>
+creates a scalar field called <code class="docutils literal notranslate"><span class="pre">BlendControl</span></code> over a cube with sides of 60
+model units. Two separate boxes, each 12 units wide, define the values at
+opposite ends of the blend. Every grid point inside or on the box centered at
+<code class="docutils literal notranslate"><span class="pre">(12,</span> <span class="pre">12,</span> <span class="pre">12)</span></code> has value 0 (BC). Every grid point inside or on the box centered
+at <code class="docutils literal notranslate"><span class="pre">(48,</span> <span class="pre">48,</span> <span class="pre">48)</span></code> has value 1 (BCCubic).</p>
+<p>The example uses <code class="docutils literal notranslate"><span class="pre">&quot;overlap&quot;:</span> <span class="pre">&quot;Linear&quot;</span></code>. For a grid point outside both boxes,
+let <code class="docutils literal notranslate"><span class="pre">d_BC</span></code> and <code class="docutils literal notranslate"><span class="pre">d_BCCubic</span></code> be the shortest distances to their surfaces.
+The blend value is <code class="docutils literal notranslate"><span class="pre">d_BC</span> <span class="pre">/</span> <span class="pre">(d_BC</span> <span class="pre">+</span> <span class="pre">d_BCCubic)</span></code>. A point closer to the BC
+box has a value below 0.5, and a point closer to the BCCubic box has a value
+above 0.5. The midpoint <code class="docutils literal notranslate"><span class="pre">(30,</span> <span class="pre">30,</span> <span class="pre">30)</span></code> is equally distant from both
+surfaces, so its value is 0.5. Along the diagonal gap the value rises
+linearly from 0 to 1. The same distance rule applies everywhere outside
+the boxes, shaping the gradient across the entire section.</p>
+<p>Both boxes use <code class="docutils literal notranslate"><span class="pre">transition_width:</span> <span class="pre">0</span></code>. The <code class="docutils literal notranslate"><span class="pre">Linear</span></code> interpolation fills
+the space outside them, so the required <code class="docutils literal notranslate"><span class="pre">default_value</span></code> of 0.5 plays no
+part in the calculation.</p>
+<figure class="align-center" id="id7">
+<a class="reference internal image-reference" href="_images/BigCube_LinearGeometry_BlendField.png"><img alt="Diagonal field section with a blue box at 0, a gold box at 1, and a continuous gradient between them." src="_images/BigCube_LinearGeometry_BlendField.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The exported <code class="docutils literal notranslate"><span class="pre">BlendControl</span></code> field on the plane X = Y, which passes
+through both box centers.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">Add_Lattice</span></code> creates the BC lattice. <code class="docutils literal notranslate"><span class="pre">OP_FieldMerge</span></code> uses
+<code class="docutils literal notranslate"><span class="pre">BlendControl</span></code> as a local blend weight. A value of 0 retains the BC field,
+1 selects the BCCubic field, and intermediate values blend the two fields
+before the surface is extracted. Both lattices use the same 12-unit cell
+size and thickness setting of 1.2.</p>
+<figure class="align-center" id="id8">
+<a class="reference internal image-reference" href="_images/BigCube_LinearGeometry_MergedLattice.png"><img alt="The merged lattice cube colored from blue at the low-field corner through teal to gold at the high-field corner." src="_images/BigCube_LinearGeometry_MergedLattice.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The exported lattice surface colored by the local field value. The
+colors use the same scale as the field section.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id9">
+<a class="reference internal image-reference" href="_images/BigCube_LinearGeometry_TopologyDetail.png"><img alt="Three crops show diagonal BC struts, intermediate branches, and a BCCubic cell with a frame of edge struts." src="_images/BigCube_LinearGeometry_TopologyDetail.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Equal 12-unit crops along the cube diagonal. The BC end shows diagonal
+struts. Edge branches begin to appear in the blend zone and form a
+frame joined to the diagonal network near the BCCubic end. The number
+below each crop is the field value at its center.</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="save-and-reuse-the-field">
+<h3>Save and reuse the field<a class="headerlink" href="#save-and-reuse-the-field" title="Link to this heading">#</a></h3>
+<p>Use <code class="docutils literal notranslate"><span class="pre">Export</span></code> to save the values and grid coordinates in HDF5:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Export&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;outfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//CellSize.h5&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;GridFieldIDs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;CellSize&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In a later workflow, load the saved field before the mesher step:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ReadGridField&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;inp_GridFieldFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;.//Test_results//CellSize.h5&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;FieldID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Gridfield_ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CellSize&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">FieldID</span></code> selects the saved field; <code class="docutils literal notranslate"><span class="pre">Gridfield_ID</span></code> names the loaded field.
+A partitioned file also needs <code class="docutils literal notranslate"><span class="pre">BlockID</span></code>. Loading one partial block does not
+provide the complete field required to mesh an entire solid.</p>
+<p>The standalone field example is
+<code class="docutils literal notranslate"><span class="pre">Test_json/FieldContainer/CombineGeometry/CombineGeometry.json</span></code>.
+For field creation, tet meshing and conformal infill together, see
+<a class="reference internal" href="GradedTetLattice.html#graded-tet-lattice"><span class="std std-ref">Meshing 03</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="OPField.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Field Operation 01</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="FieldContainer.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Grid Field Container</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#morph-implicit-field">Morph implicit field</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#engine-bracket-example">Engine bracket example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fields-and-masks">Fields and masks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#whole-region-protection-and-transition-space">Whole-region protection and transition space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#movement-parameters">Movement parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#staged-movement">Staged movement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-controls">Numerical controls</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limits-and-subsequent-operations">Limits and subsequent operations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scalar-fields-from-geometry-regions">Scalar Fields from Geometry Regions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-between-separate-regions">Interpolate between separate regions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#primitive-and-mesh-region-definitions">Primitive and mesh region definitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blend-two-lattice-topologies">Blend two lattice topologies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#save-and-reuse-the-field">Save and reuse the field</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bleemsys
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Bleemsys Ltd.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
