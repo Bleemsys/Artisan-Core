@@ -2,6 +2,14 @@ import {workflowPanelSubtitle} from './workflow-panel-subtitle.js';
 import {cloneNumericJson,parseNumericJson,stringifyNumericJson,setNumber} from './numeric-json.js';
 import {definitionTypes,definitionError,isMeshType,latticeReferences} from './lattice-schema.js';
 import {operationIcon} from './operation-icons.js';
+import {STRUT_DOMAINS} from './strut-cell-model.js';
+import {supportsMeshCellDomain} from './mesh-cell-model.js';
+
+export function supportsCellDesigner(type,domain){
+  if(type==='strut')return STRUT_DOMAINS.includes(domain);
+  if(type==='TPMS')return domain==='Hex';
+  return supportsMeshCellDomain(type,domain);
+}
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const domains={Hex:'Cube (Hex)',Tet:'Tetrahedron (Tet)',Quad:'Quadrilateral (Quad)',Triangle:'Triangle'};
@@ -96,7 +104,7 @@ export function createLatticeDefinitionEditor(options){
     const json=q('#lattice-definition-json');
     if(json){try{json.value=stringifyNumericJson(readDraft(current).definition);}catch{json.value=stringifyNumericJson(current.definition);}}
     const domain=state.values.ladomain,designer=q('#edit-strut-cell,#edit-tpms-cell,#edit-mesh-cell'),help=q('[data-ld-designer-help]');
-    if(designer){const supported=type==='TPMS'?domain==='Hex':['Hex','Tet'].includes(domain);designer.disabled=!supported||!!error;
+    if(designer){const supported=supportsCellDesigner(type,domain);designer.disabled=!supported||!!error;
       if(help){help.textContent=supported?'':type==='TPMS'?'The visual designer supports TPMS definitions in Cube (Hex) cells.':'The visual designer supports Cube (Hex) and Tetrahedron (Tet) cells.';help.hidden=supported;}}
     const link=q('#lattice-link-periods');if(link)link.setAttribute('aria-pressed',String(state.linked));
   }

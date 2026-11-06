@@ -1,4 +1,13 @@
 export default {
+ 'Quad · unit square':'Quad · 单位正方形','Triangle · reference triangle':'Triangle · 参考三角形',
+ 'Custom unit cell · Quad reference domain':'自定义晶胞 · 四边形参考域','Custom unit cell · Triangle reference domain':'自定义晶胞 · 三角形参考域',
+ 'Quad nodes require X and Y between 0 and 1, and Z = 0.':'Quad 节点的 X 和 Y 必须在 0 至 1 之间，且 Z = 0。',
+ 'Triangle nodes require X ≥ 0, Y ≥ 0, X + Y ≤ 1 and Z = 0.':'Triangle 节点必须满足 X ≥ 0、Y ≥ 0、X + Y ≤ 1，且 Z = 0。',
+ '4 corners in the XY plane. Centre: (0.5,0.5,0).':'XY 平面内的 4 个角点。中心：(0.5,0.5,0)。',
+ '3 corners in the XY plane. Centre: (1/3,1/3,0).':'XY 平面内的 3 个角点。中心：(1/3,1/3,0)。',
+ 'Neighbours depend on the conformal mesh. This preview shows one reference cell.':'相邻晶胞取决于随形网格。此处仅预览一个参考晶胞。',
+ 'Press Enter or click Update node to move the selected node.':'按 Enter 键或点击“更新节点”以移动所选节点。',
+ 'Enter a number in each editable coordinate field.':'请在每个可编辑的坐标字段中输入数字。',
  'Custom unit cell · Tet reference domain':'自定义晶胞 · 四面体参考域','Hex · unit cube':'Hex · 单位立方体','Tet · reference tetrahedron':'Tet · 参考四面体',
  'Tet: X ≥ 0, Y ≥ 0, Z ≥ 0 and X + Y + Z ≤ 1.':'Tet：X ≥ 0、Y ≥ 0、Z ≥ 0，且 X + Y + Z ≤ 1。',
  '4 corners: (0,0,0), (1,0,0), (0,1,0), (0,0,1). Centre: (0.25,0.25,0.25).':'4 个角点：(0,0,0)、(1,0,0)、(0,1,0)、(0,0,1)。中心：(0.25,0.25,0.25)。',

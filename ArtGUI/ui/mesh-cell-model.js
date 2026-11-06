@@ -1,13 +1,16 @@
 import {ShapeUtils,Vector2} from './vendor/three.module.js';
 import {cloneNumericJson} from './numeric-json.js';
-import {isStrutPoint,strutDomainGeometry} from './strut-cell-model.js';
+import {isStrutPoint,strutDomainGeometry,isSurfaceCellDomain,STRUT_DOMAINS} from './strut-cell-model.js';
 
 export const MESH_CELL_LIMITS={vertices:100000,faces:100000,triangles:200000,fileBytes:32*1024*1024,polygonVertices:64};
 export const MESH_CELL_TYPES=['Geom','Geom-Plate'];
+export function supportsMeshCellDomain(type,domain){
+ return type==='Geom-Plate'?STRUT_DOMAINS.includes(domain):type==='Geom'&&(domain==='Hex'||domain==='Tet');
+}
 const copy=cloneNumericJson,sub=(a,b)=>a.map((v,i)=>v-b[i]),dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
 const finite=p=>Array.isArray(p)&&p.length===3&&p.every(v=>Number.isFinite(v)&&Math.abs(v)<=1e9);
 export const blankMeshDefinition=(type='Geom',domain='Hex')=>({type,definition:{file:'',ladomain:domain}});
-export function meshDefinitionDraft(definition){if(!MESH_CELL_TYPES.includes(definition?.type)||!['Hex','Tet'].includes(definition.definition?.ladomain)||typeof definition.definition.file!=='string')throw Error('Choose a Geometry or Plate definition in a Hex or Tet reference cell.');return copy(definition);}
+export function meshDefinitionDraft(definition){if(!supportsMeshCellDomain(definition?.type,definition?.definition?.ladomain)||typeof definition.definition.file!=='string')throw Error('Choose a compatible reference domain for this Geometry or Plate definition.');return copy(definition);}
 export const emptyCellMesh=()=>({vertices:[],faces:[],nextFaceId:1});
 export const meshFace=(mesh,id)=>mesh.faces.find(f=>f.id===id);
 export function activeVertexIndices(mesh){return [...new Set(mesh.faces.flatMap(f=>f.indices))].sort((a,b)=>a-b);}
@@ -43,7 +46,13 @@ export function inspectCellMesh(mesh,type,domain){
  for(const edge of edges.values()){const bad=edge.count===1||edge.count>2||edge.count===2&&edge.direction!==0;if(edge.count===1)openEdges++;if(edge.count>2)junctionEdges++;if(edge.count===2&&edge.direction!==0)windingEdges++;if(bad){badEdges.push([edge.a,edge.b]);if(type==='Geom')edge.faces.forEach(id=>badFaces.add(id));}}
  if(!mesh.faces.length)errors.push(type==='Geom'?'Import a closed solid mesh.':'Add a plate or import a surface mesh.');
  if(duplicateFaces)errors.push('Duplicate faces must be removed.');
- if(outside.size)errors.push(domain==='Tet'?'Mesh vertices must satisfy X ≥ 0, Y ≥ 0, Z ≥ 0 and X + Y + Z ≤ 1.':'Mesh vertices must lie between 0 and 1. Fit the mesh inside the reference cell.');
+ const outsideMessages={
+  Hex:'Mesh vertices must lie between 0 and 1. Fit the mesh inside the reference cell.',
+  Tet:'Mesh vertices must satisfy X ≥ 0, Y ≥ 0, Z ≥ 0 and X + Y + Z ≤ 1.',
+  Quad:'Plate vertices must lie in the XY unit square at Z = 0.',
+  Triangle:'Plate vertices require X ≥ 0, Y ≥ 0, X + Y ≤ 1 and Z = 0.'
+ };
+ if(outside.size)errors.push(outsideMessages[domain]);
  if(type==='Geom'){
   if(openEdges)errors.push('Geometry requires closed boundaries. Open edges: '+openEdges+'.');
   if(junctionEdges)errors.push('Geometry has edges shared by more than two faces.');
@@ -93,8 +102,18 @@ export function compactCellMesh(mesh){const used=activeVertexIndices(mesh),map=n
 export function cellMeshObj(mesh){const data=compactCellMesh(mesh),map=new Map(activeVertexIndices(mesh).map((id,i)=>[id,i]));return'# ArtGUI prepared unit cell\n'+data.vertices.map(p=>'v '+p.join(' ')).join('\n')+'\n'+mesh.faces.map((face,i)=>'# ArtGUI polygon '+data.faces[i].map(v=>v+1).join(' ')+'\n'+faceGeometry(mesh,face).triangles.map(t=>'f '+t.map(v=>map.get(v)+1).join(' ')).join('\n')).join('\n')+'\n';}
 export function fitCellMesh(mesh,domain,lockProportions=true){
  const bounds=cellMeshBounds(mesh);if(!bounds)throw Error('Import a mesh or add a plate first.');const target=strutDomainGeometry(domain).centre,prepared=copy(mesh),active=activeVertexIndices(mesh),size=bounds.size,span=Math.max(...size);if(span<1e-12)throw Error('The mesh has no extent.');
- const deltas=active.map(i=>sub(mesh.vertices[i],bounds.centre).map((v,a)=>lockProportions?v:v/(size[a]||span))),limits=[];
- for(const d of deltas){for(let a=0;a<3;a++){if(d[a]<0)limits.push(target[a]/-d[a]);if(domain==='Hex'&&d[a]>0)limits.push((1-target[a])/d[a]);}if(domain==='Tet'&&d.reduce((a,b)=>a+b,0)>0)limits.push((1-target.reduce((a,b)=>a+b,0))/d.reduce((a,b)=>a+b,0));}
+ const surface=isSurfaceCellDomain(domain),simplex=domain==='Tet'||domain==='Triangle';
+ if(surface&&size[2]>1e-9)throw Error('To fit a surface cell, use a plate parallel to the XY plane.');
+ const deltas=active.map(i=>sub(mesh.vertices[i],bounds.centre).map((v,a)=>surface&&a===2?0:lockProportions?v:v/(size[a]||span))),limits=[];
+ const budget=1-target.reduce((a,b)=>a+b,0);
+ for(const d of deltas){
+  for(let a=0;a<3;a++){
+   if(d[a]<0)limits.push(target[a]/-d[a]);
+   if(!simplex&&d[a]>0)limits.push((1-target[a])/d[a]);
+  }
+  const sum=d.reduce((a,b)=>a+b,0);
+  if(simplex&&sum>0)limits.push(budget/sum);
+ }
  const scale=Math.min(...limits);if(!Number.isFinite(scale)||scale<=0)throw Error('The mesh cannot be fitted into this reference cell.');active.forEach((id,i)=>prepared.vertices[id]=target.map((v,a)=>Math.max(0,Math.min(1,v+deltas[i][a]*scale))));return checkedMesh(prepared);
 }
 export function transformCellMesh(mesh,{translation=[0,0,0],rotation=[0,0,0],scale=[1,1,1]}={}){
@@ -105,13 +124,30 @@ export function addPlate(mesh,points,domain){
  if(points.some(p=>!isStrutPoint(p,domain)))throw Error('Plate vertices must lie inside the selected reference domain.');const out=copy(mesh),indices=points.map(p=>{let i=out.vertices.findIndex(v=>v.every((n,a)=>n===p[a]));if(i<0){i=out.vertices.length;out.vertices.push([...p]);}return i;}),face={id:out.nextFaceId++,indices};out.faces.push(face);checkedMesh(out);const key=[...indices].sort((a,b)=>a-b).join(',');if(mesh.faces.some(f=>[...f.indices].sort((a,b)=>a-b).join(',')===key))throw Error('This plate already exists.');return{mesh:out,id:face.id};
 }
 export function referencePlate(plane,position,domain){
+ if(isSurfaceCellDomain(domain)){
+  if(plane!=='XY'||position!==0)throw Error('Quad and Triangle plates lie in the XY plane at Z = 0.');
+  return strutDomainGeometry(domain).corners.map(p=>[...p]);
+ }
  if(!['XY','XZ','YZ'].includes(plane)||!Number.isFinite(position)||position<0||position>1)throw Error('Choose a plane and a position between 0 and 1.');const axis=plane==='XY'?2:plane==='XZ'?1:0,axes=[0,1,2].filter(a=>a!==axis),limit=domain==='Tet'?1-position:1,uv=domain==='Tet'?[[0,0],[limit,0],[0,limit]]:[[0,0],[1,0],[1,1],[0,1]];return uv.map(p=>{const out=[0,0,0];out[axis]=position;axes.forEach((a,i)=>out[a]=p[i]);return out;});
 }
 export function updateMeshVertex(mesh,index,point,domain){if(!mesh.vertices[index]||!isStrutPoint(point,domain))throw Error('The vertex must lie inside the selected reference domain.');const out=copy(mesh);out.vertices[index]=[...point];return checkedMesh(out);}
 export function translateMeshFace(mesh,id,delta,domain){const face=meshFace(mesh,id);if(!face)throw Error('Select a plate first.');const out=copy(mesh);for(const i of face.indices){const p=mesh.vertices[i].map((v,a)=>v+delta[a]);if(!isStrutPoint(p,domain))throw Error('The plate must stay inside the reference domain.');out.vertices[i]=p;}return checkedMesh(out);}
 export function reverseMeshFace(mesh,id=null){const out=copy(mesh);for(const f of out.faces)if(id===null||f.id===id)f.indices.reverse();return out;}
 export function removeMeshFace(mesh,id){const out=copy(mesh);out.faces=out.faces.filter(f=>f.id!==id);return out;}
-export function constrainMeshDelta(domain,points,delta){let t=1;for(const p of points){for(let a=0;a<3;a++){if(delta[a]<0)t=Math.min(t,-p[a]/delta[a]);if(delta[a]>0)t=Math.min(t,(1-p[a])/delta[a]);}const sum=delta.reduce((a,b)=>a+b,0);if(domain==='Tet'&&sum>0)t=Math.min(t,(1-p.reduce((a,b)=>a+b,0))/sum);}return delta.map(v=>v*Math.max(0,Math.min(1,t)));}
+export function constrainMeshDelta(domain,points,delta){
+ const surface=isSurfaceCellDomain(domain);
+ const movement=surface?[delta[0],delta[1],0]:delta;
+ const simplex=domain==='Tet'||domain==='Triangle',sum=movement.reduce((a,b)=>a+b,0);
+ let t=1;
+ for(const p of points){
+  for(let a=0;a<3;a++){
+   if(movement[a]<0)t=Math.min(t,-p[a]/movement[a]);
+   if(movement[a]>0)t=Math.min(t,(1-p[a])/movement[a]);
+  }
+  if(simplex&&sum>0)t=Math.min(t,(1-p.reduce((a,b)=>a+b,0))/sum);
+ }
+ return movement.map(v=>v*Math.max(0,Math.min(1,t)));
+}
 
 // An independently authored, watertight example made from the boundary of a
 // small voxel frame. It is also a deterministic import/export test fixture.

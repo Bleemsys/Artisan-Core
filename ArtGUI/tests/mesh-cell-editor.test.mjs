@@ -17,6 +17,24 @@ async function fixture(options={}){
 test('plate builder creates editable faces and saves an engine-compatible mesh reference only on Apply',{skip},async()=>{
  const f=await fixture();try{assert.equal(f.q('[data-mc="apply"]').disabled,true);f.click('add-preset');f.input('[data-new-plane]','XZ');f.click('add-preset');f.input('[data-new-plane]','YZ');f.click('add-preset');assert.equal(f.editor.getMesh().faces.length,3);assert.equal(f.saved.length,0);assert.equal(f.q('[data-mc="apply"]').disabled,false);f.click('apply');await f.flush();assert.equal(f.saved.length,1);assert.equal(f.saved[0].faces.length,3);assert.equal(f.saved[0].kind,'Geom-Plate');assert.deepEqual(f.applications[0].definition,{type:'Geom-Plate',definition:{file:'C:/cells/prepared.obj',ladomain:'Hex'}});assert.equal(f.editor.dialog.isConnected,false);assert.equal(f.calls.disposed,1);}finally{f.close();}
 });
+test('Quad and Triangle plate presets are planar and save with their selected domain',{skip},async()=>{
+ for(const [domain,count] of [['Quad',4],['Triangle',3]]){
+  const f=await fixture();
+  try{
+   f.input('[data-domain]',domain);
+   assert.equal(f.q('[data-preset-coordinates]').hidden,true);
+   assert.equal(f.q('[data-mc="type-solid"]').disabled,true);
+   f.click('add-preset');
+   assert.equal(f.q('[data-face-position]').disabled,true);
+   assert.equal(f.q('input[data-vertex="2"]').readOnly,true);
+   f.click('apply');await f.flush();
+   assert.equal(f.saved[0].domain,domain);
+   assert.equal(f.saved[0].vertices.length,count);
+   assert.ok(f.saved[0].vertices.every(p=>p[2]===0));
+   assert.equal(f.applications[0].definition.definition.ladomain,domain);
+  }finally{f.close();}
+ }
+});
 test('face dragging is one undo action and range edits, reverse normal and deletion restore correctly',{skip},async()=>{
  const f=await fixture();try{f.click('add-preset');const before=f.editor.getMesh();f.callbacks.onBeginDrag();f.callbacks.onDrag({kind:'vertex',index:0,position:[.1,0,.5]});f.callbacks.onDrag({kind:'vertex',index:0,position:[.2,0,.5]});f.callbacks.onCommitDrag();assert.equal(f.editor.getMesh().vertices[0][0],.2);f.click('undo');assert.deepEqual(f.editor.getMesh(),before);f.click('redo');assert.equal(f.editor.getMesh().vertices[0][0],.2);f.callbacks.onBeginDrag();f.callbacks.onDrag({kind:'vertex',index:0,position:[.3,0,.5]});f.callbacks.onCancelDrag();assert.equal(f.editor.getMesh().vertices[0][0],.2);
   f.input('[data-face-position]','.7','input');f.input('[data-face-position]','.8','input');f.input('[data-face-position]','.8');assert.equal(f.editor.getMesh().vertices[0][2],.8);f.click('undo');assert.equal(f.editor.getMesh().vertices[0][2],.5);const order=f.editor.getMesh().faces[0].indices;f.click('reverse');assert.deepEqual(f.editor.getMesh().faces[0].indices,[...order].reverse());f.click('delete-face');assert.equal(f.editor.getMesh().faces.length,0);f.click('undo');assert.equal(f.editor.getMesh().faces.length,1);

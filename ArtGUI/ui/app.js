@@ -41,7 +41,7 @@ import {createResourceMonitor} from './resource-monitor.js';
 import {admitFullDetail,initialGeometryMode} from './preview-policy.mjs';
 import {loadIndexedGeometry} from './full-detail-load.mjs';
 import {integratedGroups,integratedNames,definitionTypes,isMeshType,definitionTemplate,definitionError,latticeReferences} from './lattice-schema.js';
-import {createLatticeDefinitionEditor} from './lattice-definition-editor.js';
+import {createLatticeDefinitionEditor,supportsCellDesigner} from './lattice-definition-editor.js';
 import {openStrutCellEditor} from './strut-cell-editor.js';
 import {blankStrutDefinition} from './strut-cell-model.js';
 import {openTpmsCellEditor} from './tpms-cell-editor.js';
@@ -514,7 +514,7 @@ let viewerReady = Promise.resolve();
       for(const ref of refs)ref.object[ref.key]=name;
       insertLatticeStep({Define_Lattice:{la_name:name,definition}},index);
       toast(refs.length?'Definition imported; workflow references now use its project name.':'Definition imported. Relative paths retain their original workflow meaning.');
-      if((definition.type==='strut'||MESH_CELL_TYPES.includes(definition.type))&&['Hex','Tet'].includes(definition.definition.ladomain)||definition.type==='TPMS'&&definition.definition.ladomain==='Hex')editCellDefinition(selectedStep().Define_Lattice);
+      if(supportsCellDesigner(definition.type,definition.definition.ladomain))editCellDefinition(selectedStep().Define_Lattice);
     }catch(e){toast(`Could not import definition: ${e.message||e}`);}
   }
   function latticePicker(id,value,attributes,browseAttributes,unitOnly=false,exclude=''){

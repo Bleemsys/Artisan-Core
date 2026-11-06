@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import {OrbitControls} from './vendor/addons/controls/OrbitControls.js';
-import {strutDomainGeometry} from './strut-cell-model.js';
+import {strutDomainGeometry,isSurfaceCellDomain} from './strut-cell-model.js';
 import {meshFace,faceGeometry,constrainMeshDelta} from './mesh-cell-model.js';
 
 export function createMeshCellViewport({canvas,labels,getState,onSelectFace,onSelectVertex,onBeginDrag,onDrag,onCommitDrag,onCancelDrag,onMessage}){
@@ -14,7 +14,7 @@ export function createMeshCellViewport({canvas,labels,getState,onSelectFace,onSe
  function release(object,shared=false){if(!object)return;group.remove(object);if(object.isInstancedMesh)object.dispose();if(!shared)object.geometry?.dispose();}
  function render(){if(disposed)return;renderer.render(scene,camera);if(labels){labels.replaceChildren();if(state?.type==='Geom-Plate')for(const id of handleIndices){const p=state.mesh.vertices[id];if(!visible(p))continue;const point=new THREE.Vector3(...p).project(camera),x=(point.x+1)*width/2,y=(1-point.y)*height/2;if(x<0||x>width-20||y<12||y>height)continue;const label=document.createElement('span');label.textContent='N'+(id+1);label.translate=false;label.style.left=(x+7)+'px';label.style.top=(y-17)+'px';if(state.selection.vertex===id)label.className='active';labels.append(label);}}}
  function resize(){width=Math.max(1,canvas.clientWidth);height=Math.max(1,canvas.clientHeight);const aspect=width/height;camera.left=-half*aspect;camera.right=half*aspect;camera.top=half;camera.bottom=-half;camera.updateProjectionMatrix();renderer.setSize(width,height,false);render();}
- function fit(){const b=state?.analysis.bounds,min=[0,0,0],max=[1,1,1];if(b)for(let a=0;a<3;a++){min[a]=Math.min(min[a],b.min[a]);max[a]=Math.max(max[a],b.max[a]);}const centre=min.map((v,a)=>(v+max[a])/2),span=Math.max(...max.map((v,a)=>v-min[a]));half=Math.max(.7,span*.9);controls.target.set(...centre);camera.position.set(centre[0]+span*2.7,centre[1]-span*3.4,centre[2]+span*2.5);camera.zoom=1;resize();controls.update();}
+ function fit(){const b=state?.analysis.bounds,min=[0,0,0],max=[1,1,isSurfaceCellDomain(state?.domain)?0:1];if(b)for(let a=0;a<3;a++){min[a]=Math.min(min[a],b.min[a]);max[a]=Math.max(max[a],b.max[a]);}const centre=min.map((v,a)=>(v+max[a])/2),span=Math.max(...max.map((v,a)=>v-min[a]));half=Math.max(.7,span*.9);controls.target.set(...centre);camera.position.set(centre[0]+span*2.7,centre[1]-span*3.4,centre[2]+span*2.5);camera.zoom=1;resize();controls.update();}
  function geometry(indices){const positions=[];for(const t of indices)for(const i of t)positions.push(...state.mesh.vertices[i]);const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));g.computeVertexNormals();return g;}
  function rebuild(){
   for(const o of [meshObject,edges,bounds,badEdges,badPoints])release(o);meshObject=edges=bounds=badEdges=badPoints=null;

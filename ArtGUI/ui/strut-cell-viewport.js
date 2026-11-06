@@ -21,7 +21,14 @@ export function createStrutCellViewport({canvas,labels,getState,onSelect,onNodeC
  function lineObject(values,material){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(values,3));return new THREE.LineSegments(g,material);}
  function draw(){if(disposed)return;renderer.render(scene,camera);updateLabels();}
  function updateLabels(){if(!state)return;const ids=state.cell.nodes.length<=60?state.cell.nodes:state.cell.nodes.filter(n=>n.id===state.selection?.id||n.id===state.pending);labels.replaceChildren();for(const n of ids){const p=v(n.position).project(camera);if(p.z< -1||p.z>1)continue;const x=(p.x+1)*width/2,y=(1-p.y)*height/2;if(x<0||x>width-25||y<8||y>height-18)continue;const label=document.createElement('span');label.textContent='N'+n.id;label.translate=false;label.style.left=(x+9)+'px';label.style.top=(y-16)+'px';if(state.selection?.kind==='node'&&state.selection.id===n.id)label.className='active';labels.append(label);}}
- function fit(){if(!state)return;const validTet=domainOf()==='Tet'&&!state.cell.nodes.some(n=>!isStrutPoint(n.position,'Tet')),centre=hasNeighbours()?1:(validTet?0.25:0.5);controls.target.set(centre,centre,centre);camera.position.set(centre+2.7,centre-3.4,centre+2.5);camera.zoom=1;resize();controls.update();}
+ function fit(){
+  if(!state)return;
+  const domain=domainOf(),outside=state.cell.nodes.some(n=>!isStrutPoint(n.position,domain));
+  const centre=hasNeighbours()?[1,1,1]:outside?[.5,.5,.5]:strutDomainGeometry(domain).centre;
+  controls.target.set(...centre);
+  camera.position.set(centre[0]+2.7,centre[1]-3.4,centre[2]+2.5);
+  camera.zoom=1;resize();controls.update();
+ }
  function resize(){width=Math.max(1,canvas.clientWidth);height=Math.max(1,canvas.clientHeight);const half=hasNeighbours()?1.9:1.02,aspect=width/height;camera.left=-half*aspect;camera.right=half*aspect;camera.top=half;camera.bottom=-half;camera.updateProjectionMatrix();renderer.setSize(width,height,false);draw();}
  function update(next){
   state=next;for(const object of [nodeMesh,lineMesh,ghostMesh,boxMesh,highlight,draftLine])disposeObject(object);nodeMesh=lineMesh=ghostMesh=boxMesh=highlight=draftLine=null;

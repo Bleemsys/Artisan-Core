@@ -1,4 +1,8 @@
 export default {
+ 'Surface plates lie in the XY plane at Z = 0.':'表面板位于 Z = 0 的 XY 平面内。',
+ 'Plate vertices must lie in the XY unit square at Z = 0.':'板面顶点必须位于 Z = 0 的 XY 单位正方形内。',
+ 'Plate vertices require X ≥ 0, Y ≥ 0, X + Y ≤ 1 and Z = 0.':'板面顶点必须满足 X ≥ 0、Y ≥ 0、X + Y ≤ 1，且 Z = 0。',
+ 'To fit a surface cell, use a plate parallel to the XY plane.':'请使用平行于 XY 平面的板面来适配表面晶胞。',
  'Geometry cell designer':'几何晶胞设计器','Plate cell designer':'板晶胞设计器','Open Geometry cell designer':'打开几何晶胞设计器','Open Plate cell designer':'打开板晶胞设计器',
  'Inspect and prepare STL/OBJ cell meshes, or create editable plate surfaces.':'检查和准备 STL/OBJ 晶胞网格，或创建可编辑的板面。',
  'Import mesh':'导入网格','Geometry solid':'实体几何','Plate surface':'板面','Cell type':'晶胞类型','Source file':'源文件','Source and checks':'源文件与检查','Replace':'替换','Show issues':'显示问题',

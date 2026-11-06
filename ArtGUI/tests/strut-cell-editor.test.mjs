@@ -16,6 +16,30 @@ async function fixture(options={}){
 test('new-cell cancel discards the draft and never calls the project writer',{skip},async()=>{
  const f=await fixture();try{f.click('corners');f.click('cancel');assert.equal(f.q('[data-discard]').hidden,false);assert.deepEqual(f.applications,[]);f.click('keep');assert.equal(f.q('[data-discard]').hidden,true);f.click('cancel');f.click('discard');assert.equal(f.editor.dialog.isConnected,false);assert.equal(document.activeElement.id,'origin');assert.equal(f.calls.disposed,1);}finally{f.close();}
 });
+test('surface strut coordinates survive a repaint and commit by Enter or Apply',{skip},async()=>{
+ const f=await fixture();
+ try{
+  f.input('[data-domain]','Triangle');
+  f.click('corners');f.click('centre');f.click('hub');
+  const x=f.q('[data-coordinate="0"]'),y=f.q('[data-coordinate="1"]');
+  assert.equal(f.q('[data-coordinate="2"]').readOnly,true);
+  f.input('[data-coordinate="0"]','0.4');
+  f.q('[data-tab="connections"]').click();
+  assert.equal(x.value,'0.4');
+  x.dispatchEvent(new f.dom.window.KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+  assert.equal(f.editor.getDraft().definition.definition.pts[3][0],.4);
+  f.click('undo');
+  assert.equal(Number(x.value),1/3);
+  f.click('redo');
+  y.value='0.8';f.click('apply');
+  assert.equal(f.applications.length,0);
+  assert.match(f.q('[data-status]').textContent,/X \+ Y ≤ 1/);
+  y.value='0.5';f.click('apply');
+  assert.equal(f.applications[0].definition.definition.ladomain,'Triangle');
+  assert.deepEqual(f.applications[0].definition.definition.pts[3],[.4,.5,0]);
+  assert.deepEqual(f.applications[0].definition.definition.cnnt,[[3,0],[3,1],[3,2]]);
+ }finally{f.close();}
+});
 test('creates a hub cell, edits a coordinate and applies only engine-compatible definition data',{skip},async()=>{
  const f=await fixture();try{f.click('apply');assert.match(f.q('[data-status]').textContent,/two nodes/);f.click('corners');f.click('centre');f.click('hub');f.input('[data-coordinate="2"]','.65');f.click('update-node');f.click('apply');assert.equal(f.applications.length,1);const result=f.applications[0];assert.equal(result.name,'CustomCell');assert.deepEqual(Object.keys(result.definition).sort(),['definition','type']);assert.equal(result.definition.definition.pts.length,9);assert.equal(result.definition.definition.cnnt.length,8);assert.equal(result.definition.definition.pts[8][2],.65);assert.equal(f.editor.dialog.isConnected,false);}finally{f.close();}
 });
@@ -37,6 +61,8 @@ test('Tet setup offers four corners and the tetrahedron centre, enforces its lim
  const f=await fixture();try{f.input('[data-domain]','Tet');assert.equal(f.editor.getDraft().definition.definition.ladomain,'Tet');assert.deepEqual([...f.editor.dialog.querySelectorAll('[data-coordinate]')].map(el=>Number(el.value)),[.25,.25,.25]);assert.equal(f.q('[data-sc="neighbours"]').disabled,true);assert.match(f.q('[data-domain-help]').textContent,/X \+ Y \+ Z ≤ 1/);
   f.click('corners');f.click('centre');f.click('hub');assert.equal(f.editor.getDraft().definition.definition.pts.length,5);assert.equal(f.editor.getDraft().definition.definition.cnnt.length,4);
   for(const axis of ['0','1','2'])f.input('[data-coordinate="'+axis+'"]','.6');const before=f.editor.getDraft();f.click('update-node');assert.deepEqual(f.editor.getDraft(),before);assert.match(f.q('[data-status]').textContent,/X \+ Y \+ Z/);
+  f.click('apply');assert.equal(f.applications.length,0);
+  for(const axis of ['0','1','2'])f.input('[data-coordinate="'+axis+'"]','.25');
   f.click('apply');assert.equal(f.applications[0].definition.definition.ladomain,'Tet');assert.deepEqual(f.applications[0].definition.definition.pts[4],[.25,.25,.25]);
  }finally{f.close();}
 });

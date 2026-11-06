@@ -68,7 +68,20 @@ test('usage navigation uses actual consuming steps and flags consumers preceding
   const f=fixture();try{f.q('[data-ld-use-step="3"]').click();assert.deepEqual(f.navigated,['3']);f.doc.WorkFlow={'1':{Add_Lattice:{la_name:'CellA'}},'2':{Define_Lattice:f.first}};f.editor.show(f.host,f.first);assert.match(f.q('.ld-order-warning').textContent,/precedes/);f.q('#delete-lattice').click();assert.deepEqual(f.removed,[f.first]);}finally{f.close();}
 });
 test('strut arrays are editable in Advanced, invalid connectivity is rejected and extra fields survive',{skip},()=>{
-  const f=fixture('strut');try{assert.ok(f.q('[data-ld-section="advanced"] #lattice-pts'));const before=stringifyNumericJson(f.first);f.edit('#lattice-cnnt','[[0,999]]');assert.equal(f.editor.apply(),false);assert.equal(stringifyNumericJson(f.first),before);f.q('#revert-lattice').click();f.first.definition.definition.extra={value:1};f.editor.show(f.host,f.first);f.edit('#lattice-name','StrutEdited');assert.equal(f.editor.apply(),true);assert.deepEqual(f.first.definition.definition.extra,{value:1});f.edit('#lattice-domain','Quad','change');assert.equal(f.q('#edit-strut-cell').disabled,true);}finally{f.close();}
+  const f=fixture('strut');try{assert.ok(f.q('[data-ld-section="advanced"] #lattice-pts'));const before=stringifyNumericJson(f.first);f.edit('#lattice-cnnt','[[0,999]]');assert.equal(f.editor.apply(),false);assert.equal(stringifyNumericJson(f.first),before);f.q('#revert-lattice').click();f.first.definition.definition.extra={value:1};f.editor.show(f.host,f.first);f.edit('#lattice-name','StrutEdited');assert.equal(f.editor.apply(),true);assert.deepEqual(f.first.definition.definition.extra,{value:1});}finally{f.close();}
+});
+test('surface domains open the Strut and Plate designers from the definition panel',{skip},()=>{
+ for(const [type,button] of [['strut','#edit-strut-cell'],['Geom-Plate','#edit-mesh-cell']]){
+  const f=fixture(type);
+  try{
+   for(const domain of ['Quad','Triangle']){
+    f.edit('#lattice-domain',domain,'change');
+    assert.equal(f.q(button).disabled,false);
+    f.q(button).click();
+    assert.equal(f.edits.at(-1).draft.definition.definition.ladomain,domain);
+   }
+  }finally{f.close();}
+ }
 });
 test('all definition families render applicable controls and mesh k remains optional',{skip},()=>{
   for(const type of ['MeshLattice','ConformalLattice','TPMS-Field','Geom','Geom-Plate']){const f=fixture(type);try{assert.equal(f.editor.applyAll(),true,type);if(type.includes('Lattice')){assert.ok(f.q('#lattice-meshfile'));assert.ok(f.q('[data-ld-section="advanced"] #lattice-k'));delete f.first.definition.definition.k;f.editor.show(f.host,f.first);assert.equal(f.editor.applyAll(),true);assert.equal('k' in f.first.definition.definition,false);}else if(type==='TPMS-Field'){assert.equal(f.q('#edit-tpms-cell'),null);assert.ok(f.q('#lattice-expr'));}else{assert.ok(f.q('#edit-mesh-cell'));assert.ok(f.q('#lattice-file'));}}finally{f.close();}}

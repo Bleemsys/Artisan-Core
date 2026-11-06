@@ -36,9 +36,20 @@ fn triangulate(vertices: &[[f64;3]], face: &[usize]) -> Result<Vec<[usize;3]>,St
 }
 
 fn mesh_obj(vertices: &[[f64; 3]], faces: &[Vec<usize>], kind: &str, domain: &str) -> Result<String, String> {
-    if !["Geom", "Geom-Plate"].contains(&kind) || !["Hex", "Tet"].contains(&domain) { return Err("Choose Geometry or Plate in a Hex or Tet reference domain.".into()); }
+    let surface = matches!(domain, "Quad" | "Triangle");
+    if !matches!((kind, domain),
+        ("Geom" | "Geom-Plate", "Hex" | "Tet") | ("Geom-Plate", "Quad" | "Triangle"))
+    {
+        return Err("Choose a compatible reference domain for this Geometry or Plate definition.".into());
+    }
     if vertices.len() < 3 || vertices.len() > MAX_VERTICES || faces.is_empty() || faces.len() > MAX_FACES { return Err("The prepared mesh is empty or exceeds the editing limit.".into()); }
-    if vertices.iter().any(|p| p.iter().any(|v| !v.is_finite() || *v < 0.0 || *v > 1.0) || domain == "Tet" && p.iter().sum::<f64>() > 1.0 + 1e-9) { return Err("Prepared mesh vertices must lie inside the reference domain.".into()); }
+    if vertices.iter().any(|p| {
+        p.iter().any(|v| !v.is_finite() || *v < 0.0 || *v > 1.0)
+            || surface && p[2] != 0.0
+            || matches!(domain, "Tet" | "Triangle") && p.iter().sum::<f64>() > 1.0 + 1e-9
+    }) {
+        return Err("Prepared mesh vertices must lie inside the reference domain.".into());
+    }
     let mut edges: HashMap<(usize, usize), (usize, i32)> = HashMap::new();
     let mut seen = HashSet::new();
     let mut volume = 0.0;
@@ -121,6 +132,21 @@ mod tests {
         let mut f=vec![vec![0,2,1],vec![0,1,3],vec![0,3,2],vec![1,2,3]];
         assert!(mesh_obj(&v,&f,"Geom","Tet").is_ok());for face in &mut f { face.reverse(); } assert!(mesh_obj(&v,&f,"Geom","Tet").is_err());
         let mut bad=v;bad[0][0]=f64::NAN;assert!(mesh_obj(&bad,&f,"Geom-Plate","Hex").is_err());
+    }
+    #[test]
+    fn surface_domains_save_planar_plates_and_enforce_their_boundaries() {
+        let square = [[0.0,0.0,0.0],[1.0,0.0,0.0],[1.0,1.0,0.0],[0.0,1.0,0.0]];
+        let square_face = [vec![0,1,2,3]];
+        let obj = mesh_obj(&square, &square_face, "Geom-Plate", "Quad").unwrap();
+        assert_eq!(obj.lines().filter(|line| line.starts_with("f ")).count(), 2);
+        assert!(mesh_obj(&square, &square_face, "Geom-Plate", "Triangle").is_err());
+        assert!(mesh_obj(&square, &square_face, "Geom", "Quad").is_err());
+
+        let mut triangle = [square[0], square[1], square[3]];
+        let triangle_face = [vec![0,1,2]];
+        assert!(mesh_obj(&triangle, &triangle_face, "Geom-Plate", "Triangle").is_ok());
+        triangle[0][2] = 0.1;
+        assert!(mesh_obj(&triangle, &triangle_face, "Geom-Plate", "Triangle").is_err());
     }
     #[test] fn asset_creation_cannot_overwrite_an_existing_file() {
         let dir=std::env::temp_dir().join(format!("artgui-cell-assets-{}-{}",std::process::id(),NEXT_ASSET.fetch_add(1,Ordering::Relaxed)));fs::create_dir(&dir).unwrap();let path=dir.join("source.obj");

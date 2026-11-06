@@ -23,7 +23,7 @@ test('reconnecting validates before changing an edge',()=>{
  const c=strutCellFromDefinition(blankStrutDefinition());addReferenceNodes(c,HEX_CORNERS);const a=addCellConnection(c,1,2);addCellConnection(c,1,3);assert.throws(()=>updateCellConnection(c,a,1,3));assert.equal(c.connections[0].end,2);updateCellConnection(c,a,2,4);assert.deepEqual(c.connections[0],{id:a,start:2,end:4});
 });
 test('preserves imported coincident nodes, reports invalid zero-length edges and excludes other domains',()=>{
- const value={type:'strut',definition:{pts:[[0,0,0],[0,0,0],[1,1,1]],cnnt:[[0,1]],ladomain:'Hex'}};const c=strutCellFromDefinition(value);assert.equal(c.nodes.length,3);assert.match(strutCellError(c),/zero length/);assert.ok(strutCellWarnings(c).some(m=>m.includes('same position')));assert.throws(()=>strutCellFromDefinition({...value,definition:{...value.definition,ladomain:'Quad'}}),/Hex and Tet/);
+ const value={type:'strut',definition:{pts:[[0,0,0],[0,0,0],[1,1,1]],cnnt:[[0,1]],ladomain:'Hex'}};const c=strutCellFromDefinition(value);assert.equal(c.nodes.length,3);assert.match(strutCellError(c),/zero length/);assert.ok(strutCellWarnings(c).some(m=>m.includes('same position')));assert.throws(()=>strutCellFromDefinition({...value,definition:{...value.definition,ladomain:'Other'}}),/reference cell/);
 });
 
 test('Tet uses the documented four vertices, centroid and coupled coordinate limits',()=>{
@@ -39,7 +39,18 @@ test('switching domains preserves coordinates, IDs, connections and extras while
  const cell=strutCellFromDefinition({type:'strut',note:'keep',definition:{pts:[[0,0,0],[.5,.5,.5]],cnnt:[[0,1]],ladomain:'Hex',custom:4}}),before=cloneNumericJson(cell);
  setStrutCellDomain(cell,'Tet');assert.deepEqual(cell.nodes,before.nodes);assert.deepEqual(cell.connections,before.connections);assert.match(strutCellError(cell),/X \+ Y \+ Z/);
  moveCellNode(cell,2,[.25,.25,.25]);assert.equal(strutCellError(cell),'');assert.equal(strutCellToDefinition(cell).definition.ladomain,'Tet');assert.equal(strutCellToDefinition(cell).note,'keep');
- setStrutCellDomain(cell,'Hex');assert.equal(strutCellError(cell),'');assert.throws(()=>setStrutCellDomain(cell,'Triangle'));assert.equal(cell.base.definition.ladomain,'Hex');
+ setStrutCellDomain(cell,'Hex');assert.equal(strutCellError(cell),'');assert.throws(()=>setStrutCellDomain(cell,'Other'));assert.equal(cell.base.definition.ladomain,'Hex');
+});
+
+test('surface struts use square or triangle corners and stay in the XY plane when dragged',()=>{
+ assert.deepEqual(strutDomainGeometry('Quad').corners,[[0,0,0],[1,0,0],[1,1,0],[0,1,0]]);
+ assert.deepEqual(strutDomainGeometry('Triangle').corners,[[0,0,0],[1,0,0],[0,1,0]]);
+ assert.equal(isStrutPoint([.8,.8,0],'Quad'),true);
+ assert.equal(isStrutPoint([.8,.8,0],'Triangle'),false);
+ assert.equal(isStrutPoint([.2,.2,.1],'Quad'),false);
+ assert.deepEqual(constrainStrutDrag('Triangle',[.25,.25,0],[1,1,1],'xy'),[.5,.5,0]);
+ assert.deepEqual(constrainStrutDrag('Triangle',[.25,.25,0],[1,1,1],'x'),[.75,.25,0]);
+ assert.deepEqual(constrainStrutDrag('Quad',[.25,.25,0],[1,1,1],'xyz'),[1,1,0]);
 });
 
 test('Tet definitions round trip exact numeric tokens and reject points outside the simplex',()=>{
